@@ -33,6 +33,8 @@ namespace keago0403
 
         Ellipse myEllipse;
         Rectangle myRect;
+        Line myLine;
+
 
         bool bfirst = true;
         bool bmousedown = false;
@@ -44,7 +46,32 @@ namespace keago0403
 
             bmousedown = true;
         }
+        //線線線線線線線線線線線線線線線
+        void drawLine(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            if (bfirst)
+            {
+                bfirst = false;
+                myLine = new Line();
+                myLine.Stroke = System.Windows.Media.Brushes.Black;
+                myLine.X1 = xStart;
+                myLine.X2 = xEnd;
+                myLine.Y1 = yStart;
+                myLine.Y2 = yEnd;
+                myLine.HorizontalAlignment = HorizontalAlignment.Left;
+                myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = 2;
+                mygrid.Children.Add(myLine);
 
+            }
+            else
+            {
+                myLine.X2 = xEnd;
+                myLine.Y2 = yEnd;
+            }
+        }
+
+        //正方形正方形正方形正方形正方形正方形
         void drawRect(int x, int y, int w, int h)
         {
             if (bfirst)
@@ -53,7 +80,7 @@ namespace keago0403
                 myRect = new Rectangle();
 
                 SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
+                mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
                 myRect.Fill = mySolidColorBrush;
                 myRect.StrokeThickness = 2;
                 myRect.Stroke = Brushes.Black;
@@ -72,7 +99,7 @@ namespace keago0403
             }
         }
 
-
+        //圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形
         void drawEllipse(int x, int y, int w, int h)
         {
 
@@ -87,7 +114,7 @@ namespace keago0403
 
                 // Describes the brush's color using RGB values. 
                 // Each value has a range of 0-255.
-                mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
+                mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
                 myEllipse.Fill = mySolidColorBrush;
                 myEllipse.StrokeThickness = 2;
                 myEllipse.Stroke = Brushes.Black;
@@ -122,6 +149,8 @@ namespace keago0403
 
             int px = (int)pStart.X;
             int py = (int)pStart.Y;
+            int ex = (int)pEnd.X;
+            int ey = (int)pEnd.Y;
             int w = Math.Abs((int)(pEnd.X - pStart.X));
             int h = Math.Abs((int)(pEnd.Y - pStart.Y));
             if (pEnd.X < pStart.X)
@@ -140,6 +169,11 @@ namespace keago0403
                     drawRect(px, py, w, h);
                     myRect.Opacity = 1;
                     break;
+                case 3:
+                    drawLine(px, py, ex, ey);
+                    myLine.Opacity = 1;
+                    break;
+                    
 
             }
 
@@ -157,6 +191,8 @@ namespace keago0403
                 pEnd = e.GetPosition(mygrid);
                 int px = (int)pStart.X;
                 int py = (int)pStart.Y;
+                int ex = (int)pEnd.X;
+                int ey = (int)pEnd.Y;
                 int w = Math.Abs((int)(pEnd.X - pStart.X));
                 int h = Math.Abs((int)(pEnd.Y - pStart.Y));
                 if (pEnd.X < pStart.X)
@@ -173,6 +209,10 @@ namespace keago0403
                     case 2:
                         drawRect(px, py, w, h);
                         myRect.Opacity = 0.5;
+                        break;
+                    case 3:
+                        drawLine(px, py, ex, ey);
+                        myLine.Opacity = 0.5;
                         break;
 
                 }

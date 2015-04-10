@@ -13,7 +13,7 @@ namespace keago0403
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-
+            f.TopMost = true;
         }
 
         private void circle_btn_Click(object sender, RibbonControlEventArgs e)
@@ -28,6 +28,10 @@ namespace keago0403
             f.Show();
         }
 
-        
+        private void line_btn_Click(object sender, RibbonControlEventArgs e)
+        {
+            f.setDrawType(3);
+            f.Show();
+        }
     }
 }

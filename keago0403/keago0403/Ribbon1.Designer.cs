@@ -38,6 +38,7 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.circle_btn = this.Factory.CreateRibbonButton();
             this.rectangle_btn = this.Factory.CreateRibbonButton();
+            this.line_btn = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             // 
@@ -45,14 +46,15 @@
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.group1);
-            this.tab1.Label = "TabAddIns";
+            this.tab1.Label = "Violet";
             this.tab1.Name = "tab1";
             // 
             // group1
             // 
             this.group1.Items.Add(this.circle_btn);
             this.group1.Items.Add(this.rectangle_btn);
-            this.group1.Label = "group1";
+            this.group1.Items.Add(this.line_btn);
+            this.group1.Label = "Shape";
             this.group1.Name = "group1";
             // 
             // circle_btn
@@ -74,6 +76,15 @@
             this.rectangle_btn.ShowImage = true;
             this.rectangle_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.rectangle_btn_Click);
             // 
+            // line_btn
+            // 
+            this.line_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.line_btn.Image = global::keago0403.Properties.Resources.line;
+            this.line_btn.Label = "Line";
+            this.line_btn.Name = "line_btn";
+            this.line_btn.ShowImage = true;
+            this.line_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.line_btn_Click);
+            // 
             // Ribbon1
             // 
             this.Name = "Ribbon1";
@@ -93,6 +104,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton circle_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton rectangle_btn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton line_btn;
     }
 
     partial class ThisRibbonCollection
