@@ -72,7 +72,6 @@
             this.rectangle_btn.Label = "Rectangle";
             this.rectangle_btn.Name = "rectangle_btn";
             this.rectangle_btn.ShowImage = true;
-            this.rectangle_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.rectangle_btn_Click);
             // 
             // Ribbon1
             // 

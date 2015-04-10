@@ -25,14 +25,10 @@ namespace keago0403
             InitializeComponent();
         }
 
-        public int drawtype=1;
-
-
         Point pStart;
         Point pEnd;
 
         Ellipse myEllipse;
-        Rectangle myRect;
 
         bool bfirst = true;
         bool bmousedown = false;
@@ -43,33 +39,6 @@ namespace keago0403
             pStart = e.GetPosition(mygrid);
 
             bmousedown = true;
-        }
-
-        void drawRect(int x, int y, int w, int h)
-        {
-            if (bfirst)
-            {
-                bfirst = false;
-                myRect = new Rectangle();
-
-                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
-                myRect.Fill = mySolidColorBrush;
-                myRect.StrokeThickness = 2;
-                myRect.Stroke = Brushes.Black;
-
-                myRect.Width = w;
-                myRect.Height = h;
-                myRect.Margin = new Thickness(x, y, 0, 0);
-
-                mygrid.Children.Add(myRect);
-            }
-            else {
-                myRect.Width = w;
-                myRect.Height = h;
-                myRect.Margin = new Thickness(x, y, 0, 0);
-
-            }
         }
 
 
@@ -130,22 +99,11 @@ namespace keago0403
                 py = (int)pEnd.Y;
 
 
-            switch (drawtype)
-            {
-                case 1:
-                    drawEllipse(px, py, w, h);
-                    myEllipse.Opacity = 1;
-                    break;
-                case 2:
-                    drawRect(px, py, w, h);
-                    myRect.Opacity = 1;
-                    break;
-
-            }
+            drawEllipse(px, py, w, h);
 
             bfirst = true;
             bmousedown = false;
-            
+            myEllipse.Opacity = 1;
 
         }
 
@@ -163,19 +121,9 @@ namespace keago0403
                     px = (int)pEnd.X;
                 if (pEnd.Y < pStart.Y)
                     py = (int)pEnd.Y;
-
-                switch (drawtype)
-                {
-                    case 1:
-                        drawEllipse(px, py, w, h);
-                        myEllipse.Opacity = 0.5;
-                        break;
-                    case 2:
-                        drawRect(px, py, w, h);
-                        myRect.Opacity = 0.5;
-                        break;
-
-                }
+                drawEllipse(px, py, w, h);
+                myEllipse.Opacity = 0.5;
+                // drawEllipse((int)pStart.X, (int)pStart.Y, (int)(pEnd.X - pStart.X), (int)(pEnd.Y - pStart.Y), 1);
             }
         }
 
