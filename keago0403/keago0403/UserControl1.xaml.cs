@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,8 @@ namespace keago0403
             mygrid.Children.Clear();
          
         }
+
+
 
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -226,6 +229,50 @@ namespace keago0403
 
                 }
             }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            int margin = (int)mygrid.Margin.Left;
+            int width = (int)mygrid.ActualWidth + (int)mygrid.Margin.Left + (int)mygrid.Margin.Right;
+            int height = (int)mygrid.ActualHeight +
+                (int)mygrid.Margin.Top + (int)mygrid.Margin.Bottom;
+
+            RenderTargetBitmap rtb = new RenderTargetBitmap(width, height, 96d, 96d, PixelFormats.Default);
+            DrawingVisual dv = new DrawingVisual();
+            using (DrawingContext dc = dv.RenderOpen())
+            {
+                VisualBrush vb = new VisualBrush(mygrid);
+                Rect r = new Rect(new System.Windows.Point(0, 0), new System.Windows.Size(width, height));
+
+                vb.Stretch = Stretch.UniformToFill;
+                dc.DrawRectangle(vb, null, r);
+
+            }
+            rtb.Render(dv);
+            //save the ink to a memory stream
+            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(rtb));
+            byte[] bitmapBytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                //get the bitmap bytes from the memory stream
+                ms.Position = 0;
+                bitmapBytes = ms.ToArray();
+            }
+
+            Utility _utility = new Utility();
+
+            _utility.BitmapBytes = bitmapBytes;
+
+          //  this.Dispose(true);
+          //  this.Close();
+            _utility.TagName = "test";// cbxTagName.SelectedItem.ToString();
+            Globals.ThisAddIn.AddPictureContentControl(_utility);
+
+
+
         }
 
 
