@@ -33,5 +33,13 @@ namespace keago0403
             f.setDrawType(3);
             f.Show();
         }
+
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            f.ClearDrawing();
+            f.Show();
+      
+
+        }
     }
 }

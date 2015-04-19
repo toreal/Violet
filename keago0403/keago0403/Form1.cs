@@ -23,6 +23,12 @@ namespace keago0403
 
         }
 
+        public void ClearDrawing()
+        {
+            userControl11.ClearDrawing();
+
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {

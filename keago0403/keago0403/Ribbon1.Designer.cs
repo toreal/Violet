@@ -39,6 +39,7 @@
             this.circle_btn = this.Factory.CreateRibbonButton();
             this.rectangle_btn = this.Factory.CreateRibbonButton();
             this.line_btn = this.Factory.CreateRibbonButton();
+            this.button1 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             // 
@@ -54,6 +55,7 @@
             this.group1.Items.Add(this.circle_btn);
             this.group1.Items.Add(this.rectangle_btn);
             this.group1.Items.Add(this.line_btn);
+            this.group1.Items.Add(this.button1);
             this.group1.Label = "Shape";
             this.group1.Name = "group1";
             // 
@@ -85,6 +87,12 @@
             this.line_btn.ShowImage = true;
             this.line_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.line_btn_Click);
             // 
+            // button1
+            // 
+            this.button1.Label = "button1";
+            this.button1.Name = "button1";
+            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            // 
             // Ribbon1
             // 
             this.Name = "Ribbon1";
@@ -105,6 +113,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton circle_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton rectangle_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton line_btn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
     }
 
     partial class ThisRibbonCollection

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace keago0403
 {
@@ -38,6 +39,12 @@ namespace keago0403
 
         bool bfirst = true;
         bool bmousedown = false;
+
+        public void ClearDrawing()
+        {
+            mygrid.Children.Clear();
+         
+        }
 
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -173,7 +180,9 @@ namespace keago0403
                     drawLine(px, py, ex, ey);
                     myLine.Opacity = 1;
                     break;
-                    
+              
+
+
 
             }
 
