@@ -33,13 +33,20 @@ namespace keago0403
         byte colorR = 0;
         byte colorG = 0;
         byte colorB = 0;
+        int strokeT = 1;
 
+        String Status = "rest";
         Point pStart;
         Point pEnd;
+        Point p0, p1, p2, p3 = new Point(0, 0);
+        BezierSegment bezier = new BezierSegment();
+        PathFigure figure = new PathFigure();
+        PathGeometry geometry = new PathGeometry();
 
         Ellipse myEllipse;
         Rectangle myRect;
         Line myLine;
+        System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
 
         bool bfirst = true;
         bool bmousedown = false;
@@ -47,6 +54,20 @@ namespace keago0403
         public void ClearDrawing()
         {
             mygrid.Children.Clear();
+        }
+        public void stroke(int stroketype)
+        {
+            switch (stroketype){
+                case 1:
+                    strokeT = 1;
+                    break;
+                case 3:
+                    strokeT = 3;
+                    break;
+                case 5:
+                    strokeT = 5;
+                    break;
+            }
         }
         public void color(String CName) {
             colortype = CName;
@@ -87,18 +108,94 @@ namespace keago0403
                     colorG = 255;
                     colorB = 255;
                     break;
-
             }
         }
-
-
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             pStart = e.GetPosition(mygrid);
-
             bmousedown = true;
         }
+
+        //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
+        public void Curve(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            if(bfirst){
+                if (Status.Equals("rest"))
+                {
+                    bfirst = false;
+                    bezier = new BezierSegment();
+                    bezier.Point3 = new Point(xEnd, yEnd);
+                    figure = new PathFigure();
+                    figure.StartPoint = new Point(xStart, yStart);
+                    bezier.Point1 = figure.StartPoint;
+                    bezier.Point2 = bezier.Point3;
+                    p0 = figure.StartPoint;
+                    p1 = bezier.Point1;
+                    figure.Segments.Add(bezier);
+                    geometry = new PathGeometry();
+                    geometry.Figures.Add(figure);
+                    myPath = new System.Windows.Shapes.Path();
+                    myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+                    myPath.StrokeThickness = strokeT;
+                    myPath.Data = geometry;
+                    mygrid.Children.Add(myPath);
+                    Status = "work1";
+                }
+                else if (Status.Equals("work1"))
+                {
+                    bfirst = false;
+                    mygrid.Children.Remove(myPath);
+                    bezier.Point1 = new Point(xEnd, yEnd);
+                    bezier.Point3 = p3;
+                    figure = new PathFigure();
+                    figure.StartPoint = p0;
+                    figure.Segments.Add(bezier);
+                    geometry = new PathGeometry();
+                    geometry.Figures.Add(figure);
+                    myPath.Data = geometry;
+                    mygrid.Children.Add(myPath);
+                    Status = "work2";
+                }
+                else if (Status.Equals("work2"))
+                {
+                    bfirst = false;
+                    mygrid.Children.Remove(myPath);
+                    bezier.Point2 = new Point(xEnd, yEnd);
+                    bezier.Point1 = p1;
+                    bezier.Point3 = p3;
+                    figure = new PathFigure();
+                    figure.StartPoint = p0;
+                    figure.Segments.Add(bezier);
+                    geometry = new PathGeometry();
+                    geometry.Figures.Add(figure);
+                    myPath.Data = geometry;
+                    mygrid.Children.Add(myPath);
+                    Status = "rest";
+                }
+            }
+            else
+            {
+                if (Status.Equals("work1"))
+                {
+                    bezier.Point3 = new Point(xEnd, yEnd);
+                    p3 = bezier.Point3;
+                    bezier.Point2 = bezier.Point3;
+                    p2 = bezier.Point2;
+                }
+                else if (Status.Equals("work2"))
+                {
+                    bezier.Point1 = new Point(xEnd, yEnd);
+                    p1 = bezier.Point1;
+                }
+                else if (Status.Equals("rest"))
+                {
+                    bezier.Point2 = new Point(xEnd, yEnd);
+                    p2 = bezier.Point2;
+                }
+            }
+        }
+
         //線線線線線線線線線線線線線線線
         void drawLine(int xStart, int yStart, int xEnd, int yEnd)
         {
@@ -113,9 +210,8 @@ namespace keago0403
                 myLine.Y2 = yEnd;
                 myLine.HorizontalAlignment = HorizontalAlignment.Left;
                 myLine.VerticalAlignment = VerticalAlignment.Center;
-                myLine.StrokeThickness = 2;
+                myLine.StrokeThickness = strokeT;
                 mygrid.Children.Add(myLine);
-
             }
             else
             {
@@ -135,7 +231,7 @@ namespace keago0403
                 SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                 mySolidColorBrush.Color = Color.FromArgb( 0, colorR, colorG, colorB);
                 myRect.Fill = mySolidColorBrush;
-                myRect.StrokeThickness = 2;
+                myRect.StrokeThickness = strokeT;
                 myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 
                 myRect.Width = w;
@@ -148,14 +244,12 @@ namespace keago0403
                 myRect.Width = w;
                 myRect.Height = h;
                 myRect.Margin = new Thickness(x, y, 0, 0);
-
             }
         }
 
         //圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形圓形
         void drawEllipse(int x, int y, int w, int h)
         {
-
             if (bfirst)
             {
                 bfirst = false;
@@ -169,7 +263,7 @@ namespace keago0403
                 // Each value has a range of 0-255.
                 mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
                 myEllipse.Fill = mySolidColorBrush;
-                myEllipse.StrokeThickness = 2;
+                myEllipse.StrokeThickness = strokeT;
                 myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
 
                 // Set the width and height of the Ellipse.
@@ -180,25 +274,18 @@ namespace keago0403
                 // Add the Ellipse to the StackPanel.
 
                 mygrid.Children.Add(myEllipse);
-
             }
             else
             {
-
                 myEllipse.Width = w;
                 myEllipse.Height = h;
                 myEllipse.Margin = new Thickness(x, y, 0, 0);
-
             }
-
-
         }
 
         private void mygrid_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
             pEnd = e.GetPosition(mygrid);
-
 
             int px = (int)pStart.X;
             int py = (int)pStart.Y;
@@ -210,7 +297,6 @@ namespace keago0403
                 px = (int)pEnd.X;
             if (pEnd.Y < pStart.Y)
                 py = (int)pEnd.Y;
-
 
             switch (drawtype)
             {
@@ -226,16 +312,13 @@ namespace keago0403
                     drawLine(px, py, ex, ey);
                     myLine.Opacity = 1;
                     break;
-              
-
-
-
+                case 4:
+                    Curve(px, py, ex, ey);
+                    myPath.Opacity = 1;
+                    break;
             }
-
             bfirst = true;
             bmousedown = false;
-            
-
         }
 
         private void mygrid_MouseMove(object sender, MouseEventArgs e)
@@ -269,7 +352,10 @@ namespace keago0403
                         drawLine(px, py, ex, ey);
                         myLine.Opacity = 0.5;
                         break;
-
+                    case 4:
+                        Curve(px, py, ex, ey);
+                        myPath.Opacity = 0.5;
+                        break;
                 }
             }
         }
@@ -313,11 +399,7 @@ namespace keago0403
           //  this.Close();
             _utility.TagName = "test";// cbxTagName.SelectedItem.ToString();
             Globals.ThisAddIn.AddPictureContentControl(_utility);
-
-
-
+            ClearDrawing();
         }
-
-
     }
 }

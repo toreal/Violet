@@ -34,9 +34,10 @@
             // 
             // elementHost1
             // 
+            this.elementHost1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.elementHost1.Location = new System.Drawing.Point(0, -2);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1280, 720);
+            this.elementHost1.Size = new System.Drawing.Size(1265, 720);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.userControl11;
@@ -47,6 +48,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 682);
             this.Controls.Add(this.elementHost1);
+            this.IsMdiContainer = true;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -58,5 +60,7 @@
 
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private UserControl1 userControl11;
+
+
     }
 }

@@ -39,7 +39,7 @@
             this.circle_btn = this.Factory.CreateRibbonButton();
             this.rectangle_btn = this.Factory.CreateRibbonButton();
             this.line_btn = this.Factory.CreateRibbonButton();
-            this.button3 = this.Factory.CreateRibbonButton();
+            this.Curve = this.Factory.CreateRibbonButton();
             this.Color = this.Factory.CreateRibbonGroup();
             this.red_btn = this.Factory.CreateRibbonButton();
             this.orange_btn = this.Factory.CreateRibbonButton();
@@ -49,6 +49,10 @@
             this.blue_btn = this.Factory.CreateRibbonButton();
             this.white_btn = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
+            this.StrokeThickness = this.Factory.CreateRibbonMenu();
+            this.px1 = this.Factory.CreateRibbonButton();
+            this.px3 = this.Factory.CreateRibbonButton();
+            this.px5 = this.Factory.CreateRibbonButton();
             this.button2 = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
             this.button11 = this.Factory.CreateRibbonButton();
@@ -71,7 +75,7 @@
             this.group1.Items.Add(this.circle_btn);
             this.group1.Items.Add(this.rectangle_btn);
             this.group1.Items.Add(this.line_btn);
-            this.group1.Items.Add(this.button3);
+            this.group1.Items.Add(this.Curve);
             this.group1.Label = "Shape";
             this.group1.Name = "group1";
             // 
@@ -103,13 +107,14 @@
             this.line_btn.ShowImage = true;
             this.line_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.line_btn_Click);
             // 
-            // button3
+            // Curve
             // 
-            this.button3.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button3.Image = global::keago0403.Properties.Resources._123;
-            this.button3.Label = "Curve";
-            this.button3.Name = "button3";
-            this.button3.ShowImage = true;
+            this.Curve.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.Curve.Image = global::keago0403.Properties.Resources._123;
+            this.Curve.Label = "Curve";
+            this.Curve.Name = "Curve";
+            this.Curve.ShowImage = true;
+            this.Curve.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Curve_Click);
             // 
             // Color
             // 
@@ -120,7 +125,7 @@
             this.Color.Items.Add(this.black_btn);
             this.Color.Items.Add(this.blue_btn);
             this.Color.Items.Add(this.white_btn);
-            this.Color.Label = "group3";
+            this.Color.Label = "Color";
             this.Color.Name = "Color";
             // 
             // red_btn
@@ -181,11 +186,46 @@
             // 
             // group2
             // 
+            this.group2.Items.Add(this.StrokeThickness);
             this.group2.Items.Add(this.button2);
             this.group2.Items.Add(this.button1);
             this.group2.Items.Add(this.button11);
             this.group2.Label = "Other";
             this.group2.Name = "group2";
+            // 
+            // StrokeThickness
+            // 
+            this.StrokeThickness.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.StrokeThickness.Items.Add(this.px1);
+            this.StrokeThickness.Items.Add(this.px3);
+            this.StrokeThickness.Items.Add(this.px5);
+            this.StrokeThickness.Label = "StrokeThickness";
+            this.StrokeThickness.Name = "StrokeThickness";
+            this.StrokeThickness.ShowImage = true;
+            // 
+            // px1
+            // 
+            this.px1.Image = global::keago0403.Properties.Resources.px1;
+            this.px1.Label = "px1";
+            this.px1.Name = "px1";
+            this.px1.ShowImage = true;
+            this.px1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.px1_Click);
+            // 
+            // px3
+            // 
+            this.px3.Image = global::keago0403.Properties.Resources.background1;
+            this.px3.Label = "px3";
+            this.px3.Name = "px3";
+            this.px3.ShowImage = true;
+            this.px3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.px3_Click);
+            // 
+            // px5
+            // 
+            this.px5.Image = global::keago0403.Properties.Resources.background1;
+            this.px5.Label = "px5";
+            this.px5.Name = "px5";
+            this.px5.ShowImage = true;
+            this.px5.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.px5_Click);
             // 
             // button2
             // 
@@ -240,7 +280,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton Curve;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup Color;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton red_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton orange_btn;
@@ -250,6 +290,10 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton blue_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton white_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button11;
+        internal Microsoft.Office.Tools.Ribbon.RibbonMenu StrokeThickness;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton px1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton px3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton px5;
     }
 
     partial class ThisRibbonCollection

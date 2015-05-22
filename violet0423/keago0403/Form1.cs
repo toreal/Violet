@@ -16,12 +16,9 @@ namespace keago0403
         {
             InitializeComponent();
         }
-
         public void setDrawType(int ntype)
         {
             userControl11.drawtype = ntype;
-            
-
         }
         public void setColorType(String colorName)
         {
@@ -30,10 +27,11 @@ namespace keago0403
         public void ClearDrawing()
         {
             userControl11.ClearDrawing();
-
         }
-
-
+        public void setStrokeType(int ntype)
+        {
+            userControl11.stroke(ntype);
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             
