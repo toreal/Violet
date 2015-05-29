@@ -150,6 +150,9 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="log4net">
+      <HintPath>dll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -202,6 +205,8 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="ControlProperties.cs" />
+    <Compile Include="ControlStorage.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -331,6 +336,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\px1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3px1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\strokes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\point1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\point11.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,6 +9,7 @@ using Microsoft.Office.Tools.Word;
 using Microsoft.Office.Interop.Word;
 using System.IO;
 using System.Drawing;
+using Chem4Word.Core;
 
 namespace keago0403
 {
@@ -36,6 +37,34 @@ namespace keago0403
         
         #endregion
 
+
+        protected override object RequestService(Guid serviceGuid)
+        {
+
+        
+
+            Application.DocumentBeforeSave += Application_DocumentBeforeSave;
+                
+            
+            return base.RequestService(serviceGuid);
+        }
+
+        void Application_DocumentBeforeSave(Word.Document doc, ref bool SaveAsUI, ref bool Cancel)
+        {
+            _Document vstoDocument = Globals.Factory.GetVstoObject(this.Application.ActiveDocument) as _Document;
+            List<ControlProperties> savedControls = new List<ControlProperties>();
+           // Chem4Word.Core.ControlProperties[] controls =new Chem4Word.Core.ControlProperties[100];
+           // Chem4Word.Core.ControlsStorage.Store(vstoDocument, controls);
+            //throw new NotImplementedException();
+
+
+
+            savedControls.Sort(new ControlCollectionComparer());
+            ControlsStorage.Store(doc, savedControls.ToArray());
+            
+        }
+
+
         internal void AddPictureContentControl(Utility _utility)
         {
             Microsoft.Office.Tools.Word.Document vstoDocument = Globals.Factory.GetVstoObject(this.Application.ActiveDocument);
@@ -62,7 +91,7 @@ namespace keago0403
                             PictureContentControl piccontrol = vstoDocument.Controls.AddPictureContentControl(selection.Range, Guid.NewGuid().ToString());
                             // piccontrol3.Image.Save(ms, ImageFormat.Jpeg);
                             //System.Windows.Forms.MessageBox.Show(piccontrol.Tag);
-                            piccontrol.Image = ScaleImage(_drawnimage, 200, 150);//Save(new Bitmap(returnImage), 270, 180, 0);
+                            piccontrol.Image = _drawnimage;// ScaleImage(_drawnimage, 200, 150);//Save(new Bitmap(returnImage), 270, 180, 0);
 
 
                         }

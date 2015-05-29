@@ -67,6 +67,9 @@ namespace keago0403
                 case 5:
                     strokeT = 5;
                     break;
+                case 10:
+                    strokeT = 8;
+                    break;
             }
         }
         public void color(String CName) {
@@ -366,13 +369,15 @@ namespace keago0403
             int width = (int)mygrid.ActualWidth + (int)mygrid.Margin.Left + (int)mygrid.Margin.Right;
             int height = (int)mygrid.ActualHeight +
                 (int)mygrid.Margin.Top + (int)mygrid.Margin.Bottom;
-
+            mygrid.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
             RenderTargetBitmap rtb = new RenderTargetBitmap(width, height, 96d, 96d, PixelFormats.Default);
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext dc = dv.RenderOpen())
             {
-                VisualBrush vb = new VisualBrush(mygrid);
                 Rect r = new Rect(new System.Windows.Point(0, 0), new System.Windows.Size(width, height));
+
+                dc.DrawRectangle(new SolidColorBrush(Colors.White), new Pen(), r);
+                VisualBrush vb = new VisualBrush(mygrid);
 
                 vb.Stretch = Stretch.UniformToFill;
                 dc.DrawRectangle(vb, null, r);
@@ -401,5 +406,7 @@ namespace keago0403
             Globals.ThisAddIn.AddPictureContentControl(_utility);
             ClearDrawing();
         }
+        
+        
     }
 }

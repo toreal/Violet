@@ -53,6 +53,7 @@
             this.px1 = this.Factory.CreateRibbonButton();
             this.px3 = this.Factory.CreateRibbonButton();
             this.px5 = this.Factory.CreateRibbonButton();
+            this.button3 = this.Factory.CreateRibbonButton();
             this.button2 = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
             this.button11 = this.Factory.CreateRibbonButton();
@@ -81,7 +82,6 @@
             // 
             // circle_btn
             // 
-            this.circle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.circle_btn.Image = global::keago0403.Properties.Resources.circle;
             this.circle_btn.Label = "Circle";
             this.circle_btn.Name = "circle_btn";
@@ -91,7 +91,6 @@
             // 
             // rectangle_btn
             // 
-            this.rectangle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.rectangle_btn.Image = global::keago0403.Properties.Resources.rectangle;
             this.rectangle_btn.Label = "Rectangle";
             this.rectangle_btn.Name = "rectangle_btn";
@@ -100,7 +99,6 @@
             // 
             // line_btn
             // 
-            this.line_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.line_btn.Image = global::keago0403.Properties.Resources.line;
             this.line_btn.Label = "Line";
             this.line_btn.Name = "line_btn";
@@ -109,7 +107,6 @@
             // 
             // Curve
             // 
-            this.Curve.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.Curve.Image = global::keago0403.Properties.Resources._123;
             this.Curve.Label = "Curve";
             this.Curve.Name = "Curve";
@@ -195,42 +192,49 @@
             // 
             // StrokeThickness
             // 
-            this.StrokeThickness.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.StrokeThickness.Image = global::keago0403.Properties.Resources.strokes;
             this.StrokeThickness.Items.Add(this.px1);
             this.StrokeThickness.Items.Add(this.px3);
             this.StrokeThickness.Items.Add(this.px5);
-            this.StrokeThickness.Label = "StrokeThickness";
+            this.StrokeThickness.Items.Add(this.button3);
+            this.StrokeThickness.Label = "Strokes";
             this.StrokeThickness.Name = "StrokeThickness";
             this.StrokeThickness.ShowImage = true;
             // 
             // px1
             // 
-            this.px1.Image = global::keago0403.Properties.Resources.px1;
-            this.px1.Label = "px1";
+            this.px1.Image = global::keago0403.Properties.Resources._1px;
+            this.px1.Label = "1 px";
             this.px1.Name = "px1";
             this.px1.ShowImage = true;
             this.px1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.px1_Click);
             // 
             // px3
             // 
-            this.px3.Image = global::keago0403.Properties.Resources.background1;
-            this.px3.Label = "px3";
+            this.px3.Image = global::keago0403.Properties.Resources._3px1;
+            this.px3.Label = "3 px";
             this.px3.Name = "px3";
             this.px3.ShowImage = true;
             this.px3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.px3_Click);
             // 
             // px5
             // 
-            this.px5.Image = global::keago0403.Properties.Resources.background1;
-            this.px5.Label = "px5";
+            this.px5.Image = global::keago0403.Properties.Resources._5px;
+            this.px5.Label = "5 px";
             this.px5.Name = "px5";
             this.px5.ShowImage = true;
             this.px5.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.px5_Click);
             // 
+            // button3
+            // 
+            this.button3.Image = global::keago0403.Properties.Resources._8px;
+            this.button3.Label = "8 px";
+            this.button3.Name = "button3";
+            this.button3.ShowImage = true;
+            // 
             // button2
             // 
-            this.button2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button2.Image = global::keago0403.Properties.Resources.backpoint;
+            this.button2.Image = global::keago0403.Properties.Resources.point11;
             this.button2.Label = "Background Point";
             this.button2.Name = "button2";
             this.button2.ShowImage = true;
@@ -238,7 +242,6 @@
             // 
             // button1
             // 
-            this.button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.button1.Image = global::keago0403.Properties.Resources.clear1;
             this.button1.Label = " Clear";
             this.button1.Name = "button1";
@@ -247,7 +250,6 @@
             // 
             // button11
             // 
-            this.button11.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.button11.Image = global::keago0403.Properties.Resources.text;
             this.button11.Label = "Text";
             this.button11.Name = "button11";
@@ -294,6 +296,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton px1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton px3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton px5;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
     }
 
     partial class ThisRibbonCollection

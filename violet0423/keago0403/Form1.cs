@@ -15,6 +15,7 @@ namespace keago0403
         public Form1()
         {
             InitializeComponent();
+            
         }
         public void setDrawType(int ntype)
         {

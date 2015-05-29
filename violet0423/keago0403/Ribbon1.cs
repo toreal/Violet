@@ -26,6 +26,9 @@ namespace keago0403
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
+          
+
+
             Check();
         }
 
