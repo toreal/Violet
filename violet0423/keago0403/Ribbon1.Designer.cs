@@ -40,6 +40,7 @@
             this.rectangle_btn = this.Factory.CreateRibbonButton();
             this.line_btn = this.Factory.CreateRibbonButton();
             this.Curve = this.Factory.CreateRibbonButton();
+            this.triangle_btn = this.Factory.CreateRibbonButton();
             this.Color = this.Factory.CreateRibbonGroup();
             this.red_btn = this.Factory.CreateRibbonButton();
             this.orange_btn = this.Factory.CreateRibbonButton();
@@ -77,6 +78,7 @@
             this.group1.Items.Add(this.rectangle_btn);
             this.group1.Items.Add(this.line_btn);
             this.group1.Items.Add(this.Curve);
+            this.group1.Items.Add(this.triangle_btn);
             this.group1.Label = "Shape";
             this.group1.Name = "group1";
             // 
@@ -107,11 +109,18 @@
             // 
             // Curve
             // 
-            this.Curve.Image = global::keago0403.Properties.Resources._123;
+            this.Curve.Image = global::keago0403.Properties.Resources.curve;
             this.Curve.Label = "Curve";
             this.Curve.Name = "Curve";
             this.Curve.ShowImage = true;
             this.Curve.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Curve_Click);
+            // 
+            // triangle_btn
+            // 
+            this.triangle_btn.Image = global::keago0403.Properties.Resources.triangle;
+            this.triangle_btn.Label = "Triangle";
+            this.triangle_btn.Name = "triangle_btn";
+            this.triangle_btn.ShowImage = true;
             // 
             // Color
             // 
@@ -183,10 +192,10 @@
             // 
             // group2
             // 
-            this.group2.Items.Add(this.StrokeThickness);
-            this.group2.Items.Add(this.button2);
-            this.group2.Items.Add(this.button1);
             this.group2.Items.Add(this.button11);
+            this.group2.Items.Add(this.button1);
+            this.group2.Items.Add(this.button2);
+            this.group2.Items.Add(this.StrokeThickness);
             this.group2.Label = "Other";
             this.group2.Name = "group2";
             // 
@@ -297,6 +306,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton px3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton px5;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton triangle_btn;
     }
 
     partial class ThisRibbonCollection
