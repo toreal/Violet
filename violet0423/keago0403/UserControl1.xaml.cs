@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,15 @@ using System.Windows.Threading;
 
 namespace keago0403
 {
+
+   class myline
+   {
+      public  Point a;
+      public Point b;
+
+
+   }
+
     /// <summary>
     /// UserControl1.xaml 的互動邏輯
     /// </summary>
@@ -27,9 +37,12 @@ namespace keago0403
             InitializeComponent();
         }
 
-        public int drawtype=1;
-        public String  colortype = "White";
 
+        ArrayList objList = new ArrayList();
+
+        public int drawtype=1;
+        public String  colortype = "black";
+        public int lineSpace = 25;
         byte colorR = 0;
         byte colorG = 0;
         byte colorB = 0;
@@ -54,6 +67,40 @@ namespace keago0403
         public void ClearDrawing()
         {
             mygrid.Children.Clear();
+        }
+        public void drawLine(double w, double h)
+        {
+            int i;
+            int height = (int)h;
+            int width = (int)w;
+            for (i = 0; i <= height; i += lineSpace)
+            {
+                myLine = new Line();
+                myLine.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+                myLine.X1 = 0;
+                myLine.X2 = width;
+                myLine.Y1 = i;
+                myLine.Y2 = i;
+                myLine.HorizontalAlignment = HorizontalAlignment.Left;
+                myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = strokeT;
+                myLine.Opacity = 0.2;
+                myBackground.Children.Add(myLine);
+            }
+            for (i = 0; i <= width; i += lineSpace)
+            {
+                myLine = new Line();
+                myLine.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+                myLine.X1 = i;
+                myLine.X2 = i;
+                myLine.Y1 = 0;
+                myLine.Y2 = height;
+                myLine.HorizontalAlignment = HorizontalAlignment.Left;
+                myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = strokeT;
+                myLine.Opacity = 0.2;
+                myBackground.Children.Add(myLine);
+            }
         }
         public void stroke(int stroketype)
         {
@@ -220,6 +267,12 @@ namespace keago0403
             {
                 myLine.X2 = xEnd;
                 myLine.Y2 = yEnd;
+
+                //myline mline = new myline();
+                
+                //mline.a = new Point()
+                //objList.Add(mline);
+
             }
         }
 
@@ -236,7 +289,6 @@ namespace keago0403
                 myRect.Fill = mySolidColorBrush;
                 myRect.StrokeThickness = strokeT;
                 myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
-                
                 myRect.Width = w;
                 myRect.Height = h;
                 myRect.Margin = new Thickness(x, y, 0, 0);
@@ -270,6 +322,7 @@ namespace keago0403
                 myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
 
                 // Set the width and height of the Ellipse.
+                
                 myEllipse.Width = w;
                 myEllipse.Height = h;
                 myEllipse.Margin = new Thickness(x, y, 0, 0);
@@ -282,6 +335,7 @@ namespace keago0403
             {
                 myEllipse.Width = w;
                 myEllipse.Height = h;
+
                 myEllipse.Margin = new Thickness(x, y, 0, 0);
             }
         }
@@ -294,13 +348,24 @@ namespace keago0403
             int py = (int)pStart.Y;
             int ex = (int)pEnd.X;
             int ey = (int)pEnd.Y;
-            int w = Math.Abs((int)(pEnd.X - pStart.X));
-            int h = Math.Abs((int)(pEnd.Y - pStart.Y));
+            int w = Math.Abs(ex-px);
+            int h = Math.Abs(ey-py);
             if (pEnd.X < pStart.X)
                 px = (int)pEnd.X;
             if (pEnd.Y < pStart.Y)
                 py = (int)pEnd.Y;
-
+            if (w % 25 != 0)
+                w = 25 * (int)(w / 25);
+            if (h % 25 != 0)
+                h = 25 * (int)(h / 25);
+            if (px % 25 != 0)
+                px = 25 * (int)(px / 25);
+            if (py % 25 != 0)
+                py = 25 * (int)(py / 25);
+            if (ex % 25 != 0)
+                ex = 25 * (int)(ex / 25);
+            if (ey % 25 != 0)
+                ey = 25 * (int)(ey / 25);
             switch (drawtype)
             {
                 case 1:
@@ -326,7 +391,6 @@ namespace keago0403
 
         private void mygrid_MouseMove(object sender, MouseEventArgs e)
         {
-
             if (bmousedown)
             {
                 pEnd = e.GetPosition(mygrid);
@@ -340,7 +404,18 @@ namespace keago0403
                     px = (int)pEnd.X;
                 if (pEnd.Y < pStart.Y)
                     py = (int)pEnd.Y;
-
+                if (w % 25 != 0)
+                    w = 25 * (int)(w / 25);
+                if (h % 25 != 0)
+                    h = 25 * (int)(h / 25);
+                if (px % 25 != 0)
+                    px = 25 * (int)(px / 25);
+                if (py % 25 != 0)
+                    py = 25 * (int)(py / 25);
+                if (ex % 25 != 0)
+                    ex = 25 * (int)(ex / 25);
+                if (ey % 25 != 0)
+                    ey = 25 * (int)(ey / 25);
                 switch (drawtype)
                 {
                     case 1:

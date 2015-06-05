@@ -15,7 +15,11 @@ namespace keago0403
             if (f == null)
             {
                 f = new Form1();
+                int formHeight = (int)(f.setFormSize("h")/1.7);
+                int formWidth = (int)(f.setFormSize("w")/1.7);
+                f.Size = new System.Drawing.Size(formWidth,formHeight);
                 f.TopMost = true;
+                f.drawBackgroundLine();
                 f.Disposed += new EventHandler(f_Disposed);
             }
         }
@@ -26,9 +30,6 @@ namespace keago0403
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-          
-
-
             Check();
         }
 

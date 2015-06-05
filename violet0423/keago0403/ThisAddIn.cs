@@ -92,8 +92,6 @@ namespace keago0403
                             // piccontrol3.Image.Save(ms, ImageFormat.Jpeg);
                             //System.Windows.Forms.MessageBox.Show(piccontrol.Tag);
                             piccontrol.Image = _drawnimage;// ScaleImage(_drawnimage, 200, 150);//Save(new Bitmap(returnImage), 270, 180, 0);
-
-
                         }
 
                     }

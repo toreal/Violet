@@ -35,9 +35,9 @@
             // elementHost1
             // 
             this.elementHost1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.elementHost1.Location = new System.Drawing.Point(0, -2);
+            this.elementHost1.Location = new System.Drawing.Point(0, -1);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1265, 720);
+            this.elementHost1.Size = new System.Drawing.Size(1265, 719);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.userControl11;
