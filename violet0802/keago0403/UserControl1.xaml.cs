@@ -19,12 +19,18 @@ using System.Windows.Threading;
 namespace keago0403
 {
 
-   class myline
+   class myAddFunction
    {
-      public  Point a;
-      public Point b;
+       public Point start;
+       public Point end;
+       public int numCode;
 
-
+       public void AddLine(int startX, int startY, int endX, int endY, int numCode)
+       {
+           this.start = new Point(startX, startY);
+           this.end = new Point(endX, endY);
+           this.numCode = numCode;
+       }
    }
 
     /// <summary>
@@ -32,12 +38,13 @@ namespace keago0403
     /// </summary>
     public partial class UserControl1 : UserControl
     {
+        
         public UserControl1()
         {
             InitializeComponent();
         }
 
-
+        myAddFunction maf;
         ArrayList objList = new ArrayList();
 
         public int drawtype=1;
@@ -374,6 +381,7 @@ namespace keago0403
                 ex = 25 * (int)(ex / 25);
             if (ey % 25 != 0)
                 ey = 25 * (int)(ey / 25);
+            maf = new myAddFunction();
             switch (drawtype)
             {
                 case 1:
@@ -387,13 +395,8 @@ namespace keago0403
                 case 3:
                     drawLine(px, py, ex, ey);
                     myLine.Opacity = 1;
-                   
-                    Point a = new Point(px, py);
-                    Point b = new Point(ex, ey);
-                    LineGeometry saveLine = new LineGeometry(a, b);
-                    objList.Add(saveLine);
-                    Console.WriteLine(objList.Count);
-
+                    maf.AddLine(px, py, ex, ey, objList.Count);
+                    objList.Add(maf);
                     break;
                 case 4:
                     Curve(px, py, ex, ey);
@@ -402,6 +405,7 @@ namespace keago0403
             }
             bfirst = true;
             bmousedown = false;
+            
         }
 
         private void mygrid_MouseMove(object sender, MouseEventArgs e)
