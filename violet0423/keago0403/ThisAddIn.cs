@@ -81,18 +81,29 @@ namespace keago0403
                     //shape[0].
                     MemoryStream ms = new MemoryStream(_utility.BitmapBytes);
                     Image _drawnimage = Image.FromStream(ms);
-                    // Word.ContentControl contentControl = Globals.ThisAddIn.Application.ActiveDocument.SelectContentControlsByTitle(_utility.TagName)[0];
-                    //foreach (Word.ContentControl contentControl in vstoDocument.Content.ContentControls)
-                    {
-                      //  WdContentControlType type = contentControl.Type;
-                        //if (type == WdContentControlType.wdContentControlPicture && contentControl.Tag.Equals(_utility.TagName))
-                        {
+                  //   Word.ContentControl contentControl = Globals.ThisAddIn.Application.ActiveDocument.SelectContentControlsByTitle(_utility.TagName)[0];
 
-                            PictureContentControl piccontrol = vstoDocument.Controls.AddPictureContentControl(selection.Range, Guid.NewGuid().ToString());
-                            // piccontrol3.Image.Save(ms, ImageFormat.Jpeg);
-                            //System.Windows.Forms.MessageBox.Show(piccontrol.Tag);
-                            piccontrol.Image = _drawnimage;// ScaleImage(_drawnimage, 200, 150);//Save(new Bitmap(returnImage), 270, 180, 0);
+                    if (vstoDocument.Content.ContentControls.Count> 0 )
+                    { 
+                        foreach (Word.ContentControl contentControl in vstoDocument.Content.ContentControls)
+                        {
+                            WdContentControlType type = contentControl.Type;
+                            if (type == WdContentControlType.wdContentControlPicture && contentControl.Tag.Equals(_utility.TagName))
+                            {
+
+                                PictureContentControl piccontrol = vstoDocument.Controls.AddPictureContentControl(selection.Range, Guid.NewGuid().ToString());
+                                // piccontrol3.Image.Save(ms, ImageFormat.Jpeg);
+                                //System.Windows.Forms.MessageBox.Show(piccontrol.Tag);
+                                piccontrol.Image = _drawnimage;// ScaleImage(_drawnimage, 200, 150);//Save(new Bitmap(returnImage), 270, 180, 0);
+                            }
+
                         }
+                    }else
+                    {
+                        PictureContentControl piccontrol = vstoDocument.Controls.AddPictureContentControl(selection.Range, Guid.NewGuid().ToString());
+                        // piccontrol3.Image.Save(ms, ImageFormat.Jpeg);
+                        //System.Windows.Forms.MessageBox.Show(piccontrol.Tag);
+                        piccontrol.Image = _drawnimage;
 
                     }
 
