@@ -16,6 +16,9 @@ namespace keago0403
        
 
         public int  selIndex =-1;
+        public int mx;
+        public int my;
+        public bool bmove;
 
        
 

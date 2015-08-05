@@ -75,6 +75,7 @@ namespace keago0403
         public void ClearDrawing()
         {
             mygrid.Children.Clear();
+            gdc.PathList.Clear();
         }
         public void drawLine(double w, double h)
         {
@@ -172,6 +173,13 @@ namespace keago0403
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             pStart = e.GetPosition(mygrid);
+            if (drawtype == 5)
+            {
+                gdc.selIndex = gdc.PathList.Count - 1;
+
+            }
+            else
+                gdc.selIndex = -1;
             bmousedown = true;
         }
         /*void saveFunction(LineGeometry lg)
@@ -293,7 +301,7 @@ namespace keago0403
         }
 
         //正方形正方形正方形正方形正方形正方形
-        void drawRect(int x, int y, int w, int h)
+        void drawRect(int x, int y, int w, int h, byte bfill )
         {
             if (bfirst)
             {
@@ -301,7 +309,7 @@ namespace keago0403
                 myRect = new Rectangle();
 
                 SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                mySolidColorBrush.Color = Color.FromArgb( 0, colorR, colorG, colorB);
+                mySolidColorBrush.Color = Color.FromArgb( bfill, colorR, colorG, colorB);
                 myRect.Fill = mySolidColorBrush;
                 myRect.StrokeThickness = strokeT;
                 myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
@@ -384,39 +392,44 @@ namespace keago0403
                 ey = 25 * (int)(ey / 25);
             maf = new myAddFunction();
 
-            gPath gp = new gPath();
-            gp.state.colorB = colorB;
-            gp.state.colorG = colorG;
-            gp.state.colorR = colorR;
-            gp.state.strokeT = strokeT;
-            gp.drawtype = drawtype;
-            gp.x1 = px;
-            gp.y1 = py;
-            gp.x2 = ex;
-            gp.y2 = ey;
-
-            if (drawtype  <=2) // 應修改成一致
+            if (drawtype <= 4)
             {
-                gp.x2 = w;
-                gp.y2 = h;
+                gPath gp = new gPath();
+                gp.state.colorB = colorB;
+                gp.state.colorG = colorG;
+                gp.state.colorR = colorR;
+                gp.state.strokeT = strokeT;
+                gp.drawtype = drawtype;
+                gp.x1 = px;
+                gp.y1 = py;
+                gp.x2 = ex;
+                gp.y2 = ey;
 
+                if (drawtype <= 2) // 應修改成一致
+                {
+                    gp.x2 = w;
+                    gp.y2 = h;
+
+
+                }
+
+                if (drawtype == 3)
+                {
+                    gp.y1 = (int)pStart.Y;
+
+                    if (gp.y1 % 25 != 0)
+                        gp.y1 = 25 * (int)(gp.y1 / 25);
+
+
+                }
+                gdc.PathList.Add(gp);
 
             }
-
-            if (drawtype == 3)
-            { 
-                gp.y1 = (int)pStart.Y;
-
-                if (gp.y1 % 25 != 0)
-                    gp.y1 = 25 * (int)(gp.y1 / 25);
-            
-    
-            }
-            gdc.PathList.Add(gp);
-
             if (true) //新舊碼切換(暫時)
             {
-                           reDraw();
+                gdc.bmove = false;
+               
+                           reDraw(true);
             }else
             { 
 
@@ -427,7 +440,7 @@ namespace keago0403
                     myEllipse.Opacity = 1;
                     break;
                 case 2:
-                    drawRect(px, py, w, h);
+                    drawRect(px, py, w, h,0);
                     myRect.Opacity = 1;
                     break;
                 case 3:
@@ -484,7 +497,7 @@ namespace keago0403
                         myEllipse.Opacity = 0.5;
                         break;
                     case 2:
-                        drawRect(px, py, w, h);
+                        drawRect(px, py, w, h,0);
                         myRect.Opacity = 0.5;
                         break;
                     case 3:
@@ -495,55 +508,100 @@ namespace keago0403
                         Curve(px, py, ex, ey);
                         myPath.Opacity = 0.5;
                         break;
+                    case 5:
+                        gdc.bmove = true;
+                        gdc.mx = ex;
+                        gdc.my = ey;
+                        reDraw(true);
+                        break;
+
                 }
             }
         }
 
-        void reDraw()
+        void reDraw(bool bfull )
         {
+            if ( bfull)
+            mygrid.Children.Clear();
+           // ClearDrawing();
 
-            ClearDrawing();
-
-            foreach ( gPath gpath in gdc.PathList )
+            gPath p=null;
+            if (gdc.selIndex >= 0 && gdc.selIndex < gdc.PathList.Count)
             {
+                 p = (gPath)gdc.PathList[gdc.selIndex];
+                
+            }
 
-                if ( gpath != null )
+            if (bfull)
+            {
+                foreach (gPath gpath in gdc.PathList)
                 {
-                    
-                      colorR = gpath.state.colorR;
-                      colorG = gpath.state.colorG;
-                      colorB = gpath.state.colorB;
-                      strokeT = gpath.state.strokeT;
 
-                      
-                      switch (gpath.drawtype)
-                      {
-                          case 1:
-                              drawEllipse(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
-                              myEllipse.Opacity = 1;
-                              break;
-                          case 2:
-                              drawRect(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
-                              myRect.Opacity = 1;
-                              break;
-                          case 3:
-                              drawLine(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
-                              myLine.Opacity = 1;
-                              //maf.AddLine(px, py, ex, ey, objList.Count);
-                              //objList.Add(maf);
-                              break;
-                          case 4:
-                              Curve(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
-                              myPath.Opacity = 1;
-                              break;
-                      }
+                    if (gpath != null && gpath != p)
+                    {
 
+                        drawGPath(gpath);
 
-                      bfirst = true;
+                    }
+
+                }//end of for loop 
+
+            }
+            if (p!= null )
+            {
+                if (gdc.bmove)
+                {
+                    p.x2 = gdc.mx;
+                    p.y2 = gdc.my;
                 }
+                drawGPath(p);
+                byte tmp = colorG;
+
+
+                colorG = 255;
+                drawRect(p.x1 -5, p.y1-5 ,10,10,255);
+                bfirst = true;
+                drawRect(p.x2 -5, p.y2-5 , 10, 10,255);
+                bfirst = true;
+                colorG = tmp;
 
             }
 
+
+        }
+
+        void drawGPath(gPath gpath)
+        {
+            colorR = gpath.state.colorR;
+            colorG = gpath.state.colorG;
+            colorB = gpath.state.colorB;
+            strokeT = gpath.state.strokeT;
+            bfirst = true;
+
+            switch (gpath.drawtype)
+            {
+                case 1:
+                    drawEllipse(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                    myEllipse.Opacity = 1;
+                    break;
+                case 2:
+                    drawRect(gpath.x1, gpath.y1, gpath.x2, gpath.y2, 0);
+                    myRect.Opacity = 1;
+                    break;
+                case 3:
+                    drawLine(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                    myLine.Opacity = 1;
+                    //maf.AddLine(px, py, ex, ey, objList.Count);
+                    //objList.Add(maf);
+                    break;
+                case 4:
+                    Curve(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                    myPath.Opacity = 1;
+                    break;
+            }
+
+
+            bfirst = true;
 
         }
 
