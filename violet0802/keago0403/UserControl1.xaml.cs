@@ -175,7 +175,25 @@ namespace keago0403
             pStart = e.GetPosition(mygrid);
             if (drawtype == 5)
             {
+                if ( gdc.selIndex < 0 )
                 gdc.selIndex = gdc.PathList.Count - 1;
+                else
+                {
+                    gPath p=(gPath)gdc.PathList[gdc.selIndex];
+
+                    if ( p != null)
+                    {
+                        double  d1 = Math.Pow(pStart.X - p.x1,2) + Math.Pow(pStart.Y - p.y1,2);
+                        double d2 = Math.Pow(pStart.X - p.x2, 2) + Math.Pow(pStart.Y - p.y2, 2);
+
+                        if (d1 < d2)
+                            gdc.node = 0;
+                        else
+                            gdc.node = 1;
+
+                    }
+
+                }
 
             }
             else
@@ -551,8 +569,18 @@ namespace keago0403
             {
                 if (gdc.bmove)
                 {
-                    p.x2 = gdc.mx;
-                    p.y2 = gdc.my;
+                    if (gdc.node == 0)
+                    {
+                        p.x1 = gdc.mx;
+                        p.y1 = gdc.my;
+
+
+                    }
+                    else
+                    {
+                        p.x2 = gdc.mx;
+                        p.y2 = gdc.my;
+                    }
                 }
                 drawGPath(p);
                 byte tmp = colorG;
