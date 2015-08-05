@@ -383,6 +383,43 @@ namespace keago0403
             if (ey % 25 != 0)
                 ey = 25 * (int)(ey / 25);
             maf = new myAddFunction();
+
+            gPath gp = new gPath();
+            gp.state.colorB = colorB;
+            gp.state.colorG = colorG;
+            gp.state.colorR = colorR;
+            gp.state.strokeT = strokeT;
+            gp.drawtype = drawtype;
+            gp.x1 = px;
+            gp.y1 = py;
+            gp.x2 = ex;
+            gp.y2 = ey;
+
+            if (drawtype  <=2) // 應修改成一致
+            {
+                gp.x2 = w;
+                gp.y2 = h;
+
+
+            }
+
+            if (drawtype == 3)
+            { 
+                gp.y1 = (int)pStart.Y;
+
+                if (gp.y1 % 25 != 0)
+                    gp.y1 = 25 * (int)(gp.y1 / 25);
+            
+    
+            }
+            gdc.PathList.Add(gp);
+
+            if (true) //新舊碼切換(暫時)
+            {
+                           reDraw();
+            }else
+            { 
+
             switch (drawtype)
             {
                 case 1:
@@ -404,8 +441,12 @@ namespace keago0403
                     myPath.Opacity = 1;
                     break;
             }
+
+            }
+
             bfirst = true;
             bmousedown = false;
+
             
         }
 
@@ -458,7 +499,53 @@ namespace keago0403
             }
         }
 
+        void reDraw()
+        {
 
+            ClearDrawing();
+
+            foreach ( gPath gpath in gdc.PathList )
+            {
+
+                if ( gpath != null )
+                {
+                    
+                      colorR = gpath.state.colorR;
+                      colorG = gpath.state.colorG;
+                      colorB = gpath.state.colorB;
+                      strokeT = gpath.state.strokeT;
+
+                      
+                      switch (gpath.drawtype)
+                      {
+                          case 1:
+                              drawEllipse(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                              myEllipse.Opacity = 1;
+                              break;
+                          case 2:
+                              drawRect(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                              myRect.Opacity = 1;
+                              break;
+                          case 3:
+                              drawLine(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                              myLine.Opacity = 1;
+                              //maf.AddLine(px, py, ex, ey, objList.Count);
+                              //objList.Add(maf);
+                              break;
+                          case 4:
+                              Curve(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                              myPath.Opacity = 1;
+                              break;
+                      }
+
+
+                      bfirst = true;
+                }
+
+            }
+
+
+        }
 
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

@@ -13,8 +13,7 @@ namespace keago0403
 
         public ArrayList PathList = new ArrayList();
 
-        public ArrayList Properties = new ArrayList();
-
+       
 
         public int  selIndex =-1;
 
@@ -23,13 +22,13 @@ namespace keago0403
 
     }
 
-    public class gPro
+    public struct gPro
     {
 
-        public byte colorR = 0;
-        public byte colorG = 0;
-        public byte colorB = 0;
-        public int strokeT = 1;
+        public byte colorR ;
+        public byte colorG ;
+        public byte colorB ;
+        public int strokeT ;
 
 
     }
@@ -42,6 +41,8 @@ namespace keago0403
 
         public int x2;
         public int y2;
+
+        public gPro state;
 
     }
 
