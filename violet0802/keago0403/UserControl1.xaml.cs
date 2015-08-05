@@ -50,6 +50,7 @@ namespace keago0403
         public int drawtype=1;
         public String  colortype = "black";
         public int lineSpace = 25;
+        public GraphDoc gdc = new GraphDoc();
         byte colorR = 0;
         byte colorG = 0;
         byte colorB = 0;
@@ -456,6 +457,9 @@ namespace keago0403
                 }
             }
         }
+
+
+
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {

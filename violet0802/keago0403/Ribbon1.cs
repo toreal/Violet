@@ -119,5 +119,12 @@ namespace keago0403
         {
             f.setStrokeType(5);
         }
+
+        private void selBtn_Click(object sender, RibbonControlEventArgs e)
+        {
+            Check();
+            f.setDrawType(5);
+            f.Show();
+        }
     }
 }

@@ -50,14 +50,15 @@
             this.blue_btn = this.Factory.CreateRibbonButton();
             this.white_btn = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
+            this.button11 = this.Factory.CreateRibbonButton();
+            this.button1 = this.Factory.CreateRibbonButton();
+            this.button2 = this.Factory.CreateRibbonButton();
             this.StrokeThickness = this.Factory.CreateRibbonMenu();
             this.px1 = this.Factory.CreateRibbonButton();
             this.px3 = this.Factory.CreateRibbonButton();
             this.px5 = this.Factory.CreateRibbonButton();
             this.button3 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
-            this.button1 = this.Factory.CreateRibbonButton();
-            this.button11 = this.Factory.CreateRibbonButton();
+            this.selBtn = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.Color.SuspendLayout();
@@ -79,6 +80,7 @@
             this.group1.Items.Add(this.line_btn);
             this.group1.Items.Add(this.Curve);
             this.group1.Items.Add(this.triangle_btn);
+            this.group1.Items.Add(this.selBtn);
             this.group1.Label = "Shape";
             this.group1.Name = "group1";
             // 
@@ -199,6 +201,29 @@
             this.group2.Label = "Other";
             this.group2.Name = "group2";
             // 
+            // button11
+            // 
+            this.button11.Image = global::keago0403.Properties.Resources.text;
+            this.button11.Label = "Text";
+            this.button11.Name = "button11";
+            this.button11.ShowImage = true;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::keago0403.Properties.Resources.clear1;
+            this.button1.Label = " Clear";
+            this.button1.Name = "button1";
+            this.button1.ShowImage = true;
+            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Image = global::keago0403.Properties.Resources.point11;
+            this.button2.Label = "Background Point";
+            this.button2.Name = "button2";
+            this.button2.ShowImage = true;
+            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
+            // 
             // StrokeThickness
             // 
             this.StrokeThickness.Image = global::keago0403.Properties.Resources.strokes;
@@ -241,28 +266,11 @@
             this.button3.Name = "button3";
             this.button3.ShowImage = true;
             // 
-            // button2
+            // selBtn
             // 
-            this.button2.Image = global::keago0403.Properties.Resources.point11;
-            this.button2.Label = "Background Point";
-            this.button2.Name = "button2";
-            this.button2.ShowImage = true;
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Image = global::keago0403.Properties.Resources.clear1;
-            this.button1.Label = " Clear";
-            this.button1.Name = "button1";
-            this.button1.ShowImage = true;
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
-            // 
-            // button11
-            // 
-            this.button11.Image = global::keago0403.Properties.Resources.text;
-            this.button11.Label = "Text";
-            this.button11.Name = "button11";
-            this.button11.ShowImage = true;
+            this.selBtn.Label = "Select";
+            this.selBtn.Name = "selBtn";
+            this.selBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.selBtn_Click);
             // 
             // Ribbon1
             // 
@@ -307,6 +315,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton px5;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton triangle_btn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton selBtn;
     }
 
     partial class ThisRibbonCollection
