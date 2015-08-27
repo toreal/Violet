@@ -18,21 +18,6 @@ using System.Windows.Threading;
 
 namespace keago0403
 {
-
-   class myAddFunction
-   {
-       public Point start;
-       public Point end;
-       public int numCode;
-
-       public void AddLine(int startX, int startY, int endX, int endY, int numCode)
-       {
-           this.start = new Point(startX, startY);
-           this.end = new Point(endX, endY);
-           this.numCode = numCode;
-       }
-   }
-
     /// <summary>
     /// UserControl1.xaml 的互動邏輯
     /// </summary>
@@ -44,7 +29,6 @@ namespace keago0403
             InitializeComponent();
         }
 
-        myAddFunction maf;
         ArrayList objList = new ArrayList();
 
         public int drawtype=1;
@@ -170,54 +154,50 @@ namespace keago0403
             }
         }
 
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        private void mygrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             pStart = e.GetPosition(mygrid);
             if (drawtype == 5)
             {
-                if ( gdc.selIndex < 0 )
-                gdc.selIndex = gdc.PathList.Count - 1;
+                if (gdc.selIndex < 0)
+                    gdc.selIndex = gdc.PathList.Count - 1;
                 else
                 {
-                    gPath p=(gPath)gdc.PathList[gdc.selIndex];
+                    gPath p = (gPath)gdc.PathList[gdc.selIndex];
 
-                    if ( p != null)
+                    if (p != null)
                     {
-                        double  d1 = Math.Pow(pStart.X - p.x1,2) + Math.Pow(pStart.Y - p.y1,2);
-                        double d2 = Math.Pow(pStart.X - p.x2, 2) + Math.Pow(pStart.Y - p.y2, 2);
-
-                        if (d1 < d2)
-                            gdc.node = 0;
+                        double d1 = Math.Pow(pStart.X - p.x1, 2) + Math.Pow(pStart.Y - p.y1, 2);
+                        //double d2 = Math.Pow(pStart.X - p.w, 2) + Math.Pow(pStart.Y - p.h, 2);
+                        double d2 = Math.Pow(p.w, 2) + Math.Pow(p.h, 2);
+                        if (gdc.selIndex < 0)
+                            gdc.selIndex = gdc.PathList.Count - 1;
                         else
-                            gdc.node = 1;
-
+                        {
+                            if (d1 < d2)
+                                gdc.node = 0;
+                            else
+                                gdc.node = 1;
+                        }
                     }
-
+                    else
+                    {
+                        gdc.selIndex = -1;
+                        bmousedown = true;
+                    }
                 }
-
             }
-            else
-                gdc.selIndex = -1;
-            bmousedown = true;
         }
-        /*void saveFunction(LineGeometry lg)
-        {
-            objList.Add(lg);
-            showArrayList();
-        }*/
-        /*void showArrayList()
-        {
-            Console.WriteLine(objList.Count);
-        }*/
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
-        public void Curve(int xStart, int yStart, int xEnd, int yEnd)
+        public void drawCurve(int xStart, int yStart, int w, int h)
         {
-            if(bfirst){
+            if (bfirst)
+            {
                 if (Status.Equals("rest"))
                 {
                     bfirst = false;
                     bezier = new BezierSegment();
-                    bezier.Point3 = new Point(xEnd, yEnd);
+                    bezier.Point3 = new Point(w + xStart, h + yStart);
                     figure = new PathFigure();
                     figure.StartPoint = new Point(xStart, yStart);
                     bezier.Point1 = figure.StartPoint;
@@ -238,7 +218,7 @@ namespace keago0403
                 {
                     bfirst = false;
                     mygrid.Children.Remove(myPath);
-                    bezier.Point1 = new Point(xEnd, yEnd);
+                    bezier.Point1 = new Point(w + xStart, h + yStart);
                     bezier.Point3 = p3;
                     figure = new PathFigure();
                     figure.StartPoint = p0;
@@ -253,7 +233,7 @@ namespace keago0403
                 {
                     bfirst = false;
                     mygrid.Children.Remove(myPath);
-                    bezier.Point2 = new Point(xEnd, yEnd);
+                    bezier.Point2 = new Point(w + xStart, h + yStart);
                     bezier.Point1 = p1;
                     bezier.Point3 = p3;
                     figure = new PathFigure();
@@ -270,26 +250,26 @@ namespace keago0403
             {
                 if (Status.Equals("work1"))
                 {
-                    bezier.Point3 = new Point(xEnd, yEnd);
+                    bezier.Point3 = new Point(w + xStart, h + yStart);
                     p3 = bezier.Point3;
                     bezier.Point2 = bezier.Point3;
                     p2 = bezier.Point2;
                 }
                 else if (Status.Equals("work2"))
                 {
-                    bezier.Point1 = new Point(xEnd, yEnd);
+                    bezier.Point1 = new Point(w + xStart, h + yStart);
                     p1 = bezier.Point1;
                 }
                 else if (Status.Equals("rest"))
                 {
-                    bezier.Point2 = new Point(xEnd, yEnd);
+                    bezier.Point2 = new Point(w + xStart, h + yStart);
                     p2 = bezier.Point2;
                 }
             }
         }
 
         //線線線線線線線線線線線線線線線
-        void drawLine(int xStart, int yStart, int xEnd, int yEnd)
+        void drawLine(int xStart, int yStart, int w, int h)
         {
             if (bfirst)
             {
@@ -297,9 +277,9 @@ namespace keago0403
                 myLine = new Line();
                 myLine.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 myLine.X1 = xStart;
-                myLine.X2 = xEnd;
+                myLine.X2 = w + xStart;
                 myLine.Y1 = yStart;
-                myLine.Y2 = yEnd;
+                myLine.Y2 = h + yStart;
                 myLine.HorizontalAlignment = HorizontalAlignment.Left;
                 myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = strokeT;
@@ -307,19 +287,14 @@ namespace keago0403
             }
             else
             {
-                myLine.X2 = xEnd;
-                myLine.Y2 = yEnd;
-
-                //myline mline = new myline();
-                
-                //mline.a = new Point()
-                //objList.Add(mline);
+                myLine.X2 = w + xStart;
+                myLine.Y2 = h + yStart;
 
             }
         }
 
         //正方形正方形正方形正方形正方形正方形
-        void drawRect(int x, int y, int w, int h, byte bfill )
+        void drawRect(int x, int y, int w, int h, byte bfill)
         {
             if (bfirst)
             {
@@ -327,20 +302,26 @@ namespace keago0403
                 myRect = new Rectangle();
 
                 SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                mySolidColorBrush.Color = Color.FromArgb( bfill, colorR, colorG, colorB);
+                mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
                 myRect.Fill = mySolidColorBrush;
                 myRect.StrokeThickness = strokeT;
                 myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
-                myRect.Width = w;
-                myRect.Height = h;
+                myRect.Width = Math.Abs(w);
+                myRect.Height = Math.Abs(h);
+                mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
+                myRect.Fill = mySolidColorBrush;
+                myRect.StrokeThickness = strokeT;
+                myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+                myRect.Width = Math.Abs(w);
+                myRect.Height = Math.Abs(h);
                 myRect.Margin = new Thickness(x, y, 0, 0);
 
                 mygrid.Children.Add(myRect);
             }
-            else {
-                myRect.Width = w;
-                myRect.Height = h;
-                myRect.Margin = new Thickness(x, y, 0, 0);
+            else
+            {
+                myRect.Width = Math.Abs(w);
+                myRect.Height = Math.Abs(h);
             }
         }
 
@@ -364,9 +345,12 @@ namespace keago0403
                 myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
 
                 // Set the width and height of the Ellipse.
-                
-                myEllipse.Width = w;
-                myEllipse.Height = h;
+
+                myEllipse.Width = Math.Abs(w);
+                myEllipse.Height = Math.Abs(h);
+
+                myEllipse.Width = Math.Abs(w);
+                myEllipse.Height = Math.Abs(h);
                 myEllipse.Margin = new Thickness(x, y, 0, 0);
 
                 // Add the Ellipse to the StackPanel.
@@ -375,9 +359,8 @@ namespace keago0403
             }
             else
             {
-                myEllipse.Width = w;
-                myEllipse.Height = h;
-
+                myEllipse.Width = Math.Abs(w);
+                myEllipse.Height = Math.Abs(h);
                 myEllipse.Margin = new Thickness(x, y, 0, 0);
             }
         }
@@ -390,8 +373,8 @@ namespace keago0403
             int py = (int)pStart.Y;
             int ex = (int)pEnd.X;
             int ey = (int)pEnd.Y;
-            int w = Math.Abs(ex-px);
-            int h = Math.Abs(ey-py);
+            int w = ex - px;
+            int h = ey - py;
             if (pEnd.X < pStart.X)
                 px = (int)pEnd.X;
             if (pEnd.Y < pStart.Y)
@@ -408,7 +391,6 @@ namespace keago0403
                 ex = 25 * (int)(ex / 25);
             if (ey % 25 != 0)
                 ey = 25 * (int)(ey / 25);
-            maf = new myAddFunction();
 
             if (drawtype <= 4)
             {
@@ -420,15 +402,14 @@ namespace keago0403
                 gp.drawtype = drawtype;
                 gp.x1 = px;
                 gp.y1 = py;
-                gp.x2 = ex;
-                gp.y2 = ey;
 
+                gp.x2 = w;
+                gp.y2 = h;
+
+                /*gp.x2 = ex;
+                gp.y2 = ey;
                 if (drawtype <= 2) // 應修改成一致
                 {
-                    gp.x2 = w;
-                    gp.y2 = h;
-
-
                 }
 
                 if (drawtype == 3)
@@ -437,48 +418,39 @@ namespace keago0403
 
                     if (gp.y1 % 25 != 0)
                         gp.y1 = 25 * (int)(gp.y1 / 25);
-
-
-                }
+                }*/
                 gdc.PathList.Add(gp);
-
             }
-            if (true) //新舊碼切換(暫時)
+            gdc.bmove = false;
+            reDraw(true);
+            /*if (true) //新舊碼切換(暫時)
             {
-                gdc.bmove = false;
-               
-                           reDraw(true);
-            }else
-            { 
-
-            switch (drawtype)
+                
+            }
+            else
             {
-                case 1:
-                    drawEllipse(px, py, w, h);
-                    myEllipse.Opacity = 1;
-                    break;
-                case 2:
-                    drawRect(px, py, w, h,0);
-                    myRect.Opacity = 1;
-                    break;
-                case 3:
-                    drawLine(px, py, ex, ey);
-                    myLine.Opacity = 1;
-                    maf.AddLine(px, py, ex, ey, objList.Count);
-                    objList.Add(maf);
-                    break;
-                case 4:
-                    Curve(px, py, ex, ey);
-                    myPath.Opacity = 1;
-                    break;
-            }
-
-            }
-
+                switch (drawtype)
+                {
+                    case 1:
+                        drawEllipse(px, py, w, h);
+                        myEllipse.Opacity = 1;
+                        break;
+                    case 2:
+                        drawRect(px, py, w, h, 0);
+                        myRect.Opacity = 1;
+                        break;
+                    case 3:
+                        drawLine(px, py, ex, ey);
+                        myLine.Opacity = 1;
+                        break;
+                    case 4:
+                        drawCurve(px, py, ex, ey);
+                        myPath.Opacity = 1;
+                        break;
+                }
+            }*/
             bfirst = true;
             bmousedown = false;
-
-            
         }
 
         private void mygrid_MouseMove(object sender, MouseEventArgs e)
@@ -490,8 +462,8 @@ namespace keago0403
                 int py = (int)pStart.Y;
                 int ex = (int)pEnd.X;
                 int ey = (int)pEnd.Y;
-                int w = Math.Abs((int)(pEnd.X - pStart.X));
-                int h = Math.Abs((int)(pEnd.Y - pStart.Y));
+                int w = (int)(pEnd.X - pStart.X);
+                int h = (int)(pEnd.Y - pStart.Y);
                 if (pEnd.X < pStart.X)
                     px = (int)pEnd.X;
                 if (pEnd.Y < pStart.Y)
@@ -519,25 +491,24 @@ namespace keago0403
                         myRect.Opacity = 0.5;
                         break;
                     case 3:
-                        drawLine(px, py, ex, ey);
+                        drawLine(px, py, w, h);
                         myLine.Opacity = 0.5;
                         break;
                     case 4:
-                        Curve(px, py, ex, ey);
+                        drawCurve(px, py, w, h);
                         myPath.Opacity = 0.5;
                         break;
                     case 5:
                         gdc.bmove = true;
-                        gdc.mx = ex;
-                        gdc.my = ey;
+                        gdc.mx = w;
+                        gdc.my = h;
                         reDraw(true);
                         break;
-
                 }
             }
         }
 
-        void reDraw(bool bfull )
+        void reDraw( bool bfull )
         {
             if ( bfull)
             mygrid.Children.Clear();
@@ -547,7 +518,6 @@ namespace keago0403
             if (gdc.selIndex >= 0 && gdc.selIndex < gdc.PathList.Count)
             {
                  p = (gPath)gdc.PathList[gdc.selIndex];
-                
             }
 
             if (bfull)
@@ -557,13 +527,9 @@ namespace keago0403
 
                     if (gpath != null && gpath != p)
                     {
-
                         drawGPath(gpath);
-
                     }
-
-                }//end of for loop 
-
+                }//end of for loop
             }
             if (p!= null )
             {
@@ -573,29 +539,23 @@ namespace keago0403
                     {
                         p.x1 = gdc.mx;
                         p.y1 = gdc.my;
-
-
                     }
                     else
                     {
-                        p.x2 = gdc.mx;
-                        p.y2 = gdc.my;
+                        p.w = gdc.mx;
+                        p.h = gdc.my;
                     }
                 }
                 drawGPath(p);
                 byte tmp = colorG;
 
-
                 colorG = 255;
                 drawRect(p.x1 -5, p.y1-5 ,10,10,255);
                 bfirst = true;
-                drawRect(p.x2 -5, p.y2-5 , 10, 10,255);
+                drawRect(p.w - 5, p.h - 5, 10, 10, 255);
                 bfirst = true;
                 colorG = tmp;
-
             }
-
-
         }
 
         void drawGPath(gPath gpath)
@@ -606,31 +566,28 @@ namespace keago0403
             strokeT = gpath.state.strokeT;
             bfirst = true;
 
-            switch (gpath.drawtype)
+            switch (gpath.drawtype) // 都是用( 起點X,起點Y,兩點長,兩點寬 )傳入
             {
                 case 1:
-                    drawEllipse(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                    drawEllipse(gpath.x1, gpath.y1, gpath.w, gpath.h);
                     myEllipse.Opacity = 1;
                     break;
                 case 2:
-                    drawRect(gpath.x1, gpath.y1, gpath.x2, gpath.y2, 0);
+                    drawRect(gpath.x1, gpath.y1, gpath.w, gpath.h, 0);
                     myRect.Opacity = 1;
                     break;
                 case 3:
-                    drawLine(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                    drawLine(gpath.x1, gpath.y1, gpath.w, gpath.h);
                     myLine.Opacity = 1;
                     //maf.AddLine(px, py, ex, ey, objList.Count);
                     //objList.Add(maf);
                     break;
                 case 4:
-                    Curve(gpath.x1, gpath.y1, gpath.x2, gpath.y2);
+                    drawCurve(gpath.x1, gpath.y1, gpath.w, gpath.h);
                     myPath.Opacity = 1;
                     break;
             }
-
-
             bfirst = true;
-
         }
 
 
@@ -677,7 +634,5 @@ namespace keago0403
             Globals.ThisAddIn.AddPictureContentControl(_utility);
             ClearDrawing();
         }
-        
-        
     }
 }
