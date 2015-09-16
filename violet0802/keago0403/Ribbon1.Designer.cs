@@ -41,6 +41,7 @@
             this.line_btn = this.Factory.CreateRibbonButton();
             this.Curve = this.Factory.CreateRibbonButton();
             this.triangle_btn = this.Factory.CreateRibbonButton();
+            this.selBtn = this.Factory.CreateRibbonButton();
             this.Color = this.Factory.CreateRibbonGroup();
             this.red_btn = this.Factory.CreateRibbonButton();
             this.orange_btn = this.Factory.CreateRibbonButton();
@@ -52,13 +53,14 @@
             this.group2 = this.Factory.CreateRibbonGroup();
             this.button11 = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
+            this.bgp = this.Factory.CreateRibbonButton();
             this.StrokeThickness = this.Factory.CreateRibbonMenu();
             this.px1 = this.Factory.CreateRibbonButton();
             this.px3 = this.Factory.CreateRibbonButton();
             this.px5 = this.Factory.CreateRibbonButton();
             this.button3 = this.Factory.CreateRibbonButton();
-            this.selBtn = this.Factory.CreateRibbonButton();
+            this.redo = this.Factory.CreateRibbonButton();
+            this.undo = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.Color.SuspendLayout();
@@ -123,6 +125,12 @@
             this.triangle_btn.Label = "Triangle";
             this.triangle_btn.Name = "triangle_btn";
             this.triangle_btn.ShowImage = true;
+            // 
+            // selBtn
+            // 
+            this.selBtn.Label = "Select";
+            this.selBtn.Name = "selBtn";
+            this.selBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.selBtn_Click);
             // 
             // Color
             // 
@@ -196,8 +204,10 @@
             // 
             this.group2.Items.Add(this.button11);
             this.group2.Items.Add(this.button1);
-            this.group2.Items.Add(this.button2);
+            this.group2.Items.Add(this.bgp);
             this.group2.Items.Add(this.StrokeThickness);
+            this.group2.Items.Add(this.redo);
+            this.group2.Items.Add(this.undo);
             this.group2.Label = "Other";
             this.group2.Name = "group2";
             // 
@@ -216,13 +226,13 @@
             this.button1.ShowImage = true;
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
-            // button2
+            // bgp
             // 
-            this.button2.Image = global::keago0403.Properties.Resources.point11;
-            this.button2.Label = "Background Point";
-            this.button2.Name = "button2";
-            this.button2.ShowImage = true;
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
+            this.bgp.Image = global::keago0403.Properties.Resources.point11;
+            this.bgp.Label = "Background Point";
+            this.bgp.Name = "bgp";
+            this.bgp.ShowImage = true;
+            this.bgp.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bgp_Click);
             // 
             // StrokeThickness
             // 
@@ -266,11 +276,20 @@
             this.button3.Name = "button3";
             this.button3.ShowImage = true;
             // 
-            // selBtn
+            // redo
             // 
-            this.selBtn.Label = "Select";
-            this.selBtn.Name = "selBtn";
-            this.selBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.selBtn_Click);
+            this.redo.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.redo.Label = "redo";
+            this.redo.Name = "redo";
+            this.redo.ShowImage = true;
+            this.redo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.redo_Click);
+            // 
+            // undo
+            // 
+            this.undo.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.undo.Label = "undo";
+            this.undo.Name = "undo";
+            this.undo.ShowImage = true;
             // 
             // Ribbon1
             // 
@@ -298,7 +317,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton line_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton bgp;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton Curve;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup Color;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton red_btn;
@@ -316,6 +335,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton triangle_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton selBtn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton redo;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton undo;
     }
 
     partial class ThisRibbonCollection

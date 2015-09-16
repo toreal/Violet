@@ -10,16 +10,22 @@ namespace keago0403
     public partial class Ribbon1
     {
         Form1 f;
+        double backGroundColor = 0.2;
+        void changeBackLineColor()
+        {
+            
+        }
         void Check()
         {
             if (f == null)
             {
                 f = new Form1();
+                backGroundColor = 0.2;
                 int formHeight = (int)(f.setFormSize("h")/1.7);
                 int formWidth = (int)(f.setFormSize("w")/1.7);
                 f.Size = new System.Drawing.Size(formWidth,formHeight);
                 f.TopMost = true;
-                f.drawBackgroundLine();
+                f.drawBackgroundLine(backGroundColor);
                 f.Disposed += new EventHandler(f_Disposed);
             }
         }
@@ -65,9 +71,18 @@ namespace keago0403
             f.ClearDrawing();
         }
 
-        private void button2_Click(object sender, RibbonControlEventArgs e)
+        private void bgp_Click(object sender, RibbonControlEventArgs e)
         {
-
+            if (backGroundColor != 0)
+            {
+                backGroundColor = 0;
+                f.drawBackgroundLine(backGroundColor);
+            }
+            else
+            {
+                backGroundColor = 0.2;
+                f.drawBackgroundLine(backGroundColor);
+            }
         }
 
         private void red_btn_Click(object sender, RibbonControlEventArgs e)
@@ -125,6 +140,10 @@ namespace keago0403
             Check();
             f.setDrawType(5);
             f.Show();
+        }
+        private void redo_Click(object sender, RibbonControlEventArgs e)
+        {
+
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace keago0403
 {
@@ -11,7 +12,7 @@ namespace keago0403
     {
         public ArrayList PathList = new ArrayList();
 
-        public int  selIndex =-1;
+        public int selIndex =-1;
         public int node=0;
         public int mx;
         public int my;
@@ -35,6 +36,8 @@ namespace keago0403
         public int x2;
         public int y2;
 
+        public Point Point1;
+        public Point Point2;
         public gPro state;
     }
 }

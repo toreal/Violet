@@ -18,9 +18,12 @@ namespace keago0403
         {
             InitializeComponent();
         }
-        public void drawBackgroundLine()
+        public void drawBackgroundLine(double Sop)
         {
-            userControl11.drawLine(Swidth, Sheight);
+            if (Sop != 0)
+                userControl11.drawBackLine(Swidth, Sheight, Sop);
+            else
+                userControl11.hideBackLine();
         }
         public double setFormSize(String ctype)
         {
