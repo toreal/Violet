@@ -36,8 +36,11 @@ namespace keago0403
         public int x2;
         public int y2;
 
-        public Point Point1;
-        public Point Point2;
         public gPro state;
+
+        public Point controlBtn1;
+        public Point controlBtn2;
+        public Point controlBtn3;
+        public Point controlBtn4;
     }
 }
