@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,9 +33,9 @@ namespace keago0403
 
         public int drawtype = 1;
         public String colortype = "black";
-        public int lineSpace = 25;
+        public int lineSpace = 9;
         public GraphDoc gdc = new GraphDoc();
-        //public RUse ru = new RUse();
+        public RUse ru = new RUse();
         byte colorR = 0;
         byte colorG = 0;
         byte colorB = 0;
@@ -56,6 +57,7 @@ namespace keago0403
         bool bfirst = true;
         bool bmousedown = false;
         bool bhave = false;
+        bool bnodechange = false;
 
         public void ClearDrawing()
         {
@@ -71,6 +73,8 @@ namespace keago0403
             int i;
             int height = (int)h;
             int width = (int)w;
+            int tempStroke = strokeT;
+            strokeT = 1;
             for (i = 0; i <= height; i += lineSpace)
             {
                 myLine = new Line();
@@ -99,6 +103,7 @@ namespace keago0403
                 myLine.Opacity = opac;
                 myBackground.Children.Add(myLine);
             }
+            strokeT = tempStroke;
         }
         public void stroke(int stroketype)
         {
@@ -169,39 +174,14 @@ namespace keago0403
                     gdc.selIndex = gdc.PathList.Count - 1;
                 else
                 {
-                    RUse ru = new RUse();
                     ru = gdc.checkOut(pStart);
-                    if (ru.Node > 0 && ru.Sel > 0)
+                    if (ru.Node >= 0 && ru.Sel >= 0)
                     {
                         gPath p = (gPath)gdc.PathList[ru.Sel];
                         gdc.node = ru.Node;
+                        //pStart = ru.changeStartPoint;
                         bhave = true;
                     }
-                    
-                    /*if (p != null)
-                    {
-                        double d1 = Math.Pow(pStart.X - p.controlBtn1.X, 2) + Math.Pow(pStart.Y - p.controlBtn1.Y, 2);
-                        double d2 = Math.Pow(pStart.X - p.controlBtn2.X, 2) + Math.Pow(pStart.Y - p.controlBtn2.Y, 2);
-                        double d3 = Math.Pow(pStart.X - p.controlBtn3.X, 2) + Math.Pow(pStart.Y - p.controlBtn3.Y, 2);
-                        double d4 = Math.Pow(pStart.X - p.controlBtn4.X, 2) + Math.Pow(pStart.Y - p.controlBtn4.Y, 2);
-                        double minNum = Math.Min(Math.Min(d1, d2), Math.Min(d3, d4));
-                        if ((pStart.X >= p.controlBtn1.X - 1) && (pStart.X <= p.controlBtn1.X + 1) && (pStart.Y >= p.controlBtn1.Y - 1) && (pStart.Y <= p.controlBtn1.Y + 1))
-                        {
-                            gdc.node = 0;
-                        }
-                        if ((pStart.X >= p.controlBtn2.X - 1) && (pStart.X <= p.controlBtn2.X + 1) && (pStart.Y >= p.controlBtn2.Y - 1) && (pStart.Y <= p.controlBtn2.Y + 1))
-                        {
-                            gdc.node = 1;
-                        }
-                        if ((pStart.X >= p.controlBtn3.X - 1) && (pStart.X <= p.controlBtn3.X + 1) && (pStart.Y >= p.controlBtn3.Y - 1) && (pStart.Y <= p.controlBtn3.Y + 1))
-                        {
-                            gdc.node = 2;
-                        }
-                        if ((pStart.X >= p.controlBtn4.X - 1) && (pStart.X <= p.controlBtn4.X + 1) && (pStart.Y >= p.controlBtn4.Y - 1) && (pStart.Y <= p.controlBtn4.Y + 1))
-                        {
-                            gdc.node = 3;
-                        }
-                    }*/
                 }
             }
             else
@@ -209,7 +189,9 @@ namespace keago0403
                 gdc.selIndex = -1;
             }
             bmousedown = true;
+            //Debug.WriteLine("true");
         }
+        
         public void drawCurve(Point point0, Point point1, Point point2, Point point3)
         {
             if (bfirst)
@@ -232,6 +214,7 @@ namespace keago0403
             }
         }
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
+        
         public void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -313,7 +296,6 @@ namespace keago0403
                 }
             }
         }
-
         //線線線線線線線線線線線線線線線
         void drawLine(int xStart, int yStart, int xEnd, int yEnd)
         {
@@ -408,12 +390,14 @@ namespace keago0403
 
         private void mygrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            bmousedown = false;
+            //Debug.WriteLine("false");
             pEnd = e.GetPosition(mygrid);
-            int tempX, tempY;
-            int px = (int)pStart.X;
-            int py = (int)pStart.Y;
-            int ex = (int)pEnd.X;
-            int ey = (int)pEnd.Y;
+            double tempX, tempY;
+            double px = pStart.X;
+            double py = pStart.Y;
+            double ex = pEnd.X;
+            double ey = pEnd.Y;
 
             if (drawtype != 3 && ex < px)
             {
@@ -427,14 +411,14 @@ namespace keago0403
                 ey = py;
                 py = tempY;
             }
-            if (px % 25 != 0)
-                px = 25 * (int)(px / 25);
-            if (py % 25 != 0)
-                py = 25 * (int)(py / 25);
-            if (ex % 25 != 0)
-                ex = 25 * (int)(ex / 25);
-            if (ey % 25 != 0)
-                ey = 25 * (int)(ey / 25);
+            if (px % lineSpace != 0)
+                px = lineSpace * Math.Round((px / lineSpace), 0);
+            if (py % lineSpace != 0)
+                py = lineSpace * Math.Round((py / lineSpace), 0);
+            if (ex % lineSpace != 0)
+                ex = lineSpace * Math.Round((ex / lineSpace), 0);
+            if (ey % lineSpace != 0)
+                ey = lineSpace * Math.Round((ey / lineSpace), 0);
 
             if (drawtype <= 4 && Status.Equals("rest"))
             {
@@ -480,22 +464,22 @@ namespace keago0403
                 reDraw(true);
             
             bfirst = true;
-            bmousedown = false;
+            
             bhave = false;
         }
 
         private void mygrid_MouseMove(object sender, MouseEventArgs e)
         {
-            if (bmousedown)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 if (!bhave) //if you can control an object
                 {
                     pEnd = e.GetPosition(mygrid);
-                    int tempX, tempY;
-                    int px = (int)pStart.X;
-                    int py = (int)pStart.Y;
-                    int ex = (int)pEnd.X;
-                    int ey = (int)pEnd.Y;
+                    double tempX, tempY;
+                    double px = pStart.X;
+                    double py = pStart.Y;
+                    double ex = pEnd.X;
+                    double ey = pEnd.Y;
                     if (drawtype != 3 && ex < px)
                     {
                         tempX = ex;
@@ -508,30 +492,30 @@ namespace keago0403
                         ey = py;
                         py = tempY;
                     }
-                    if (px % 25 != 0)
-                        px = 25 * (int)(px / 25);
-                    if (py % 25 != 0)
-                        py = 25 * (int)(py / 25);
-                    if (ex % 25 != 0)
-                        ex = 25 * (int)(ex / 25);
-                    if (ey % 25 != 0)
-                        ey = 25 * (int)(ey / 25);
+                    if (px % lineSpace != 0)
+                        px = lineSpace * Math.Round((px / lineSpace), 0);
+                    if (py % lineSpace != 0)
+                        py = lineSpace * Math.Round((py / lineSpace), 0);
+                    if (ex % lineSpace != 0)
+                        ex = lineSpace * Math.Round((ex / lineSpace), 0);
+                    if (ey % lineSpace != 0)
+                        ey = lineSpace * Math.Round((ey / lineSpace), 0);
                     switch (drawtype)
                     {
                         case 1:
-                            drawEllipse(px, py, ex, ey);
+                            drawEllipse((int)px, (int)py, (int)ex, (int)ey);
                             myEllipse.Opacity = 0.5;
                             break;
                         case 2:
-                            drawRect(px, py, ex, ey, 0);
+                            drawRect((int)px, (int)py, (int)ex, (int)ey, 0);
                             myRect.Opacity = 0.5;
                             break;
                         case 3:
-                            drawLine(px, py, ex, ey);
+                            drawLine((int)px, (int)py, (int)ex, (int)ey);
                             myLine.Opacity = 0.5;
                             break;
                         case 4:
-                            drawCurve(px, py, ex, ey);
+                            drawCurve((int)px, (int)py, (int)ex, (int)ey);
                             myPath.Opacity = 0.5;
                             break;
                         /*case 5:
@@ -545,12 +529,12 @@ namespace keago0403
                 else
                 {
                     pEnd = e.GetPosition(mygrid);
-                    int tempX, tempY;
-                    int px = (int)pStart.X;
-                    int py = (int)pStart.Y;
-                    int ex = (int)pEnd.X;
-                    int ey = (int)pEnd.Y;
-                    if (drawtype != 3 && ex < px)
+                    //int tempX, tempY;
+                    double px = pStart.X;
+                    double py = pStart.Y;
+                    double ex = pEnd.X;
+                    double ey = pEnd.Y;
+                    /*if (drawtype != 3 && ex < px)
                     {
                         tempX = ex;
                         ex = px;
@@ -561,18 +545,18 @@ namespace keago0403
                         tempY = ey;
                         ey = py;
                         py = tempY;
-                    }
-                    if (px % 25 != 0)
-                        px = 25 * (int)(px / 25);
-                    if (py % 25 != 0)
-                        py = 25 * (int)(py / 25);
-                    if (ex % 25 != 0)
-                        ex = 25 * (int)(ex / 25);
-                    if (ey % 25 != 0)
-                        ey = 25 * (int)(ey / 25);
+                    }*/
+                    if (px % lineSpace != 0)
+                        px = lineSpace * Math.Round((px / lineSpace), 0);
+                    if (py % lineSpace != 0)
+                        py = lineSpace * Math.Round((py / lineSpace), 0);
+                    if (ex % lineSpace != 0)
+                        ex = lineSpace * Math.Round((ex / lineSpace), 0);
+                    if (ey % lineSpace != 0)
+                        ey = lineSpace * Math.Round((ey / lineSpace), 0);
                     gdc.bmove = true;
-                    gdc.mx = ex;
-                    gdc.my = ey;
+                    gdc.mx = (int)ex;
+                    gdc.my = (int)ey;
                     reDraw(true);
                 }
             }
@@ -585,11 +569,10 @@ namespace keago0403
             // ClearDrawing();
 
             gPath p = null;
-            if (gdc.selIndex >= 0 && gdc.selIndex < gdc.PathList.Count)
+            if (ru.Sel >= 0 && bhave/*gdc.selIndex < gdc.PathList.Count*/)
             {
-                p = (gPath)gdc.PathList[gdc.selIndex];
+                p = (gPath)gdc.PathList[ru.Sel];
             }
-
             if (bfull)
             {
                 foreach (gPath gpath in gdc.PathList)
@@ -610,6 +593,16 @@ namespace keago0403
                         p.controlBtn1.Y = gdc.my;
                         p.controlBtn2.Y = gdc.my;
                         p.controlBtn3.X = gdc.mx;
+                        if (p.controlBtn1.X > p.controlBtn2.X)
+                        {
+                            bnodechange = true;
+                            changeNode(1);
+                        }
+                        if (p.controlBtn1.Y > p.controlBtn3.Y)
+                        {
+                            bnodechange = true;
+                            changeNode(2);
+                        }
                     }
                     else if (gdc.node == 1)
                     {
@@ -617,6 +610,16 @@ namespace keago0403
                         p.controlBtn2.Y = gdc.my;
                         p.controlBtn1.Y = gdc.my;
                         p.controlBtn4.X = gdc.mx;
+                        if (p.controlBtn2.X < p.controlBtn1.X)
+                        {
+                            bnodechange = true;
+                            changeNode(0);
+                        }
+                        if (p.controlBtn2.Y > p.controlBtn4.Y)
+                        {
+                            bnodechange = true;
+                            changeNode(3);
+                        }
                     }
                     else if (gdc.node == 2)
                     {
@@ -624,6 +627,17 @@ namespace keago0403
                         p.controlBtn3.Y = gdc.my;
                         p.controlBtn1.X = gdc.mx;
                         p.controlBtn4.Y = gdc.my;
+                        if (p.controlBtn3.X > p.controlBtn4.X)
+                        {
+                            bnodechange = true;
+                            changeNode(3);
+                        }
+
+                        if (p.controlBtn3.Y < p.controlBtn1.Y)
+                        {
+                            bnodechange = true;
+                            changeNode(0);
+                        }
                     }
                     else
                     {
@@ -631,6 +645,17 @@ namespace keago0403
                         p.controlBtn4.Y = gdc.my;
                         p.controlBtn2.X = gdc.mx;
                         p.controlBtn3.Y = gdc.my;
+                        if (p.controlBtn4.X < p.controlBtn3.X)
+                        {
+                            bnodechange = true;
+                            changeNode(2);
+                        }
+
+                        if (p.controlBtn4.Y < p.controlBtn2.Y)
+                        {
+                            bnodechange = true;
+                            changeNode(1);
+                        }
                     }
                 }
                 drawGPath(p);
@@ -673,6 +698,15 @@ namespace keago0403
                         colorR = tmp;
                     }
                 }
+            }
+        }
+
+        void changeNode(int Node)
+        {
+            if (bnodechange)
+            {
+                gdc.node = Node;
+                bnodechange = false;
             }
         }
 
