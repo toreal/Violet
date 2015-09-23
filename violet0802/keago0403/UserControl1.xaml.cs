@@ -34,6 +34,7 @@ namespace keago0403
         public String colortype = "black";
         public int lineSpace = 25;
         public GraphDoc gdc = new GraphDoc();
+        //public RUse ru = new RUse();
         byte colorR = 0;
         byte colorG = 0;
         byte colorB = 0;
@@ -54,6 +55,7 @@ namespace keago0403
 
         bool bfirst = true;
         bool bmousedown = false;
+        bool bhave = false;
 
         public void ClearDrawing()
         {
@@ -167,36 +169,45 @@ namespace keago0403
                     gdc.selIndex = gdc.PathList.Count - 1;
                 else
                 {
-                    gPath p = (gPath)gdc.PathList[gdc.selIndex];
-
-                    if (p != null)
+                    RUse ru = new RUse();
+                    ru = gdc.checkOut(pStart);
+                    if (ru.Node > 0 && ru.Sel > 0)
+                    {
+                        gPath p = (gPath)gdc.PathList[ru.Sel];
+                        gdc.node = ru.Node;
+                        bhave = true;
+                    }
+                    
+                    /*if (p != null)
                     {
                         double d1 = Math.Pow(pStart.X - p.controlBtn1.X, 2) + Math.Pow(pStart.Y - p.controlBtn1.Y, 2);
                         double d2 = Math.Pow(pStart.X - p.controlBtn2.X, 2) + Math.Pow(pStart.Y - p.controlBtn2.Y, 2);
                         double d3 = Math.Pow(pStart.X - p.controlBtn3.X, 2) + Math.Pow(pStart.Y - p.controlBtn3.Y, 2);
                         double d4 = Math.Pow(pStart.X - p.controlBtn4.X, 2) + Math.Pow(pStart.Y - p.controlBtn4.Y, 2);
                         double minNum = Math.Min(Math.Min(d1, d2), Math.Min(d3, d4));
-                        if (minNum == d1)
+                        if ((pStart.X >= p.controlBtn1.X - 1) && (pStart.X <= p.controlBtn1.X + 1) && (pStart.Y >= p.controlBtn1.Y - 1) && (pStart.Y <= p.controlBtn1.Y + 1))
                         {
                             gdc.node = 0;
                         }
-                        else if (minNum == d2)
+                        if ((pStart.X >= p.controlBtn2.X - 1) && (pStart.X <= p.controlBtn2.X + 1) && (pStart.Y >= p.controlBtn2.Y - 1) && (pStart.Y <= p.controlBtn2.Y + 1))
                         {
                             gdc.node = 1;
                         }
-                        else if (minNum == d3)
+                        if ((pStart.X >= p.controlBtn3.X - 1) && (pStart.X <= p.controlBtn3.X + 1) && (pStart.Y >= p.controlBtn3.Y - 1) && (pStart.Y <= p.controlBtn3.Y + 1))
                         {
                             gdc.node = 2;
                         }
-                        else
+                        if ((pStart.X >= p.controlBtn4.X - 1) && (pStart.X <= p.controlBtn4.X + 1) && (pStart.Y >= p.controlBtn4.Y - 1) && (pStart.Y <= p.controlBtn4.Y + 1))
                         {
                             gdc.node = 3;
                         }
-                    }
+                    }*/
                 }
             }
             else
+            {
                 gdc.selIndex = -1;
+            }
             bmousedown = true;
         }
         public void drawCurve(Point point0, Point point1, Point point2, Point point3)
@@ -407,11 +418,8 @@ namespace keago0403
             if (drawtype != 3 && ex < px)
             {
                 tempX = ex;
-                tempY = ey;
                 ex = px;
-                ey = py;
                 px = tempX;
-                py = tempY;
             }
             if (drawtype != 3 && ey < py)
             {
@@ -473,67 +481,99 @@ namespace keago0403
             
             bfirst = true;
             bmousedown = false;
+            bhave = false;
         }
 
         private void mygrid_MouseMove(object sender, MouseEventArgs e)
         {
             if (bmousedown)
             {
-                pEnd = e.GetPosition(mygrid);
-                int tempX, tempY;
-                int px = (int)pStart.X;
-                int py = (int)pStart.Y;
-                int ex = (int)pEnd.X;
-                int ey = (int)pEnd.Y;
-                if (drawtype != 3 && ex < px)
+                if (!bhave) //if you can control an object
                 {
-                    tempX = ex;
-                    tempY = ey;
-                    ex = px;
-                    ey = py;
-                    px = tempX;
-                    py = tempY;
+                    pEnd = e.GetPosition(mygrid);
+                    int tempX, tempY;
+                    int px = (int)pStart.X;
+                    int py = (int)pStart.Y;
+                    int ex = (int)pEnd.X;
+                    int ey = (int)pEnd.Y;
+                    if (drawtype != 3 && ex < px)
+                    {
+                        tempX = ex;
+                        ex = px;
+                        px = tempX;
+                    }
+                    if (drawtype != 3 && ey < py)
+                    {
+                        tempY = ey;
+                        ey = py;
+                        py = tempY;
+                    }
+                    if (px % 25 != 0)
+                        px = 25 * (int)(px / 25);
+                    if (py % 25 != 0)
+                        py = 25 * (int)(py / 25);
+                    if (ex % 25 != 0)
+                        ex = 25 * (int)(ex / 25);
+                    if (ey % 25 != 0)
+                        ey = 25 * (int)(ey / 25);
+                    switch (drawtype)
+                    {
+                        case 1:
+                            drawEllipse(px, py, ex, ey);
+                            myEllipse.Opacity = 0.5;
+                            break;
+                        case 2:
+                            drawRect(px, py, ex, ey, 0);
+                            myRect.Opacity = 0.5;
+                            break;
+                        case 3:
+                            drawLine(px, py, ex, ey);
+                            myLine.Opacity = 0.5;
+                            break;
+                        case 4:
+                            drawCurve(px, py, ex, ey);
+                            myPath.Opacity = 0.5;
+                            break;
+                        /*case 5:
+                            gdc.bmove = true;
+                            gdc.mx = ex;
+                            gdc.my = ey;
+                            reDraw(true);
+                            break;*/
+                    }
                 }
-                if (drawtype!=3 && ey < py)
+                else
                 {
-                    tempY = ey;
-                    ey = py;
-                    py = tempY;
-                }
-                if (px % 25 != 0)
-                    px = 25 * (int)(px / 25);
-                if (py % 25 != 0)
-                    py = 25 * (int)(py / 25);
-                if (ex % 25 != 0)
-                    ex = 25 * (int)(ex / 25);
-                if (ey % 25 != 0)
-                    ey = 25 * (int)(ey / 25);
-                Point po1 = new Point(px, py);
-                Point po2 = new Point(ex, ey);
-                switch (drawtype)
-                {
-                    case 1:
-                        drawEllipse(px, py, ex, ey);
-                        myEllipse.Opacity = 0.5;
-                        break;
-                    case 2:
-                        drawRect(px, py, ex, ey, 0);
-                        myRect.Opacity = 0.5;
-                        break;
-                    case 3:
-                        drawLine(px, py, ex, ey);
-                        myLine.Opacity = 0.5;
-                        break;
-                    case 4:
-                        drawCurve(px, py, ex, ey);
-                        myPath.Opacity = 0.5;
-                        break;
-                    case 5:
-                        gdc.bmove = true;
-                        gdc.mx = ex;
-                        gdc.my = ey;
-                        reDraw(true);
-                        break;
+                    pEnd = e.GetPosition(mygrid);
+                    int tempX, tempY;
+                    int px = (int)pStart.X;
+                    int py = (int)pStart.Y;
+                    int ex = (int)pEnd.X;
+                    int ey = (int)pEnd.Y;
+                    if (drawtype != 3 && ex < px)
+                    {
+                        tempX = ex;
+                        ex = px;
+                        px = tempX;
+                    }
+                    if (drawtype != 3 && ey < py)
+                    {
+                        tempY = ey;
+                        ey = py;
+                        py = tempY;
+                    }
+                    if (px % 25 != 0)
+                        px = 25 * (int)(px / 25);
+                    if (py % 25 != 0)
+                        py = 25 * (int)(py / 25);
+                    if (ex % 25 != 0)
+                        ex = 25 * (int)(ex / 25);
+                    if (ey % 25 != 0)
+                        ey = 25 * (int)(ey / 25);
+                    gdc.bmove = true;
+                    gdc.mx = ex;
+                    gdc.my = ey;
+                    reDraw(true);
                 }
             }
         }
@@ -571,7 +611,7 @@ namespace keago0403
                         p.controlBtn2.Y = gdc.my;
                         p.controlBtn3.X = gdc.mx;
                     }
-                    else if(gdc.node == 1)
+                    else if (gdc.node == 1)
                     {
                         p.controlBtn2.X = gdc.mx;
                         p.controlBtn2.Y = gdc.my;
@@ -594,35 +634,44 @@ namespace keago0403
                     }
                 }
                 drawGPath(p);
-                if (p.drawtype < 4)
+                if (bhave)
                 {
-                    byte tmp = colorG;
+                    if (p.drawtype < 4)
+                    {
+                        byte tmpG = colorG;
+                        byte tmpR = colorR;
+                        byte tmpB = colorB;
 
-                    colorG = 255;
-                    drawRect((int)p.controlBtn1.X - 5, (int)p.controlBtn1.Y - 5, (int)p.controlBtn1.X + 5, (int)p.controlBtn1.Y + 5, 255);
-                    bfirst = true;
-                    drawRect((int)p.controlBtn2.X - 5, (int)p.controlBtn2.Y - 5, (int)p.controlBtn2.X + 5, (int)p.controlBtn2.Y + 5, 255);
-                    bfirst = true;
-                    drawRect((int)p.controlBtn3.X - 5, (int)p.controlBtn3.Y - 5, (int)p.controlBtn3.X + 5, (int)p.controlBtn3.Y + 5, 255);
-                    bfirst = true;
-                    drawRect((int)p.controlBtn4.X - 5, (int)p.controlBtn4.Y - 5, (int)p.controlBtn4.X + 5, (int)p.controlBtn4.Y + 5, 255);
-                    bfirst = true;
-                    colorG = tmp;
-                }
-                else
-                {
-                    byte tmp = colorR;
+                        drawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                        bfirst = true;
+                        colorB = 255;
+                        drawRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
+                        bfirst = true;
+                        colorR = 255;
+                        drawRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
+                        bfirst = true;
+                        colorG = 255;
+                        drawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                        bfirst = true;
+                        colorG = tmpG;
+                        colorR = tmpR;
+                        colorB = tmpB;
+                    }
+                    else
+                    {
+                        byte tmp = colorR;
 
-                    colorR = 255;
-                    drawRect((int)p.controlBtn1.X - 5, (int)p.controlBtn1.Y - 5, (int)p.controlBtn1.X + 5, (int)p.controlBtn1.Y + 5, 255);
-                    bfirst = true;
-                    drawRect((int)p.controlBtn2.X - 5, (int)p.controlBtn2.Y - 5, (int)p.controlBtn2.X + 5, (int)p.controlBtn2.Y + 5, 255);
-                    bfirst = true;
-                    drawRect((int)p.controlBtn3.X - 5, (int)p.controlBtn3.Y - 5, (int)p.controlBtn3.X + 5, (int)p.controlBtn3.Y + 5, 255);
-                    bfirst = true;
-                    drawRect((int)p.controlBtn4.X - 5, (int)p.controlBtn4.Y - 5, (int)p.controlBtn4.X + 5, (int)p.controlBtn4.Y + 5, 255);
-                    bfirst = true;
-                    colorR = tmp;
+                        colorR = 255;
+                        drawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                        bfirst = true;
+                        drawRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
+                        bfirst = true;
+                        drawRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
+                        bfirst = true;
+                        drawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                        bfirst = true;
+                        colorR = tmp;
+                    }
                 }
             }
         }
