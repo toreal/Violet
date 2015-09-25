@@ -57,7 +57,7 @@ namespace keago0403
         bool bfirst = true;
         bool bmousedown = false;
         bool bhave = false;
-        bool bnodechange = false;
+        //bool bnodechange = false;
 
         public void ClearDrawing()
         {
@@ -595,14 +595,18 @@ namespace keago0403
                         p.controlBtn3.X = gdc.mx;
                         if (p.controlBtn1.X > p.controlBtn2.X)
                         {
-                            bnodechange = true;
-                            changeNode(1);
+                            gdc.node = 1;
+                            p.controlBtn1.X -= lineSpace;
+                            p.controlBtn3.X = p.controlBtn1.X;
                         }
                         if (p.controlBtn1.Y > p.controlBtn3.Y)
                         {
-                            bnodechange = true;
-                            changeNode(2);
+                            gdc.node = 2;
+                            p.controlBtn1.Y -= lineSpace;
+                            p.controlBtn2.Y = p.controlBtn1.Y;
                         }
+                        
+
                     }
                     else if (gdc.node == 1)
                     {
@@ -612,13 +616,15 @@ namespace keago0403
                         p.controlBtn4.X = gdc.mx;
                         if (p.controlBtn2.X < p.controlBtn1.X)
                         {
-                            bnodechange = true;
-                            changeNode(0);
+                            gdc.node = 0;
+                            p.controlBtn2.X += lineSpace;
+                            p.controlBtn4.X = p.controlBtn2.X;
                         }
                         if (p.controlBtn2.Y > p.controlBtn4.Y)
                         {
-                            bnodechange = true;
-                            changeNode(3);
+                            gdc.node = 3;
+                            p.controlBtn2.Y -= lineSpace;
+                            p.controlBtn1.Y = p.controlBtn2.Y;
                         }
                     }
                     else if (gdc.node == 2)
@@ -629,14 +635,15 @@ namespace keago0403
                         p.controlBtn4.Y = gdc.my;
                         if (p.controlBtn3.X > p.controlBtn4.X)
                         {
-                            bnodechange = true;
-                            changeNode(3);
+                            gdc.node = 3;
+                            p.controlBtn3.X -= lineSpace;
+                            p.controlBtn1.X = p.controlBtn3.X;
                         }
-
                         if (p.controlBtn3.Y < p.controlBtn1.Y)
                         {
-                            bnodechange = true;
-                            changeNode(0);
+                            gdc.node = 0;
+                            p.controlBtn3.Y += lineSpace;
+                            p.controlBtn4.Y = p.controlBtn3.Y;
                         }
                     }
                     else
@@ -647,14 +654,15 @@ namespace keago0403
                         p.controlBtn3.Y = gdc.my;
                         if (p.controlBtn4.X < p.controlBtn3.X)
                         {
-                            bnodechange = true;
-                            changeNode(2);
+                            gdc.node = 2;
+                            p.controlBtn4.X += lineSpace;
+                            p.controlBtn2.X = p.controlBtn4.X;
                         }
-
                         if (p.controlBtn4.Y < p.controlBtn2.Y)
                         {
-                            bnodechange = true;
-                            changeNode(1);
+                            gdc.node = 1;
+                            p.controlBtn4.Y += lineSpace;
+                            p.controlBtn3.Y = p.controlBtn4.Y;
                         }
                     }
                 }
@@ -701,14 +709,14 @@ namespace keago0403
             }
         }
 
-        void changeNode(int Node)
+        /*void changeNode(int Node)
         {
             if (bnodechange)
             {
                 gdc.node = Node;
                 bnodechange = false;
             }
-        }
+        }*/
 
         void drawGPath(gPath gpath)
         {
