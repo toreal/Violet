@@ -31,28 +31,24 @@ namespace keago0403
                 {
                     r.Sel = i;
                     r.Node = 0;
-                    r.changeStartPoint = p.controlBtn4;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn2.X - 10) && (downPlace.X <= p.controlBtn2.X + 10) && (downPlace.Y >= p.controlBtn2.Y - 10) && (downPlace.Y <= p.controlBtn2.Y + 10))
                 {
                     r.Sel = i;
                     r.Node = 1;
-                    r.changeStartPoint = p.controlBtn3;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn3.X - 10) && (downPlace.X <= p.controlBtn3.X + 10) && (downPlace.Y >= p.controlBtn3.Y - 10) && (downPlace.Y <= p.controlBtn3.Y + 10))
                 {
                     r.Sel = i;
                     r.Node = 2;
-                    r.changeStartPoint = p.controlBtn2;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn4.X - 10) && (downPlace.X <= p.controlBtn4.X + 10) && (downPlace.Y >= p.controlBtn4.Y - 10) && (downPlace.Y <= p.controlBtn4.Y + 10))
                 {
                     r.Sel = i;
                     r.Node = 3;
-                    r.changeStartPoint = p.controlBtn1;
                     break;
                 }
             }
@@ -88,6 +84,5 @@ namespace keago0403
     {
         public int Sel = -1;
         public int Node = -1;
-        public Point changeStartPoint;
     }
 }
