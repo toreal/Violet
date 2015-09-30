@@ -18,6 +18,10 @@ namespace keago0403
         {
             InitializeComponent();
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
         public void drawBackgroundLine(double Sop)
         {
             if (Sop != 0)
@@ -35,8 +39,7 @@ namespace keago0403
             Sheight = Screen.PrimaryScreen.Bounds.Height;
             return Sheight;
         }
-        public void setDrawType(int ntype)
-        {
+        public void setDrawType(int ntype){
             userControl11.drawtype = ntype;
         }
         public void setColorType(String colorName)
@@ -50,10 +53,6 @@ namespace keago0403
         public void setStrokeType(int ntype)
         {
             userControl11.stroke(ntype);
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
         }
     }
 }

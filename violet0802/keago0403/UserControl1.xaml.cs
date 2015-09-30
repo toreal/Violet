@@ -164,9 +164,9 @@ namespace keago0403
                     break;
             }
         }
-        private void mygrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            pStart = e.GetPosition(mygrid);
+            pStart = e.GetPosition(myControl);
             if (drawtype == 5)
             {
                 if (gdc.selIndex < 0)
@@ -189,7 +189,7 @@ namespace keago0403
             //bmousedown = true;
             //Debug.WriteLine("true");
         }
-        
+
         public void drawCurve(Point point0, Point point1, Point point2, Point point3)
         {
             if (bfirst)
@@ -386,11 +386,11 @@ namespace keago0403
             }
         }
 
-        private void mygrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void myControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //bmousedown = false;
             //Debug.WriteLine("false");
-            pEnd = e.GetPosition(mygrid);
+            pEnd = e.GetPosition(myControl);
             double tempX, tempY;
             double px = pStart.X;
             double py = pStart.Y;
@@ -436,7 +436,6 @@ namespace keago0403
                         gp.controlBtn3 = new Point(px, ey);
                     }
                 }
-
                 if (drawtype == 4)
                 {
                     gp.controlBtn1 = p0;
@@ -445,23 +444,30 @@ namespace keago0403
                     gp.controlBtn4 = p3;
                 }
                 gdc.PathList.Add(gp);
+                gdc.FullStack.Push(gp);
+            }
+            if (bhave && ru.Sel >= 0)
+            {
+                if (new Point(ex, ey) != new Point(px, py))
+                {
+                    gdc.FullStack.Push(gdc.PathList[ru.Sel]);
+                }
             }
             gdc.bmove = false;
-            if(Status.Equals("rest"))
+            if (Status.Equals("rest"))
                 reDraw(true);
-            
+
             bfirst = true;
-            
             bhave = false;
         }
-
-        private void mygrid_MouseMove(object sender, MouseEventArgs e)
+        
+        private void myControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 if (!bhave) //if you can control an object
                 {
-                    pEnd = e.GetPosition(mygrid);
+                    pEnd = e.GetPosition(myControl);
                     double tempX, tempY;
                     double px = pStart.X;
                     double py = pStart.Y;
@@ -509,7 +515,7 @@ namespace keago0403
                 }
                 else
                 {
-                    pEnd = e.GetPosition(mygrid);
+                    pEnd = e.GetPosition(myControl);
                     double px = pStart.X;
                     double py = pStart.Y;
                     double ex = pEnd.X;
@@ -529,8 +535,8 @@ namespace keago0403
                 }
             }
         }
-
-        void reDraw(bool bfull)
+        
+        void reDraw(bool bfull)   
         {
             if (bfull)
                 mygrid.Children.Clear();

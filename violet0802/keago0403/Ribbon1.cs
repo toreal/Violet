@@ -11,10 +11,6 @@ namespace keago0403
     {
         Form1 f;
         double backGroundColor = 0.2;
-        void changeBackLineColor()
-        {
-            
-        }
         void Check()
         {
             if (f == null)
@@ -143,7 +139,7 @@ namespace keago0403
         }
         private void redo_Click(object sender, RibbonControlEventArgs e)
         {
-
+            
         }
     }
 }

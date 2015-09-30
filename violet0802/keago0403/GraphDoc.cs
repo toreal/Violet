@@ -11,15 +11,30 @@ namespace keago0403
     public class GraphDoc
     {
         public ArrayList PathList = new ArrayList();
-        public ArrayList FullList = new ArrayList();
-        public int selIndex = -1;
+        public Stack FullStack = new Stack();
+        public int listIndex = -1; // The last seat in FullList array
+        public int selIndex = -1; // The last seat in PathList array
         public int node = 0;
         public int mx;
         public int my;
         public bool bmove;
 
+        public Boolean checkBtn(Point point, int sel) // check if there has same place
+        {
+            gPath p = (gPath)PathList[sel];
+            if (point.X == p.controlBtn1.X || point.X == p.controlBtn2.X || point.X == p.controlBtn3.X || point.X == p.controlBtn4.X)
+            {
+                return false;
+            }
+            if (point.Y == p.controlBtn1.Y || point.Y == p.controlBtn2.Y || point.Y == p.controlBtn3.Y || point.Y == p.controlBtn4.Y)
+            {
+                return false;
+            }
+            return true;
+        }
         public void checkIn() //make sure the PathList is update
         {
+            //PathList.Add(FullList[]);
         }
         public RUse checkOut(Point downPlace) //check for the place you mouseDown have object
         {
@@ -27,25 +42,25 @@ namespace keago0403
             for (int i = 0; i < PathList.Count; i++)
             {
                 gPath p = (gPath)PathList[i];
-                if ((downPlace.X >= p.controlBtn1.X - 10) && (downPlace.X <= p.controlBtn1.X + 10) && (downPlace.Y >= p.controlBtn1.Y - 10) && (downPlace.Y <= p.controlBtn1.Y + 10))
+                if ((downPlace.X >= p.controlBtn1.X - 3) && (downPlace.X <= p.controlBtn1.X + 3) && (downPlace.Y >= p.controlBtn1.Y - 3) && (downPlace.Y <= p.controlBtn1.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 0;
                     break;
                 }
-                if ((downPlace.X >= p.controlBtn2.X - 10) && (downPlace.X <= p.controlBtn2.X + 10) && (downPlace.Y >= p.controlBtn2.Y - 10) && (downPlace.Y <= p.controlBtn2.Y + 10))
+                if ((downPlace.X >= p.controlBtn2.X - 3) && (downPlace.X <= p.controlBtn2.X + 3) && (downPlace.Y >= p.controlBtn2.Y - 3) && (downPlace.Y <= p.controlBtn2.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 1;
                     break;
                 }
-                if ((downPlace.X >= p.controlBtn3.X - 10) && (downPlace.X <= p.controlBtn3.X + 10) && (downPlace.Y >= p.controlBtn3.Y - 10) && (downPlace.Y <= p.controlBtn3.Y + 10))
+                if ((downPlace.X >= p.controlBtn3.X - 3) && (downPlace.X <= p.controlBtn3.X + 3) && (downPlace.Y >= p.controlBtn3.Y - 3) && (downPlace.Y <= p.controlBtn3.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 2;
                     break;
                 }
-                if ((downPlace.X >= p.controlBtn4.X - 10) && (downPlace.X <= p.controlBtn4.X + 10) && (downPlace.Y >= p.controlBtn4.Y - 10) && (downPlace.Y <= p.controlBtn4.Y + 10))
+                if ((downPlace.X >= p.controlBtn4.X - 3) && (downPlace.X <= p.controlBtn4.X + 3) && (downPlace.Y >= p.controlBtn4.Y - 3) && (downPlace.Y <= p.controlBtn4.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 3;
@@ -66,13 +81,13 @@ namespace keago0403
     public class gPath
     {
         public int drawtype;
+        public gPro state;
+
         public int x1;
         public int y1;
 
         public int x2;
         public int y2;
-
-        public gPro state;
 
         public Point controlBtn1;
         public Point controlBtn2;
