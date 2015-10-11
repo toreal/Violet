@@ -205,8 +205,6 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="ControlProperties.cs" />
-    <Compile Include="ControlStorage.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -240,6 +238,8 @@
     <EmbeddedResource Include="Ribbon1.resx">
       <DependentUpon>Ribbon1.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="james.snk" />
+    <None Include="jamesnew.pfx" />
     <None Include="keago0403_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -379,10 +379,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>keago0403_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>jamesnew.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F8C8FE421E2ED8167F2834888C684D3794EAEB8D</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A8D331A49D566FB445CECECE3A5F70A74D1CFC75</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace keago0403
 {
@@ -61,7 +63,7 @@ namespace keago0403
         public void ClearDrawing()
         {
             mygrid.Children.Clear();
-            gdc.PathList.Clear();
+            gdc.sroot.PathList.Clear();
         }
         public void hideBackLine()
         {
@@ -170,13 +172,13 @@ namespace keago0403
             if (drawtype == 5)
             {
                 if (gdc.selIndex < 0)
-                    gdc.selIndex = gdc.PathList.Count - 1;
+                    gdc.selIndex = gdc.sroot.PathList.Count - 1;
                 else
                 {
                     ru = gdc.checkOut(pStart);
                     if (ru.Node >= 0 && ru.Sel >= 0)
                     {
-                        gPath p = (gPath)gdc.PathList[ru.Sel];
+                        gPath p = (gPath)gdc.sroot.PathList[ru.Sel];
                         gdc.node = ru.Node;
                         bhave = true;
                     }
@@ -443,14 +445,14 @@ namespace keago0403
                     gp.controlBtn3 = p2;
                     gp.controlBtn4 = p3;
                 }
-                gdc.PathList.Add(gp);
+                gdc.sroot.PathList.Add(gp);
                 gdc.FullStack.Push(gp);
             }
             if (bhave && ru.Sel >= 0)
             {
                 if (new Point(ex, ey) != new Point(px, py))
                 {
-                    gdc.FullStack.Push(gdc.PathList[ru.Sel]);
+                    gdc.FullStack.Push(gdc.sroot.PathList[ru.Sel]);
                 }
             }
             gdc.bmove = false;
@@ -545,11 +547,11 @@ namespace keago0403
             gPath p = null;
             if (ru.Sel >= 0 && bhave)
             {
-                p = (gPath)gdc.PathList[ru.Sel];
+                p = (gPath)gdc.sroot.PathList[ru.Sel];
             }
             if (bfull)
             {
-                foreach (gPath gpath in gdc.PathList)
+                foreach (gPath gpath in gdc.sroot.PathList)
                 {
                     if (gpath != null && gpath != p)
                     {
@@ -807,6 +809,23 @@ namespace keago0403
             bfirst = true;
         }
 
+        public void initpath(string xml)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(SVGRoot));
+            using (MemoryStream ms = new MemoryStream( System.Text.Encoding.UTF8.GetBytes(xml)))
+            {
+
+
+
+                gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
+
+
+            }
+            
+
+
+
+        }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             int margin = (int)mygrid.Margin.Left;
@@ -844,9 +863,30 @@ namespace keago0403
 
             _utility.BitmapBytes = bitmapBytes;
 
+            using (MemoryStream stream = new MemoryStream())
+            {
+
+                XmlSerializer s = new XmlSerializer(typeof(SVGRoot));
+
+
+             s.Serialize(XmlWriter.Create(stream), gdc.sroot);
+
+                
+            stream.Flush();
+            stream.Seek(0, SeekOrigin.Begin);
+
+            StreamReader sr = new StreamReader(stream);
+            string  myStr = sr.ReadToEnd();
+
+
+            
+            _utility.xml = myStr;
+            }
+            
+
             //  this.Dispose(true);
             //  this.Close();
-            _utility.TagName = "test";// cbxTagName.SelectedItem.ToString();
+           // _utility.TagName = "test";// cbxTagName.SelectedItem.ToString();
             Globals.ThisAddIn.AddPictureContentControl(_utility);
             ClearDrawing();
         }

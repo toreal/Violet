@@ -1,16 +1,31 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Word;
+//using Microsoft.Office.Tools.Word;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Serialization;
+
 
 namespace keago0403
 {
+
+    [XmlRoot(ElementName = "SVGRoot", Namespace = "")]
+    public class SVGRoot
+    {
+         [XmlElement("PathList")]
+        public List<gPath> PathList = new List<gPath>();
+
+    }
+
+    
     public class GraphDoc
     {
-        public ArrayList PathList = new ArrayList();
+
+       public  SVGRoot sroot = new SVGRoot();
         public Stack FullStack = new Stack();
         public int listIndex = -1; // The last seat in FullList array
         public int selIndex = -1; // The last seat in PathList array
@@ -19,9 +34,12 @@ namespace keago0403
         public int my;
         public bool bmove;
 
-        public Boolean checkBtn(Point point, int sel) // check if there has same place
+
+        
+
+        public Boolean checkBtn(System.Windows.Point point, int sel) // check if there has same place
         {
-            gPath p = (gPath)PathList[sel];
+            gPath p = (gPath)sroot.PathList[sel];
             if (point.X == p.controlBtn1.X || point.X == p.controlBtn2.X || point.X == p.controlBtn3.X || point.X == p.controlBtn4.X)
             {
                 return false;
@@ -32,16 +50,16 @@ namespace keago0403
             }
             return true;
         }
-        public void checkIn() //make sure the PathList is update
-        {
-            //PathList.Add(FullList[]);
-        }
-        public RUse checkOut(Point downPlace) //check for the place you mouseDown have object
+        //public void checkIn() //make sure the PathList is update
+        //{
+        //    //PathList.Add(FullList[]);
+        //}
+        public RUse checkOut(System.Windows.Point downPlace) //check for the place you mouseDown have object
         {
             RUse r = new RUse();
-            for (int i = 0; i < PathList.Count; i++)
+            for (int i = 0; i < sroot.PathList.Count; i++)
             {
-                gPath p = (gPath)PathList[i];
+                gPath p = (gPath)sroot.PathList[i];
                 if ((downPlace.X >= p.controlBtn1.X - 3) && (downPlace.X <= p.controlBtn1.X + 3) && (downPlace.Y >= p.controlBtn1.Y - 3) && (downPlace.Y <= p.controlBtn1.Y + 3))
                 {
                     r.Sel = i;
@@ -69,7 +87,25 @@ namespace keago0403
             }
             return r;
         }
+
+
+
+        public void addContent(Document doc)
+        {
+
+            
+            
+            object missing = Type.Missing;
+
+            ContentControl cc =doc.ContentControls.Add(WdContentControlType.wdContentControlPicture,
+                                                                       ref missing);
+
+
+        }
+
+
     }
+    [Serializable]
     public struct gPro
     {
         public byte colorR ;
@@ -77,7 +113,7 @@ namespace keago0403
         public byte colorB ;
         public int strokeT ;
     }
-
+    [Serializable]
     public class gPath
     {
         public int drawtype;
@@ -89,15 +125,19 @@ namespace keago0403
         public int x2;
         public int y2;
 
-        public Point controlBtn1;
-        public Point controlBtn2;
-        public Point controlBtn3;
-        public Point controlBtn4;
+        public System.Windows.Point controlBtn1;
+        public System.Windows.Point controlBtn2;
+        public System.Windows.Point controlBtn3;
+        public System.Windows.Point controlBtn4;
     }
 
+    
     public class RUse
     {
         public int Sel = -1;
         public int Node = -1;
     }
+
+
+
 }

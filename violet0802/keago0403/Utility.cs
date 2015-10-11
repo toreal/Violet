@@ -16,20 +16,23 @@ namespace keago0403
             set { bitmapBytes = value; }
         }
 
-        string tagName;
 
-        public string TagName
-        {
-            get { return tagName; }
-            set { tagName = value; }
-        }
 
-        List<string> picControlName;
+        public string xml;
+        //string tagName;
 
-        public List<string> PicControlName
-        {
-            get { return picControlName; }
-            set { picControlName = value; }
-        }
+        //public string TagName
+        //{
+        //    get { return tagName; }
+        //    set { tagName = value; }
+        //}
+
+        //List<string> picControlName;
+
+        //public List<string> PicControlName
+        //{
+        //    get { return picControlName; }
+        //    set { picControlName = value; }
+        //}
     }
 }

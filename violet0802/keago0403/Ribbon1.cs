@@ -9,7 +9,7 @@ namespace keago0403
 {
     public partial class Ribbon1
     {
-        Form1 f;
+       public  Form1 f;
         double backGroundColor = 0.2;
         void Check()
         {
@@ -140,6 +140,17 @@ namespace keago0403
         private void redo_Click(object sender, RibbonControlEventArgs e)
         {
             
+        }
+
+
+         public void initPath(string xml)
+        {
+            Check();
+            f.initpath(xml);
+            f.setDrawType(5);
+            f.Show();
+
+
         }
     }
 }

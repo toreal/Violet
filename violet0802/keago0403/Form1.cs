@@ -22,6 +22,9 @@ namespace keago0403
         {
 
         }
+
+      
+
         public void drawBackgroundLine(double Sop)
         {
             if (Sop != 0)
@@ -53,6 +56,11 @@ namespace keago0403
         public void setStrokeType(int ntype)
         {
             userControl11.stroke(ntype);
+        }
+
+        public void initpath(string xml)
+        {
+            userControl11.initpath(xml);
         }
     }
 }
