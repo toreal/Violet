@@ -24,20 +24,42 @@ namespace keago0403
     
     public class GraphDoc
     {
-
        public  SVGRoot sroot = new SVGRoot();
+       public List<gPath> FullList = new List<gPath>();
         public Stack FullStack = new Stack();
-        public int listIndex = -1; // The last seat in FullList array
         public int selIndex = -1; // The last seat in PathList array
         public int node = 0;
         public int mx;
         public int my;
         public bool bmove;
 
-
+        public void writeIn(gPath Data, int Action)
+        {
+            pointAry pa = new pointAry();
+            if (Action == 0)
+            {
+                FullList.Add(Data);
+                pa = new pointAry(Data.ListPlace, -1, (FullList.Count - 1));
+                FullStack.Push(pa);
+                sroot.PathList.Add(Data);
+            }
+            if (Action == 1)
+            {
+                int temp = 0;
+                for(int i=FullList.Count-1;i>=0;i--){
+                    if(FullList[i].ListPlace == Data.ListPlace)
+                        temp = i;
+                }
+                FullList.Add(Data);
+                pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
+                FullStack.Push(pa);
+                sroot.PathList.RemoveAt(Data.ListPlace);
+                sroot.PathList.Insert(Data.ListPlace, Data);
+            }
+        }
         
 
-        public Boolean checkBtn(System.Windows.Point point, int sel) // check if there has same place
+        /*public Boolean checkBtn(System.Windows.Point point, int sel) // check if there has same place
         {
             gPath p = (gPath)sroot.PathList[sel];
             if (point.X == p.controlBtn1.X || point.X == p.controlBtn2.X || point.X == p.controlBtn3.X || point.X == p.controlBtn4.X)
@@ -49,11 +71,8 @@ namespace keago0403
                 return false;
             }
             return true;
-        }
-        //public void checkIn() //make sure the PathList is update
-        //{
-        //    //PathList.Add(FullList[]);
-        //}
+        }*/
+
         public RUse checkOut(System.Windows.Point downPlace) //check for the place you mouseDown have object
         {
             RUse r = new RUse();
@@ -64,31 +83,33 @@ namespace keago0403
                 {
                     r.Sel = i;
                     r.Node = 0;
+                    r.Point = p.controlBtn4;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn2.X - 3) && (downPlace.X <= p.controlBtn2.X + 3) && (downPlace.Y >= p.controlBtn2.Y - 3) && (downPlace.Y <= p.controlBtn2.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 1;
+                    r.Point = p.controlBtn3;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn3.X - 3) && (downPlace.X <= p.controlBtn3.X + 3) && (downPlace.Y >= p.controlBtn3.Y - 3) && (downPlace.Y <= p.controlBtn3.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 2;
+                    r.Point = p.controlBtn2;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn4.X - 3) && (downPlace.X <= p.controlBtn4.X + 3) && (downPlace.Y >= p.controlBtn4.Y - 3) && (downPlace.Y <= p.controlBtn4.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 3;
+                    r.Point = p.controlBtn1;
                     break;
                 }
             }
             return r;
         }
-
-
 
         public void addContent(Document doc)
         {
@@ -118,13 +139,7 @@ namespace keago0403
     {
         public int drawtype;
         public gPro state;
-
-        public int x1;
-        public int y1;
-
-        public int x2;
-        public int y2;
-
+        public int ListPlace;
         public System.Windows.Point controlBtn1;
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
@@ -136,8 +151,27 @@ namespace keago0403
     {
         public int Sel = -1;
         public int Node = -1;
+        public System.Windows.Point Point;
     }
 
+    public class pointAry
+    {
+        private int leastP;
+        private int lastP;
+        private int changeP;
+        public pointAry()
+        {
+            changeP = 0;
+            lastP = -1;
+            leastP = 0;
 
+        }
+        public pointAry(int a, int b, int c)
+        {
+            changeP = a;
+            lastP = b;
+            leastP = c;
+        }
+    }
 
 }
