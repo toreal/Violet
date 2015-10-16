@@ -36,25 +36,41 @@ namespace keago0403
         public void writeIn(gPath Data, int Action)
         {
             pointAry pa = new pointAry();
+
+            gPath path = new gPath();
+            path.state.colorR = Data.state.colorR;
+            path.state.colorG = Data.state.colorG;
+            path.state.colorB = Data.state.colorB;
+            path.state.strokeT = Data.state.strokeT;
+            path.drawtype = Data.drawtype;
+            path.controlBtn1 = Data.controlBtn1;
+            path.controlBtn2 = Data.controlBtn2;
+            path.controlBtn3 = Data.controlBtn3;
+            path.controlBtn4 = Data.controlBtn4;
+
             if (Action == 0)
             {
-                FullList.Add(Data);
+                FullList.Add(path);
                 pa = new pointAry(Data.ListPlace, -1, (FullList.Count - 1));
                 FullStack.Push(pa);
-                sroot.PathList.Add(Data);
+                sroot.PathList.Add(path);
             }
-            if (Action == 1)
+            else if (Action == 1)
             {
                 int temp = 0;
-                for(int i=FullList.Count-1;i>=0;i--){
-                    if(FullList[i].ListPlace == Data.ListPlace)
+                for (int i = FullList.Count - 1; i >= 0; i--)
+                {
+                    if (FullList[i].ListPlace == Data.ListPlace)
+                    {
                         temp = i;
+                        break;
+                    }
                 }
-                FullList.Add(Data);
+                FullList.Add(path);
                 pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
                 FullStack.Push(pa);
-                sroot.PathList.RemoveAt(Data.ListPlace);
-                sroot.PathList.Insert(Data.ListPlace, Data);
+                //sroot.PathList.RemoveAt(Data.ListPlace);
+                //sroot.PathList.Insert(Data.ListPlace, Data);
             }
         }
         
