@@ -57,7 +57,7 @@ namespace keago0403
         System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
 
         bool bfirst = true;
-        //bool bmousedown = false;
+        bool bmousedown = false;
         bool bhave = false;
 
         public void ClearDrawing()
@@ -169,21 +169,25 @@ namespace keago0403
         private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             pStart = e.GetPosition(myControl);
-            
-            ru.Sel = gdc.sroot.PathList.Count;
+            tempGPath = new gPath();
+            //ru.Sel = gdc.sroot.PathList.Count;
             if (drawtype == 5)
             {
                 if (gdc.selIndex < 0)
+                {
                     gdc.selIndex = gdc.sroot.PathList.Count - 1;
+                    myChange.Opacity = .0;
+                }
                 else
                 {
                     ru = gdc.checkOut(pStart);
                     if (ru.Node >= 0 && ru.Sel >= 0)
                     {
-                        //tempGPath = gdc.sroot.PathList[ru.Sel];
-                        //pStart = ru.Point;
+                        tempGPath = gdc.sroot.PathList[ru.Sel];
+                        pStart = ru.Point;
                         gdc.node = ru.Node;
                         bhave = true;
+                        bmousedown = true;
                     }
                 }
             }
@@ -213,7 +217,14 @@ namespace keago0403
                 myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 myPath.StrokeThickness = strokeT;
                 myPath.Data = geometry;
-                mygrid.Children.Add(myPath);
+                if (bmousedown)
+                {
+                    myChange.Children.Add(myPath);
+                }
+                else
+                {
+                    mygrid.Children.Add(myPath);
+                }
             }
         }
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
@@ -315,7 +326,14 @@ namespace keago0403
                 myLine.HorizontalAlignment = HorizontalAlignment.Left;
                 myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = strokeT;
-                mygrid.Children.Add(myLine);
+                if (bmousedown)
+                {
+                    myChange.Children.Add(myLine);
+                }
+                else
+                {
+                    mygrid.Children.Add(myLine);
+                }
             }
             else
             {
@@ -341,8 +359,14 @@ namespace keago0403
                 myRect.Width = Math.Abs(xEnd - xStart);
                 myRect.Height = Math.Abs(yEnd - yStart);
                 myRect.Margin = new Thickness(xStart, yStart, 0, 0);
-
-                mygrid.Children.Add(myRect);
+                if (bmousedown)
+                {
+                    myChange.Children.Add(myRect);
+                }
+                else
+                {
+                    mygrid.Children.Add(myRect);
+                }
             }
             else
             {
@@ -379,8 +403,14 @@ namespace keago0403
                 myEllipse.Margin = new Thickness(xStart, yStart, 0, 0);
 
                 // Add the Ellipse to the StackPanel.
-
-                mygrid.Children.Add(myEllipse);
+                if (bmousedown)
+                {
+                    myChange.Children.Add(myEllipse);
+                }
+                else
+                {
+                    mygrid.Children.Add(myEllipse);
+                }
             }
             else
             {
@@ -402,7 +432,7 @@ namespace keago0403
             double ex = pEnd.X;
             double ey = pEnd.Y;
 
-            tempGPath = new gPath();
+            //tempGPath = new gPath();
             if (drawtype != 3 && ex < px)
             {
                 tempX = ex;
@@ -434,9 +464,7 @@ namespace keago0403
             {
                 if (new Point(ex, ey) != new Point(px, py))
                 {
-                    gPath GP = new gPath();
-                    GP = gdc.sroot.PathList[ru.Sel];
-                    gdc.writeIn(GP, 1);
+                    gdc.writeIn(tempGPath, 1);
                 }
             }
             gdc.bmove = false;
@@ -553,7 +581,7 @@ namespace keago0403
             }
         }
 
-        void reDraw(bool bfull)   
+        void reDraw(bool bfull)
         {
             if (bfull)
                 mygrid.Children.Clear();
@@ -573,7 +601,7 @@ namespace keago0403
                     {
                         drawGPath(gpath);
                     }
-                }//end of for loop 
+                }//end of for loop
             }
             if (p != null)
             {
@@ -807,19 +835,45 @@ namespace keago0403
             {
                 case 1:
                     drawEllipse((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
-                    myEllipse.Opacity = 1;
+                    if(bmousedown){
+                        myEllipse.Opacity = 0.5;
+                    }
+                    else{
+                        myEllipse.Opacity = 1;
+                    }
                     break;
                 case 2:
                     drawRect((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y, 0);
-                    myRect.Opacity = 1;
+                    if (bmousedown)
+                    {
+                        myRect.Opacity = 0.5;
+                    }
+                    else
+                    {
+                        myRect.Opacity = 1;
+                    }
                     break;
                 case 3:
                     drawLine((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
-                    myLine.Opacity = 1;
+                    if (bmousedown)
+                    {
+                        myLine.Opacity = 0.5;
+                    }
+                    else
+                    {
+                        myLine.Opacity = 1;
+                    }
                     break;
                 case 4:
                     drawCurve(gpath.controlBtn1, gpath.controlBtn2, gpath.controlBtn3, gpath.controlBtn4);
-                    myPath.Opacity = 1;
+                    if (bmousedown)
+                    {
+                        myPath.Opacity = 0.5;
+                    }
+                    else
+                    {
+                        myPath.Opacity = 1;
+                    }
                     break;
             }
             bfirst = true;
