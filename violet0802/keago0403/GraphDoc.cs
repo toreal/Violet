@@ -35,25 +35,15 @@ namespace keago0403
 
         public void writeIn(gPath Data, int Action)
         {
-            pointAry pa = new pointAry();
-
-            gPath path = new gPath();
-            path.state.colorR = Data.state.colorR;
-            path.state.colorG = Data.state.colorG;
-            path.state.colorB = Data.state.colorB;
-            path.state.strokeT = Data.state.strokeT;
-            path.drawtype = Data.drawtype;
-            path.controlBtn1 = Data.controlBtn1;
-            path.controlBtn2 = Data.controlBtn2;
-            path.controlBtn3 = Data.controlBtn3;
-            path.controlBtn4 = Data.controlBtn4;
-
+            pointAry pa;
+            gPath g = new gPath();
             if (Action == 0)
             {
-                FullList.Add(path);
+                FullList.Add(Data);
                 pa = new pointAry(Data.ListPlace, -1, (FullList.Count - 1));
                 FullStack.Push(pa);
-                sroot.PathList.Add(path);
+                g.copyVal(Data);
+                sroot.PathList.Add(g);
             }
             else if (Action == 1)
             {
@@ -66,11 +56,12 @@ namespace keago0403
                         break;
                     }
                 }
-                FullList.Add(path);
+                
+                FullList.Add(Data);
                 pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
                 FullStack.Push(pa);
                 //sroot.PathList.RemoveAt(Data.ListPlace);
-                //sroot.PathList.Insert(Data.ListPlace, Data);
+                //sroot.PathList.Insert(Data.ListPlace, FullList[FullList.Count - 1]);
             }
         }
         
@@ -160,9 +151,25 @@ namespace keago0403
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
+
+
+        public void copyVal(gPath obj)
+        {
+
+            drawtype = obj.drawtype;
+            state = obj.state;
+            ListPlace = obj.ListPlace;
+
+            controlBtn1 = obj.controlBtn1;
+            controlBtn2 = obj.controlBtn2;
+            controlBtn3 = obj.controlBtn3;
+            controlBtn4 = obj.controlBtn4;
+
+
+        }
+
     }
 
-    
     public class RUse
     {
         public int Sel = -1;

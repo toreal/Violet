@@ -50,14 +50,14 @@ namespace keago0403
         BezierSegment bezier = new BezierSegment();
         PathFigure figure = new PathFigure();
         PathGeometry geometry = new PathGeometry();
-        gPath tempGPath;
+        gPath tempFPath;
         Ellipse myEllipse;
         Rectangle myRect;
         Line myLine;
         System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
 
         bool bfirst = true;
-        bool bmousedown = false;
+        //bool bmousedown = false;
         bool bhave = false;
 
         public void ClearDrawing()
@@ -169,25 +169,26 @@ namespace keago0403
         private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             pStart = e.GetPosition(myControl);
-            tempGPath = new gPath();
-            //ru.Sel = gdc.sroot.PathList.Count;
+            tempFPath = new gPath();
+
+            //gPath selpath;
             if (drawtype == 5)
             {
                 if (gdc.selIndex < 0)
                 {
                     gdc.selIndex = gdc.sroot.PathList.Count - 1;
-                    myChange.Opacity = .0;
                 }
                 else
                 {
                     ru = gdc.checkOut(pStart);
                     if (ru.Node >= 0 && ru.Sel >= 0)
                     {
-                        tempGPath = gdc.sroot.PathList[ru.Sel];
-                        pStart = ru.Point;
+                        //selpath = ;
+
+                        //pStart = ru.Point;
                         gdc.node = ru.Node;
                         bhave = true;
-                        bmousedown = true;
+                        //bmousedown = true;
                     }
                 }
             }
@@ -217,14 +218,7 @@ namespace keago0403
                 myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 myPath.StrokeThickness = strokeT;
                 myPath.Data = geometry;
-                if (bmousedown)
-                {
-                    myChange.Children.Add(myPath);
-                }
-                else
-                {
-                    mygrid.Children.Add(myPath);
-                }
+                mygrid.Children.Add(myPath);
             }
         }
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
@@ -326,14 +320,7 @@ namespace keago0403
                 myLine.HorizontalAlignment = HorizontalAlignment.Left;
                 myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = strokeT;
-                if (bmousedown)
-                {
-                    myChange.Children.Add(myLine);
-                }
-                else
-                {
-                    mygrid.Children.Add(myLine);
-                }
+                mygrid.Children.Add(myLine);
             }
             else
             {
@@ -359,14 +346,7 @@ namespace keago0403
                 myRect.Width = Math.Abs(xEnd - xStart);
                 myRect.Height = Math.Abs(yEnd - yStart);
                 myRect.Margin = new Thickness(xStart, yStart, 0, 0);
-                if (bmousedown)
-                {
-                    myChange.Children.Add(myRect);
-                }
-                else
-                {
-                    mygrid.Children.Add(myRect);
-                }
+                mygrid.Children.Add(myRect);
             }
             else
             {
@@ -403,14 +383,7 @@ namespace keago0403
                 myEllipse.Margin = new Thickness(xStart, yStart, 0, 0);
 
                 // Add the Ellipse to the StackPanel.
-                if (bmousedown)
-                {
-                    myChange.Children.Add(myEllipse);
-                }
-                else
-                {
-                    mygrid.Children.Add(myEllipse);
-                }
+                mygrid.Children.Add(myEllipse);
             }
             else
             {
@@ -458,13 +431,14 @@ namespace keago0403
 
             if (drawtype <= 4 && Status.Equals("rest"))
             {
-                gdc.writeIn(tempGPath, 0);
+                gdc.writeIn(tempFPath, 0);
             }
             if (bhave && ru.Sel >= 0)
             {
                 if (new Point(ex, ey) != new Point(px, py))
                 {
-                    gdc.writeIn(tempGPath, 1);
+                    tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
+                    gdc.writeIn(tempFPath, 1);
                 }
             }
             gdc.bmove = false;
@@ -554,30 +528,30 @@ namespace keago0403
 
         private void remGPath(double px, double py, double ex, double ey)
         {
-            tempGPath.state.colorB = colorB;
-            tempGPath.state.colorG = colorG;
-            tempGPath.state.colorR = colorR;
-            tempGPath.state.strokeT = strokeT;
-            tempGPath.ListPlace = ru.Sel;
-            tempGPath.drawtype = drawtype;
+            tempFPath.state.colorB = colorB;
+            tempFPath.state.colorG = colorG;
+            tempFPath.state.colorR = colorR;
+            tempFPath.state.strokeT = strokeT;
+            tempFPath.ListPlace = ru.Sel;
+            tempFPath.drawtype = drawtype;
             
             if (drawtype <= 3)
             {
-                tempGPath.controlBtn1 = new Point(px, py);
-                tempGPath.controlBtn4 = new Point(ex, ey);
+                tempFPath.controlBtn1 = new Point(px, py);
+                tempFPath.controlBtn4 = new Point(ex, ey);
 
                 if (drawtype < 3)
                 {
-                    tempGPath.controlBtn2 = new Point(ex, py);
-                    tempGPath.controlBtn3 = new Point(px, ey);
+                    tempFPath.controlBtn2 = new Point(ex, py);
+                    tempFPath.controlBtn3 = new Point(px, ey);
                 }
             }
             if (drawtype == 4)
             {
-                tempGPath.controlBtn1 = p0;
-                tempGPath.controlBtn2 = p1;
-                tempGPath.controlBtn3 = p2;
-                tempGPath.controlBtn4 = p3;
+                tempFPath.controlBtn1 = p0;
+                tempFPath.controlBtn2 = p1;
+                tempFPath.controlBtn3 = p2;
+                tempFPath.controlBtn4 = p3;
             }
         }
 
@@ -835,45 +809,19 @@ namespace keago0403
             {
                 case 1:
                     drawEllipse((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
-                    if(bmousedown){
-                        myEllipse.Opacity = 0.5;
-                    }
-                    else{
-                        myEllipse.Opacity = 1;
-                    }
+                    myEllipse.Opacity = 1;
                     break;
                 case 2:
                     drawRect((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y, 0);
-                    if (bmousedown)
-                    {
-                        myRect.Opacity = 0.5;
-                    }
-                    else
-                    {
-                        myRect.Opacity = 1;
-                    }
+                    myRect.Opacity = 1;
                     break;
                 case 3:
                     drawLine((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
-                    if (bmousedown)
-                    {
-                        myLine.Opacity = 0.5;
-                    }
-                    else
-                    {
-                        myLine.Opacity = 1;
-                    }
+                    myLine.Opacity = 1;
                     break;
                 case 4:
                     drawCurve(gpath.controlBtn1, gpath.controlBtn2, gpath.controlBtn3, gpath.controlBtn4);
-                    if (bmousedown)
-                    {
-                        myPath.Opacity = 0.5;
-                    }
-                    else
-                    {
-                        myPath.Opacity = 1;
-                    }
+                    myPath.Opacity = 1;
                     break;
             }
             bfirst = true;
@@ -888,8 +836,6 @@ namespace keago0403
                 gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
 
             }
-            
-
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
