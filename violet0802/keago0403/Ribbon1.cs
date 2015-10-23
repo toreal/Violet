@@ -25,6 +25,7 @@ namespace keago0403
                 f.Disposed += new EventHandler(f_Disposed);
             }
         }
+
         void f_Disposed(object sender, EventArgs e)
         {
             f = null;
@@ -139,9 +140,19 @@ namespace keago0403
         }
         private void redo_Click(object sender, RibbonControlEventArgs e)
         {
-            
+            if (f != null)
+            {
+                f.setAction(0);
+            }
         }
 
+        private void undo_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (f != null)
+            {
+                f.setAction(1);
+            }
+        }
 
          public void initPath(string xml)
         {
@@ -150,7 +161,7 @@ namespace keago0403
             f.setDrawType(5);
             f.Show();
 
-
         }
+
     }
 }

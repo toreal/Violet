@@ -20,13 +20,13 @@ namespace keago0403
         public List<gPath> PathList = new List<gPath>();
 
     }
-
     
     public class GraphDoc
     {
        public  SVGRoot sroot = new SVGRoot();
        public List<gPath> FullList = new List<gPath>();
         public Stack FullStack = new Stack();
+        public Stack TempStack = new Stack();
         public int selIndex = -1; // The last seat in PathList array
         public int node = 0;
         public int mx;
@@ -36,9 +36,9 @@ namespace keago0403
         public void writeIn(gPath Data, int Action)
         {
             pointAry pa;
-            gPath g = new gPath();
             if (Action == 0)
             {
+                gPath g = new gPath();
                 FullList.Add(Data);
                 pa = new pointAry(Data.ListPlace, -1, (FullList.Count - 1));
                 FullStack.Push(pa);
@@ -121,17 +121,63 @@ namespace keago0403
         public void addContent(Document doc)
         {
 
-            
-            
             object missing = Type.Missing;
 
             ContentControl cc =doc.ContentControls.Add(WdContentControlType.wdContentControlPicture,
                                                                        ref missing);
 
-
         }
 
+        public void unDo()
+        {
+            if (TempStack.Count > 0)
+            {
+                gPath tempPath = new gPath();
+                pointAry tempPA = new pointAry();
 
+                tempPA = (pointAry)TempStack.Pop();
+
+                if (tempPA.leastPlace() >= 0)
+                {
+                    tempPath.copyVal(FullList[tempPA.leastPlace()]);
+                    if ((sroot.PathList.Count - 1) < tempPA.changePlace())
+                    {
+                        sroot.PathList.Add(tempPath);
+                    }
+                    else
+                    {
+                        sroot.PathList[tempPA.changePlace()] = tempPath;
+                    }
+                }
+                else
+                {
+                    sroot.PathList.RemoveAt(tempPA.changePlace());
+                }
+                FullStack.Push(tempPA);
+            }
+        }
+
+        public void reDo()
+        {
+            if (FullStack.Count > 0)
+            {
+                gPath tempPath = new gPath();
+                pointAry tempPA = new pointAry();
+
+                tempPA = (pointAry)FullStack.Pop();
+
+                if (tempPA.lastPlace() >= 0)
+                {
+                    tempPath.copyVal(FullList[tempPA.lastPlace()]);
+                    sroot.PathList[tempPA.changePlace()] = tempPath;
+                }
+                else
+                {
+                    sroot.PathList.RemoveAt(tempPA.changePlace());
+                }
+                TempStack.Push(tempPA);
+            }
+        }
     }
     [Serializable]
     public struct gPro
@@ -194,6 +240,24 @@ namespace keago0403
             changeP = a;
             lastP = b;
             leastP = c;
+        }
+        /*public void copyPA(pointAry pa)
+        {
+            changeP = pa.changeP;
+            lastP = pa.lastP;
+            leastP = pa.leastP;
+        }*/
+        public int changePlace()
+        {
+            return changeP;
+        }
+        public int lastPlace()
+        {
+            return lastP;
+        }
+        public int leastPlace()
+        {
+            return leastP;
         }
     }
 

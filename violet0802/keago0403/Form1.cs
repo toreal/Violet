@@ -62,5 +62,9 @@ namespace keago0403
         {
             userControl11.initpath(xml);
         }
+        public void setAction(int act)
+        {
+            userControl11.RUdo(act);
+        }
     }
 }

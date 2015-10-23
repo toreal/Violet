@@ -166,6 +166,22 @@ namespace keago0403
                     break;
             }
         }
+        public void RUdo(int Act)
+        {
+            if (gdc.sroot.PathList.Count > 0)
+            {
+                if (Act == 0)
+                {
+                    gdc.reDo();
+                    reDraw(true);
+                }
+                if (Act == 1)
+                {
+                    gdc.unDo();
+                    reDraw(true);
+                }
+            }
+        }
         private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             pStart = e.GetPosition(myControl);
@@ -200,7 +216,7 @@ namespace keago0403
             //Debug.WriteLine("true");
         }
 
-        public void drawCurve(Point point0, Point point1, Point point2, Point point3)
+        void drawCurve(Point point0, Point point1, Point point2, Point point3)
         {
             if (bfirst)
             {
@@ -223,7 +239,7 @@ namespace keago0403
         }
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
         
-        public void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
+        void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
             {
@@ -532,8 +548,12 @@ namespace keago0403
             tempFPath.state.colorG = colorG;
             tempFPath.state.colorR = colorR;
             tempFPath.state.strokeT = strokeT;
-            tempFPath.ListPlace = ru.Sel;
             tempFPath.drawtype = drawtype;
+
+            if (ru.Sel >= 0)
+                tempFPath.ListPlace = ru.Sel;
+            else
+                tempFPath.ListPlace = gdc.sroot.PathList.Count;
             
             if (drawtype <= 3)
             {

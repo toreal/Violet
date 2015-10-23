@@ -290,6 +290,7 @@
             this.undo.Label = "undo";
             this.undo.Name = "undo";
             this.undo.ShowImage = true;
+            this.undo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.undo_Click);
             // 
             // Ribbon1
             // 
