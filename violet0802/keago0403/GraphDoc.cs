@@ -83,35 +83,35 @@ namespace keago0403
         public RUse checkOut(System.Windows.Point downPlace) //check for the place you mouseDown have object
         {
             RUse r = new RUse();
-            for (int i = 0; i < sroot.PathList.Count; i++)
+            for (int i = sroot.PathList.Count - 1; i >= 0 ; i--)
             {
                 gPath p = (gPath)sroot.PathList[i];
+                //if(p.drawtype == 1) 
+                //if(p.drawtype == 2)
+                //if(p.drawtype == 3)
+                //if(p.drawtype == 4)
                 if ((downPlace.X >= p.controlBtn1.X - 3) && (downPlace.X <= p.controlBtn1.X + 3) && (downPlace.Y >= p.controlBtn1.Y - 3) && (downPlace.Y <= p.controlBtn1.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 0;
-                    r.Point = p.controlBtn4;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn2.X - 3) && (downPlace.X <= p.controlBtn2.X + 3) && (downPlace.Y >= p.controlBtn2.Y - 3) && (downPlace.Y <= p.controlBtn2.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 1;
-                    r.Point = p.controlBtn3;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn3.X - 3) && (downPlace.X <= p.controlBtn3.X + 3) && (downPlace.Y >= p.controlBtn3.Y - 3) && (downPlace.Y <= p.controlBtn3.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 2;
-                    r.Point = p.controlBtn2;
                     break;
                 }
                 if ((downPlace.X >= p.controlBtn4.X - 3) && (downPlace.X <= p.controlBtn4.X + 3) && (downPlace.Y >= p.controlBtn4.Y - 3) && (downPlace.Y <= p.controlBtn4.Y + 3))
                 {
                     r.Sel = i;
                     r.Node = 3;
-                    r.Point = p.controlBtn1;
                     break;
                 }
             }
@@ -178,6 +178,10 @@ namespace keago0403
                 TempStack.Push(tempPA);
             }
         }
+        public void Release()
+        {
+            this.TempStack.Clear();
+        }
     }
     [Serializable]
     public struct gPro
@@ -211,7 +215,6 @@ namespace keago0403
             controlBtn3 = obj.controlBtn3;
             controlBtn4 = obj.controlBtn4;
 
-
         }
 
     }
@@ -241,12 +244,6 @@ namespace keago0403
             lastP = b;
             leastP = c;
         }
-        /*public void copyPA(pointAry pa)
-        {
-            changeP = pa.changeP;
-            lastP = pa.lastP;
-            leastP = pa.leastP;
-        }*/
         public int changePlace()
         {
             return changeP;

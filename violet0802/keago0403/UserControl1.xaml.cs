@@ -19,7 +19,7 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace keago0403
+namespace keago0403 
 {
 
     /// <summary>
@@ -119,7 +119,7 @@ namespace keago0403
                 case 5:
                     strokeT = 5;
                     break;
-                case 10:        //可考慮拿掉,有點太粗了
+                case 8:        //可考慮拿掉,有點太粗了
                     strokeT = 8;
                     break;
             }
@@ -166,7 +166,7 @@ namespace keago0403
                     break;
             }
         }
-        public void RUdo(int Act)
+        public void RUdo(int Act)  //redo undo used
         {
             if (gdc.sroot.PathList.Count > 0)
             {
@@ -211,6 +211,7 @@ namespace keago0403
             else
             {
                 gdc.selIndex = -1;
+                gdc.Release();
             }
             //bmousedown = true;
             //Debug.WriteLine("true");
