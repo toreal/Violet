@@ -68,3 +68,21 @@ C:\Users\user\Downloads\國科會計畫\Violet-master\violet0802\keago0403\obj\D
 C:\Users\user\Downloads\國科會計畫\Violet-master\violet0802\keago0403\obj\Debug\keago0403.csproj.GenerateResource.Cache
 C:\Users\user\Downloads\國科會計畫\Violet-master\violet0802\keago0403\obj\Debug\keago0403.dll
 C:\Users\user\Downloads\國科會計畫\Violet-master\violet0802\keago0403\obj\Debug\keago0403.pdb
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\bin\Debug\keago0403.dll
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\bin\Debug\keago0403.pdb
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\bin\Debug\keago0403.dll.manifest
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\bin\Debug\keago0403.vsto
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\bin\Debug\log4net.dll
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\UserControl1.baml
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\UserControl1.g.cs
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403_MarkupCompile.cache
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.g.resources
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.Form1.resources
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.Properties.Resources.resources
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.Ribbon1.resources
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.csproj.GenerateResource.Cache
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.dll
+C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.pdb

@@ -164,6 +164,16 @@ namespace keago0403
                     colorG = 255;
                     colorB = 255;
                     break;
+                case "violet":
+                    colorR = 138;
+                    colorG = 43;
+                    colorB = 226;
+                    break;
+                case "gray":
+                    colorR = 128;
+                    colorG = 128;
+                    colorB = 128;
+                    break;
             }
         }
         public void RUdo(int Act)  //redo undo used

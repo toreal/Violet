@@ -142,7 +142,7 @@ namespace keago0403
         {
             if (f != null)
             {
-                f.setAction(0);
+                f.setAction(1);
             }
         }
 
@@ -150,7 +150,7 @@ namespace keago0403
         {
             if (f != null)
             {
-                f.setAction(1);
+                f.setAction(0);
             }
         }
 
@@ -162,6 +162,16 @@ namespace keago0403
             f.Show();
 
         }
+
+         private void violet_Click(object sender, RibbonControlEventArgs e)
+         {
+             f.setColorType("violet");
+         }
+
+         private void gray_Click(object sender, RibbonControlEventArgs e)
+         {
+             f.setColorType("gray");
+         }
 
     }
 }
