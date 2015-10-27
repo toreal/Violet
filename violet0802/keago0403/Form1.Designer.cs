@@ -34,10 +34,11 @@
             // 
             // elementHost1
             // 
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.elementHost1.Location = new System.Drawing.Point(0, -1);
+            this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1265, 719);
+            this.elementHost1.Size = new System.Drawing.Size(624, 322);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.userControl11;
@@ -46,6 +47,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(624, 322);
             this.Controls.Add(this.elementHost1);
             this.IsMdiContainer = true;
