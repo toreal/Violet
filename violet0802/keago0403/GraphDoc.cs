@@ -18,7 +18,6 @@ namespace keago0403
     {
          [XmlElement("PathList")]
         public List<gPath> PathList = new List<gPath>();
-
     }
     
     public class GraphDoc
@@ -32,6 +31,7 @@ namespace keago0403
         public int mx;
         public int my;
         public bool bmove;
+
 
         public void writeIn(gPath Data, int Action)
         {
@@ -60,25 +60,8 @@ namespace keago0403
                 FullList.Add(Data);
                 pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
                 FullStack.Push(pa);
-                //sroot.PathList.RemoveAt(Data.ListPlace);
-                //sroot.PathList.Insert(Data.ListPlace, FullList[FullList.Count - 1]);
             }
         }
-        
-
-        /*public Boolean checkBtn(System.Windows.Point point, int sel) // check if there has same place
-        {
-            gPath p = (gPath)sroot.PathList[sel];
-            if (point.X == p.controlBtn1.X || point.X == p.controlBtn2.X || point.X == p.controlBtn3.X || point.X == p.controlBtn4.X)
-            {
-                return false;
-            }
-            if (point.Y == p.controlBtn1.Y || point.Y == p.controlBtn2.Y || point.Y == p.controlBtn3.Y || point.Y == p.controlBtn4.Y)
-            {
-                return false;
-            }
-            return true;
-        }*/
 
         public RUse checkOut(System.Windows.Point downPlace) //check for the place you mouseDown have object
         {
@@ -123,8 +106,7 @@ namespace keago0403
 
             object missing = Type.Missing;
 
-            ContentControl cc =doc.ContentControls.Add(WdContentControlType.wdContentControlPicture,
-                                                                       ref missing);
+            ContentControl cc =doc.ContentControls.Add(WdContentControlType.wdContentControlPicture,ref missing);
 
         }
 
@@ -178,6 +160,7 @@ namespace keago0403
                 TempStack.Push(tempPA);
             }
         }
+
         public void Release()
         {
             this.TempStack.Clear();

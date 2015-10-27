@@ -57,7 +57,7 @@ namespace keago0403
         System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
 
         bool bfirst = true;
-        //bool bmousedown = false;
+        bool bhmove = false;
         bool bhave = false;
 
         public void ClearDrawing()
@@ -168,19 +168,17 @@ namespace keago0403
         }
         public void RUdo(int Act)  //redo undo used
         {
-            if (gdc.sroot.PathList.Count > 0)
+            if (Act == 0)
             {
-                if (Act == 0)
-                {
-                    gdc.reDo();
-                    reDraw(true);
-                }
-                if (Act == 1)
-                {
-                    gdc.unDo();
-                    reDraw(true);
-                }
+                gdc.reDo();
+                reDraw(true);
             }
+            if (Act == 1)
+            {
+                gdc.unDo();
+                reDraw(true);
+            }
+
         }
         private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -193,6 +191,17 @@ namespace keago0403
                 if (gdc.selIndex < 0)
                 {
                     gdc.selIndex = gdc.sroot.PathList.Count - 1;
+                    bhmove = false;
+                }
+                else if (bhmove)
+                {
+                    ru = gdc.checkOut(pStart);
+                    if (ru.Node >= 0 && ru.Sel >= 0)
+                    {
+                        gdc.node = ru.Node;
+                        bhave = true;
+                        bhmove = true;
+                    }
                 }
                 else
                 {
@@ -200,19 +209,19 @@ namespace keago0403
                     if (ru.Node >= 0 && ru.Sel >= 0)
                     {
                         //selpath = ;
-
                         //pStart = ru.Point;
                         gdc.node = ru.Node;
                         bhave = true;
-                        //bmousedown = true;
+                        bhmove = true;
                     }
                 }
             }
             else
             {
                 gdc.selIndex = -1;
-                gdc.Release();
+                bhmove = false;
             }
+
             //bmousedown = true;
             //Debug.WriteLine("true");
         }
@@ -449,6 +458,7 @@ namespace keago0403
             if (drawtype <= 4 && Status.Equals("rest"))
             {
                 gdc.writeIn(tempFPath, 0);
+                gdc.Release();
             }
             if (bhave && ru.Sel >= 0)
             {
@@ -456,6 +466,7 @@ namespace keago0403
                 {
                     tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
                     gdc.writeIn(tempFPath, 1);
+                    gdc.Release();
                 }
             }
             gdc.bmove = false;
@@ -464,8 +475,9 @@ namespace keago0403
 
             bfirst = true;
             bhave = false;
+            bhmove = false;
         }
-        
+
         private void myControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -525,7 +537,6 @@ namespace keago0403
                     double py = pStart.Y;
                     double ex = pEnd.X;
                     double ey = pEnd.Y;
-                    
                     if (px % lineSpace != 0)
                         px = lineSpace * Math.Round((px / lineSpace), 0);
                     if (py % lineSpace != 0)
@@ -534,7 +545,7 @@ namespace keago0403
                         ex = lineSpace * Math.Round((ex / lineSpace), 0);
                     if (ey % lineSpace != 0)
                         ey = lineSpace * Math.Round((ey / lineSpace), 0);
-                    
+
                     gdc.bmove = true;
                     gdc.mx = (int)ex;
                     gdc.my = (int)ey;
@@ -584,7 +595,7 @@ namespace keago0403
             gPath p = new gPath();
             p = null;
             Point tempPoint;
-            if (ru.Sel >= 0 && bhave)
+            if ((ru.Sel >= 0 && bhave)||(ru.Sel >= 0 && bhmove))
             {
                 p = (gPath)gdc.sroot.PathList[ru.Sel];
             }
@@ -761,6 +772,10 @@ namespace keago0403
                             p.controlBtn4.Y = gdc.my;
                         }
                     }
+                }
+                if(bhmove)
+                {
+                    
                 }
                 drawGPath(p);
                 if (bhave)
