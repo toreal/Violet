@@ -86,3 +86,20 @@ C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago04
 C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.csproj.GenerateResource.Cache
 C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.dll
 C:\Users\user\Desktop\新增資料夾 (2)\violet0802\keago0403\obj\Debug\keago0403.pdb
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\bin\Debug\keago0403.dll
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\bin\Debug\keago0403.pdb
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\bin\Debug\keago0403.dll.manifest
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\bin\Debug\keago0403.vsto
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\bin\Debug\log4net.dll
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.csprojResolveAssemblyReference.cache
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\UserControl1.baml
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\UserControl1.g.cs
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403_MarkupCompile.cache
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.g.resources
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.Form1.resources
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.Properties.Resources.resources
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.Ribbon1.resources
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.csproj.GenerateResource.Cache
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.dll
+C:\Users\Lab421-208\Desktop\Violet-master\violet0802\keago0403\obj\Debug\keago0403.pdb

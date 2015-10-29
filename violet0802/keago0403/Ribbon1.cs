@@ -70,15 +70,18 @@ namespace keago0403
 
         private void bgp_Click(object sender, RibbonControlEventArgs e)
         {
-            if (backGroundColor != 0)
+            if (f != null)
             {
-                backGroundColor = 0;
-                f.drawBackgroundLine(backGroundColor);
-            }
-            else
-            {
-                backGroundColor = 0.2;
-                f.drawBackgroundLine(backGroundColor);
+                if (backGroundColor != 0)
+                {
+                    backGroundColor = 0;
+                    f.drawBackgroundLine(backGroundColor);
+                }
+                else
+                {
+                    backGroundColor = 0.2;
+                    f.drawBackgroundLine(backGroundColor);
+                }
             }
         }
 
@@ -111,12 +114,21 @@ namespace keago0403
         {
             f.setColorType("blue");
         }
+        private void violet_Click(object sender, RibbonControlEventArgs e)
+        {
+            f.setColorType("violet");
+        }
 
+        private void gray_Click(object sender, RibbonControlEventArgs e)
+        {
+            f.setColorType("gray");
+        }
         private void white_btn_Click(object sender, RibbonControlEventArgs e)
         {
             f.setColorType("white");
 
         }
+
         private void px1_Click(object sender, RibbonControlEventArgs e)
         {
             f.setStrokeType(1);
@@ -130,6 +142,10 @@ namespace keago0403
         private void px5_Click(object sender, RibbonControlEventArgs e)
         {
             f.setStrokeType(5);
+        }
+        private void px8_Click(object sender, RibbonControlEventArgs e)
+        {
+            f.setStrokeType(8);
         }
 
         private void selBtn_Click(object sender, RibbonControlEventArgs e)
@@ -162,16 +178,5 @@ namespace keago0403
             f.Show();
 
         }
-
-         private void violet_Click(object sender, RibbonControlEventArgs e)
-         {
-             f.setColorType("violet");
-         }
-
-         private void gray_Click(object sender, RibbonControlEventArgs e)
-         {
-             f.setColorType("gray");
-         }
-
     }
 }

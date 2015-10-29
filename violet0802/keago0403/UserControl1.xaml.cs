@@ -57,8 +57,8 @@ namespace keago0403
         System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
 
         bool bfirst = true;
-        bool bhmove = false;
-        bool bhave = false;
+        //bool bchange = false; //you can move or change
+        bool bhave = false; //you have choose
 
         public void ClearDrawing()
         {
@@ -195,43 +195,36 @@ namespace keago0403
             pStart = e.GetPosition(myControl);
             tempFPath = new gPath();
 
-            //gPath selpath;
             if (drawtype == 5)
             {
                 if (gdc.selIndex < 0)
                 {
                     gdc.selIndex = gdc.sroot.PathList.Count - 1;
-                    bhmove = false;
+                    //bchange = false;
                 }
-                else if (bhmove)
+                /*else if (bhave && !bchange)
                 {
-                    ru = gdc.checkOut(pStart);
-                    if (ru.Node >= 0 && ru.Sel >= 0)
+                    ru.Node = gdc.checkMove(pStart).Node;
+                    if (ru.Node >= 0)
                     {
                         gdc.node = ru.Node;
-                        bhave = true;
-                        bhmove = true;
+                        bchange = true;
                     }
-                }
+                }*/
                 else
                 {
                     ru = gdc.checkOut(pStart);
-                    if (ru.Node >= 0 && ru.Sel >= 0)
+                    if (ru.Sel >= 0)
                     {
-                        //selpath = ;
-                        //pStart = ru.Point;
                         gdc.node = ru.Node;
                         bhave = true;
-                        bhmove = true;
                     }
                 }
             }
             else
             {
                 gdc.selIndex = -1;
-                bhmove = false;
             }
-
             //bmousedown = true;
             //Debug.WriteLine("true");
         }
@@ -485,7 +478,7 @@ namespace keago0403
 
             bfirst = true;
             bhave = false;
-            bhmove = false;
+            //gdc.bchange = false;
         }
 
         private void myControl_MouseMove(object sender, MouseEventArgs e)
@@ -605,7 +598,7 @@ namespace keago0403
             gPath p = new gPath();
             p = null;
             Point tempPoint;
-            if ((ru.Sel >= 0 && bhave)||(ru.Sel >= 0 && bhmove))
+            if (ru.Sel >= 0 && bhave)
             {
                 p = (gPath)gdc.sroot.PathList[ru.Sel];
             }
@@ -783,10 +776,6 @@ namespace keago0403
                         }
                     }
                 }
-                if(bhmove)
-                {
-                    
-                }
                 drawGPath(p);
                 if (bhave)
                 {
@@ -794,6 +783,8 @@ namespace keago0403
                     {
                         byte tmpG = colorG;
                         colorG = 255;
+                        drawRect((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y, 0);
+                        bfirst = true;
                         drawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
                         bfirst = true;
                         drawRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
@@ -808,6 +799,8 @@ namespace keago0403
                     {
                         byte tmpG = colorG;
                         colorG = 255;
+                        drawLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
+                        bfirst = true;
                         drawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
                         bfirst = true;
                         drawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
@@ -887,8 +880,7 @@ namespace keago0403
         {
             int margin = (int)mygrid.Margin.Left;
             int width = (int)mygrid.ActualWidth + (int)mygrid.Margin.Left + (int)mygrid.Margin.Right;
-            int height = (int)mygrid.ActualHeight +
-                (int)mygrid.Margin.Top + (int)mygrid.Margin.Bottom;
+            int height = (int)mygrid.ActualHeight + (int)mygrid.Margin.Top + (int)mygrid.Margin.Bottom;
             mygrid.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
             RenderTargetBitmap rtb = new RenderTargetBitmap(width, height, 96d, 96d, PixelFormats.Default);
             DrawingVisual dv = new DrawingVisual();
