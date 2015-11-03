@@ -31,6 +31,7 @@ namespace keago0403
         public int mx;
         public int my;
         public bool bmove;
+        private int maskNum = -1;
 
         public void writeIn(gPath Data, int Action)
         {
@@ -62,7 +63,7 @@ namespace keago0403
             }
         }
 
-        public int checkCorner(System.Windows.Point downPlace, gPath p)//check if you click on the corner you choose
+        private int checkCorner(System.Windows.Point downPlace, gPath p)//check if you click on the corner you choose
         {
             int Node = -1;
             if ((downPlace.X >= p.controlBtn1.X - 3) && (downPlace.X <= p.controlBtn1.X + 3) && (downPlace.Y >= p.controlBtn1.Y - 3) && (downPlace.Y <= p.controlBtn1.Y + 3))
@@ -81,13 +82,13 @@ namespace keago0403
             {
                 Node = 3;
             }
-
             return Node;
         } 
 
         public RUse checkOut(System.Windows.Point downPlace) //check for the place you mouseDown have object
         {
             RUse r = new RUse();
+            r.Sel = -1;
             int tempInt;
             for (int i = sroot.PathList.Count - 1; i >= 0; i--)
             {
@@ -97,13 +98,26 @@ namespace keago0403
                     if (checkEllipse(downPlace, p))
                     {
                         r.Sel = i;
-                        r.Node = 0;
-                        tempInt = checkCorner(downPlace, p);
-                        if (tempInt >= 0)
-                        {
-                            r.Node = tempInt;
-                        }
+                        maskNum = i;
+                        
                         break;
+                    }
+                    if (i == maskNum)
+                    {
+                        if (maskRL(downPlace, p))
+                        {
+                            r.Sel = i;
+                            tempInt = checkCorner(downPlace, p);
+                            if (tempInt >= 0)
+                            {
+                                r.Node = tempInt;
+                            }
+                            else
+                            {
+                                r.Node = 4;
+                            }
+                            break;
+                        }
                     }
                 }
                 if (p.drawtype == 2)
@@ -111,12 +125,17 @@ namespace keago0403
                     if (checkRect(downPlace, p))
                     {
                         r.Sel = i;
-                        r.Node = 0;
                         tempInt = checkCorner(downPlace, p);
                         if (tempInt >= 0)
                         {
                             r.Node = tempInt;
                         }
+                        maskNum = i;
+                        break;
+                    }
+                    if( (i == maskNum) && maskRL(downPlace, p)){
+                        r.Sel = i;
+                        r.Node = 4;
                         break;
                     }
                 }
@@ -125,12 +144,16 @@ namespace keago0403
                     if (checkLine(downPlace, p))
                     {
                         r.Sel = i;
-                        r.Node = 0;
                         tempInt = checkCorner(downPlace, p);
                         if (tempInt >= 0)
                         {
                             r.Node = tempInt;
                         }
+                        else if (i == maskNum)
+                        {
+                            r.Node = 4;
+                        }
+                        maskNum = i;
                         break;
                     }
                 }
@@ -139,7 +162,21 @@ namespace keago0403
             return r;
         }
 
-        public bool checkEllipse(System.Windows.Point downPlace, gPath p)
+        private bool maskRL(System.Windows.Point downPlace, gPath p)
+        {
+            bool tf = true;
+            if (downPlace.X > p.controlBtn2.X + 3 || downPlace.X < p.controlBtn1.X - 3)
+                tf = false;
+            if (downPlace.Y > p.controlBtn4.Y + 3 || downPlace.Y < p.controlBtn1.Y - 3)
+                tf = false;
+            return tf;
+        }
+        public void clearMaskNum()
+        {
+            maskNum = -1;
+        }
+
+        private bool checkEllipse(System.Windows.Point downPlace, gPath p)
         {
             bool tf = false;
             double c_x = (p.controlBtn2.X - p.controlBtn1.X) / 2;
@@ -184,7 +221,7 @@ namespace keago0403
             return tf;
         }
 
-        public bool checkRect(System.Windows.Point downPlace, gPath p)
+        private bool checkRect(System.Windows.Point downPlace, gPath p)
         {
             bool tf = false;
             if ((downPlace.X <= p.controlBtn2.X + 3 && downPlace.X >= p.controlBtn2.X - 3) || (downPlace.X >= p.controlBtn1.X - 3 && downPlace.X <= p.controlBtn1.X + 3))
@@ -204,7 +241,7 @@ namespace keago0403
             return tf;
         }
 
-        public bool checkLine(System.Windows.Point downPlace, gPath p)
+        private bool checkLine(System.Windows.Point downPlace, gPath p)
         {
             bool tf = false;
             double m = (p.controlBtn4.Y - p.controlBtn1.Y) / (p.controlBtn4.X - p.controlBtn1.X);

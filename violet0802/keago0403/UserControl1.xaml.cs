@@ -59,7 +59,7 @@ namespace keago0403
         bool bfirst = true;
         //bool bchange = false; //you can move or change
         bool bhave = false; //you have choose
-
+        
         public void ClearDrawing()
         {
             mygrid.Children.Clear();
@@ -202,15 +202,6 @@ namespace keago0403
                     gdc.selIndex = gdc.sroot.PathList.Count - 1;
                     //bchange = false;
                 }
-                /*else if (bhave && !bchange)
-                {
-                    ru.Node = gdc.checkMove(pStart).Node;
-                    if (ru.Node >= 0)
-                    {
-                        gdc.node = ru.Node;
-                        bchange = true;
-                    }
-                }*/
                 else
                 {
                     ru = gdc.checkOut(pStart);
@@ -219,11 +210,16 @@ namespace keago0403
                         gdc.node = ru.Node;
                         bhave = true;
                     }
+                    else
+                    {
+                        gdc.clearMaskNum();
+                    }
                 }
             }
             else
             {
                 gdc.selIndex = -1;
+                gdc.clearMaskNum();
             }
             //bmousedown = true;
             //Debug.WriteLine("true");
@@ -616,163 +612,188 @@ namespace keago0403
             {
                 if (gdc.bmove)
                 {
-                    if (p.drawtype < 3)
+                    if (gdc.node >= 0)
                     {
-                        if (gdc.node == 0)
+                        if (p.drawtype < 3)
                         {
-                            if (p.controlBtn1.X > p.controlBtn2.X)
+                            if (gdc.node == 0)
                             {
-                                gdc.node = 1;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn1;
-                                p.controlBtn1 = tempPoint;
-                                tempPoint = p.controlBtn3;
-                                p.controlBtn3 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
+                                if (p.controlBtn1.X > p.controlBtn2.X)
+                                {
+                                    gdc.node = 1;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn1;
+                                    p.controlBtn1 = tempPoint;
+                                    tempPoint = p.controlBtn3;
+                                    p.controlBtn3 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else if (p.controlBtn1.Y > p.controlBtn3.Y)
+                                {
+                                    gdc.node = 2;
+                                    tempPoint = p.controlBtn1;
+                                    p.controlBtn1 = p.controlBtn3;
+                                    p.controlBtn3 = tempPoint;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else
+                                {
+                                    p.controlBtn1.X = gdc.mx;
+                                    p.controlBtn1.Y = gdc.my;
+                                    p.controlBtn2.Y = gdc.my;
+                                    p.controlBtn3.X = gdc.mx;
+                                }
                             }
-                            else if (p.controlBtn1.Y > p.controlBtn3.Y)
+                            else if (gdc.node == 1)
                             {
-                                gdc.node = 2;
-                                tempPoint = p.controlBtn1;
-                                p.controlBtn1 = p.controlBtn3;
-                                p.controlBtn3 = tempPoint;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
+                                if (p.controlBtn2.X < p.controlBtn1.X)
+                                {
+                                    gdc.node = 0;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn1;
+                                    p.controlBtn1 = tempPoint;
+                                    tempPoint = p.controlBtn3;
+                                    p.controlBtn3 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else if (p.controlBtn2.Y > p.controlBtn4.Y)
+                                {
+                                    gdc.node = 3;
+                                    tempPoint = p.controlBtn1;
+                                    p.controlBtn1 = p.controlBtn3;
+                                    p.controlBtn3 = tempPoint;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else
+                                {
+                                    p.controlBtn2.X = gdc.mx;
+                                    p.controlBtn2.Y = gdc.my;
+                                    p.controlBtn1.Y = gdc.my;
+                                    p.controlBtn4.X = gdc.mx;
+                                }
+                            }
+                            else if (gdc.node == 2)
+                            {
+                                if (p.controlBtn3.X > p.controlBtn4.X)
+                                {
+                                    gdc.node = 3;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn1;
+                                    p.controlBtn1 = tempPoint;
+                                    tempPoint = p.controlBtn3;
+                                    p.controlBtn3 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else if (p.controlBtn3.Y < p.controlBtn1.Y)
+                                {
+                                    gdc.node = 0;
+                                    tempPoint = p.controlBtn1;
+                                    p.controlBtn1 = p.controlBtn3;
+                                    p.controlBtn3 = tempPoint;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else
+                                {
+                                    p.controlBtn3.X = gdc.mx;
+                                    p.controlBtn3.Y = gdc.my;
+                                    p.controlBtn1.X = gdc.mx;
+                                    p.controlBtn4.Y = gdc.my;
+                                }
+                            }
+                            else if (gdc.node == 3)
+                            {
+                                if (p.controlBtn4.X < p.controlBtn3.X)
+                                {
+                                    gdc.node = 2;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn1;
+                                    p.controlBtn1 = tempPoint;
+                                    tempPoint = p.controlBtn3;
+                                    p.controlBtn3 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else if (p.controlBtn4.Y < p.controlBtn2.Y)
+                                {
+                                    gdc.node = 1;
+                                    tempPoint = p.controlBtn1;
+                                    p.controlBtn1 = p.controlBtn3;
+                                    p.controlBtn3 = tempPoint;
+                                    tempPoint = p.controlBtn2;
+                                    p.controlBtn2 = p.controlBtn4;
+                                    p.controlBtn4 = tempPoint;
+                                }
+                                else
+                                {
+                                    p.controlBtn4.X = gdc.mx;
+                                    p.controlBtn4.Y = gdc.my;
+                                    p.controlBtn2.X = gdc.mx;
+                                    p.controlBtn3.Y = gdc.my;
+                                }
                             }
                             else
+                            {
+                                tempPoint = pStart;
+                                p.controlBtn1.X += (gdc.mx - tempPoint.X);
+                                p.controlBtn1.Y += (gdc.my - tempPoint.Y);
+                                p.controlBtn2.X += (gdc.mx - tempPoint.X);
+                                p.controlBtn2.Y += (gdc.my - tempPoint.Y);
+                                p.controlBtn3.X += (gdc.mx - tempPoint.X);
+                                p.controlBtn3.Y += (gdc.my - tempPoint.Y);
+                                p.controlBtn4.X += (gdc.mx - tempPoint.X);
+                                p.controlBtn4.Y += (gdc.my - tempPoint.Y);
+                                pStart = new Point(gdc.mx, gdc.my);
+                            }
+                        }
+                        else if (p.drawtype == 3)
+                        {
+                            if (gdc.node == 0)
                             {
                                 p.controlBtn1.X = gdc.mx;
                                 p.controlBtn1.Y = gdc.my;
-                                p.controlBtn2.Y = gdc.my;
-                                p.controlBtn3.X = gdc.mx;
                             }
-                        }
-                        else if (gdc.node == 1)
-                        {
-                            if (p.controlBtn2.X < p.controlBtn1.X)
+                            if (gdc.node == 3)
                             {
-                                gdc.node = 0;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn1;
-                                p.controlBtn1 = tempPoint;
-                                tempPoint = p.controlBtn3;
-                                p.controlBtn3 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
-                            }
-                            else if (p.controlBtn2.Y > p.controlBtn4.Y)
-                            {
-                                gdc.node = 3;
-                                tempPoint = p.controlBtn1;
-                                p.controlBtn1 = p.controlBtn3;
-                                p.controlBtn3 = tempPoint;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
-                            }
-                            else
-                            {
-                                p.controlBtn2.X = gdc.mx;
-                                p.controlBtn2.Y = gdc.my;
-                                p.controlBtn1.Y = gdc.my;
                                 p.controlBtn4.X = gdc.mx;
+                                p.controlBtn4.Y = gdc.my;
+                            }
+                            if (gdc.node == 4)
+                            {
+                                tempPoint = pStart;
+                                p.controlBtn1.X += (gdc.mx - tempPoint.X);
+                                p.controlBtn1.Y += (gdc.my - tempPoint.Y);
+                                p.controlBtn4.X += (gdc.mx - tempPoint.X);
+                                p.controlBtn4.Y += (gdc.my - tempPoint.Y);
+                                pStart = new Point(gdc.mx, gdc.my);
                             }
                         }
-                        else if (gdc.node == 2)
+                        else if (p.drawtype == 4)
                         {
-                            if (p.controlBtn3.X > p.controlBtn4.X)
+                            if (gdc.node == 0)
                             {
-                                gdc.node = 3;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn1;
-                                p.controlBtn1 = tempPoint;
-                                tempPoint = p.controlBtn3;
-                                p.controlBtn3 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
-                            }
-                            else if (p.controlBtn3.Y < p.controlBtn1.Y)
-                            {
-                                gdc.node = 0;
-                                tempPoint = p.controlBtn1;
-                                p.controlBtn1 = p.controlBtn3;
-                                p.controlBtn3 = tempPoint;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
-                            }
-                            else
-                            {
-                                p.controlBtn3.X = gdc.mx;
-                                p.controlBtn3.Y = gdc.my;
                                 p.controlBtn1.X = gdc.mx;
-                                p.controlBtn4.Y = gdc.my;
+                                p.controlBtn1.Y = gdc.my;
                             }
-                        }
-                        else
-                        {
-                            if (p.controlBtn4.X < p.controlBtn3.X)
+                            else if (gdc.node == 1)
                             {
-                                gdc.node = 2;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn1;
-                                p.controlBtn1 = tempPoint;
-                                tempPoint = p.controlBtn3;
-                                p.controlBtn3 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
+                                p.controlBtn2.X = gdc.mx;
+                                p.controlBtn2.Y = gdc.my;
                             }
-                            else if (p.controlBtn4.Y < p.controlBtn2.Y)
+                            else if (gdc.node == 2)
                             {
-                                gdc.node = 1;
-                                tempPoint = p.controlBtn1;
-                                p.controlBtn1 = p.controlBtn3;
-                                p.controlBtn3 = tempPoint;
-                                tempPoint = p.controlBtn2;
-                                p.controlBtn2 = p.controlBtn4;
-                                p.controlBtn4 = tempPoint;
+                                p.controlBtn3.X = gdc.mx;
+                                p.controlBtn3.Y = gdc.my;
                             }
                             else
                             {
                                 p.controlBtn4.X = gdc.mx;
                                 p.controlBtn4.Y = gdc.my;
-                                p.controlBtn2.X = gdc.mx;
-                                p.controlBtn3.Y = gdc.my;
                             }
-                        }
-                    }
-                    else if (p.drawtype == 3)
-                    {
-                        if (gdc.node == 0)
-                        {
-                            p.controlBtn1.X = gdc.mx;
-                            p.controlBtn1.Y = gdc.my;
-                        }
-                        if (gdc.node == 3)
-                        {
-                            p.controlBtn4.X = gdc.mx;
-                            p.controlBtn4.Y = gdc.my;
-                        }
-                    }
-                    else if (p.drawtype == 4)
-                    {
-                        if (gdc.node == 0)
-                        {
-                            p.controlBtn1.X = gdc.mx;
-                            p.controlBtn1.Y = gdc.my;
-                        }
-                        else if (gdc.node == 1)
-                        {
-                            p.controlBtn2.X = gdc.mx;
-                            p.controlBtn2.Y = gdc.my;
-                        }
-                        else if (gdc.node == 2)
-                        {
-                            p.controlBtn3.X = gdc.mx;
-                            p.controlBtn3.Y = gdc.my;
-                        }
-                        else
-                        {
-                            p.controlBtn4.X = gdc.mx;
-                            p.controlBtn4.Y = gdc.my;
                         }
                     }
                 }
