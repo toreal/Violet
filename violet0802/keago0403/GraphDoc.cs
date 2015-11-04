@@ -259,7 +259,7 @@ namespace keago0403
 
             object missing = Type.Missing;
 
-            ContentControl cc =doc.ContentControls.Add(WdContentControlType.wdContentControlPicture,ref missing);
+            ContentControl cc = doc.ContentControls.Add(WdContentControlType.wdContentControlPicture,ref missing);
 
         }
 

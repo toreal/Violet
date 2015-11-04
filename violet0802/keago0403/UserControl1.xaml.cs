@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,8 +46,8 @@ namespace keago0403
         int strokeT = 1;
 
         String Status = "rest";
-        Point pStart;
-        Point pEnd;
+        Point pStart,pEnd;
+        Point tempStart;
         Point p0, p1, p2, p3 = new Point(0, 0);
         BezierSegment bezier = new BezierSegment();
         PathFigure figure = new PathFigure();
@@ -57,7 +59,7 @@ namespace keago0403
         System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
 
         bool bfirst = true;
-        //bool bchange = false; //you can move or change
+        bool bCanMove = false; //you can do mouseEvent
         bool bhave = false; //you have choose
         
         public void ClearDrawing()
@@ -194,7 +196,8 @@ namespace keago0403
         {
             pStart = e.GetPosition(myControl);
             tempFPath = new gPath();
-
+            tempStart = pStart;
+            bCanMove = true;
             if (drawtype == 5)
             {
                 if (gdc.selIndex < 0)
@@ -354,6 +357,32 @@ namespace keago0403
             }
         }
 
+        void reDrawRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
+        {
+            if (bfirst)
+            {
+                Status = "rest";
+                bfirst = false;
+                myRect = new Rectangle();
+
+                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
+                myRect.Fill = mySolidColorBrush;
+                myRect.StrokeThickness = strokeT;
+                myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+                myRect.Width = Math.Abs(xEnd - xStart);
+                myRect.Height = Math.Abs(yEnd - yStart);
+                myRect.Margin = new Thickness(xStart, yStart, 0, 0);
+
+                myChange.Children.Add(myRect);
+            }
+            else
+            {
+                myRect.Width = Math.Abs(xEnd - xStart);
+                myRect.Height = Math.Abs(yEnd - yStart);
+                myRect.Margin = new Thickness(xStart, yStart, 0, 0);
+            }
+        }
         //正方形正方形正方形正方形正方形正方形
         void drawRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
         {
@@ -371,6 +400,7 @@ namespace keago0403
                 myRect.Width = Math.Abs(xEnd - xStart);
                 myRect.Height = Math.Abs(yEnd - yStart);
                 myRect.Margin = new Thickness(xStart, yStart, 0, 0);
+
                 mygrid.Children.Add(myRect);
             }
             else
@@ -407,7 +437,6 @@ namespace keago0403
                 myEllipse.Height = Math.Abs(yEnd - yStart);
                 myEllipse.Margin = new Thickness(xStart, yStart, 0, 0);
 
-                // Add the Ellipse to the StackPanel.
                 mygrid.Children.Add(myEllipse);
             }
             else
@@ -421,60 +450,63 @@ namespace keago0403
 
         private void myControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //bmousedown = false;
-            //Debug.WriteLine("false");
-            pEnd = e.GetPosition(myControl);
-            double tempX, tempY;
-            double px = pStart.X;
-            double py = pStart.Y;
-            double ex = pEnd.X;
-            double ey = pEnd.Y;
+            if (bCanMove)
+            {
+                //bmousedown = false;
+                //Debug.WriteLine("false");
+                pEnd = e.GetPosition(myControl);
+                double tempX, tempY;
+                double px = pStart.X;
+                double py = pStart.Y;
+                double ex = pEnd.X;
+                double ey = pEnd.Y;
 
-            //tempGPath = new gPath();
-            if (drawtype != 3 && ex < px)
-            {
-                tempX = ex;
-                ex = px;
-                px = tempX;
-            }
-            if (drawtype != 3 && ey < py)
-            {
-                tempY = ey;
-                ey = py;
-                py = tempY;
-            }
-            if (px % lineSpace != 0)
-                px = lineSpace * Math.Round((px / lineSpace), 0);
-            if (py % lineSpace != 0)
-                py = lineSpace * Math.Round((py / lineSpace), 0);
-            if (ex % lineSpace != 0)
-                ex = lineSpace * Math.Round((ex / lineSpace), 0);
-            if (ey % lineSpace != 0)
-                ey = lineSpace * Math.Round((ey / lineSpace), 0);
-
-            remGPath(px, py, ex, ey);
-
-            if (drawtype <= 4 && Status.Equals("rest"))
-            {
-                gdc.writeIn(tempFPath, 0);
-                gdc.Release();
-            }
-            if (bhave && ru.Sel >= 0)
-            {
-                if (new Point(ex, ey) != new Point(px, py))
+                //tempGPath = new gPath();
+                if (drawtype != 3 && ex < px)
                 {
-                    tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
-                    gdc.writeIn(tempFPath, 1);
+                    tempX = ex;
+                    ex = px;
+                    px = tempX;
+                }
+                if (drawtype != 3 && ey < py)
+                {
+                    tempY = ey;
+                    ey = py;
+                    py = tempY;
+                }
+                if (px % lineSpace != 0)
+                    px = lineSpace * Math.Round((px / lineSpace), 0);
+                if (py % lineSpace != 0)
+                    py = lineSpace * Math.Round((py / lineSpace), 0);
+                if (ex % lineSpace != 0)
+                    ex = lineSpace * Math.Round((ex / lineSpace), 0);
+                if (ey % lineSpace != 0)
+                    ey = lineSpace * Math.Round((ey / lineSpace), 0);
+
+                remGPath(px, py, ex, ey);
+
+                if (drawtype <= 4 && Status.Equals("rest"))
+                {
+                    gdc.writeIn(tempFPath, 0);
                     gdc.Release();
                 }
-            }
-            gdc.bmove = false;
-            if (Status.Equals("rest"))
-                reDraw(true);
+                if (bhave && ru.Sel >= 0)
+                {
+                    if (new Point(ex, ey) != new Point(px, py))
+                    {
+                        tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
+                        gdc.writeIn(tempFPath, 1);
+                        gdc.Release();
+                    }
+                }
+                gdc.bmove = false;
+                if (Status.Equals("rest"))
+                    reDraw(true);
 
-            bfirst = true;
-            bhave = false;
-            //gdc.bchange = false;
+                bfirst = true;
+                bhave = false;
+                //gdc.bchange = false;
+            }
         }
 
         private void myControl_MouseMove(object sender, MouseEventArgs e)
@@ -589,7 +621,10 @@ namespace keago0403
         void reDraw(bool bfull)
         {
             if (bfull)
+            {
                 mygrid.Children.Clear();
+                myChange.Children.Clear();
+            }
             // ClearDrawing();
             gPath p = new gPath();
             p = null;
@@ -738,7 +773,7 @@ namespace keago0403
                             }
                             else
                             {
-                                tempPoint = pStart;
+                                tempPoint = tempStart;
                                 p.controlBtn1.X += (gdc.mx - tempPoint.X);
                                 p.controlBtn1.Y += (gdc.my - tempPoint.Y);
                                 p.controlBtn2.X += (gdc.mx - tempPoint.X);
@@ -747,7 +782,7 @@ namespace keago0403
                                 p.controlBtn3.Y += (gdc.my - tempPoint.Y);
                                 p.controlBtn4.X += (gdc.mx - tempPoint.X);
                                 p.controlBtn4.Y += (gdc.my - tempPoint.Y);
-                                pStart = new Point(gdc.mx, gdc.my);
+                                tempStart = new Point(gdc.mx, gdc.my);
                             }
                         }
                         else if (p.drawtype == 3)
@@ -764,12 +799,12 @@ namespace keago0403
                             }
                             if (gdc.node == 4)
                             {
-                                tempPoint = pStart;
+                                tempPoint = tempStart;
                                 p.controlBtn1.X += (gdc.mx - tempPoint.X);
                                 p.controlBtn1.Y += (gdc.my - tempPoint.Y);
                                 p.controlBtn4.X += (gdc.mx - tempPoint.X);
                                 p.controlBtn4.Y += (gdc.my - tempPoint.Y);
-                                pStart = new Point(gdc.mx, gdc.my);
+                                tempStart = new Point(gdc.mx, gdc.my);
                             }
                         }
                         else if (p.drawtype == 4)
@@ -800,38 +835,40 @@ namespace keago0403
                 drawGPath(p);
                 if (bhave)
                 {
+                    byte tmpR = colorR;
+                    byte tmpG = colorG;
+                    byte tmpB = colorB;
+                    colorR = 0;
+                    colorG = 0;
+                    colorB = 0;
                     if (p.drawtype < 3)
                     {
-                        byte tmpG = colorG;
                         colorG = 255;
-                        drawRect((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y, 0);
+                        reDrawRect((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y, 0);
                         bfirst = true;
-                        drawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
                         bfirst = true;
-                        drawRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
                         bfirst = true;
-                        drawRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
                         bfirst = true;
-                        drawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
                         bfirst = true;
                         colorG = tmpG;
                     }
                     else if (p.drawtype == 3)
                     {
-                        byte tmpG = colorG;
                         colorG = 255;
                         drawLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
                         bfirst = true;
-                        drawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
                         bfirst = true;
-                        drawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
                         bfirst = true;
                         colorG = tmpG;
                     }
                     else
                     {
-                        byte tmpR = colorR;
-                        byte tmpG = colorG;
                         drawLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn2.X, (int)p.controlBtn2.Y);
                         myLine.Opacity = 0.5;
                         bfirst = true;
@@ -839,17 +876,17 @@ namespace keago0403
                         myLine.Opacity = 0.5;
                         bfirst = true;
                         colorG = 255;
-                        drawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
                         bfirst = true;
                         colorG = tmpG;
                         colorR = 255;
-                        drawRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
                         bfirst = true;
-                        drawRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
                         bfirst = true;
                         colorR = tmpR;
                         colorG = 255;
-                        drawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                        reDrawRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
                         bfirst = true;
                         colorG = tmpG;
                     }
@@ -892,17 +929,19 @@ namespace keago0403
             XmlSerializer serializer = new XmlSerializer(typeof(SVGRoot));
             using (MemoryStream ms = new MemoryStream( System.Text.Encoding.UTF8.GetBytes(xml)))
             {
-
                 gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
-
+                reDraw(true);
             }
         }
+     
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+            myChange.Children.Clear();
             int margin = (int)mygrid.Margin.Left;
             int width = (int)mygrid.ActualWidth + (int)mygrid.Margin.Left + (int)mygrid.Margin.Right;
             int height = (int)mygrid.ActualHeight + (int)mygrid.Margin.Top + (int)mygrid.Margin.Bottom;
-            mygrid.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+            mygrid.Background = new SolidColorBrush(Color.FromArgb(255, 255, 0, 255));
+
             RenderTargetBitmap rtb = new RenderTargetBitmap(width, height, 96d, 96d, PixelFormats.Default);
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext dc = dv.RenderOpen())
@@ -939,24 +978,23 @@ namespace keago0403
                 XmlSerializer s = new XmlSerializer(typeof(SVGRoot));
 
 
-             s.Serialize(XmlWriter.Create(stream), gdc.sroot);
-
-                
-            stream.Flush();
-            stream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader sr = new StreamReader(stream);
-            string  myStr = sr.ReadToEnd();
+                s.Serialize(XmlWriter.Create(stream), gdc.sroot);
 
 
-            
-            _utility.xml = myStr;
+                stream.Flush();
+                stream.Seek(0, SeekOrigin.Begin);
+
+                StreamReader sr = new StreamReader(stream);
+                string myStr = sr.ReadToEnd();
+
+
+
+                _utility.xml = myStr;
             }
-            
 
             //  this.Dispose(true);
             //  this.Close();
-           // _utility.TagName = "test";// cbxTagName.SelectedItem.ToString();
+            // _utility.TagName = "test";// cbxTagName.SelectedItem.ToString();
             Globals.ThisAddIn.AddPictureContentControl(_utility);
             ClearDrawing();
         }
