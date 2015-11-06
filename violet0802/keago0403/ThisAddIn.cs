@@ -56,38 +56,36 @@ namespace keago0403
 
         void Application_WindowBeforeDoubleClick(Selection sel, ref bool Cancel)
         {
-           
+
             int n = sel.ContentControls.Count;
             Microsoft.Office.Interop.Word.ContentControl cp = sel.Range.ParentContentControl;
-            
-            String mytitle=null;
-            String sid=null;
-            if (cp!=null)
+
+            String mytitle = null;
+            String sid = null;
+            if (cp != null)
             {
                 mytitle = cp.Title;
                 sid = cp.ID;
-            
-
-            if (mytitle == "violet")
-            {
-                Debug.WriteLine("control selected "+sid);
-                string xid = cp.Tag;
-
-                Microsoft.Office.Tools.Word.Document vstoDocument = Globals.Factory.GetVstoObject(this.Application.ActiveDocument);
-                CustomXMLPart xmlpart = vstoDocument.CustomXMLParts.SelectByID(xid);
-                string xml=xmlpart.XML;
 
 
-                Globals.Ribbons.Ribbon1.initPath(xml);
+                if (mytitle == "violet")
+                {
+                    Debug.WriteLine("control selected " + sid);
+                    string xid = cp.Tag;
 
-                Globals.Ribbons.Ribbon1.RibbonUI.ActivateTabMso("TabAddIns");
-                
-                
-             
+                    Microsoft.Office.Tools.Word.Document vstoDocument = Globals.Factory.GetVstoObject(this.Application.ActiveDocument);
+                    CustomXMLPart xmlpart = vstoDocument.CustomXMLParts.SelectByID(xid);
+                    string xml = xmlpart.XML;
+
+
+                    Globals.Ribbons.Ribbon1.initPath(xml);
+
+                    Globals.Ribbons.Ribbon1.RibbonUI.ActivateTabMso("TabAddIns");
+
+
+
+                }
             }
-            }
-
-
 
 
 

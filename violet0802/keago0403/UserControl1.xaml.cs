@@ -246,11 +246,11 @@ namespace keago0403
                 myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 myPath.StrokeThickness = strokeT;
                 myPath.Data = geometry;
+                Console.WriteLine(bezier.GetType());
                 mygrid.Children.Add(myPath);
             }
         }
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
-        
         void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -330,6 +330,30 @@ namespace keago0403
                     bezier.Point2 = new Point(xEnd, yEnd);
                     p2 = bezier.Point2;
                 }
+            }
+        }
+
+        void reDrawLine(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            if (bfirst)
+            {
+                Status = "rest";
+                bfirst = false;
+                myLine = new Line();
+                myLine.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+                myLine.X1 = xStart;
+                myLine.X2 = xEnd;
+                myLine.Y1 = yStart;
+                myLine.Y2 = yEnd;
+                myLine.HorizontalAlignment = HorizontalAlignment.Left;
+                myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = strokeT;
+                myChange.Children.Add(myLine);
+            }
+            else
+            {
+                myLine.X2 = xEnd;
+                myLine.Y2 = yEnd;
             }
         }
         //線線線線線線線線線線線線線線線
@@ -859,7 +883,7 @@ namespace keago0403
                     else if (p.drawtype == 3)
                     {
                         colorG = 255;
-                        drawLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
+                        reDrawLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
                         bfirst = true;
                         reDrawRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
                         bfirst = true;
@@ -869,10 +893,10 @@ namespace keago0403
                     }
                     else
                     {
-                        drawLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn2.X, (int)p.controlBtn2.Y);
+                        reDrawLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn2.X, (int)p.controlBtn2.Y);
                         myLine.Opacity = 0.5;
                         bfirst = true;
-                        drawLine((int)p.controlBtn3.X, (int)p.controlBtn3.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
+                        reDrawLine((int)p.controlBtn3.X, (int)p.controlBtn3.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
                         myLine.Opacity = 0.5;
                         bfirst = true;
                         colorG = 255;

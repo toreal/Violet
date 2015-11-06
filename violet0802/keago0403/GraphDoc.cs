@@ -157,7 +157,20 @@ namespace keago0403
                         break;
                     }
                 }
-                //if(p.drawtype == 4)
+                if (p.drawtype == 4)
+                {
+                    if (checkCurve(downPlace, p))
+                    {
+                        r.Sel = i;
+                        tempInt = checkCorner(downPlace, p);
+                        if (tempInt >= 0)
+                        {
+                            r.Node = tempInt;
+                        }
+                        maskNum = i;
+                        break;
+                    }
+                }
             }
             return r;
         }
@@ -171,9 +184,17 @@ namespace keago0403
                 tf = false;
             return tf;
         }
+
         public void clearMaskNum()
         {
             maskNum = -1;
+        }
+
+        private bool checkCurve(System.Windows.Point downPlace, gPath p)
+        {
+            bool tf = false;
+            tf = true;
+            return tf;
         }
 
         private bool checkEllipse(System.Windows.Point downPlace, gPath p)
