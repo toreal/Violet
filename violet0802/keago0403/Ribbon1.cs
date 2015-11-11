@@ -9,7 +9,7 @@ namespace keago0403
 {
     public partial class Ribbon1
     {
-       public  Form1 f;
+        public Form1 f;
         double backGroundColor = 0.2;
         void Check()
         {
@@ -62,7 +62,7 @@ namespace keago0403
             f.setDrawType(4);
             f.Show();
         }
-        private void button1_Click(object sender, RibbonControlEventArgs e)
+        private void clear_Click(object sender, RibbonControlEventArgs e)
         {
             Check();
             f.ClearDrawing();
@@ -152,7 +152,6 @@ namespace keago0403
         {
             Check();
             f.setDrawType(5);
-            f.Show();
         }
         private void redo_Click(object sender, RibbonControlEventArgs e)
         {

@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,7 +84,14 @@ namespace keago0403
                 Node = 3;
             }
             return Node;
-        } 
+        }
+
+        public RUse checkObj(params System.Windows.Point[] checkPoint)
+        {
+            RUse r = new RUse();
+            return r;
+        }
+
 
         public RUse checkOut(System.Windows.Point downPlace) //check for the place you mouseDown have object
         {
@@ -157,7 +165,7 @@ namespace keago0403
                         break;
                     }
                 }
-                if (p.drawtype == 4)
+                /*if (p.drawtype == 4)
                 {
                     if (checkCurve(downPlace, p))
                     {
@@ -170,7 +178,7 @@ namespace keago0403
                         maskNum = i;
                         break;
                     }
-                }
+                }*/
             }
             return r;
         }
@@ -190,12 +198,12 @@ namespace keago0403
             maskNum = -1;
         }
 
-        private bool checkCurve(System.Windows.Point downPlace, gPath p)
+        /*private bool checkCurve(System.Windows.Point downPlace, gPath p)
         {
             bool tf = false;
-            tf = true;
+            //tf = true;
             return tf;
-        }
+        }*/
 
         private bool checkEllipse(System.Windows.Point downPlace, gPath p)
         {
@@ -359,7 +367,6 @@ namespace keago0403
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
 
-
         public void copyVal(gPath obj)
         {
 
@@ -371,7 +378,6 @@ namespace keago0403
             controlBtn2 = obj.controlBtn2;
             controlBtn3 = obj.controlBtn3;
             controlBtn4 = obj.controlBtn4;
-
         }
 
     }

@@ -45,6 +45,7 @@ namespace keago0403
         byte colorB = 0;
         int strokeT = 1;
 
+        
         String Status = "rest";
         Point pStart,pEnd;
         Point tempStart;
@@ -57,7 +58,7 @@ namespace keago0403
         Rectangle myRect;
         Line myLine;
         System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
-
+        
         bool bfirst = true;
         bool bCanMove = false; //you can do mouseEvent
         bool bhave = false; //you have choose
@@ -246,10 +247,23 @@ namespace keago0403
                 myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 myPath.StrokeThickness = strokeT;
                 myPath.Data = geometry;
-                Console.WriteLine(bezier.GetType());
+                myPath.MouseDown += myPath_MouseDown;
+                
                 mygrid.Children.Add(myPath);
             }
         }
+        void myPath_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            /*gPath ggpp = sender as gPath;  // sender 無法轉變成 gPath ,得想其他辦法
+            Point tConOne = ggpp.controlBtn1;
+            Point tConTwo = ggpp.controlBtn2;
+            Point tConThree = ggpp.controlBtn3;
+            Point tConFour = ggpp.controlBtn4;
+            ru = gdc.checkObj(tConOne, tConTwo, tConThree, tConFour);*/
+            showCanvas();
+            //throw new NotImplementedException();
+        }
+
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
         void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
         {
@@ -348,6 +362,7 @@ namespace keago0403
                 myLine.HorizontalAlignment = HorizontalAlignment.Left;
                 myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = strokeT;
+                myLine.PreviewMouseDown += myLine_PreviewMouseDown;
                 myChange.Children.Add(myLine);
             }
             else
@@ -356,6 +371,13 @@ namespace keago0403
                 myLine.Y2 = yEnd;
             }
         }
+        void myLine_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            int i = 0;
+            Debug.WriteLine(i);
+            //throw new NotImplementedException();
+        }
+
         //線線線線線線線線線線線線線線線
         void drawLine(int xStart, int yStart, int xEnd, int yEnd)
         {
@@ -946,6 +968,17 @@ namespace keago0403
                     break;
             }
             bfirst = true;
+        }
+
+        public void hiddenCanvas()
+        {
+            myChange.Visibility = Visibility.Hidden;
+            myControl.Visibility = Visibility.Hidden;
+        }
+        void showCanvas()
+        {
+            myChange.Visibility = Visibility.Visible;
+            myControl.Visibility = Visibility.Visible;
         }
 
         public void initpath(string xml)

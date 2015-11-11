@@ -23,14 +23,12 @@ namespace keago0403
 
         }
 
-      
-
         public void drawBackgroundLine(double Sop)
         {
             if (Sop != 0)
-                userControl11.drawBackLine(Swidth, Sheight, Sop);
+                userControl1.drawBackLine(Swidth, Sheight, Sop);
             else
-                userControl11.hideBackLine();
+                userControl1.hideBackLine();
         }
         public double setFormSize(String ctype)
         {
@@ -43,28 +41,30 @@ namespace keago0403
             return Sheight;
         }
         public void setDrawType(int ntype){
-            userControl11.drawtype = ntype;
+            if (ntype == 5)
+                userControl1.hiddenCanvas();
+            userControl1.drawtype = ntype;
         }
         public void setColorType(String colorName)
         {
-            userControl11.color(colorName);
+            userControl1.color(colorName);
         }
         public void ClearDrawing()
         {
-            userControl11.ClearDrawing();
+            userControl1.ClearDrawing();
         }
         public void setStrokeType(int ntype)
         {
-            userControl11.stroke(ntype);
+            userControl1.stroke(ntype);
         }
 
         public void initpath(string xml)
         {
-            userControl11.initpath(xml);
+            userControl1.initpath(xml);
         }
         public void setAction(int act)
         {
-            userControl11.RUdo(act);
+            userControl1.RUdo(act);
         }
     }
 }
