@@ -53,6 +53,7 @@ namespace keago0403
         BezierSegment bezier = new BezierSegment();
         PathFigure figure = new PathFigure();
         PathGeometry geometry = new PathGeometry();
+        Geometry tempGeo;
         gPath tempFPath;
         Ellipse myEllipse;
         Rectangle myRect;
@@ -254,14 +255,12 @@ namespace keago0403
         }
         void myPath_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            /*gPath ggpp = sender as gPath;  // sender 無法轉變成 gPath ,得想其他辦法
-            Point tConOne = ggpp.controlBtn1;
-            Point tConTwo = ggpp.controlBtn2;
-            Point tConThree = ggpp.controlBtn3;
-            Point tConFour = ggpp.controlBtn4;
-            ru = gdc.checkObj(tConOne, tConTwo, tConThree, tConFour);*/
+            System.Windows.Shapes.Path ggpp = sender as System.Windows.Shapes.Path;
+            Point dx = e.GetPosition(mygrid);
+            Geometry pg = ggpp.Data;
+
+            ru = gdc.checkOut(dx, pg);
             showCanvas();
-            //throw new NotImplementedException();
         }
 
         //曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線曲線
@@ -320,7 +319,7 @@ namespace keago0403
                     geometry = new PathGeometry();
                     geometry.Figures.Add(figure);
                     myPath.Data = geometry;
-
+                    tempGeo = geometry;
                     mygrid.Children.Add(myPath);
                     Status = "rest";
                 }
@@ -661,6 +660,7 @@ namespace keago0403
                 tempFPath.controlBtn2 = p1;
                 tempFPath.controlBtn3 = p2;
                 tempFPath.controlBtn4 = p3;
+                tempFPath.geo = tempGeo;
             }
         }
 

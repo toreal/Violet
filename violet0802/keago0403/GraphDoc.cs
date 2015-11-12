@@ -86,14 +86,7 @@ namespace keago0403
             return Node;
         }
 
-        public RUse checkObj(params System.Windows.Point[] checkPoint)
-        {
-            RUse r = new RUse();
-            return r;
-        }
-
-
-        public RUse checkOut(System.Windows.Point downPlace) //check for the place you mouseDown have object
+        public RUse checkOut(System.Windows.Point downPlace, params System.Windows.Media.Geometry[] checkGeo) //check for the place you mouseDown have object
         {
             RUse r = new RUse();
             r.Sel = -1;
@@ -165,20 +158,25 @@ namespace keago0403
                         break;
                     }
                 }
-                /*if (p.drawtype == 4)
+                if (p.drawtype == 4)
                 {
-                    if (checkCurve(downPlace, p))
+                    
+                    if (checkGeo.Length > 0)
                     {
-                        r.Sel = i;
-                        tempInt = checkCorner(downPlace, p);
-                        if (tempInt >= 0)
+                        System.Windows.Media.Geometry tempGeo = checkGeo[0];
+                        if (checkCurve(downPlace, p, tempGeo))
                         {
-                            r.Node = tempInt;
+                            r.Sel = i;
+                            tempInt = checkCorner(downPlace, p);
+                            if (tempInt >= 0)
+                            {
+                                r.Node = tempInt;
+                            }
+                            maskNum = i;
+                            break;
                         }
-                        maskNum = i;
-                        break;
                     }
-                }*/
+                }
             }
             return r;
         }
@@ -198,20 +196,16 @@ namespace keago0403
             maskNum = -1;
         }
 
-        /*private bool checkCurve(System.Windows.Point downPlace, gPath p)
+        private bool checkCurve(System.Windows.Point downPlace, gPath p, System.Windows.Media.Geometry Geo)
         {
             bool tf = false;
-            //tf = true;
+            if(p.geo == Geo)
+                tf = true;
             return tf;
-        }*/
+        }
 
         private bool checkEllipse(System.Windows.Point downPlace, gPath p)
         {
-            bool tf = false;
-            double c_x = (p.controlBtn2.X - p.controlBtn1.X) / 2;
-            double c_y = (p.controlBtn3.Y - p.controlBtn1.Y) / 2;
-            System.Windows.Point center = new System.Windows.Point(p.controlBtn1.X + c_x, p.controlBtn1.Y + c_y);
-
             //另類解法 - EGO
             /*double xR = Math.Abs(downPlace.X - center.X);
             double yR = Math.Abs(downPlace.Y - center.Y);
@@ -231,6 +225,10 @@ namespace keago0403
             {
                 tf = true;
             }*/
+            bool tf = false;
+            double c_x = (p.controlBtn2.X - p.controlBtn1.X) / 2;
+            double c_y = (p.controlBtn3.Y - p.controlBtn1.Y) / 2;
+            System.Windows.Point center = new System.Windows.Point(p.controlBtn1.X + c_x, p.controlBtn1.Y + c_y);
 
             double simpleX = Math.Sqrt((1 - Math.Pow((downPlace.Y - center.Y), 2) / Math.Pow(c_y, 2)) * Math.Pow(c_x, 2));
             double simpleY = Math.Sqrt((1 - Math.Pow((downPlace.X - center.X), 2) / Math.Pow(c_x, 2)) * Math.Pow(c_y, 2));
@@ -248,6 +246,7 @@ namespace keago0403
             if (downPlace.Y <= lowerPlaceY + 3 && downPlace.Y >= lowerPlaceY - 3)
                 tf = true;
             return tf;
+
         }
 
         private bool checkRect(System.Windows.Point downPlace, gPath p)
@@ -366,6 +365,7 @@ namespace keago0403
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
+        public System.Windows.Media.Geometry geo;
 
         public void copyVal(gPath obj)
         {
@@ -378,6 +378,7 @@ namespace keago0403
             controlBtn2 = obj.controlBtn2;
             controlBtn3 = obj.controlBtn3;
             controlBtn4 = obj.controlBtn4;
+            geo = obj.geo;
         }
 
     }
