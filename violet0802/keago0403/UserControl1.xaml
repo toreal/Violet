@@ -8,19 +8,14 @@
 
     <Grid>
         <Canvas Name="myBackground" Background="White" />
-        <Canvas Name="mygrid"  OpacityMask="White">
+        <Canvas Name="mygrid"  OpacityMask="White" MouseLeftButtonDown="mygrid_MouseLeftButtonDown" MouseLeftButtonUp="mygrid_MouseLeftButtonUp" MouseMove="mygrid_MouseMove">
             <Canvas.Background>
                 <SolidColorBrush Opacity=".0" />
             </Canvas.Background>
         </Canvas>
-        <Canvas Name="myChange" OpacityMask="White" Visibility="Hidden">
+        <Canvas Name="myControl" OpacityMask="White" MouseLeftButtonDown="myControl_MouseLeftButtonDown" MouseMove="myControl_MouseMove">
             <Canvas.Background>
-                <SolidColorBrush Opacity=".2" Color="Black" />
-            </Canvas.Background>
-        </Canvas>
-        <Canvas Name="myControl" OpacityMask="White" MouseMove="myControl_MouseMove" MouseLeftButtonDown="myControl_MouseLeftButtonDown" MouseLeftButtonUp="myControl_MouseLeftButtonUp">
-            <Canvas.Background>
-                <SolidColorBrush Opacity=".0" />
+                <SolidColorBrush Opacity=".1" Color="Black" />
             </Canvas.Background>
         </Canvas>
     </Grid>

@@ -23,7 +23,7 @@ namespace keago0403
     
     public class GraphDoc
     {
-       public  SVGRoot sroot = new SVGRoot();
+       public SVGRoot sroot = new SVGRoot();
        public List<gPath> FullList = new List<gPath>();
         public Stack FullStack = new Stack();
         public Stack TempStack = new Stack();
@@ -100,7 +100,6 @@ namespace keago0403
                     {
                         r.Sel = i;
                         maskNum = i;
-                        
                         break;
                     }
                     if (i == maskNum)
@@ -347,6 +346,7 @@ namespace keago0403
             this.TempStack.Clear();
         }
     }
+    
     [Serializable]
     public struct gPro
     {
@@ -390,6 +390,16 @@ namespace keago0403
         public System.Windows.Point Point;
     }
 
+    public class gPoint{
+        public System.Windows.Point mouseXY;
+
+        public System.Windows.Point point0;
+        public System.Windows.Point point1;
+        public System.Windows.Point point2;
+        public System.Windows.Point point3;
+        public System.Windows.Media.Geometry geo;
+    }
+
     public class pointAry
     {
         private int leastP;
@@ -419,6 +429,144 @@ namespace keago0403
         public int leastPlace()
         {
             return leastP;
+        }
+    }
+
+    public class checkHitDraw
+    {
+        public int checkHitWhich(List<gPath> l, gPoint gp, int drawType)
+        {
+            int whichOne = -1;
+            for (int i = l.Count - 1; i >= 0; i--)
+            {
+                if (drawType < 3)
+                {
+                    if (l[i].controlBtn1 != gp.point0)
+                        continue;
+                    if (l[i].controlBtn2 != gp.point1)
+                        continue;
+                    if (l[i].controlBtn3 != gp.point2)
+                        continue;
+                    if (l[i].controlBtn4 != gp.point3)
+                        continue;
+                }
+                if (drawType == 3)
+                {
+                    if (l[i].drawtype != drawType)
+                        continue;
+                    if (l[i].controlBtn1 != gp.point0)
+                        continue;
+                    if (l[i].controlBtn4 != gp.point3)
+                        continue;
+                }
+                if (drawType == 4)
+                {
+                    if (!l[i].geo.Bounds.Equals(gp.geo.Bounds))
+                        continue;
+                }
+                whichOne = i;
+            }
+            return whichOne;
+        }
+
+        public bool checkHitEllipse(gPoint p)
+        {
+            bool tf = false;
+            double c_x = (p.point1.X - p.point0.X) / 2;
+            double c_y = (p.point2.Y - p.point0.Y) / 2;
+            System.Windows.Point center = new System.Windows.Point(p.point0.X + c_x, p.point0.Y + c_y);
+
+            double simpleX = Math.Sqrt((1 - Math.Pow((p.mouseXY.Y - center.Y), 2) / Math.Pow(c_y, 2)) * Math.Pow(c_x, 2));
+            double simpleY = Math.Sqrt((1 - Math.Pow((p.mouseXY.X - center.X), 2) / Math.Pow(c_x, 2)) * Math.Pow(c_y, 2));
+            double higherPlaceX = center.X + simpleX;
+            double lowerPlaceX = center.X - simpleX;
+            double higherPlaceY = center.Y + simpleY;
+            double lowerPlaceY = center.Y - simpleY;
+
+            if (p.mouseXY.X <= higherPlaceX && p.mouseXY.X >= higherPlaceX - 3)
+                tf = true;
+            if (p.mouseXY.X >= lowerPlaceX && p.mouseXY.X <= lowerPlaceX + 3)
+                tf = true;
+            if (p.mouseXY.Y <= higherPlaceY && p.mouseXY.Y >= higherPlaceY - 3)
+                tf = true;
+            if (p.mouseXY.Y >= lowerPlaceY && p.mouseXY.Y <= lowerPlaceY + 3)
+                tf = true;
+
+            return tf;
+        }
+
+        public bool checkHitRect(gPoint p)
+        {
+            bool tf = false;
+            if ((p.mouseXY.X <= p.point1.X + 3 && p.mouseXY.X >= p.point1.X - 3) || (p.mouseXY.X >= p.point0.X - 3 && p.mouseXY.X <= p.point0.X + 3))
+            {
+                if (p.mouseXY.Y <= p.point2.Y && p.mouseXY.Y >= p.point0.Y)
+                {
+                    tf = true;
+                }
+            }
+            if ((p.mouseXY.Y <= p.point2.Y + 3 && p.mouseXY.Y >= p.point2.Y - 3) || (p.mouseXY.Y >= p.point0.Y - 3 && p.mouseXY.Y <= p.point0.Y + 3))
+            {
+                if (p.mouseXY.X <= p.point1.X && p.mouseXY.X >= p.point0.X)
+                {
+                    tf = true;
+                }
+            }
+            return tf;
+        }
+
+        public bool checkHitLine(System.Windows.Point downPlace, gPath p)
+        {
+            bool tf = false;
+            double m = (p.controlBtn4.Y - p.controlBtn1.Y) / (p.controlBtn4.X - p.controlBtn1.X);
+            double xm = (downPlace.Y - p.controlBtn1.Y) / m + p.controlBtn1.X;
+            double ym = (downPlace.X - p.controlBtn1.X) * m + p.controlBtn1.Y;
+            if (downPlace.X >= xm - 3 && downPlace.X <= xm + 3)
+                tf = true;
+            if (downPlace.Y >= ym - 3 && downPlace.Y <= ym + 3)
+                tf = true;
+            return tf;
+        }
+
+        public bool checkHitCurve(System.Windows.Media.Geometry geo, gPath p)
+        {
+            bool tf = false;
+            System.Windows.Media.Geometry tmpGeo = p.geo;
+            if (geo.Bounds.Equals(tmpGeo.Bounds))
+                tf = true;
+            return tf;
+        }
+
+        public int checkHitCorner(System.Windows.Point downPlace, gPath p)
+        {
+            int Node = -1;
+            if ((downPlace.X >= p.controlBtn1.X - 3) && (downPlace.X <= p.controlBtn1.X + 3) && (downPlace.Y >= p.controlBtn1.Y - 3) && (downPlace.Y <= p.controlBtn1.Y + 3))
+            {
+                Node = 0;
+            }
+            if ((downPlace.X >= p.controlBtn2.X - 3) && (downPlace.X <= p.controlBtn2.X + 3) && (downPlace.Y >= p.controlBtn2.Y - 3) && (downPlace.Y <= p.controlBtn2.Y + 3))
+            {
+                Node = 1;
+            }
+            if ((downPlace.X >= p.controlBtn3.X - 3) && (downPlace.X <= p.controlBtn3.X + 3) && (downPlace.Y >= p.controlBtn3.Y - 3) && (downPlace.Y <= p.controlBtn3.Y + 3))
+            {
+                Node = 2;
+            }
+            if ((downPlace.X >= p.controlBtn4.X - 3) && (downPlace.X <= p.controlBtn4.X + 3) && (downPlace.Y >= p.controlBtn4.Y - 3) && (downPlace.Y <= p.controlBtn4.Y + 3))
+            {
+                Node = 3;
+            }
+            return Node;
+        }
+
+        public bool checkHitCenter(System.Windows.Point downPlace, gPath p)
+        {
+            bool tf = true;
+            if (downPlace.X > p.controlBtn2.X + 3 || downPlace.X < p.controlBtn1.X - 3)
+                tf = false;
+            if (downPlace.Y > p.controlBtn4.Y + 3 || downPlace.Y < p.controlBtn1.Y - 3)
+                tf = false;
+            return tf;
         }
     }
 
