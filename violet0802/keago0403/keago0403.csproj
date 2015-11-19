@@ -238,6 +238,7 @@
     <EmbeddedResource Include="Ribbon1.resx">
       <DependentUpon>Ribbon1.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="james.pfx" />
     <None Include="james.snk" />
     <None Include="jamesnew.pfx" />
     <None Include="keago0403_TemporaryKey.pfx" />
@@ -379,11 +380,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>james.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>91ADBD7212639050EEDD0E1B09235B54AB0BAFA5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A0CCADAC74B716E705D58D82FB7A041E67B57B57</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>james.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

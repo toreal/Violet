@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Unloaded="UserControl_Unloaded">
+             d:DesignHeight="300" d:DesignWidth="300" Unloaded="UserControl_Unloaded" KeyDown="UserControl_KeyDown">
 
     <Grid>
-        <Canvas Name="myBackground" Background="White" />
+        <Canvas Name="myBackground" Background="White" Focusable="True"/>
         <Canvas Name="mygrid"  OpacityMask="White" MouseLeftButtonDown="mygrid_MouseLeftButtonDown" MouseLeftButtonUp="mygrid_MouseLeftButtonUp" MouseMove="mygrid_MouseMove">
             <Canvas.Background>
                 <SolidColorBrush Opacity=".0" />

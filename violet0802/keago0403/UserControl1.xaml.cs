@@ -1419,5 +1419,63 @@ namespace keago0403
             Globals.ThisAddIn.AddPictureContentControl(_utility);
             ClearDrawing();
         }
+
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+
+
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+
+                if ( e.Key == Key.C)
+                {
+
+                    gPath tp = gdc.sroot.PathList[ru.Sel];
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+
+
+                        XmlSerializer s = new XmlSerializer(typeof(gPath));
+
+                        s.Serialize(XmlWriter.Create(stream), tp);
+
+                        stream.Flush();
+                        stream.Seek(0, SeekOrigin.Begin);
+
+                        StreamReader sr = new StreamReader(stream);
+                        string myStr = sr.ReadToEnd();
+
+                        Clipboard.SetText(myStr);
+                    }
+
+                 
+
+                }else if ( e.Key == Key.V)
+                {
+
+                    String str = Clipboard.GetText();
+
+                    XmlSerializer serializer = new XmlSerializer(typeof(gPath));
+                    using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
+                    {
+                        gPath tp = (gPath)serializer.Deserialize(XmlReader.Create(ms));
+
+                        gdc.sroot.PathList.Add(tp);
+                        
+                    }
+
+
+                }
+
+
+                
+                
+
+
+            }
+
+
+
+        }
     }
 }
