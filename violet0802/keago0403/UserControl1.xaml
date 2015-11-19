@@ -13,7 +13,7 @@
                 <SolidColorBrush Opacity=".0" />
             </Canvas.Background>
         </Canvas>
-        <Canvas Name="myControl" OpacityMask="White" MouseLeftButtonDown="myControl_MouseLeftButtonDown" MouseMove="myControl_MouseMove">
+        <Canvas Name="myControl" OpacityMask="White" MouseLeftButtonDown="myControl_MouseLeftButtonDown" MouseMove="myControl_MouseMove" MouseLeftButtonUp="myControl_MouseLeftButtonUp">
             <Canvas.Background>
                 <SolidColorBrush Opacity=".1" Color="Black" />
             </Canvas.Background>

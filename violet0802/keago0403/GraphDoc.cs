@@ -57,7 +57,6 @@ namespace keago0403
                         break;
                     }
                 }
-                
                 FullList.Add(Data);
                 pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
                 FullStack.Push(pa);
@@ -86,7 +85,7 @@ namespace keago0403
             return Node;
         }
 
-        public RUse checkOut(System.Windows.Point downPlace, params System.Windows.Media.Geometry[] checkGeo) //check for the place you mouseDown have object
+        /*public RUse checkOut(System.Windows.Point downPlace, params System.Windows.Media.Geometry[] checkGeo) //check for the place you mouseDown have object
         {
             RUse r = new RUse();
             r.Sel = -1;
@@ -198,15 +197,13 @@ namespace keago0403
         private bool checkCurve(System.Windows.Point downPlace, gPath p, System.Windows.Media.Geometry Geo)
         {
             bool tf = false;
-            if(p.geo == Geo)
-                tf = true;
             return tf;
         }
 
         private bool checkEllipse(System.Windows.Point downPlace, gPath p)
         {
             //另類解法 - EGO
-            /*double xR = Math.Abs(downPlace.X - center.X);
+            double xR = Math.Abs(downPlace.X - center.X);
             double yR = Math.Abs(downPlace.Y - center.Y);
             double longToC = Math.Sqrt((Math.Pow((downPlace.X - center.X), 2)) + (Math.Pow((downPlace.Y - center.Y), 2)));
 
@@ -223,7 +220,7 @@ namespace keago0403
             if (sum <= 3)
             {
                 tf = true;
-            }*/
+            }//------------------------
             bool tf = false;
             double c_x = (p.controlBtn2.X - p.controlBtn1.X) / 2;
             double c_y = (p.controlBtn3.Y - p.controlBtn1.Y) / 2;
@@ -279,7 +276,7 @@ namespace keago0403
             if (downPlace.Y >= ym - 3 && downPlace.Y <= ym + 3)
                 tf = true;
             return tf;
-        }
+        }*/
 
         public void addContent(Document doc)
         {
@@ -365,7 +362,6 @@ namespace keago0403
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
-        public System.Windows.Media.Geometry geo;
 
         public void copyVal(gPath obj)
         {
@@ -378,7 +374,6 @@ namespace keago0403
             controlBtn2 = obj.controlBtn2;
             controlBtn3 = obj.controlBtn3;
             controlBtn4 = obj.controlBtn4;
-            geo = obj.geo;
         }
 
     }
@@ -397,7 +392,6 @@ namespace keago0403
         public System.Windows.Point point1;
         public System.Windows.Point point2;
         public System.Windows.Point point3;
-        public System.Windows.Media.Geometry geo;
     }
 
     public class pointAry
@@ -439,7 +433,7 @@ namespace keago0403
             int whichOne = -1;
             for (int i = l.Count - 1; i >= 0; i--)
             {
-                if (drawType < 3)
+                if (drawType < 3 || drawType == 4)
                 {
                     if (l[i].controlBtn1 != gp.point0)
                         continue;
@@ -457,11 +451,6 @@ namespace keago0403
                     if (l[i].controlBtn1 != gp.point0)
                         continue;
                     if (l[i].controlBtn4 != gp.point3)
-                        continue;
-                }
-                if (drawType == 4)
-                {
-                    if (!l[i].geo.Bounds.Equals(gp.geo.Bounds))
                         continue;
                 }
                 whichOne = i;
@@ -528,12 +517,28 @@ namespace keago0403
             return tf;
         }
 
-        public bool checkHitCurve(System.Windows.Media.Geometry geo, gPath p)
+        public bool checkHitCurve(String Data, gPath p)
         {
-            bool tf = false;
-            System.Windows.Media.Geometry tmpGeo = p.geo;
-            if (geo.Bounds.Equals(tmpGeo.Bounds))
-                tf = true;
+            bool tf = true;
+            String[] tmpStr = Data.Split(',');
+            double[] tmpDouStr = new double[tmpStr.Length];
+            for (int i = 0; i < tmpStr.Length; i++)
+            {
+                tmpDouStr[i] = Convert.ToDouble(tmpStr[i]);
+            }
+            System.Windows.Point tmpPoint0 = new System.Windows.Point(tmpDouStr[0], tmpDouStr[1]);
+            System.Windows.Point tmpPoint1 = new System.Windows.Point(tmpDouStr[2], tmpDouStr[3]);
+            System.Windows.Point tmpPoint2 = new System.Windows.Point(tmpDouStr[4], tmpDouStr[5]);
+            System.Windows.Point tmpPoint3 = new System.Windows.Point(tmpDouStr[6], tmpDouStr[7]);
+
+            if (!tmpPoint0.Equals(p.controlBtn1))
+                tf = false;
+            if (!tmpPoint1.Equals(p.controlBtn2))
+                tf = false;
+            if (!tmpPoint2.Equals(p.controlBtn3))
+                tf = false;
+            if (!tmpPoint3.Equals(p.controlBtn4))
+                tf = false;
             return tf;
         }
 

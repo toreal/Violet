@@ -51,7 +51,7 @@ namespace keago0403
         }
         public void ClearDrawing()
         {
-            userControl1.ClearDrawing();
+            userControl1.ClearBtnUse();
         }
         public void setStrokeType(int ntype)
         {

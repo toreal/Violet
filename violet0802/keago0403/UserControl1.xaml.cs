@@ -33,7 +33,7 @@ namespace keago0403
         public UserControl1()
         {
             InitializeComponent();
-            myControl.Visibility = Visibility.Hidden;
+            hiddenCanvas();
         }
 
         public int drawtype = 1;
@@ -67,6 +67,7 @@ namespace keago0403
         bool bfirst = true;
         bool bCanMove = false; //you can do mouseEvent
         bool bhave = false; //you have choose
+        bool gCanMove = false;
         bool bConThing = false;
 
         /*--------------  滑鼠事件  --------------*/
@@ -99,57 +100,7 @@ namespace keago0403
             else
             {
                 gdc.selIndex = -1;
-                gdc.clearMaskNum();
-            }
-        }
-        private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            pStart = correctPoint(e.GetPosition(myControl));
-            tempFPath = new gPath();
-            bCanMove = true;
-            tempStart = pStart;
-            int tempDraw = gdc.sroot.PathList[ru.Sel].drawtype;
-            if (tempDraw < 3)
-            {
-                if (pStart.X < gdc.sroot.PathList[ru.Sel].controlBtn1.X || pStart.X > gdc.sroot.PathList[ru.Sel].controlBtn2.X || pStart.Y < gdc.sroot.PathList[ru.Sel].controlBtn1.Y || pStart.Y > gdc.sroot.PathList[ru.Sel].controlBtn3.Y)
-                {
-                    myControl.Visibility = Visibility.Hidden;
-                    ru.Node = -1;
-                    gdc.bmove = false;
-                    bfirst = true;
-                    bhave = false;
-                    bConThing = false;
-                }
-            }
-            if (tempDraw == 3)
-            {
-                if (!chd.checkHitLine(pStart, gdc.sroot.PathList[ru.Sel]))
-                {
-                    myControl.Visibility = Visibility.Hidden;
-                    ru.Node = -1;
-                    gdc.bmove = false;
-                    bfirst = true;
-                    bhave = false;
-                    bConThing = false;
-                }
-            }
-            if (tempDraw == 4)
-            {
-                if (!chd.checkHitCurve(tempGeo, gdc.sroot.PathList[ru.Sel]))
-                {
-                    myControl.Visibility = Visibility.Hidden;
-                    ru.Node = -1;
-                    gdc.bmove = false;
-                    bfirst = true;
-                    bhave = false;
-                    bConThing = false;
-                }
-            }
-            
-            
-            if (ru.Sel >= 0)
-            {
-                gdc.node = ru.Node;
+                //gdc.clearMaskNum();
             }
         }
         private void mygrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -240,11 +191,74 @@ namespace keago0403
                 }
             }
         }
+        private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            pStart = correctPoint(e.GetPosition(myControl));
+            tempFPath = new gPath();
+            tempStart = pStart;
+            int tempDraw = gdc.sroot.PathList[ru.Sel].drawtype;
+            if (!gCanMove)
+            {
+                hiddenCanvas();
+                ru.Sel = -1;
+                ru.Node = -1;
+                bConThing = false;
+                gdc.bmove = false;
+                bfirst = true;
+                bhave = false;
+            }
+            if (ru.Sel >= 0)
+            {
+                gdc.node = ru.Node;
+            }
+        }
+        private void myControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (gCanMove)
+            {
+                gCanMove = false;
+                pEnd = correctPoint(e.GetPosition(myControl));
+                double tempX, tempY;
+                double px = pStart.X;
+                double py = pStart.Y;
+                double ex = pEnd.X;
+                double ey = pEnd.Y;
+                if (drawtype != 3 && ex < px)
+                {
+                    tempX = ex;
+                    ex = px;
+                    px = tempX;
+                }
+                if (drawtype != 3 && ey < py)
+                {
+                    tempY = ey;
+                    ey = py;
+                    py = tempY;
+                }
+
+                remGPath(px, py, ex, ey);
+
+                if (bhave && ru.Sel >= 0)
+                {
+                    if (new Point(ex, ey) != new Point(px, py))
+                    {
+                        tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
+                        gdc.writeIn(tempFPath, 1);
+                        gdc.Release();
+                    }
+                }
+                gdc.bmove = false;
+                if (Status.Equals("rest"))
+                    reDraw(true);
+                bfirst = true;
+                bhave = false;
+            }
+        }
         private void myControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (ru.Node > -1)
+                if (ru.Node > -1 && gCanMove)
                 {
                     pEnd = correctPoint(e.GetPosition(myControl));
                     double px = pStart.X;
@@ -260,6 +274,7 @@ namespace keago0403
             }
         }
 
+        
         /*------------  矯正滑鼠位置  ------------*/
         private Point correctPoint(Point p)
         {
@@ -634,10 +649,22 @@ namespace keago0403
         void myPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             bConThing = true;
-
             gp = new gPoint();
             System.Windows.Shapes.Path tempPath = sender as System.Windows.Shapes.Path;
-            gp.geo = tempPath.Data;
+            String[] tmpStr = pathDataToPoint(tempPath.Data.ToString()).Split(',');
+            double[] tmpDouStr = new double[tmpStr.Length];
+
+            for (int i = 0; i < tmpStr.Length; i++)
+            {
+                tmpDouStr[i] = Convert.ToDouble(tmpStr[i]);
+            }
+
+            gp.point0 = new Point(tmpDouStr[0], tmpDouStr[1]);
+            gp.point1 = new Point(tmpDouStr[2], tmpDouStr[3]);
+            gp.point2 = new Point(tmpDouStr[4], tmpDouStr[5]);
+            gp.point3 = new Point(tmpDouStr[6], tmpDouStr[7]);
+
+            //gp.geo = tempPath.Data;
             gp.mouseXY = new Point(e.GetPosition(mygrid).X, e.GetPosition(mygrid).Y);
             //Debug.WriteLine(gp.geo);
             showCanvas();
@@ -649,13 +676,13 @@ namespace keago0403
         {
             ru.Node = chd.checkHitCorner(e.GetPosition(myControl), gdc.sroot.PathList[ru.Sel]);
             gdc.node = ru.Node;
+            gCanMove = true;
         }
         void cornerRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (bCanMove)
+            if (gCanMove)
             {
-                //bmousedown = false;
-                //Debug.WriteLine("false");
+                gCanMove = false;
                 pEnd = correctPoint(e.GetPosition(myControl));
                 double tempX, tempY;
                 double px = pStart.X;
@@ -663,7 +690,6 @@ namespace keago0403
                 double ex = pEnd.X;
                 double ey = pEnd.Y;
 
-                //tempGPath = new gPath();
                 if (drawtype != 3 && ex < px)
                 {
                     tempX = ex;
@@ -695,22 +721,22 @@ namespace keago0403
         void sideRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (chd.checkHitCenter(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
+            {
                 ru.Node = 4;
+                gCanMove = true;
+            }
         }
         void sideRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (bCanMove)
+            if (gCanMove)
             {
-                //bmousedown = false;
-                //Debug.WriteLine("false");
+                gCanMove = false;
                 pEnd = correctPoint(e.GetPosition(myControl));
                 double tempX, tempY;
                 double px = pStart.X;
                 double py = pStart.Y;
                 double ex = pEnd.X;
                 double ey = pEnd.Y;
-
-                //tempGPath = new gPath();
                 if (drawtype != 3 && ex < px)
                 {
                     tempX = ex;
@@ -742,11 +768,20 @@ namespace keago0403
         void controlLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (chd.checkHitLine(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
+            {
+                gCanMove = true;
                 ru.Node = 4;
+            }
         }
         void controlPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ru.Node = 4;
+            System.Windows.Shapes.Path p = sender as System.Windows.Shapes.Path;
+            String tempStr = pathDataToPoint(p.Data.ToString());
+
+            if(chd.checkHitCurve(tempStr,gdc.sroot.PathList[ru.Sel])){
+                ru.Node = 4;
+                gCanMove = true;
+            } 
         }
 
         /*------------  選取邊線使用  ------------*/
@@ -760,19 +795,19 @@ namespace keago0403
             colorR = 0;
             colorG = 0;
             colorB = 0;
-            strokeT = 1;
+            strokeT = 2;
             if (p.drawtype < 3)
             {
                 colorG = 255;
                 greenFourSideRect((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y, 0);
                 bfirst = true;
-                greenFourCornerRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn1.X - 4, (int)p.controlBtn1.Y - 4, (int)p.controlBtn1.X + 4, (int)p.controlBtn1.Y + 4, 255);
                 bfirst = true;
-                greenFourCornerRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn2.X - 4, (int)p.controlBtn2.Y - 4, (int)p.controlBtn2.X + 4, (int)p.controlBtn2.Y + 4, 255);
                 bfirst = true;
-                greenFourCornerRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn3.X - 4, (int)p.controlBtn3.Y - 4, (int)p.controlBtn3.X + 4, (int)p.controlBtn3.Y + 4, 255);
                 bfirst = true;
-                greenFourCornerRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn4.X - 4, (int)p.controlBtn4.Y - 4, (int)p.controlBtn4.X + 4, (int)p.controlBtn4.Y + 4, 255);
                 bfirst = true;
                 colorG = tmpG;
             }
@@ -781,34 +816,35 @@ namespace keago0403
                 colorG = 255;
                 greenLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
                 bfirst = true;
-                greenFourCornerRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn1.X - 4, (int)p.controlBtn1.Y - 4, (int)p.controlBtn1.X + 4, (int)p.controlBtn1.Y + 4, 255);
                 bfirst = true;
-                greenFourCornerRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn4.X - 4, (int)p.controlBtn4.Y - 4, (int)p.controlBtn4.X + 4, (int)p.controlBtn4.Y + 4, 255);
                 bfirst = true;
                 colorG = tmpG;
             }
             else
             {
                 greenLine((int)p.controlBtn1.X, (int)p.controlBtn1.Y, (int)p.controlBtn2.X, (int)p.controlBtn2.Y);
-                myLine.Opacity = 0.5;
+                controlLine.Opacity = 0.2;
                 bfirst = true;
                 greenLine((int)p.controlBtn3.X, (int)p.controlBtn3.Y, (int)p.controlBtn4.X, (int)p.controlBtn4.Y);
-                myLine.Opacity = 0.5;
+                controlLine.Opacity = 0.2;
                 bfirst = true;
                 colorG = 255;
-                greenFourCornerRect((int)p.controlBtn1.X - 3, (int)p.controlBtn1.Y - 3, (int)p.controlBtn1.X + 3, (int)p.controlBtn1.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn1.X - 4, (int)p.controlBtn1.Y - 4, (int)p.controlBtn1.X + 4, (int)p.controlBtn1.Y + 4, 255);
                 bfirst = true;
                 colorG = tmpG;
                 colorR = 255;
-                greenFourCornerRect((int)p.controlBtn2.X - 3, (int)p.controlBtn2.Y - 3, (int)p.controlBtn2.X + 3, (int)p.controlBtn2.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn2.X - 4, (int)p.controlBtn2.Y - 4, (int)p.controlBtn2.X + 4, (int)p.controlBtn2.Y + 4, 255);
                 bfirst = true;
-                greenFourCornerRect((int)p.controlBtn3.X - 3, (int)p.controlBtn3.Y - 3, (int)p.controlBtn3.X + 3, (int)p.controlBtn3.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn3.X - 4, (int)p.controlBtn3.Y - 4, (int)p.controlBtn3.X + 4, (int)p.controlBtn3.Y + 4, 255);
                 bfirst = true;
                 colorR = tmpR;
                 colorG = 255;
-                greenFourCornerRect((int)p.controlBtn4.X - 3, (int)p.controlBtn4.Y - 3, (int)p.controlBtn4.X + 3, (int)p.controlBtn4.Y + 3, 255);
+                greenFourCornerRect((int)p.controlBtn4.X - 4, (int)p.controlBtn4.Y - 4, (int)p.controlBtn4.X + 4, (int)p.controlBtn4.Y + 4, 255);
                 bfirst = true;
                 greenCurve(p.controlBtn1, p.controlBtn2, p.controlBtn3, p.controlBtn4);
+                bfirst = true;
                 colorG = tmpG;
             }
             strokeT = tmpS;
@@ -885,6 +921,7 @@ namespace keago0403
                 controlLine.VerticalAlignment = VerticalAlignment.Center;
                 controlLine.StrokeThickness = strokeT;
                 controlLine.MouseLeftButtonDown += controlLine_MouseLeftButtonDown;
+                controlLine.MouseLeftButtonUp += myControl_MouseLeftButtonUp;
 
                 myControl.Children.Add(controlLine);
             }
@@ -949,7 +986,6 @@ namespace keago0403
                 tempFPath.controlBtn2 = p1;
                 tempFPath.controlBtn3 = p2;
                 tempFPath.controlBtn4 = p3;
-                tempFPath.geo = tempGeo;
             }
         }
         private void reDraw(bool bfull)
@@ -1170,6 +1206,17 @@ namespace keago0403
                 greenDrawing();
             }
         }
+        public void ClearBtnUse()
+        {
+            if (MessageBox.Show("你確定要清除畫布嗎?    若要你的檔案將會全部遺失!", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                mygrid.Children.Clear();
+                gdc.sroot.PathList.Clear();
+                gdc.FullList.Clear();
+                gdc.FullStack.Clear();
+                gdc.Release();
+            }
+        }
         public void ClearDrawing()
         {
             mygrid.Children.Clear();
@@ -1301,6 +1348,17 @@ namespace keago0403
                     reDraw(true);
                 }
             }
+        }
+        private String pathDataToPoint(String Data) //將Path.Data的值轉換成四個控制點
+        {
+            String tempStr = Data;
+            int tmpMSeat = tempStr.IndexOf("M");
+            tempStr = tempStr.Remove(tmpMSeat, 1);
+
+            String[] tempAry = tempStr.Split('C');
+            tempStr = tempAry[0]+","+tempAry[1];
+            //Debug.WriteLine(tempStr);
+            return tempStr;
         }
 
         /*--------------  圖檔使用  --------------*/

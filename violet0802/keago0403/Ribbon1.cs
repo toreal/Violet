@@ -33,7 +33,7 @@ namespace keago0403
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            Check();
+            //Check();
         }
 
         private void circle_btn_Click(object sender, RibbonControlEventArgs e)
@@ -65,7 +65,9 @@ namespace keago0403
         private void clear_Click(object sender, RibbonControlEventArgs e)
         {
             Check();
+            f.TopMost = false;
             f.ClearDrawing();
+            f.TopMost = true;
         }
 
         private void bgp_Click(object sender, RibbonControlEventArgs e)
@@ -87,65 +89,77 @@ namespace keago0403
 
         private void red_btn_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("red");
+            if (f != null)
+                f.setColorType("red");
         }
 
         private void button7_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("orange");
+            if (f != null)
+                f.setColorType("orange");
         }
 
         private void yellow_btn_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("yellow");
+            if (f != null)
+                f.setColorType("yellow");
         }
 
         private void green_btn_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("green");
+            if (f != null)
+                f.setColorType("green");
         }
 
         private void black_btn_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("black");
+            if (f != null)
+                f.setColorType("black");
         }
 
         private void blue_btn_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("blue");
+            if (f != null)
+                f.setColorType("blue");
         }
         private void violet_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("violet");
+            if (f != null)
+                f.setColorType("violet");
         }
 
         private void gray_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("gray");
+            if (f != null)
+                f.setColorType("gray");
         }
         private void white_btn_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setColorType("white");
-
+            if (f != null)
+                f.setColorType("white");
         }
 
         private void px1_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setStrokeType(1);
+            if (f != null)
+                f.setStrokeType(1);
         }
 
         private void px3_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setStrokeType(3);
+            if (f != null)
+                f.setStrokeType(3);
         }
 
         private void px5_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setStrokeType(5);
+            if (f != null)
+                f.setStrokeType(5);
         }
         private void px8_Click(object sender, RibbonControlEventArgs e)
         {
-            f.setStrokeType(8);
+            if (f != null)
+                f.setStrokeType(8);
         }
 
         private void selBtn_Click(object sender, RibbonControlEventArgs e)
@@ -156,17 +170,13 @@ namespace keago0403
         private void redo_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
-            {
                 f.setAction(1);
-            }
         }
 
         private void undo_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
-            {
                 f.setAction(0);
-            }
         }
 
          public void initPath(string xml)
