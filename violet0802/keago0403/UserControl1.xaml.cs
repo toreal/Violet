@@ -46,7 +46,7 @@ namespace keago0403
         byte colorR = 0;
         byte colorG = 0;
         byte colorB = 0;
-        int strokeT = 1;
+        int strokeT = 3;
 
         
         String Status = "rest";
@@ -83,24 +83,10 @@ namespace keago0403
                 {
                     gdc.selIndex = gdc.sroot.PathList.Count - 1;
                 }
-                /*else
-                {
-                    ru = gdc.checkOut(pStart);
-                    if (ru.Sel >= 0)
-                    {
-                        gdc.node = ru.Node;
-                        
-                    }
-                    else
-                    {
-                        gdc.clearMaskNum();
-                    }
-                }*/
             }
             else
             {
                 gdc.selIndex = -1;
-                //gdc.clearMaskNum();
             }
         }
         private void mygrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -501,9 +487,9 @@ namespace keago0403
                 bfirst = false;
                 myEllipse = new Ellipse();
 
-                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                 mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
-                myEllipse.Fill = mySolidColorBrush;
+                myEllipse.Fill = mySolidColorBrush;*/
                 myEllipse.StrokeThickness = strokeT;
                 myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 myEllipse.Width = Math.Abs(xEnd - xStart);
@@ -521,9 +507,9 @@ namespace keago0403
                 bfirst = false;
                 myRect = new Rectangle();
 
-                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                 mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
-                myRect.Fill = mySolidColorBrush;
+                myRect.Fill = mySolidColorBrush;*/
                 myRect.StrokeThickness = strokeT;
                 myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 myRect.Width = Math.Abs(xEnd - xStart);
@@ -778,8 +764,10 @@ namespace keago0403
             System.Windows.Shapes.Path p = sender as System.Windows.Shapes.Path;
             String tempStr = pathDataToPoint(p.Data.ToString());
 
-            if(chd.checkHitCurve(tempStr,gdc.sroot.PathList[ru.Sel])){
-                ru.Node = 4;
+            if(chd.checkHitCurve(tempStr,gdc.sroot.PathList[ru.Sel]))
+            {
+                ru.Node = -1;
+                //ru.Node = 4;
                 gCanMove = true;
             } 
         }

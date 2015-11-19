@@ -82,8 +82,6 @@ namespace keago0403
 
                     Globals.Ribbons.Ribbon1.RibbonUI.ActivateTabMso("TabAddIns");
 
-
-
                 }
             }
 
