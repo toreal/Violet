@@ -32,7 +32,7 @@ namespace keago0403
         public int mx;
         public int my;
         public bool bmove;
-        private int maskNum = -1;
+        //private int maskNum = -1;
 
         public void writeIn(gPath Data, int Action)
         {
@@ -66,19 +66,19 @@ namespace keago0403
         private int checkCorner(System.Windows.Point downPlace, gPath p)//check if you click on the corner you choose
         {
             int Node = -1;
-            if ((downPlace.X >= p.controlBtn1.X - 3) && (downPlace.X <= p.controlBtn1.X + 3) && (downPlace.Y >= p.controlBtn1.Y - 3) && (downPlace.Y <= p.controlBtn1.Y + 3))
+            if ((downPlace.X >= p.controlBtn1.X - 4) && (downPlace.X <= p.controlBtn1.X + 4) && (downPlace.Y >= p.controlBtn1.Y - 4) && (downPlace.Y <= p.controlBtn1.Y + 4))
             {
                 Node = 0;
             }
-            if ((downPlace.X >= p.controlBtn2.X - 3) && (downPlace.X <= p.controlBtn2.X + 3) && (downPlace.Y >= p.controlBtn2.Y - 3) && (downPlace.Y <= p.controlBtn2.Y + 3))
+            if ((downPlace.X >= p.controlBtn2.X - 4) && (downPlace.X <= p.controlBtn2.X + 4) && (downPlace.Y >= p.controlBtn2.Y - 4) && (downPlace.Y <= p.controlBtn2.Y + 4))
             {
                 Node = 1;
             }
-            if ((downPlace.X >= p.controlBtn3.X - 3) && (downPlace.X <= p.controlBtn3.X + 3) && (downPlace.Y >= p.controlBtn3.Y - 3) && (downPlace.Y <= p.controlBtn3.Y + 3))
+            if ((downPlace.X >= p.controlBtn3.X - 4) && (downPlace.X <= p.controlBtn3.X + 4) && (downPlace.Y >= p.controlBtn3.Y - 4) && (downPlace.Y <= p.controlBtn3.Y + 4))
             {
                 Node = 2;
             }
-            if ((downPlace.X >= p.controlBtn4.X - 3) && (downPlace.X <= p.controlBtn4.X + 3) && (downPlace.Y >= p.controlBtn4.Y - 3) && (downPlace.Y <= p.controlBtn4.Y + 3))
+            if ((downPlace.X >= p.controlBtn4.X - 4) && (downPlace.X <= p.controlBtn4.X + 4) && (downPlace.Y >= p.controlBtn4.Y - 4) && (downPlace.Y <= p.controlBtn4.Y + 4))
             {
                 Node = 3;
             }
@@ -545,19 +545,19 @@ namespace keago0403
         public int checkHitCorner(System.Windows.Point downPlace, gPath p)
         {
             int Node = -1;
-            if ((downPlace.X >= p.controlBtn1.X - 3) && (downPlace.X <= p.controlBtn1.X + 3) && (downPlace.Y >= p.controlBtn1.Y - 3) && (downPlace.Y <= p.controlBtn1.Y + 3))
+            if ((downPlace.X >= p.controlBtn1.X - 4) && (downPlace.X <= p.controlBtn1.X + 4) && (downPlace.Y >= p.controlBtn1.Y - 4) && (downPlace.Y <= p.controlBtn1.Y + 4))
             {
                 Node = 0;
             }
-            if ((downPlace.X >= p.controlBtn2.X - 3) && (downPlace.X <= p.controlBtn2.X + 3) && (downPlace.Y >= p.controlBtn2.Y - 3) && (downPlace.Y <= p.controlBtn2.Y + 3))
+            if ((downPlace.X >= p.controlBtn2.X - 4) && (downPlace.X <= p.controlBtn2.X + 4) && (downPlace.Y >= p.controlBtn2.Y - 4) && (downPlace.Y <= p.controlBtn2.Y + 4))
             {
                 Node = 1;
             }
-            if ((downPlace.X >= p.controlBtn3.X - 3) && (downPlace.X <= p.controlBtn3.X + 3) && (downPlace.Y >= p.controlBtn3.Y - 3) && (downPlace.Y <= p.controlBtn3.Y + 3))
+            if ((downPlace.X >= p.controlBtn3.X - 4) && (downPlace.X <= p.controlBtn3.X + 4) && (downPlace.Y >= p.controlBtn3.Y - 4) && (downPlace.Y <= p.controlBtn3.Y + 4))
             {
                 Node = 2;
             }
-            if ((downPlace.X >= p.controlBtn4.X - 3) && (downPlace.X <= p.controlBtn4.X + 3) && (downPlace.Y >= p.controlBtn4.Y - 3) && (downPlace.Y <= p.controlBtn4.Y + 3))
+            if ((downPlace.X >= p.controlBtn4.X - 4) && (downPlace.X <= p.controlBtn4.X + 4) && (downPlace.Y >= p.controlBtn4.Y - 4) && (downPlace.Y <= p.controlBtn4.Y + 4))
             {
                 Node = 3;
             }
@@ -567,9 +567,9 @@ namespace keago0403
         public bool checkHitCenter(System.Windows.Point downPlace, gPath p)
         {
             bool tf = true;
-            if (downPlace.X > p.controlBtn2.X + 3 || downPlace.X < p.controlBtn1.X - 3)
+            if (downPlace.X > p.controlBtn2.X || downPlace.X < p.controlBtn1.X)
                 tf = false;
-            if (downPlace.Y > p.controlBtn4.Y + 3 || downPlace.Y < p.controlBtn1.Y - 3)
+            if (downPlace.Y > p.controlBtn4.Y || downPlace.Y < p.controlBtn1.Y)
                 tf = false;
             return tf;
         }

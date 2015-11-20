@@ -41,9 +41,9 @@ namespace keago0403
             return Sheight;
         }
         public void setDrawType(int ntype){
+            userControl1.drawtype = ntype;
             if (ntype == 5)
                 userControl1.hiddenCanvas();
-            userControl1.drawtype = ntype;
         }
         public void setColorType(String colorName)
         {
