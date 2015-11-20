@@ -37,10 +37,10 @@
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\Users\Lab421-208\Desktop\</PublishUrl>
+    <PublishUrl>C:\Users\Lab421-209\Desktop\least\</PublishUrl>
     <InstallUrl />
     <TargetCulture>zh-cht</TargetCulture>
-    <ApplicationVersion>1.0.0.3</ApplicationVersion>
+    <ApplicationVersion>1.0.0.4</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
@@ -384,7 +384,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4530F79334AB7CB21180F8D7EBF7D3DE075A2A0A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2D36169B777BBE16BD9C0183F11B1E2D95153CFF</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

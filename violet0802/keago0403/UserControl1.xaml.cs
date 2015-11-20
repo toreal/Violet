@@ -1270,6 +1270,8 @@ namespace keago0403
             if (MessageBox.Show("你確定要清除畫布嗎?    若要你的檔案將會全部遺失!", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 mygrid.Children.Clear();
+                myControl.Children.Clear();
+                myControl.Visibility = Visibility.Hidden;
                 gdc.sroot.PathList.Clear();
                 gdc.FullList.Clear();
                 gdc.FullStack.Clear();
@@ -1291,6 +1293,14 @@ namespace keago0403
             int height = (int)h;
             int width = (int)w;
             int tempStroke = strokeT;
+            byte tmpR = colorR;
+            byte tmpG = colorG;
+            byte tmpB = colorB;
+            
+            colorR = 0;
+            colorG = 0;
+            colorB = 0;
+            
             strokeT = 1;
             for (i = 0; i <= height; i += lineSpace)
             {
@@ -1320,6 +1330,9 @@ namespace keago0403
                 myLine.Opacity = opac;
                 myBackground.Children.Add(myLine);
             }
+            colorR = tmpR;
+            colorG = tmpG;
+            colorB = tmpB;
             strokeT = tempStroke;
         }
         public void stroke(int stroketype)

@@ -64,10 +64,13 @@ namespace keago0403
         }
         private void clear_Click(object sender, RibbonControlEventArgs e)
         {
-            Check();
-            f.TopMost = false;
-            f.ClearDrawing();
-            f.TopMost = true;
+            if (f != null)
+            {
+                Check();
+                f.TopMost = false;
+                f.ClearDrawing();
+                f.TopMost = true;
+            }
         }
 
         private void bgp_Click(object sender, RibbonControlEventArgs e)
