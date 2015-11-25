@@ -37,7 +37,7 @@
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\Users\user\Desktop\2D版本安裝檔案\</PublishUrl>
+    <PublishUrl>C:\Users\Lab421-208\Desktop\new\</PublishUrl>
     <InstallUrl />
     <TargetCulture>zh-cht</TargetCulture>
     <ApplicationVersion>1.0.0.5</ApplicationVersion>
@@ -393,10 +393,10 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1AA4C4EB7795F3844AED06B70B5712AA1070A973</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4530F79334AB7CB21180F8D7EBF7D3DE075A2A0A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>james.snk</AssemblyOriginatorKeyFile>

@@ -33,9 +33,9 @@ namespace keago0403
         public UserControl1()
         {
             InitializeComponent();
-            hiddenCanvas();
+            hiddenCanvas(); //一開始要將myControl畫布取消顯示
         }
-
+        //初始設定
         public int drawtype = 1;
         public String colortype = "black";
         public int lineSpace = 9;
@@ -49,10 +49,10 @@ namespace keago0403
         int strokeT = 3;
 
         
-        String Status = "rest";
-        Point pStart, pEnd;
+        String Status = "rest"; //繪製曲線時的狀態
+        Point pStart, pEnd; //滑鼠起點和終點
         Point tempStart;
-        Point p0, p1, p2, p3 = new Point(0, 0);
+        Point p0, p1, p2, p3 = new Point(0, 0); //紀錄四個控制點使用
         BezierSegment bezier = new BezierSegment();
         PathFigure figure = new PathFigure();
         PathGeometry geometry = new PathGeometry();
@@ -65,13 +65,14 @@ namespace keago0403
         System.Windows.Shapes.Path controlPath = new System.Windows.Shapes.Path();
 
         bool bfirst = true;
-        bool bCanMove = false; //you can do mouseEvent
+        bool bCanMove = false; //繪製時,滑鼠是否可以移動
         bool bhave = false; //you have choose
-        bool gCanMove = false;
-        bool bConThing = false;
-        bool OnIt = false;
+        bool gCanMove = false; //選取後是否可以移動
+        bool bConThing = false; //是否有選取物件
+        bool OnIt = false; //是否有滑入或滑出選取物件
 
         /*--------------  滑鼠事件  --------------*/
+        // mygrid --> 畫全部圖形的地方(黑), myControl --> 畫選取圖形的地方(綠)
         private void mygrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             pStart = correctPoint(e.GetPosition(mygrid));
@@ -306,6 +307,7 @@ namespace keago0403
         }
 
         /*--------------  圖形繪製  --------------*/
+        //曲線
         void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -387,6 +389,7 @@ namespace keago0403
                 }
             }
         }
+        //直線
         void drawLine(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -410,6 +413,7 @@ namespace keago0403
                 myLine.Y2 = yEnd;
             }
         }
+        //矩形
         void drawRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
         {
             if (bfirst)
@@ -436,6 +440,7 @@ namespace keago0403
                 myRect.Margin = new Thickness(xStart, yStart, 0, 0);
             }
         }
+        //橢圓
         void drawEllipse(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -694,6 +699,7 @@ namespace keago0403
                 bhave = true;
             }
         }
+        //四個角落的控制點
         void cornerRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ru.Node = chd.checkHitCorner(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]);
@@ -740,6 +746,7 @@ namespace keago0403
                     reDraw(true);
             }
         }
+        //綠色邊框
         void sideRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (chd.checkHitCenter(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
@@ -789,6 +796,7 @@ namespace keago0403
             ru.Node = 4;
             gCanMove = true;
         }
+        //換鼠標
         void Shapes_MouseEnter_Hands(object sender, MouseEventArgs e)
         {
             OnIt = true;
@@ -804,7 +812,55 @@ namespace keago0403
             OnIt = false;
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
-        
+
+        /*--------------  鍵盤事件  --------------*/
+        private void UserControl_KeyDown(object sender, KeyEventArgs e) //鍵盤按鍵按下
+        {
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                if (e.Key == Key.C)
+                {
+                    gPath tp = new gPath();
+                    tp.copyVal(gdc.sroot.PathList[ru.Sel]);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        XmlSerializer s = new XmlSerializer(typeof(gPath));
+
+                        s.Serialize(XmlWriter.Create(stream), tp);
+
+                        stream.Flush();
+                        stream.Seek(0, SeekOrigin.Begin);
+
+                        StreamReader sr = new StreamReader(stream);
+                        string myStr = sr.ReadToEnd();
+
+                        Clipboard.SetText(myStr);
+                    }
+                }
+                else if (e.Key == Key.V)
+                {
+
+                    String str = Clipboard.GetText();
+
+                    XmlSerializer serializer = new XmlSerializer(typeof(gPath));
+                    using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
+                    {
+                        gPath tp = (gPath)serializer.Deserialize(XmlReader.Create(ms));
+                        tp.ListPlace = gdc.sroot.PathList.Count;
+                        if (gdc.checkWhich(tp) != -1)
+                        {
+                            tp.controlBtn1 = new Point(tp.controlBtn1.X + 9, tp.controlBtn1.Y + 9);
+                            tp.controlBtn2 = new Point(tp.controlBtn2.X + 9, tp.controlBtn2.Y + 9);
+                            tp.controlBtn3 = new Point(tp.controlBtn3.X + 9, tp.controlBtn3.Y + 9);
+                            tp.controlBtn4 = new Point(tp.controlBtn4.X + 9, tp.controlBtn4.Y + 9);
+                        }
+                        gdc.writeIn(tp, 0);
+                        gdc.Release();
+                        reDraw(true);
+                    }
+                }
+            }
+        }
 
         /*------------  選取邊線使用  ------------*/
         void greenDrawing()
@@ -1002,7 +1058,7 @@ namespace keago0403
         }
 
         /*--------------  其他功能  --------------*/
-        private void remGPath(double px, double py, double ex, double ey)
+        private void remGPath(double px, double py, double ex, double ey) //儲存新繪製的圖形資料
         {
             tempFPath.state.colorB = colorB;
             tempFPath.state.colorG = colorG;
@@ -1034,14 +1090,13 @@ namespace keago0403
                 tempFPath.controlBtn4 = p3;
             }
         }
-        private void reDraw(bool bfull)
+        private void reDraw(bool bfull) //重新繪製畫布
         {
             if (bfull)
             {
                 mygrid.Children.Clear();
                 myControl.Children.Clear();
             }
-            // ClearDrawing();
             gPath p = new gPath();
             p = null;
             Point tempPoint;
@@ -1057,9 +1112,9 @@ namespace keago0403
                     {
                         drawGPath(gpath);
                     }
-                }//end of for loop
+                }
             }
-            if (p != null)
+            if (p != null) //改變控制點位置,建議更改成一個方法使用
             {
                 if (gdc.bmove)
                 {
@@ -1265,29 +1320,27 @@ namespace keago0403
                 greenDrawing();
             }
         }
-        public void ClearBtnUse()
+        public void ClearBtnUse() // 清除畫布警告
         {
             if (MessageBox.Show("你確定要清除畫布嗎?    若要你的檔案將會全部遺失!", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 mygrid.Children.Clear();
-                myControl.Children.Clear();
-                myControl.Visibility = Visibility.Hidden;
                 gdc.sroot.PathList.Clear();
                 gdc.FullList.Clear();
-                gdc.FullStack.Clear();
+                gdc.UndoStack.Clear();
                 gdc.Release();
             }
         }
-        public void ClearDrawing()
+        public void ClearDrawing()  //清空資料區
         {
             mygrid.Children.Clear();
             gdc.sroot.PathList.Clear();
         }
-        public void hideBackLine()
+        public void hideBackLine() //背景格線取消
         {
             myBackground.Children.Clear();
         }
-        public void drawBackLine(double w, double h, double opac)
+        public void drawBackLine(double w, double h, double opac) //畫背景格線
         {
             int i;
             int height = (int)h;
@@ -1296,11 +1349,9 @@ namespace keago0403
             byte tmpR = colorR;
             byte tmpG = colorG;
             byte tmpB = colorB;
-            
             colorR = 0;
             colorG = 0;
             colorB = 0;
-            
             strokeT = 1;
             for (i = 0; i <= height; i += lineSpace)
             {
@@ -1335,7 +1386,7 @@ namespace keago0403
             colorB = tmpB;
             strokeT = tempStroke;
         }
-        public void stroke(int stroketype)
+        public void stroke(int stroketype) //線條粗細
         {
             switch (stroketype)
             {
@@ -1353,7 +1404,7 @@ namespace keago0403
                     break;
             }
         }
-        public void color(String CName)
+        public void color(String CName) //使用顏色
         {
             colortype = CName;
             switch (colortype)
@@ -1421,7 +1472,7 @@ namespace keago0403
                 }
             }
         }
-        private String pathDataToPoint(String Data) //將Path.Data的值轉換成四個控制點
+        private String pathDataToPoint(String Data) //將Path.Data的值轉換成四個控制點,可以考慮換成其他判斷方式
         {
             String tempStr = Data;
             int tmpMSeat = tempStr.IndexOf("M");
@@ -1434,16 +1485,17 @@ namespace keago0403
         }
 
         /*--------------  圖檔使用  --------------*/
-        public void initpath(string xml)
+        public void initpath(string xml) //匯入xml,轉換成圖片
         {
             XmlSerializer serializer = new XmlSerializer(typeof(SVGRoot));
             using (MemoryStream ms = new MemoryStream( System.Text.Encoding.UTF8.GetBytes(xml)))
             {
+                //要重新去記錄步驟,否則匯入後redo, undo 無法使用
                 gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
                 reDraw(true);
             }
         }
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e) //關閉時,轉成圖片
         {
             myControl.Children.Clear();
             int margin = (int)mygrid.Margin.Left;
@@ -1503,44 +1555,6 @@ namespace keago0403
             Globals.ThisAddIn.AddPictureContentControl(_utility);
             ClearDrawing();
         }
-        private void UserControl_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                if (e.Key == Key.C)
-                {
-                    gPath tp = new gPath();
-                    tp.copyVal(gdc.sroot.PathList[ru.Sel]);
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        XmlSerializer s = new XmlSerializer(typeof(gPath));
-
-                        s.Serialize(XmlWriter.Create(stream), tp);
-
-                        stream.Flush();
-                        stream.Seek(0, SeekOrigin.Begin);
-
-                        StreamReader sr = new StreamReader(stream);
-                        string myStr = sr.ReadToEnd();
-
-                        Clipboard.SetText(myStr);
-                    }
-                }
-                else if (e.Key == Key.V)
-                {
-
-                    String str = Clipboard.GetText();
-
-                    XmlSerializer serializer = new XmlSerializer(typeof(gPath));
-                    using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
-                    {
-                        gPath tp = (gPath)serializer.Deserialize(XmlReader.Create(ms));
-
-                        gdc.writeIn(tp, 0);
-                        gdc.Release();
-                    }
-                }
-            }
-        }
+        
     }
 }

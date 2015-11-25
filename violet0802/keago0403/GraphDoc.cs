@@ -24,15 +24,14 @@ namespace keago0403
     public class GraphDoc
     {
        public SVGRoot sroot = new SVGRoot();
-       public List<gPath> FullList = new List<gPath>();
-        public Stack FullStack = new Stack();
-        public Stack TempStack = new Stack();
+       public List<gPath> FullList = new List<gPath>(); //remember all action from grid
+        public Stack UndoStack = new Stack();
+        public Stack RedoStack = new Stack();
         public int selIndex = -1; // The last seat in PathList array
         public int node = 0;
         public int mx;
         public int my;
         public bool bmove;
-        //private int maskNum = -1;
 
         public void writeIn(gPath Data, int Action)
         {
@@ -42,7 +41,7 @@ namespace keago0403
                 gPath g = new gPath();
                 FullList.Add(Data);
                 pa = new pointAry(Data.ListPlace, -1, (FullList.Count - 1));
-                FullStack.Push(pa);
+                UndoStack.Push(pa);
                 g.copyVal(Data);
                 sroot.PathList.Add(g);
             }
@@ -59,224 +58,37 @@ namespace keago0403
                 }
                 FullList.Add(Data);
                 pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
-                FullStack.Push(pa);
+                UndoStack.Push(pa);
             }
         }
 
-        private int checkCorner(System.Windows.Point downPlace, gPath p)//check if you click on the corner you choose
+        public int checkWhich(gPath gp)
         {
-            int Node = -1;
-            if ((downPlace.X >= p.controlBtn1.X - 4) && (downPlace.X <= p.controlBtn1.X + 4) && (downPlace.Y >= p.controlBtn1.Y - 4) && (downPlace.Y <= p.controlBtn1.Y + 4))
-            {
-                Node = 0;
-            }
-            if ((downPlace.X >= p.controlBtn2.X - 4) && (downPlace.X <= p.controlBtn2.X + 4) && (downPlace.Y >= p.controlBtn2.Y - 4) && (downPlace.Y <= p.controlBtn2.Y + 4))
-            {
-                Node = 1;
-            }
-            if ((downPlace.X >= p.controlBtn3.X - 4) && (downPlace.X <= p.controlBtn3.X + 4) && (downPlace.Y >= p.controlBtn3.Y - 4) && (downPlace.Y <= p.controlBtn3.Y + 4))
-            {
-                Node = 2;
-            }
-            if ((downPlace.X >= p.controlBtn4.X - 4) && (downPlace.X <= p.controlBtn4.X + 4) && (downPlace.Y >= p.controlBtn4.Y - 4) && (downPlace.Y <= p.controlBtn4.Y + 4))
-            {
-                Node = 3;
-            }
-            return Node;
-        }
-
-        /*public RUse checkOut(System.Windows.Point downPlace, params System.Windows.Media.Geometry[] checkGeo) //check for the place you mouseDown have object
-        {
-            RUse r = new RUse();
-            r.Sel = -1;
-            int tempInt;
+            int whichOne = -1;
             for (int i = sroot.PathList.Count - 1; i >= 0; i--)
             {
-                gPath p = (gPath)sroot.PathList[i];
-                if (p.drawtype == 1)
+                if (gp.drawtype < 3 || gp.drawtype == 4)
                 {
-                    if (checkEllipse(downPlace, p))
-                    {
-                        r.Sel = i;
-                        maskNum = i;
-                        break;
-                    }
-                    if (i == maskNum)
-                    {
-                        if (maskRL(downPlace, p))
-                        {
-                            r.Sel = i;
-                            tempInt = checkCorner(downPlace, p);
-                            if (tempInt >= 0)
-                            {
-                                r.Node = tempInt;
-                            }
-                            else
-                            {
-                                r.Node = 4;
-                            }
-                            break;
-                        }
-                    }
+                    if (sroot.PathList[i].controlBtn1 != gp.controlBtn1)
+                        continue;
+                    if (sroot.PathList[i].controlBtn2 != gp.controlBtn2)
+                        continue;
+                    if (sroot.PathList[i].controlBtn3 != gp.controlBtn3)
+                        continue;
+                    if (sroot.PathList[i].controlBtn4 != gp.controlBtn4)
+                        continue;
                 }
-                if (p.drawtype == 2)
+                if (gp.drawtype == 3)
                 {
-                    if (checkRect(downPlace, p))
-                    {
-                        r.Sel = i;
-                        tempInt = checkCorner(downPlace, p);
-                        if (tempInt >= 0)
-                        {
-                            r.Node = tempInt;
-                        }
-                        maskNum = i;
-                        break;
-                    }
-                    if( (i == maskNum) && maskRL(downPlace, p)){
-                        r.Sel = i;
-                        r.Node = 4;
-                        break;
-                    }
+                    if (sroot.PathList[i].controlBtn1 != gp.controlBtn1)
+                        continue;
+                    if (sroot.PathList[i].controlBtn4 != gp.controlBtn4)
+                        continue;
                 }
-                if (p.drawtype == 3)
-                {
-                    if (checkLine(downPlace, p))
-                    {
-                        r.Sel = i;
-                        tempInt = checkCorner(downPlace, p);
-                        if (tempInt >= 0)
-                        {
-                            r.Node = tempInt;
-                        }
-                        else if (i == maskNum)
-                        {
-                            r.Node = 4;
-                        }
-                        maskNum = i;
-                        break;
-                    }
-                }
-                if (p.drawtype == 4)
-                {
-                    
-                    if (checkGeo.Length > 0)
-                    {
-                        System.Windows.Media.Geometry tempGeo = checkGeo[0];
-                        if (checkCurve(downPlace, p, tempGeo))
-                        {
-                            r.Sel = i;
-                            tempInt = checkCorner(downPlace, p);
-                            if (tempInt >= 0)
-                            {
-                                r.Node = tempInt;
-                            }
-                            maskNum = i;
-                            break;
-                        }
-                    }
-                }
+                whichOne = i;
             }
-            return r;
+            return whichOne;
         }
-
-        private bool maskRL(System.Windows.Point downPlace, gPath p)
-        {
-            bool tf = true;
-            if (downPlace.X > p.controlBtn2.X + 3 || downPlace.X < p.controlBtn1.X - 3)
-                tf = false;
-            if (downPlace.Y > p.controlBtn4.Y + 3 || downPlace.Y < p.controlBtn1.Y - 3)
-                tf = false;
-            return tf;
-        }
-
-        public void clearMaskNum()
-        {
-            maskNum = -1;
-        }
-
-        private bool checkCurve(System.Windows.Point downPlace, gPath p, System.Windows.Media.Geometry Geo)
-        {
-            bool tf = false;
-            return tf;
-        }
-
-        private bool checkEllipse(System.Windows.Point downPlace, gPath p)
-        {
-            //另類解法 - EGO
-            double xR = Math.Abs(downPlace.X - center.X);
-            double yR = Math.Abs(downPlace.Y - center.Y);
-            double longToC = Math.Sqrt((Math.Pow((downPlace.X - center.X), 2)) + (Math.Pow((downPlace.Y - center.Y), 2)));
-
-            double cos = (Math.Pow(xR, 2) + Math.Pow(longToC, 2) - Math.Pow(yR, 2)) / (2 * xR * longToC);
-            double sin = yR / longToC;
-
-
-            double sum = 0;
-
-            double temp_x = center.X + xR * cos;
-            double temp_y = center.Y + yR * sin;
-            sum = Math.Sqrt((Math.Pow((downPlace.X - temp_x), 2)) + (Math.Pow((downPlace.Y - temp_y), 2)));
-            System.Windows.Point Point = new System.Windows.Point(temp_x, temp_y);
-            if (sum <= 3)
-            {
-                tf = true;
-            }//------------------------
-            bool tf = false;
-            double c_x = (p.controlBtn2.X - p.controlBtn1.X) / 2;
-            double c_y = (p.controlBtn3.Y - p.controlBtn1.Y) / 2;
-            System.Windows.Point center = new System.Windows.Point(p.controlBtn1.X + c_x, p.controlBtn1.Y + c_y);
-
-            double simpleX = Math.Sqrt((1 - Math.Pow((downPlace.Y - center.Y), 2) / Math.Pow(c_y, 2)) * Math.Pow(c_x, 2));
-            double simpleY = Math.Sqrt((1 - Math.Pow((downPlace.X - center.X), 2) / Math.Pow(c_x, 2)) * Math.Pow(c_y, 2));
-            double higherPlaceX = center.X + simpleX;
-            double lowerPlaceX = center.X - simpleX;
-            double higherPlaceY = center.Y + simpleY;
-            double lowerPlaceY = center.Y - simpleY;
-
-            if (downPlace.X <= higherPlaceX + 3 && downPlace.X >= higherPlaceX - 3)
-                tf = true;
-            if (downPlace.X <= lowerPlaceX + 3 && downPlace.X >= lowerPlaceX - 3)
-                tf = true;
-            if (downPlace.Y <= higherPlaceY + 3 && downPlace.Y >= higherPlaceY - 3)
-                tf = true;
-            if (downPlace.Y <= lowerPlaceY + 3 && downPlace.Y >= lowerPlaceY - 3)
-                tf = true;
-            return tf;
-
-        }
-
-        private bool checkRect(System.Windows.Point downPlace, gPath p)
-        {
-            bool tf = false;
-            if ((downPlace.X <= p.controlBtn2.X + 3 && downPlace.X >= p.controlBtn2.X - 3) || (downPlace.X >= p.controlBtn1.X - 3 && downPlace.X <= p.controlBtn1.X + 3))
-            {
-                if (downPlace.Y <= p.controlBtn3.Y && downPlace.Y >= p.controlBtn1.Y)
-                {
-                    tf = true;
-                }
-            }
-            if ((downPlace.Y <= p.controlBtn3.Y + 3 && downPlace.Y >= p.controlBtn3.Y - 3) || (downPlace.Y >= p.controlBtn1.Y - 3 && downPlace.Y <= p.controlBtn1.Y + 3))
-            {
-                if (downPlace.X <= p.controlBtn2.X && downPlace.X >= p.controlBtn1.X)
-                {
-                    tf = true;
-                }
-            }
-            return tf;
-        }
-
-        private bool checkLine(System.Windows.Point downPlace, gPath p)
-        {
-            bool tf = false;
-            double m = (p.controlBtn4.Y - p.controlBtn1.Y) / (p.controlBtn4.X - p.controlBtn1.X);
-            double xm = (downPlace.Y - p.controlBtn1.Y) / m + p.controlBtn1.X;
-            double ym = (downPlace.X - p.controlBtn1.X) * m + p.controlBtn1.Y;
-            if (downPlace.X >= xm - 3 && downPlace.X <= xm + 3)
-                tf = true;
-            if (downPlace.Y >= ym - 3 && downPlace.Y <= ym + 3)
-                tf = true;
-            return tf;
-        }*/
 
         public void addContent(Document doc)
         {
@@ -289,12 +101,12 @@ namespace keago0403
 
         public void unDo()
         {
-            if (TempStack.Count > 0)
+            if (RedoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
                 pointAry tempPA = new pointAry();
 
-                tempPA = (pointAry)TempStack.Pop();
+                tempPA = (pointAry)RedoStack.Pop();
 
                 if (tempPA.leastPlace() >= 0)
                 {
@@ -312,18 +124,18 @@ namespace keago0403
                 {
                     sroot.PathList.RemoveAt(tempPA.changePlace());
                 }
-                FullStack.Push(tempPA);
+                UndoStack.Push(tempPA);
             }
         }
 
         public void reDo()
         {
-            if (FullStack.Count > 0)
+            if (UndoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
                 pointAry tempPA = new pointAry();
 
-                tempPA = (pointAry)FullStack.Pop();
+                tempPA = (pointAry)UndoStack.Pop();
 
                 if (tempPA.lastPlace() >= 0)
                 {
@@ -334,13 +146,13 @@ namespace keago0403
                 {
                     sroot.PathList.RemoveAt(tempPA.changePlace());
                 }
-                TempStack.Push(tempPA);
+                RedoStack.Push(tempPA);
             }
         }
 
         public void Release()
         {
-            this.TempStack.Clear();
+            this.RedoStack.Clear();
         }
     }
     

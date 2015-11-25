@@ -13,6 +13,7 @@ namespace keago0403
         double backGroundColor = 0.2;
         void Check()
         {
+            //確認畫布是否有開啟中
             if (f == null)
             {
                 f = new Form1();
@@ -182,13 +183,12 @@ namespace keago0403
                 f.setAction(0);
         }
 
-         public void initPath(string xml)
+        public void initPath(string xml)
         {
             Check();
             f.initpath(xml);
             f.setDrawType(5);
             f.Show();
-
         }
     }
 }
