@@ -113,7 +113,7 @@
             // circle_btn
             // 
             this.circle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.circle_btn.Image = global::keago0403.Properties.Resources.circle1;
+            this.circle_btn.Image = global::keago0403.Properties.Resources.circle;
             this.circle_btn.Label = "Circle";
             this.circle_btn.Name = "circle_btn";
             this.circle_btn.ShowImage = true;
@@ -123,7 +123,7 @@
             // rectangle_btn
             // 
             this.rectangle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.rectangle_btn.Image = global::keago0403.Properties.Resources.rectangle1;
+            this.rectangle_btn.Image = global::keago0403.Properties.Resources.rectangle;
             this.rectangle_btn.Label = "Rectangle";
             this.rectangle_btn.Name = "rectangle_btn";
             this.rectangle_btn.ShowImage = true;
@@ -132,7 +132,7 @@
             // line_btn
             // 
             this.line_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.line_btn.Image = global::keago0403.Properties.Resources.line1;
+            this.line_btn.Image = global::keago0403.Properties.Resources.line;
             this.line_btn.Label = "Line";
             this.line_btn.Name = "line_btn";
             this.line_btn.ShowImage = true;
