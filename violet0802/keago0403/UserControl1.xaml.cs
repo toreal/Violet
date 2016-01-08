@@ -57,14 +57,14 @@ namespace keago0403
         PathFigure figure = new PathFigure();
         PathGeometry geometry = new PathGeometry();
         Geometry tempGeo;
-        gPath tempFPath;
-        Ellipse myEllipse;
+        gPath tempFPath; 
+        Ellipse myEllipse; //紀錄橢圓形
         Rectangle myRect, cornerRect, sideRect;
-        Line myLine, controlLine;
-        System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path();
-        System.Windows.Shapes.Path controlPath = new System.Windows.Shapes.Path();
+        Line myLine, controlLine; //紀錄直線、控制後的直線
+        System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path(); //紀錄曲線
+        System.Windows.Shapes.Path controlPath = new System.Windows.Shapes.Path(); //紀錄控制後的曲線
 
-        bool bfirst = true;
+        bool bfirst = true; //是否為繪製新圖形
         bool bCanMove = false; //繪製時,滑鼠是否可以移動
         bool bhave = false; //you have choose
         bool gCanMove = false; //選取後是否可以移動
@@ -73,6 +73,7 @@ namespace keago0403
 
         /*--------------  滑鼠事件  --------------*/
         // mygrid --> 畫全部圖形的地方(黑), myControl --> 畫選取圖形的地方(綠)
+        //滑鼠在mygrid畫布上按下左鍵
         private void mygrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             pStart = correctPoint(e.GetPosition(mygrid));
@@ -91,12 +92,11 @@ namespace keago0403
                 gdc.selIndex = -1;
             }
         }
+        //滑鼠在mygrid畫布上放開左鍵
         private void mygrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (bCanMove)
             {
-                //bmousedown = false;
-                //Debug.WriteLine("false");
                 pEnd = correctPoint(e.GetPosition(mygrid));
                 double tempX, tempY;
                 double px = pStart.X;
@@ -104,7 +104,6 @@ namespace keago0403
                 double ex = pEnd.X;
                 double ey = pEnd.Y;
 
-                //tempGPath = new gPath();
                 if (drawtype != 3 && ex < px)
                 {
                     tempX = ex;
@@ -133,6 +132,7 @@ namespace keago0403
                 bhave = false;
             }
         }
+        //滑鼠在mygrid畫布上移動
         private void mygrid_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -179,6 +179,7 @@ namespace keago0403
                 }
             }
         }
+        //滑鼠在myControl畫布上按下左鍵
         private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -211,6 +212,7 @@ namespace keago0403
                 gdc.node = ru.Node;
             }
         }
+        //滑鼠在myControl畫布上放開左鍵
         private void myControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (gCanMove)
@@ -249,6 +251,7 @@ namespace keago0403
                 }
             }
         }
+        //滑鼠在myControl畫布上移動
         private void myControl_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -271,7 +274,7 @@ namespace keago0403
             }
         }
 
-        /*------------  矯正滑鼠位置  ------------*/
+        //矯正滑鼠位置
         private Point correctPoint(Point p)
         {
             Point temp = p;
@@ -279,35 +282,27 @@ namespace keago0403
             double tempDY = temp.Y % lineSpace;
             if (temp.X % lineSpace != 0)
             {
-                /*if (tempDX < 4.5)
-                    temp.X -= tempDX;
-                if (tempDX >= 4.5)
-                    temp.X += tempDX;*/
                 temp.X = lineSpace * Math.Round((temp.X / lineSpace), 0);
             }
             if (temp.Y % lineSpace != 0)
             {
-                /*if (tempDY < 4.5)
-                    temp.Y -= tempDY;
-                if (tempDY >= 4.5)
-                    temp.Y += tempDY;*/
                 temp.Y = lineSpace * Math.Round((temp.Y / lineSpace), 0);
             }
             return temp;
         }
 
-        /*-------  myControl控制面板呼叫  --------*/
+        //隱藏myControl
         public void hiddenCanvas()
         {
             myControl.Visibility = Visibility.Hidden;
         }
+        //顯示myControl
         void showCanvas()
         {
             myControl.Visibility = Visibility.Visible;
         }
 
-        /*--------------  圖形繪製  --------------*/
-        //曲線
+        //繪製曲線
         void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -389,7 +384,7 @@ namespace keago0403
                 }
             }
         }
-        //直線
+        //繪製直線
         void drawLine(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -413,7 +408,7 @@ namespace keago0403
                 myLine.Y2 = yEnd;
             }
         }
-        //矩形
+        //繪製矩形
         void drawRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
         {
             if (bfirst)
@@ -440,7 +435,7 @@ namespace keago0403
                 myRect.Margin = new Thickness(xStart, yStart, 0, 0);
             }
         }
-        //橢圓
+        //繪製橢圓
         void drawEllipse(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -477,7 +472,7 @@ namespace keago0403
             }
         }
 
-        /*--------------  重繪使用  --------------*/
+        //刷新畫面時 用來重繪圖形
         private void drawGPath(gPath gpath)
         {
             colorR = gpath.state.colorR;
@@ -507,13 +502,14 @@ namespace keago0403
             }
             bfirst = true;
         }
+        //重繪橢圓
         private void reEllipse(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
             {
                 bfirst = false;
                 myEllipse = new Ellipse();
-
+                //如果要繪製中心顏色，可開啟這段
                 /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                 mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
                 myEllipse.Fill = mySolidColorBrush;*/
@@ -529,13 +525,14 @@ namespace keago0403
                 mygrid.Children.Add(myEllipse);
             }
         }
+        //重繪矩形
         private void reRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
         {
             if (bfirst)
             {
                 bfirst = false;
                 myRect = new Rectangle();
-
+                //如果要繪製中心顏色，可開啟這段
                 /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
                 mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
                 myRect.Fill = mySolidColorBrush;*/
@@ -551,6 +548,7 @@ namespace keago0403
                 mygrid.Children.Add(myRect);
             }
         }
+        //重繪直線
         private void reLine(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -572,6 +570,7 @@ namespace keago0403
                 mygrid.Children.Add(myLine);
             }
         }
+        //重繪曲線
         private void reCurve(Point point0, Point point1, Point point2, Point point3)
         {
             if (bfirst)
@@ -599,6 +598,7 @@ namespace keago0403
         }
 
         /*--------------  圖形事件  --------------*/
+        //當左鍵點擊按到橢圓時
         void myEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (drawtype == 5)
@@ -615,16 +615,13 @@ namespace keago0403
                 gp.point3 = new Point(gp.point0.X + tempEll.RenderedGeometry.Bounds.BottomRight.X + (tempEll.StrokeThickness / 2), gp.point0.Y + tempEll.RenderedGeometry.Bounds.BottomRight.Y + (tempEll.StrokeThickness / 2));
 
                 gp.mouseXY = correctPoint(e.GetPosition(mygrid));
-                //Debug.WriteLine(gp.mouseXY.X + ", " + gp.mouseXY.Y + "......" + chd.checkHitEllipse(gp));
-                /*if (chd.checkHitEllipse(gp))
-                {*/
-                    showCanvas();
-                    ru.Sel = chd.checkHitWhich(gdc.sroot.PathList ,gp, 1);
-                    greenDrawing();
-                    bhave = true;
-                //}
+                showCanvas();
+                ru.Sel = chd.checkHitWhich(gdc.sroot.PathList ,gp, 1);
+                greenDrawing();
+                bhave = true;
             }
         }
+        //當左鍵點擊按到矩形時
         void myRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (drawtype == 5)
@@ -641,16 +638,13 @@ namespace keago0403
                 gp.point3 = new Point(gp.point0.X + tempRect.RenderedGeometry.Bounds.BottomRight.X + (tempRect.StrokeThickness / 2), gp.point0.Y + tempRect.RenderedGeometry.Bounds.BottomRight.Y + (tempRect.StrokeThickness / 2));
 
                 gp.mouseXY = correctPoint(e.GetPosition(mygrid));
-                //Debug.WriteLine(gp.mouseXY.X + ", " + gp.mouseXY.Y + "......" + chd.checkHitEllipse(gp));
-                /*if (chd.checkHitRect(gp))
-                {*/
-                    showCanvas();
-                    ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 2);
-                    greenDrawing();
-                    bhave = true;
-                /*}*/
+                showCanvas();
+                ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 2);
+                greenDrawing();
+                bhave = true;
             }
         }
+        //當左鍵點擊按到直線時
         void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (drawtype == 5)
@@ -670,6 +664,7 @@ namespace keago0403
                 bhave = true;
             }
         }
+        //當左鍵點擊按到曲線時
         void myPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (drawtype == 5)
@@ -690,9 +685,7 @@ namespace keago0403
                 gp.point2 = new Point(tmpDouStr[4], tmpDouStr[5]);
                 gp.point3 = new Point(tmpDouStr[6], tmpDouStr[7]);
 
-                //gp.geo = tempPath.Data;
                 gp.mouseXY = correctPoint(e.GetPosition(mygrid));
-                //Debug.WriteLine(gp.geo);
                 showCanvas();
                 ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 4);
                 greenDrawing();
@@ -706,6 +699,7 @@ namespace keago0403
             gdc.node = ru.Node;
             gCanMove = true;
         }
+        //控制邊框的範圍
         void cornerRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (gCanMove)
@@ -746,7 +740,7 @@ namespace keago0403
                     reDraw(true);
             }
         }
-        //綠色邊框
+        //當左鍵按下綠色邊框
         void sideRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (chd.checkHitCenter(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
@@ -755,6 +749,7 @@ namespace keago0403
                 gCanMove = true;
             }
         }
+        //當左鍵放開綠色邊框
         void sideRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (gCanMove)
@@ -780,6 +775,7 @@ namespace keago0403
                 }
             }
         }
+        //當左鍵按下被選取的線條
         void controlLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (chd.checkHitLine(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
@@ -788,6 +784,7 @@ namespace keago0403
                 ru.Node = 4;
             }
         }
+        //當左鍵按下被選取的曲線
         void controlPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             System.Windows.Shapes.Path p = sender as System.Windows.Shapes.Path;
@@ -863,6 +860,7 @@ namespace keago0403
         }
 
         /*------------  選取邊線使用  ------------*/
+        //繪製點選圖形的控制範圍
         void greenDrawing()
         {
             gPath p = (gPath)gdc.sroot.PathList[ru.Sel];
@@ -943,6 +941,7 @@ namespace keago0403
             colorB = tmpB;
             strokeT = tmpS;
         }
+        //繪製選取圖形邊框的控制範圍
         private void greenFourSideRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
         {
             if (bfirst)
@@ -973,6 +972,7 @@ namespace keago0403
                 sideRect.Margin = new Thickness(xStart, yStart, 0, 0);
             }
         }
+        //繪製選取圖形四個角落的控制點範圍
         private void greenFourCornerRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
         {
             if (bfirst)
@@ -1003,6 +1003,7 @@ namespace keago0403
                 cornerRect.Margin = new Thickness(xStart, yStart, 0, 0);
             }
         }
+        //繪製選取直線的控制範圍
         private void greenLine(int xStart, int yStart, int xEnd, int yEnd)
         {
             if (bfirst)
@@ -1031,6 +1032,7 @@ namespace keago0403
                 controlLine.Y2 = yEnd;
             }
         }
+        //繪製選取曲線的控制範圍
         private void greenCurve(Point point0, Point point1, Point point2, Point point3)
         {
             if (bfirst)

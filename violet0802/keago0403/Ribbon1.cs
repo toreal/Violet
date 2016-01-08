@@ -26,6 +26,7 @@ namespace keago0403
                 f.Disposed += new EventHandler(f_Disposed);
             }
         }
+        //create form
 
         void f_Disposed(object sender, EventArgs e)
         {
@@ -73,7 +74,6 @@ namespace keago0403
                 f.TopMost = true;
             }
         }
-
         private void bgp_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
@@ -96,31 +96,26 @@ namespace keago0403
             if (f != null)
                 f.setColorType("red");
         }
-
         private void button7_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
                 f.setColorType("orange");
         }
-
         private void yellow_btn_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
                 f.setColorType("yellow");
         }
-
         private void green_btn_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
                 f.setColorType("green");
         }
-
         private void black_btn_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
                 f.setColorType("black");
         }
-
         private void blue_btn_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
@@ -131,7 +126,6 @@ namespace keago0403
             if (f != null)
                 f.setColorType("violet");
         }
-
         private void gray_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
@@ -142,19 +136,16 @@ namespace keago0403
             if (f != null)
                 f.setColorType("white");
         }
-
         private void px1_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
                 f.setStrokeType(1);
         }
-
         private void px3_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
                 f.setStrokeType(3);
         }
-
         private void px5_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
@@ -165,7 +156,7 @@ namespace keago0403
             if (f != null)
                 f.setStrokeType(8);
         }
-
+        //設定顏色
         private void selBtn_Click(object sender, RibbonControlEventArgs e)
         {
             Check();
@@ -176,13 +167,12 @@ namespace keago0403
             if (f != null)
                 f.setAction(1);
         }
-
         private void undo_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)
                 f.setAction(0);
         }
-
+        //載入圖片
         public void initPath(string xml)
         {
             Check();
