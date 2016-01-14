@@ -22,7 +22,7 @@ namespace violet
         {
 
         }
-
+        //繪製背景格線
         public void drawBackgroundLine(double Sop)
         {
             if (Sop != 0)
@@ -30,6 +30,7 @@ namespace violet
             else
                 userControl1.hideBackLine();
         }
+        //取得設定用的畫布大小
         public double setFormSize(String ctype)
         {
             if (ctype == "w")
@@ -40,28 +41,33 @@ namespace violet
             Sheight = Screen.PrimaryScreen.Bounds.Height;
             return Sheight;
         }
+        //設定目前動作
         public void setDrawType(int ntype){
             userControl1.drawtype = ntype;
             if (ntype == 5)
                 userControl1.hiddenCanvas();
         }
+        //設定顏色
         public void setColorType(String colorName)
         {
             userControl1.color(colorName);
         }
+        //清除畫布
         public void ClearDrawing()
         {
             userControl1.ClearBtnUse();
         }
+        //設定線條粗細
         public void setStrokeType(int ntype)
         {
             userControl1.stroke(ntype);
         }
-
+        //載入XML
         public void initpath(string xml)
         {
             userControl1.initpath(xml);
         }
+        //選擇使用Redo或Undo 
         public void setAction(int act)
         {
             userControl1.RUdo(act);
