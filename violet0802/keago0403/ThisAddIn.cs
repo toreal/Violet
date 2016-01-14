@@ -13,7 +13,7 @@ using System.Drawing;
 using Microsoft.Office.Core;
 using System.Diagnostics;
 
-namespace keago0403
+namespace violet
 {
     public partial class ThisAddIn
     {
@@ -127,7 +127,7 @@ namespace keago0403
 
                     Image _drawnimage = Image.FromStream(ms);
 
-                    _drawnimage.Save("temp.jpg");
+                    //_drawnimage.Save("temp.jpg");
                     // Word.ContentControl contentControl = Globals.ThisAddIn.Application.ActiveDocument.SelectContentControlsByTitle(_utility.TagName)[0];
                     //foreach (Word.ContentControl contentControl in vstoDocument.Content.ContentControls)
                     {

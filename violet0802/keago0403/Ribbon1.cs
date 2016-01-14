@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using Microsoft.Office.Tools.Word;
 
-namespace keago0403
+namespace violet
 {
     public partial class Ribbon1
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace keago0403
+namespace violet
 {
     public partial class Form1 : Form
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace keago0403
+namespace violet
 {
     class Utility
     {

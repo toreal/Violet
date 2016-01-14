@@ -11,7 +11,7 @@ using System.Windows;
 using System.Xml.Serialization;
 
 
-namespace keago0403
+namespace violet
 {
 
     [XmlRoot(ElementName = "SVGRoot", Namespace = "")]
@@ -20,7 +20,11 @@ namespace keago0403
          [XmlElement("PathList")]
         public List<gPath> PathList = new List<gPath>();
     }
-    
+    /// <summary>
+    /// 記錄shape list,action data
+    /// stack 記錄動作,每個動作(pointAry)包含,該圖是圖形的第幾個(Listplace),之前記錄是否己有相同圖是第幾個,目前圖存在記錄的第幾個
+    ///
+    /// </summary>
     public class GraphDoc
     {
        public SVGRoot sroot = new SVGRoot();
@@ -89,16 +93,10 @@ namespace keago0403
             }
             return whichOne;
         }
-
-        public void addContent(Document doc)
-        {
-
-            object missing = Type.Missing;
-
-            ContentControl cc = doc.ContentControls.Add(WdContentControlType.wdContentControlPicture,ref missing);
-
-        }
-
+      
+        /// <summary>
+        /// 
+        /// </summary>
         public void unDo()
         {
             if (RedoStack.Count > 0)

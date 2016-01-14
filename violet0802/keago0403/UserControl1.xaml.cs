@@ -21,7 +21,7 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace keago0403 
+namespace violet 
 {
 
     /// <summary>
@@ -105,13 +105,13 @@ namespace keago0403
                 double ey = pEnd.Y;
 
                 //tempGPath = new gPath();
-                if (drawtype != 3 && ex < px)
+                if (drawtype != 3 && ex < px) //swap x
                 {
                     tempX = ex;
                     ex = px;
                     px = tempX;
                 }
-                if (drawtype != 3 && ey < py)
+                if (drawtype != 3 && ey < py) //swap y
                 {
                     tempY = ey;
                     ey = py;
@@ -272,6 +272,7 @@ namespace keago0403
         }
 
         /*------------  矯正滑鼠位置  ------------*/
+        //貼齊格線
         private Point correctPoint(Point p)
         {
             Point temp = p;

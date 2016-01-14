@@ -1,4 +1,4 @@
-﻿namespace keago0403
+﻿namespace violet
 {
     partial class Form1
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.userControl1 = new keago0403.UserControl1();
+            this.userControl1 = new violet.UserControl1();
             this.SuspendLayout();
             // 
             // elementHost1

@@ -1,4 +1,4 @@
-﻿namespace keago0403
+﻿namespace violet
 {
     partial class Ribbon1 : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
@@ -113,7 +113,7 @@
             // circle_btn
             // 
             this.circle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.circle_btn.Image = global::keago0403.Properties.Resources.circle;
+            this.circle_btn.Image = global::violet.Properties.Resources.circle;
             this.circle_btn.Label = "Circle";
             this.circle_btn.Name = "circle_btn";
             this.circle_btn.ShowImage = true;
@@ -123,7 +123,7 @@
             // rectangle_btn
             // 
             this.rectangle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.rectangle_btn.Image = global::keago0403.Properties.Resources.rectangle;
+            this.rectangle_btn.Image = global::violet.Properties.Resources.rectangle;
             this.rectangle_btn.Label = "Rectangle";
             this.rectangle_btn.Name = "rectangle_btn";
             this.rectangle_btn.ShowImage = true;
@@ -132,7 +132,7 @@
             // line_btn
             // 
             this.line_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.line_btn.Image = global::keago0403.Properties.Resources.line;
+            this.line_btn.Image = global::violet.Properties.Resources.line;
             this.line_btn.Label = "Line";
             this.line_btn.Name = "line_btn";
             this.line_btn.ShowImage = true;
@@ -141,7 +141,7 @@
             // Curve
             // 
             this.Curve.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.Curve.Image = global::keago0403.Properties.Resources.curve;
+            this.Curve.Image = global::violet.Properties.Resources.curve;
             this.Curve.Label = "Curve";
             this.Curve.Name = "Curve";
             this.Curve.ShowImage = true;
@@ -149,7 +149,7 @@
             // 
             // red_btn
             // 
-            this.red_btn.Image = global::keago0403.Properties.Resources.red;
+            this.red_btn.Image = global::violet.Properties.Resources.red;
             this.red_btn.Label = " ";
             this.red_btn.Name = "red_btn";
             this.red_btn.ShowImage = true;
@@ -157,7 +157,7 @@
             // 
             // orange_btn
             // 
-            this.orange_btn.Image = global::keago0403.Properties.Resources.orange;
+            this.orange_btn.Image = global::violet.Properties.Resources.orange;
             this.orange_btn.Label = " ";
             this.orange_btn.Name = "orange_btn";
             this.orange_btn.ShowImage = true;
@@ -165,7 +165,7 @@
             // 
             // yellow_btn
             // 
-            this.yellow_btn.Image = global::keago0403.Properties.Resources.yellow1;
+            this.yellow_btn.Image = global::violet.Properties.Resources.yellow1;
             this.yellow_btn.Label = " ";
             this.yellow_btn.Name = "yellow_btn";
             this.yellow_btn.ShowImage = true;
@@ -173,7 +173,7 @@
             // 
             // blue_btn
             // 
-            this.blue_btn.Image = global::keago0403.Properties.Resources.blue;
+            this.blue_btn.Image = global::violet.Properties.Resources.blue;
             this.blue_btn.Label = " ";
             this.blue_btn.Name = "blue_btn";
             this.blue_btn.ShowImage = true;
@@ -189,7 +189,7 @@
             // 
             // green_btn
             // 
-            this.green_btn.Image = global::keago0403.Properties.Resources.green;
+            this.green_btn.Image = global::violet.Properties.Resources.green;
             this.green_btn.Label = " ";
             this.green_btn.Name = "green_btn";
             this.green_btn.ShowImage = true;
@@ -197,7 +197,7 @@
             // 
             // black_btn
             // 
-            this.black_btn.Image = global::keago0403.Properties.Resources.black;
+            this.black_btn.Image = global::violet.Properties.Resources.black;
             this.black_btn.Label = " ";
             this.black_btn.Name = "black_btn";
             this.black_btn.ShowImage = true;
@@ -213,7 +213,7 @@
             // 
             // white_btn
             // 
-            this.white_btn.Image = global::keago0403.Properties.Resources.white1;
+            this.white_btn.Image = global::violet.Properties.Resources.white1;
             this.white_btn.Label = " ";
             this.white_btn.Name = "white_btn";
             this.white_btn.ShowImage = true;
@@ -231,7 +231,7 @@
             // StrokeThickness
             // 
             this.StrokeThickness.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.StrokeThickness.Image = global::keago0403.Properties.Resources.strokes;
+            this.StrokeThickness.Image = global::violet.Properties.Resources.strokes;
             this.StrokeThickness.Items.Add(this.px1);
             this.StrokeThickness.Items.Add(this.px3);
             this.StrokeThickness.Items.Add(this.px5);
@@ -242,7 +242,7 @@
             // 
             // px1
             // 
-            this.px1.Image = global::keago0403.Properties.Resources._1px;
+            this.px1.Image = global::violet.Properties.Resources._1px;
             this.px1.Label = "1 px";
             this.px1.Name = "px1";
             this.px1.ShowImage = true;
@@ -250,7 +250,7 @@
             // 
             // px3
             // 
-            this.px3.Image = global::keago0403.Properties.Resources._3px1;
+            this.px3.Image = global::violet.Properties.Resources._3px1;
             this.px3.Label = "3 px";
             this.px3.Name = "px3";
             this.px3.ShowImage = true;
@@ -258,7 +258,7 @@
             // 
             // px5
             // 
-            this.px5.Image = global::keago0403.Properties.Resources._5px;
+            this.px5.Image = global::violet.Properties.Resources._5px;
             this.px5.Label = "5 px";
             this.px5.Name = "px5";
             this.px5.ShowImage = true;
@@ -266,7 +266,7 @@
             // 
             // px8
             // 
-            this.px8.Image = global::keago0403.Properties.Resources._8px;
+            this.px8.Image = global::violet.Properties.Resources._8px;
             this.px8.Label = "8 px";
             this.px8.Name = "px8";
             this.px8.ShowImage = true;
@@ -275,7 +275,7 @@
             // bgp
             // 
             this.bgp.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.bgp.Image = global::keago0403.Properties.Resources.point11;
+            this.bgp.Image = global::violet.Properties.Resources.point11;
             this.bgp.Label = "Background Point";
             this.bgp.Name = "bgp";
             this.bgp.ShowImage = true;
