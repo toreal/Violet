@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "violet", "violet\violet.csproj", "{FCE14F42-4CEF-40AA-94CE-3EE22B636868}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeLib", "ShapeLib\ShapeLib.csproj", "{CFD0D1ED-70E2-4174-9937-6758F457D53C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FCE14F42-4CEF-40AA-94CE-3EE22B636868}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE14F42-4CEF-40AA-94CE-3EE22B636868}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE14F42-4CEF-40AA-94CE-3EE22B636868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFD0D1ED-70E2-4174-9937-6758F457D53C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD0D1ED-70E2-4174-9937-6758F457D53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD0D1ED-70E2-4174-9937-6758F457D53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD0D1ED-70E2-4174-9937-6758F457D53C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

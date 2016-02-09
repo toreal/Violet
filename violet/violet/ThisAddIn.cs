@@ -12,6 +12,8 @@ using System.Drawing;
 //using Chem4Word.Core;
 using Microsoft.Office.Core;
 using System.Diagnostics;
+using violet.Shape;
+using System.Collections;
 
 namespace violet
 {
@@ -19,6 +21,7 @@ namespace violet
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

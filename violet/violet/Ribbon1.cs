@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using Microsoft.Office.Tools.Word;
+using System.Collections;
 
 namespace violet
 {
@@ -28,6 +29,44 @@ namespace violet
         }
         //create form
 
+
+        public void Construt(Shape.ShapeObj obj )
+        {
+            ArrayList list = obj.getMenuItem();
+          //  RibbonGroup group3 = this.Factory.CreateRibbonGroup();
+           // RibbonTab tab = Factory.CreateRibbonTab();
+
+            foreach (Shape.shapeUI ui in list)
+            {
+                RibbonButton  uiobj=null;
+                switch(ui.uitype)
+                {
+                    case Shape.shapeUIType.RibbonButton:
+                        uiobj = this.Factory.CreateRibbonButton();
+                        uiobj.Click+=(RibbonControlEventHandler) ui.click;
+                        uiobj.Label = ui.label;
+                        
+                        break;
+                }
+
+                if ( uiobj != null)
+                {
+                    group1.SuspendLayout();
+                    group1.Items.Add(uiobj);
+                    group1.ResumeLayout(false);
+                    group1.PerformLayout();
+
+                }
+                    
+            }
+
+            //tab.Groups.Add(group3);
+            //Tabs.Add(tab);
+                
+        }
+
+        
+
         void f_Disposed(object sender, EventArgs e)
         {
             f = null;
@@ -35,6 +74,7 @@ namespace violet
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
+            int i = 0;
             //Check();
         }
 

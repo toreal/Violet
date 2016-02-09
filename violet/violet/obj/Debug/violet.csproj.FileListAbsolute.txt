@@ -41,7 +41,6 @@ C:\James\Violet\Violet\violet\violet\bin\Debug\Violet.vsto
 C:\James\Violet\Violet\violet\violet\bin\Debug\log4net.dll
 C:\James\Violet\Violet\violet\violet\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
 C:\James\Violet\Violet\violet\violet\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
-C:\James\Violet\Violet\violet\violet\obj\Debug\violet.csprojResolveAssemblyReference.cache
 C:\James\Violet\Violet\violet\violet\obj\Debug\UserControl1.baml
 C:\James\Violet\Violet\violet\violet\obj\Debug\UserControl1.g.cs
 C:\James\Violet\Violet\violet\violet\obj\Debug\Violet_MarkupCompile.cache
@@ -52,3 +51,6 @@ C:\James\Violet\Violet\violet\violet\obj\Debug\violet.Ribbon1.resources
 C:\James\Violet\Violet\violet\violet\obj\Debug\violet.csproj.GenerateResource.Cache
 C:\James\Violet\Violet\violet\violet\obj\Debug\Violet.dll
 C:\James\Violet\Violet\violet\violet\obj\Debug\Violet.pdb
+C:\James\Violet\Violet\violet\violet\obj\Debug\violet.csprojResolveAssemblyReference.cache
+C:\James\Violet\Violet\violet\violet\bin\Debug\ShapeLib.dll
+C:\James\Violet\Violet\violet\violet\bin\Debug\ShapeLib.pdb

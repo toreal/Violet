@@ -1,4 +1,7 @@
-﻿namespace violet
+﻿using System.Collections;
+using System.Collections.Generic;
+using violet.Shape;
+namespace violet
 {
     partial class Ribbon1 : Microsoft.Office.Tools.Ribbon.RibbonBase
     {
@@ -11,6 +14,17 @@
             : base(Globals.Factory.GetRibbonFactory())
         {
             InitializeComponent();
+
+            IList<ShapeObj> ret = shapeLib.SupportedShape();
+
+            foreach (ShapeObj obj in ret)
+            {
+             
+                Construt(obj );
+
+
+            }
+   
         }
 
         /// <summary> 
