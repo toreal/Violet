@@ -15,7 +15,8 @@ namespace violet
         {
             InitializeComponent();
 
-            IList<ShapeObj> ret = shapeLib.SupportedShape();
+            Check();
+            IList<ShapeObj> ret = shapeLib.SupportedShape( f );
 
             foreach (ShapeObj obj in ret)
             {

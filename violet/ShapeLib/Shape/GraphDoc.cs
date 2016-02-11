@@ -1,4 +1,4 @@
-﻿using Microsoft.Office.Interop.Word;
+﻿//using Microsoft.Office.Interop.Word;
 //using Microsoft.Office.Tools.Word;
 using System;
 using System.Collections;
@@ -11,7 +11,7 @@ using System.Windows;
 using System.Xml.Serialization;
 
 
-namespace violet
+namespace violet.Shape
 {
 
     [XmlRoot(ElementName = "SVGRoot", Namespace = "")]
@@ -39,12 +39,12 @@ namespace violet
 
         public void writeIn(gPath Data, int Action)
         {
-            pointAry pa;
+            saveState pa;
             if (Action == 0)
             {
                 gPath g = new gPath();
                 FullList.Add(Data);
-                pa = new pointAry(Data.ListPlace, -1, (FullList.Count - 1));
+                pa = new saveState(Data.ListPlace, -1, (FullList.Count - 1));
                 UndoStack.Push(pa);
                 g.copyVal(Data);
                 sroot.PathList.Add(g);
@@ -61,7 +61,7 @@ namespace violet
                     }
                 }
                 FullList.Add(Data);
-                pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
+                pa = new saveState(Data.ListPlace, temp, (FullList.Count - 1));
                 UndoStack.Push(pa);
             }
         }
@@ -102,9 +102,9 @@ namespace violet
             if (RedoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
-                pointAry tempPA = new pointAry();
+                saveState tempPA = new saveState();
 
-                tempPA = (pointAry)RedoStack.Pop();
+                tempPA = (saveState)RedoStack.Pop();
 
                 if (tempPA.leastPlace() >= 0)
                 {
@@ -131,9 +131,9 @@ namespace violet
             if (UndoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
-                pointAry tempPA = new pointAry();
+                saveState tempPA = new saveState();
 
-                tempPA = (pointAry)UndoStack.Pop();
+                tempPA = (saveState)UndoStack.Pop();
 
                 if (tempPA.lastPlace() >= 0)
                 {
@@ -204,19 +204,19 @@ namespace violet
         public System.Windows.Point point3;
     }
 
-    public class pointAry
+    public class saveState
     {
         private int leastP;
         private int lastP;
         private int changeP;
-        public pointAry()
+        public saveState()
         {
             changeP = 0;
             lastP = -1;
             leastP = 0;
 
         }
-        public pointAry(int a, int b, int c)
+        public saveState(int a, int b, int c)
         {
             changeP = a;
             lastP = b;

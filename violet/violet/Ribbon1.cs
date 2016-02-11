@@ -45,6 +45,7 @@ namespace violet
                         uiobj = this.Factory.CreateRibbonButton();
                         uiobj.Click+=(RibbonControlEventHandler) ui.click;
                         uiobj.Label = ui.label;
+                        uiobj.Image = ui.image;
                         
                         break;
                 }

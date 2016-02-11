@@ -34,6 +34,9 @@ namespace violet
         {
             InitializeComponent();
             hiddenCanvas(); //一開始要將myControl畫布取消顯示
+
+            Shape.shapeLib.initControl(mygrid, myControl);
+
         }
         //初始設定
         public int drawtype = 1;
@@ -56,6 +59,9 @@ namespace violet
         BezierSegment bezier = new BezierSegment();
         PathFigure figure = new PathFigure();
         PathGeometry geometry = new PathGeometry();
+
+
+
         Geometry tempGeo;
         gPath tempFPath; 
         Ellipse myEllipse; //紀錄橢圓形
