@@ -18,10 +18,9 @@ namespace violet.Shape
         /// <returns></returns>
         static public IList<ShapeObj> SupportedShape(Form myview)
         {
-
+            if (myview != null)
             Data.view = myview;
-            IList<ShapeObj> ret= new []{new ShapeObj()  };
-
+         
            
             return ret;
         }
@@ -33,6 +32,7 @@ namespace violet.Shape
         }
 
         static public  GModel Data = new GModel();
+        static IList<ShapeObj> ret = new[] { new ShapeObj() };
 
 
     }

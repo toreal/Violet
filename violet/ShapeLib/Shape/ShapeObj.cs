@@ -3,8 +3,10 @@ using Microsoft.Windows.Controls.Ribbon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,7 +25,7 @@ namespace violet.Shape
         RibbonGroup
     }
 
-   public  delegate void mouseClick(object sender, RibbonControlEventArgs e);
+   //public  delegate void mouseClick(object sender, RibbonControlEventArgs e);
     public class shapeUI
     {
         public shapeUIType uitype;
@@ -50,21 +52,24 @@ namespace violet.Shape
             //throw new NotImplementedException();
         }
 
-      public   void btn_Click(object sender, RibbonControlEventArgs e)
+        void btn_Click(object sender, RibbonControlEventArgs e)
         {
 
             if (shapeLib.Data.mygrid!= null)
             {
-                shapeLib.Data.mygrid.MouseLeftButtonUp -= MouseUpInsert; 
-                shapeLib.Data.mygrid.MouseLeftButtonUp += this.MouseUpInsert;
+                IList<ShapeObj> ret = shapeLib.SupportedShape(null);
 
-                shapeLib.Data.mygrid.MouseMove -= this.MouseMoveInsert;
-                shapeLib.Data.mygrid.MouseMove += this.MouseMoveInsert;
-
-                shapeLib.Data.mygrid.MouseLeftButtonDown -= this.MouseDownInsert;
-                shapeLib.Data.mygrid.MouseLeftButtonDown += this.MouseDownInsert;
-
+                foreach(ShapeObj obj in ret)
+                {
+                    shapeLib.Data.mygrid.MouseLeftButtonUp -= obj.MouseUpInsert;
+                    shapeLib.Data.mygrid.MouseMove -= this.MouseMoveInsert;
+                    shapeLib.Data.mygrid.MouseLeftButtonDown -= this.MouseDownInsert;
                 
+                }
+
+                shapeLib.Data.mygrid.MouseLeftButtonUp += this.MouseUpInsert;
+                shapeLib.Data.mygrid.MouseMove += this.MouseMoveInsert;
+                shapeLib.Data.mygrid.MouseLeftButtonDown += this.MouseDownInsert;
 
             }
 
