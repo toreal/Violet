@@ -28,7 +28,7 @@ namespace violet.Shape
         static public void initControl(Canvas grid ,Canvas control)
         {
             Data.mygrid = grid;
-            Data.mycontrol = control;
+            Data.myControl = control;
         }
 
         static public  GModel Data = new GModel();
@@ -45,11 +45,15 @@ namespace violet.Shape
         public String colortype = "black";
         public GraphDoc gdc = new GraphDoc();
         public Canvas mygrid;
-        public Canvas mycontrol;
+        public Canvas myControl;
         public checkHitDraw chd = new checkHitDraw();
         public RUse ru = new RUse();
         public gPoint gp;
-        public gPath tempFPath;
+     //   public gPath tempFPath;
+        public byte colorR = 0;
+        public byte colorG = 0;
+        public byte colorB = 0;
+        public int strokeT = 3;
 
 
         public String Status = "rest"; //繪製曲線時的狀態

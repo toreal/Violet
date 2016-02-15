@@ -13,6 +13,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace violet.Shape
 {
@@ -38,6 +40,16 @@ namespace violet.Shape
 
     public class ShapeObj:IShapeUI,IDrawing,IUpdateOP,IInsertOP
     {
+
+        gPath tempFPath;
+        int drawtype=3;
+        System.Windows.Point p0, p1, p2, p3 = new System.Windows.Point(0, 0); //紀錄四個控制點使用
+        Line myLine;
+        int xStart;
+        int yStart;
+        int xEnd;
+        int yEnd;
+
         public System.Collections.ArrayList getMenuItem()
         {
            
@@ -79,10 +91,9 @@ namespace violet.Shape
               shapeLib.Data.view.Show();
           }
 
-             // e.Control
-
+            
             System.Windows.Forms.MessageBox.Show("Clicked");
-            //throw new NotImplementedException();
+            
         }
 
         public ShapeObj Create(string svg)
@@ -114,7 +125,29 @@ namespace violet.Shape
 
         public void DrawShape()
         {
-            throw new NotImplementedException();
+            if (shapeLib.Data.bfirst)
+            {
+                shapeLib.Data.Status = "rest";
+                shapeLib.Data.bfirst = false;
+                myLine = new Line();
+                myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(shapeLib.Data.colorR, shapeLib.Data.colorG, shapeLib.Data.colorB));
+                myLine.X1 = xStart;
+                myLine.X2 = xEnd;
+                myLine.Y1 = yStart;
+                myLine.Y2 = yEnd;
+                myLine.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = shapeLib.Data.strokeT;
+                shapeLib.Data.mygrid.Children.Add(myLine);
+            }
+            else
+            {
+                myLine.X2 = xEnd;
+                myLine.Y2 = yEnd;
+            }
+
+
+         //   throw new NotImplementedException();
         }
 
         public void DisplayControlPoints()
@@ -124,7 +157,35 @@ namespace violet.Shape
 
         public void MouseDownUpdate(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            int tempDraw = shapeLib.Data.gdc.sroot.PathList[shapeLib.Data.ru.Sel].drawtype;
+            if (tempDraw == 3)
+            {
+                shapeLib.Data.pStart = e.GetPosition(shapeLib.Data.myControl);
+            }
+            else
+            {
+                shapeLib.Data.pStart = correctPoint(e.GetPosition(shapeLib.Data.myControl));
+            }
+
+            tempFPath = new gPath();
+            shapeLib.Data.tempStart = shapeLib.Data.pStart;
+
+            if (!shapeLib.Data.gCanMove && !shapeLib.Data.OnIt)
+            {
+                //hiddenCanvas();
+                shapeLib.Data.ru.Sel = -1;
+                shapeLib.Data.ru.Node = -1;
+                shapeLib.Data.bConThing = false;
+                shapeLib.Data.gdc.bmove = false;
+                shapeLib.Data.bfirst = true;
+                shapeLib.Data.bhave = false;
+                shapeLib.Data.OnIt = false;
+            }
+            if (shapeLib.Data.ru.Sel >= 0)
+            {
+                shapeLib.Data.gdc.node = shapeLib.Data.ru.Node;
+            }
+            //throw new NotImplementedException();
         }
 
         public void MouseUpUpdate(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -143,7 +204,7 @@ namespace violet.Shape
             Canvas mygrid = shapeLib.Data.mygrid;
 
             shapeLib.Data.pStart = correctPoint(e.GetPosition(mygrid));
-            shapeLib.Data.tempFPath = new gPath();
+            tempFPath = new gPath();
             shapeLib.Data.tempStart = shapeLib.Data.pStart;
             shapeLib.Data.bCanMove = true;
             if (shapeLib.Data.drawtype == 5)
@@ -187,16 +248,16 @@ namespace violet.Shape
                     py = tempY;
                 }
 
-                //remGPath(px, py, ex, ey);
+                remGPath(px, py, ex, ey);
 
                 if (shapeLib.Data.drawtype <= 4 && shapeLib.Data.Status.Equals("rest"))
                 {
-                    shapeLib.Data.gdc.writeIn(shapeLib.Data.tempFPath, 0);
+                    shapeLib.Data.gdc.writeIn(tempFPath, 0);
                     shapeLib.Data.gdc.Release();
                 }
                 shapeLib.Data.gdc.bmove = false;
-                //if (shapeLib.Data.Status.Equals("rest"))
-                //    reDraw(true);
+                if (shapeLib.Data.Status.Equals("rest"))
+                    DrawShape();
 
                 shapeLib.Data.bfirst = true;
                 shapeLib.Data.bhave = false;
@@ -230,6 +291,12 @@ namespace violet.Shape
                         ey = py;
                         py = tempY;
                     }
+
+                     xStart=(int)px;
+                     yStart = (int)py;
+                     xEnd = (int)ex;
+                     yEnd = (int)ey;
+                     DrawShape();
                     //switch (shapeLib.Data.drawtype)
                     //{
                     //    case 1:
@@ -255,6 +322,41 @@ namespace violet.Shape
             //throw new NotImplementedException();
         }
 
+
+        /*--------------  其他功能  --------------*/
+        private void remGPath(double px, double py, double ex, double ey) //儲存新繪製的圖形資料
+        {
+            tempFPath.state.colorB = shapeLib.Data.colorB;
+            tempFPath.state.colorG = shapeLib.Data.colorG;
+            tempFPath.state.colorR = shapeLib.Data.colorR;
+            tempFPath.state.strokeT = shapeLib.Data.strokeT;
+            tempFPath.drawtype = drawtype;
+
+            if (shapeLib.Data.ru.Sel >= 0)
+                tempFPath.ListPlace = shapeLib.Data.ru.Sel;
+            else
+                tempFPath.ListPlace = shapeLib.Data.gdc.sroot.PathList.Count;
+
+            if (drawtype <= 3)
+            {
+                tempFPath.controlBtn1 = new System.Windows.Point(px, py);
+                tempFPath.controlBtn4 = new System.Windows.Point(ex, ey);
+
+                if (drawtype < 3)
+                {
+                    tempFPath.controlBtn2 = new System.Windows.Point(ex, py);
+                    tempFPath.controlBtn3 = new System.Windows.Point(px, ey);
+                }
+            }
+            if (drawtype == 4)
+            {
+                tempFPath.controlBtn1 = p0;
+                tempFPath.controlBtn2 = p1;
+                tempFPath.controlBtn3 = p2;
+                tempFPath.controlBtn4 = p3;
+            }
+        }
+      
 
         private System.Windows.Point correctPoint(System.Windows.Point p)
         {

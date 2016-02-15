@@ -8,7 +8,7 @@
 
     <Grid>
         <Canvas Name="myBackground" Background="White" Focusable="True"/>
-        <Canvas Name="mygrid"  OpacityMask="White" MouseLeftButtonDown="mygrid_MouseLeftButtonDown" MouseLeftButtonUp="mygrid_MouseLeftButtonUp" MouseMove="mygrid_MouseMove">
+        <Canvas Name="mygrid"  OpacityMask="White" >
             <Canvas.Background>
                 <SolidColorBrush Opacity=".0" />
             </Canvas.Background>

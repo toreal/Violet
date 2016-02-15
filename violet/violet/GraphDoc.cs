@@ -194,6 +194,8 @@ namespace violet
         public int Node = -1;
         public System.Windows.Point Point;
     }
+    //當mouse 點選之後,要查看mouse 是點選到那一個物件,所以把點選到的shape 的boundary 找出來依其boundary  去比對
+    //但新的作法是否仍有需要呢?
 
     public class gPoint{
         public System.Windows.Point mouseXY;
