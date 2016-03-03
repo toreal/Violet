@@ -1480,12 +1480,12 @@ namespace violet
             {
                 if (Act == 0)
                 {
-                    VShape.shapeLib.Data.gdc.reDo();
+                    VShape.shapeLib.Data.gdc.unDo();
                  //   reDraw(true);
                 }
                 if (Act == 1)
                 {
-                    VShape.shapeLib.Data.gdc.unDo();
+                    VShape.shapeLib.Data.gdc.reDo();
                    // reDraw(true);
                 }
             }
