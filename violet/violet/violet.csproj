@@ -263,6 +263,7 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
+    <None Include="violet.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UserControl1.xaml">
@@ -388,16 +389,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>james.pfx</ManifestKeyFile>
+    <ManifestKeyFile>violet.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>ABD452958D16AB246301387CD78B1B77F445B970</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1A8C9EEB61AB0408AFD6B3A74FA97DE627983727</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>james.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>violet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
