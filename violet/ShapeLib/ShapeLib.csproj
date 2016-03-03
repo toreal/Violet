@@ -62,17 +62,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shape\GraphDoc.cs" />
-    <Compile Include="Shape\IDrawing.cs" />
-    <Compile Include="Shape\IInsertOP.cs" />
-    <Compile Include="Shape\IShapeUI.cs" />
-    <Compile Include="Shape\IUpdateOP.cs" />
-    <Compile Include="Shape\shapeLib.cs" />
-    <Compile Include="Shape\ShapeObj.cs" />
+    <Compile Include="VShape\GraphDoc.cs" />
+    <Compile Include="VShape\IDrawing.cs" />
+    <Compile Include="VShape\IInsertOP.cs" />
+    <Compile Include="VShape\IShapeUI.cs" />
+    <Compile Include="VShape\IUpdateOP.cs" />
+    <Compile Include="VShape\shapeLib.cs" />
+    <Compile Include="VShape\ShapeObj.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="james.pfx" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Doc\Design Issues.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,17 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
+using violet.VShape;
 
 
 namespace violet
 {
 
-    [XmlRoot(ElementName = "SVGRoot", Namespace = "")]
-    public class SVGRoot
-    {
-         [XmlElement("PathList")]
-        public List<gPath> PathList = new List<gPath>();
-    }
+    //[XmlRoot(ElementName = "SVGRoot", Namespace = "")]
+    //public class SVGRoot
+    //{
+    //     [XmlElement("PathList")]
+    //    public List<gPath> PathList = new List<gPath>();
+    //}
     /// <summary>
     /// 記錄shape list,action data
     /// stack 記錄動作,每個動作(pointAry)包含,該圖是圖形的第幾個(Listplace),之前記錄是否己有相同圖是第幾個,目前圖存在記錄的第幾個
@@ -162,31 +163,31 @@ namespace violet
         public byte colorB ;
         public int strokeT ;
     }
-    [Serializable]
-    public class gPath
-    {
-        public int drawtype;
-        public gPro state;
-        public int ListPlace;
-        public System.Windows.Point controlBtn1;
-        public System.Windows.Point controlBtn2;
-        public System.Windows.Point controlBtn3;
-        public System.Windows.Point controlBtn4;
+    //[Serializable]
+    //public class gPath
+    //{
+    //    public int drawtype;
+    //    public gPro state;
+    //    public int ListPlace;
+    //    public System.Windows.Point controlBtn1;
+    //    public System.Windows.Point controlBtn2;
+    //    public System.Windows.Point controlBtn3;
+    //    public System.Windows.Point controlBtn4;
 
-        public void copyVal(gPath obj)
-        {
+    //    public void copyVal(gPath obj)
+    //    {
 
-            drawtype = obj.drawtype;
-            state = obj.state;
-            ListPlace = obj.ListPlace;
+    //        drawtype = obj.drawtype;
+    //        state = obj.state;
+    //        ListPlace = obj.ListPlace;
 
-            controlBtn1 = obj.controlBtn1;
-            controlBtn2 = obj.controlBtn2;
-            controlBtn3 = obj.controlBtn3;
-            controlBtn4 = obj.controlBtn4;
-        }
+    //        controlBtn1 = obj.controlBtn1;
+    //        controlBtn2 = obj.controlBtn2;
+    //        controlBtn3 = obj.controlBtn3;
+    //        controlBtn4 = obj.controlBtn4;
+    //    }
 
-    }
+    //}
 
     public class RUse
     {

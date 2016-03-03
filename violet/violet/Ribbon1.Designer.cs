@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using violet.Shape;
+using violet.VShape;
 namespace violet
 {
     partial class Ribbon1 : Microsoft.Office.Tools.Ribbon.RibbonBase

@@ -30,18 +30,18 @@ namespace violet
         //create form
 
 
-        public void Construt(Shape.ShapeObj obj )
+        public void Construt(VShape.ShapeObj obj )
         {
             ArrayList list = obj.getMenuItem();
           //  RibbonGroup group3 = this.Factory.CreateRibbonGroup();
            // RibbonTab tab = Factory.CreateRibbonTab();
 
-            foreach (Shape.shapeUI ui in list)
+            foreach (VShape.shapeUI ui in list)
             {
                 RibbonButton  uiobj=null;
                 switch(ui.uitype)
                 {
-                    case Shape.shapeUIType.RibbonButton:
+                    case VShape.shapeUIType.RibbonButton:
                         uiobj = this.Factory.CreateRibbonButton();
                         uiobj.Click+=(RibbonControlEventHandler) ui.click;
                         uiobj.Label = ui.label;
@@ -197,11 +197,14 @@ namespace violet
             if (f != null)
                 f.setStrokeType(8);
         }
-        //設定顏色
+        //selection mode
         private void selBtn_Click(object sender, RibbonControlEventArgs e)
         {
             Check();
             f.setDrawType(5);
+
+            VShape.shapeLib.Data.drawtype = 5;
+
         }
         private void redo_Click(object sender, RibbonControlEventArgs e)
         {

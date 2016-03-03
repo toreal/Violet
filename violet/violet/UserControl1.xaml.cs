@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Serialization;
+using violet.VShape;
 
 namespace violet
 {
@@ -35,14 +37,14 @@ namespace violet
             InitializeComponent();
             hiddenCanvas(); //一開始要將myControl畫布取消顯示
 
-            Shape.shapeLib.initControl(mygrid, myControl);
+            VShape.shapeLib.initControl(mygrid, myControl);
 
         }
         //初始設定
         public int drawtype = 1;
         public String colortype = "black";
         public int lineSpace = 9;
-        public GraphDoc gdc = new GraphDoc();
+        //public GraphDoc gdc = new GraphDoc();
         public checkHitDraw chd = new checkHitDraw();
         public RUse ru = new RUse();
         gPoint gp;
@@ -77,208 +79,208 @@ namespace violet
         bool bConThing = false; //是否有選取物件
         bool OnIt = false; //是否有滑入或滑出選取物件
 
-        /*--------------  滑鼠事件  --------------*/
-        // mygrid --> 畫全部圖形的地方(黑), myControl --> 畫選取圖形的地方(綠)
-        //滑鼠在mygrid畫布上按下左鍵
-        private void mygrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            pStart = correctPoint(e.GetPosition(mygrid));
-            tempFPath = new gPath();
-            tempStart = pStart;
-            bCanMove = true;
-            if (drawtype == 5)
-            {
-                if (gdc.selIndex < 0)
-                {
-                    gdc.selIndex = gdc.sroot.PathList.Count - 1;
-                }
-            }
-            else
-            {
-                gdc.selIndex = -1;
-            }
-        }
-        //滑鼠在mygrid畫布上放開左鍵
-        private void mygrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (bCanMove)
-            {
-                pEnd = correctPoint(e.GetPosition(mygrid));
-                double tempX, tempY;
-                double px = pStart.X;
-                double py = pStart.Y;
-                double ex = pEnd.X;
-                double ey = pEnd.Y;
+        ///*--------------  滑鼠事件  --------------*/
+        //// mygrid --> 畫全部圖形的地方(黑), myControl --> 畫選取圖形的地方(綠)
+        ////滑鼠在mygrid畫布上按下左鍵
+        //private void mygrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    pStart = correctPoint(e.GetPosition(mygrid));
+        //    tempFPath = new gPath();
+        //    tempStart = pStart;
+        //    bCanMove = true;
+        //    if (drawtype == 5)
+        //    {
+        //        if (gdc.selIndex < 0)
+        //        {
+        //            gdc.selIndex = gdc.sroot.PathList.Count - 1;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        gdc.selIndex = -1;
+        //    }
+        //}
+        ////滑鼠在mygrid畫布上放開左鍵
+        //private void mygrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (bCanMove)
+        //    {
+        //        pEnd = correctPoint(e.GetPosition(mygrid));
+        //        double tempX, tempY;
+        //        double px = pStart.X;
+        //        double py = pStart.Y;
+        //        double ex = pEnd.X;
+        //        double ey = pEnd.Y;
 
-                if (drawtype != 3 && ex < px)
-                {
-                    tempX = ex;
-                    ex = px;
-                    px = tempX;
-                }
-                if (drawtype != 3 && ey < py)
-                {
-                    tempY = ey;
-                    ey = py;
-                    py = tempY;
-                }
+        //        if (drawtype != 3 && ex < px)
+        //        {
+        //            tempX = ex;
+        //            ex = px;
+        //            px = tempX;
+        //        }
+        //        if (drawtype != 3 && ey < py)
+        //        {
+        //            tempY = ey;
+        //            ey = py;
+        //            py = tempY;
+        //        }
 
-                remGPath(px, py, ex, ey);
+        //        remGPath(px, py, ex, ey);
 
-                if (drawtype <= 4 && Status.Equals("rest"))
-                {
-                    gdc.writeIn(tempFPath, 0);
-                    gdc.Release();
-                }
-                gdc.bmove = false;
-                if (Status.Equals("rest"))
-                    reDraw(true);
+        //        if (drawtype <= 4 && Status.Equals("rest"))
+        //        {
+        //            gdc.writeIn(tempFPath, 0);
+        //            gdc.Release();
+        //        }
+        //        gdc.bmove = false;
+        //        if (Status.Equals("rest"))
+        //            reDraw(true);
 
-                bfirst = true;
-                bhave = false;
-            }
-        }
-        //滑鼠在mygrid畫布上移動
-        private void mygrid_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (!bhave) //if you can control an object
-                {
-                    pEnd = correctPoint(e.GetPosition(mygrid));
-                    double tempX, tempY;
-                    double px = pStart.X;
-                    double py = pStart.Y;
-                    double ex = pEnd.X;
-                    double ey = pEnd.Y;
-                    if (drawtype < 3 && ex < px)
-                    {
-                        tempX = ex;
-                        ex = px;
-                        px = tempX;
-                    }
-                    if (drawtype < 3 && ey < py)
-                    {
-                        tempY = ey;
-                        ey = py;
-                        py = tempY;
-                    }
-                    switch (drawtype)
-                    {
-                        case 1:
-                            drawEllipse((int)px, (int)py, (int)ex, (int)ey);
-                            myEllipse.Opacity = 0.5;
-                            break;
-                        case 2:
-                            drawRect((int)px, (int)py, (int)ex, (int)ey, 0);
-                            myRect.Opacity = 0.5;
-                            break;
-                        case 3:
-                            drawLine((int)px, (int)py, (int)ex, (int)ey);
-                            myLine.Opacity = 0.5;
-                            break;
-                        case 4:
-                            drawCurve((int)px, (int)py, (int)ex, (int)ey);
-                            myPath.Opacity = 0.5;
-                            break;
-                    }
-                }
-            }
-        }
+        //        bfirst = true;
+        //        bhave = false;
+        //    }
+        //}
+        ////滑鼠在mygrid畫布上移動
+        //private void mygrid_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (e.LeftButton == MouseButtonState.Pressed)
+        //    {
+        //        if (!bhave) //if you can control an object
+        //        {
+        //            pEnd = correctPoint(e.GetPosition(mygrid));
+        //            double tempX, tempY;
+        //            double px = pStart.X;
+        //            double py = pStart.Y;
+        //            double ex = pEnd.X;
+        //            double ey = pEnd.Y;
+        //            if (drawtype < 3 && ex < px)
+        //            {
+        //                tempX = ex;
+        //                ex = px;
+        //                px = tempX;
+        //            }
+        //            if (drawtype < 3 && ey < py)
+        //            {
+        //                tempY = ey;
+        //                ey = py;
+        //                py = tempY;
+        //            }
+        //            switch (drawtype)
+        //            {
+        //                case 1:
+        //                    drawEllipse((int)px, (int)py, (int)ex, (int)ey);
+        //                    myEllipse.Opacity = 0.5;
+        //                    break;
+        //                case 2:
+        //                    drawRect((int)px, (int)py, (int)ex, (int)ey, 0);
+        //                    myRect.Opacity = 0.5;
+        //                    break;
+        //                case 3:
+        //                    drawLine((int)px, (int)py, (int)ex, (int)ey);
+        //                    myLine.Opacity = 0.5;
+        //                    break;
+        //                case 4:
+        //                    drawCurve((int)px, (int)py, (int)ex, (int)ey);
+        //                    myPath.Opacity = 0.5;
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //}
         //滑鼠在myControl畫布上按下左鍵
-        private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
+        //private void myControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
 
-            int tempDraw = gdc.sroot.PathList[ru.Sel].drawtype;
-            if (tempDraw == 3)
-            {
-                pStart = e.GetPosition(myControl);
-            }
-            else
-            {
-                pStart = correctPoint(e.GetPosition(myControl));
-            }
+        //    int tempDraw = gdc.sroot.PathList[ru.Sel].drawtype;
+        //    if (tempDraw == 3)
+        //    {
+        //        pStart = e.GetPosition(myControl);
+        //    }
+        //    else
+        //    {
+        //        pStart = correctPoint(e.GetPosition(myControl));
+        //    }
             
-            tempFPath = new gPath();
-            tempStart = pStart;
+        //    tempFPath = new gPath();
+        //    tempStart = pStart;
             
-            if (!gCanMove && !OnIt)
-            {
-                hiddenCanvas();
-                ru.Sel = -1;
-                ru.Node = -1;
-                bConThing = false;
-                gdc.bmove = false;
-                bfirst = true;
-                bhave = false;
-                OnIt = false;
-            }
-            if (ru.Sel >= 0)
-            {
-                gdc.node = ru.Node;
-            }
-        }
-        //滑鼠在myControl畫布上放開左鍵
-        private void myControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (gCanMove)
-            {
-                gCanMove = false;
-                pEnd = correctPoint(e.GetPosition(myControl));
-                double tempX, tempY;
-                double px = pStart.X;
-                double py = pStart.Y;
-                double ex = pEnd.X;
-                double ey = pEnd.Y;
-                if (drawtype != 3 && ex < px)
-                {
-                    tempX = ex;
-                    ex = px;
-                    px = tempX;
-                }
-                if (drawtype != 3 && ey < py)
-                {
-                    tempY = ey;
-                    ey = py;
-                    py = tempY;
-                }
-                remGPath(px, py, ex, ey);
-                if (bhave && ru.Sel >= 0)
-                {
-                    if (new Point(ex, ey) != new Point(px, py))
-                    {
-                        tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
-                        gdc.writeIn(tempFPath, 1);
-                        gdc.Release();
+        //    if (!gCanMove && !OnIt)
+        //    {
+        //        hiddenCanvas();
+        //        ru.Sel = -1;
+        //        ru.Node = -1;
+        //        bConThing = false;
+        //        gdc.bmove = false;
+        //        bfirst = true;
+        //        bhave = false;
+        //        OnIt = false;
+        //    }
+        //    if (ru.Sel >= 0)
+        //    {
+        //        gdc.node = ru.Node;
+        //    }
+        //}
+        ////滑鼠在myControl畫布上放開左鍵
+        //private void myControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (gCanMove)
+        //    {
+        //        gCanMove = false;
+        //        pEnd = correctPoint(e.GetPosition(myControl));
+        //        double tempX, tempY;
+        //        double px = pStart.X;
+        //        double py = pStart.Y;
+        //        double ex = pEnd.X;
+        //        double ey = pEnd.Y;
+        //        if (drawtype != 3 && ex < px)
+        //        {
+        //            tempX = ex;
+        //            ex = px;
+        //            px = tempX;
+        //        }
+        //        if (drawtype != 3 && ey < py)
+        //        {
+        //            tempY = ey;
+        //            ey = py;
+        //            py = tempY;
+        //        }
+        //        remGPath(px, py, ex, ey);
+        //        if (bhave && ru.Sel >= 0)
+        //        {
+        //            if (new Point(ex, ey) != new Point(px, py))
+        //            {
+        //                tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
+        //                gdc.writeIn(tempFPath, 1);
+        //                gdc.Release();
 
-                        if (Status.Equals("rest"))
-                            reDraw(true);
-                    }
-                }
-            }
-        }
-        //滑鼠在myControl畫布上移動
-        private void myControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (ru.Node > -1 && gCanMove)
-                {
+        //                if (Status.Equals("rest"))
+        //                    reDraw(true);
+        //            }
+        //        }
+        //    }
+        //}
+        ////滑鼠在myControl畫布上移動
+        //private void myControl_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (e.LeftButton == MouseButtonState.Pressed)
+        //    {
+        //        if (ru.Node > -1 && gCanMove)
+        //        {
                     
-                    pEnd = correctPoint(e.GetPosition(myControl));
-                    pStart = correctPoint(pStart);
-                    double px = pStart.X;
-                    double py = pStart.Y;
-                    double ex = pEnd.X;
-                    double ey = pEnd.Y;
+        //            pEnd = correctPoint(e.GetPosition(myControl));
+        //            pStart = correctPoint(pStart);
+        //            double px = pStart.X;
+        //            double py = pStart.Y;
+        //            double ex = pEnd.X;
+        //            double ey = pEnd.Y;
 
-                    gdc.bmove = true;
-                    gdc.mx = (int)ex;
-                    gdc.my = (int)ey;
-                    reDraw(true);
-                }
-            }
-        }
+        //            gdc.bmove = true;
+        //            gdc.mx = (int)ex;
+        //            gdc.my = (int)ey;
+        //            reDraw(true);
+        //        }
+        //    }
+        //}
 
         //矯正滑鼠位置
         private Point correctPoint(Point p)
@@ -479,326 +481,326 @@ namespace violet
         }
 
         //刷新畫面時 用來重繪圖形
-        private void drawGPath(gPath gpath)
-        {
-            colorR = gpath.state.colorR;
-            colorG = gpath.state.colorG;
-            colorB = gpath.state.colorB;
-            strokeT = gpath.state.strokeT;
-            bfirst = true;
+        //private void drawGPath(gPath gpath)
+        //{
+        //    colorR = gpath.state.colorR;
+        //    colorG = gpath.state.colorG;
+        //    colorB = gpath.state.colorB;
+        //    strokeT = gpath.state.strokeT;
+        //    bfirst = true;
 
-            switch (gpath.drawtype)
-            {
-                case 1:
-                    reEllipse((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
-                    myEllipse.Opacity = 1;
-                    break;
-                case 2:
-                    reRect((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y, 0);
-                    myRect.Opacity = 1;
-                    break;
-                case 3:
-                    reLine((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
-                    myLine.Opacity = 1;
-                    break;
-                case 4:
-                    reCurve(gpath.controlBtn1, gpath.controlBtn2, gpath.controlBtn3, gpath.controlBtn4);
-                    myPath.Opacity = 1;
-                    break;
-            }
-            bfirst = true;
-        }
+        //    switch (gpath.drawtype)
+        //    {
+        //        case 1:
+        //            reEllipse((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
+        //            myEllipse.Opacity = 1;
+        //            break;
+        //        case 2:
+        //            reRect((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y, 0);
+        //            myRect.Opacity = 1;
+        //            break;
+        //        case 3:
+        //            reLine((int)gpath.controlBtn1.X, (int)gpath.controlBtn1.Y, (int)gpath.controlBtn4.X, (int)gpath.controlBtn4.Y);
+        //            myLine.Opacity = 1;
+        //            break;
+        //        case 4:
+        //            reCurve(gpath.controlBtn1, gpath.controlBtn2, gpath.controlBtn3, gpath.controlBtn4);
+        //            myPath.Opacity = 1;
+        //            break;
+        //    }
+        //    bfirst = true;
+        //}
         //重繪橢圓
-        private void reEllipse(int xStart, int yStart, int xEnd, int yEnd)
-        {
-            if (bfirst)
-            {
-                bfirst = false;
-                myEllipse = new Ellipse();
-                //如果要繪製中心顏色，可開啟這段
-                /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
-                myEllipse.Fill = mySolidColorBrush;*/
-                myEllipse.StrokeThickness = strokeT;
-                myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
-                myEllipse.Width = Math.Abs(xEnd - xStart);
-                myEllipse.Height = Math.Abs(yEnd - yStart);
-                myEllipse.Margin = new Thickness(xStart, yStart, 0, 0);
-                myEllipse.MouseLeftButtonDown += myEllipse_MouseLeftButtonDown;
-                myEllipse.MouseEnter += Shapes_MouseEnter_Hands;
-                myEllipse.MouseLeave += Shapes_MouseLeave;
+        //private void reEllipse(int xStart, int yStart, int xEnd, int yEnd)
+        //{
+        //    if (bfirst)
+        //    {
+        //        bfirst = false;
+        //        myEllipse = new Ellipse();
+        //        //如果要繪製中心顏色，可開啟這段
+        //        /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+        //        mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
+        //        myEllipse.Fill = mySolidColorBrush;*/
+        //        myEllipse.StrokeThickness = strokeT;
+        //        myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+        //        myEllipse.Width = Math.Abs(xEnd - xStart);
+        //        myEllipse.Height = Math.Abs(yEnd - yStart);
+        //        myEllipse.Margin = new Thickness(xStart, yStart, 0, 0);
+        //        myEllipse.MouseLeftButtonDown += myEllipse_MouseLeftButtonDown;
+        //        myEllipse.MouseEnter += Shapes_MouseEnter_Hands;
+        //        myEllipse.MouseLeave += Shapes_MouseLeave;
 
-                mygrid.Children.Add(myEllipse);
-            }
-        }
-        //重繪矩形
-        private void reRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
-        {
-            if (bfirst)
-            {
-                bfirst = false;
-                myRect = new Rectangle();
-                //如果要繪製中心顏色，可開啟這段
-                /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
-                myRect.Fill = mySolidColorBrush;*/
-                myRect.StrokeThickness = strokeT;
-                myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
-                myRect.Width = Math.Abs(xEnd - xStart);
-                myRect.Height = Math.Abs(yEnd - yStart);
-                myRect.Margin = new Thickness(xStart, yStart, 0, 0);
-                myRect.MouseLeftButtonDown += myRect_MouseLeftButtonDown;
-                myRect.MouseEnter += Shapes_MouseEnter_Hands;
-                myRect.MouseLeave += Shapes_MouseLeave;
+        //        mygrid.Children.Add(myEllipse);
+        //    }
+        //}
+        ////重繪矩形
+        //private void reRect(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
+        //{
+        //    if (bfirst)
+        //    {
+        //        bfirst = false;
+        //        myRect = new Rectangle();
+        //        //如果要繪製中心顏色，可開啟這段
+        //        /*SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+        //        mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
+        //        myRect.Fill = mySolidColorBrush;*/
+        //        myRect.StrokeThickness = strokeT;
+        //        myRect.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+        //        myRect.Width = Math.Abs(xEnd - xStart);
+        //        myRect.Height = Math.Abs(yEnd - yStart);
+        //        myRect.Margin = new Thickness(xStart, yStart, 0, 0);
+        //        myRect.MouseLeftButtonDown += myRect_MouseLeftButtonDown;
+        //        myRect.MouseEnter += Shapes_MouseEnter_Hands;
+        //        myRect.MouseLeave += Shapes_MouseLeave;
 
-                mygrid.Children.Add(myRect);
-            }
-        }
-        //重繪直線
-        private void reLine(int xStart, int yStart, int xEnd, int yEnd)
-        {
-            if (bfirst)
-            {
-                bfirst = false;
-                myLine = new Line();
-                myLine.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
-                myLine.X1 = xStart;
-                myLine.X2 = xEnd;
-                myLine.Y1 = yStart;
-                myLine.Y2 = yEnd;
-                myLine.HorizontalAlignment = HorizontalAlignment.Left;
-                myLine.VerticalAlignment = VerticalAlignment.Center;
-                myLine.StrokeThickness = strokeT;
-                myLine.MouseLeftButtonDown += myLine_MouseLeftButtonDown;
-                myLine.MouseEnter += Shapes_MouseEnter_Hands;
-                myLine.MouseLeave += Shapes_MouseLeave;
+        //        mygrid.Children.Add(myRect);
+        //    }
+        //}
+        ////重繪直線
+        //private void reLine(int xStart, int yStart, int xEnd, int yEnd)
+        //{
+        //    if (bfirst)
+        //    {
+        //        bfirst = false;
+        //        myLine = new Line();
+        //        myLine.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+        //        myLine.X1 = xStart;
+        //        myLine.X2 = xEnd;
+        //        myLine.Y1 = yStart;
+        //        myLine.Y2 = yEnd;
+        //        myLine.HorizontalAlignment = HorizontalAlignment.Left;
+        //        myLine.VerticalAlignment = VerticalAlignment.Center;
+        //        myLine.StrokeThickness = strokeT;
+        //        myLine.MouseLeftButtonDown += myLine_MouseLeftButtonDown;
+        //        myLine.MouseEnter += Shapes_MouseEnter_Hands;
+        //        myLine.MouseLeave += Shapes_MouseLeave;
 
-                mygrid.Children.Add(myLine);
-            }
-        }
-        //重繪曲線
-        private void reCurve(Point point0, Point point1, Point point2, Point point3)
-        {
-            if (bfirst)
-            {
-                bfirst = false;
-                bezier = new BezierSegment();
-                bezier.Point3 = point3;
-                figure = new PathFigure();
-                figure.StartPoint = point0;
-                bezier.Point1 = point1;
-                bezier.Point2 = point2;
-                figure.Segments.Add(bezier);
-                geometry = new PathGeometry();
-                geometry.Figures.Add(figure);
-                myPath = new System.Windows.Shapes.Path();
-                myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
-                myPath.StrokeThickness = strokeT;
-                myPath.Data = geometry;
-                myPath.MouseLeftButtonDown += myPath_MouseLeftButtonDown;
-                myPath.MouseEnter += Shapes_MouseEnter_Hands;
-                myPath.MouseLeave += Shapes_MouseLeave;
+        //        mygrid.Children.Add(myLine);
+        //    }
+        //}
+        ////重繪曲線
+        //private void reCurve(Point point0, Point point1, Point point2, Point point3)
+        //{
+        //    if (bfirst)
+        //    {
+        //        bfirst = false;
+        //        bezier = new BezierSegment();
+        //        bezier.Point3 = point3;
+        //        figure = new PathFigure();
+        //        figure.StartPoint = point0;
+        //        bezier.Point1 = point1;
+        //        bezier.Point2 = point2;
+        //        figure.Segments.Add(bezier);
+        //        geometry = new PathGeometry();
+        //        geometry.Figures.Add(figure);
+        //        myPath = new System.Windows.Shapes.Path();
+        //        myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+        //        myPath.StrokeThickness = strokeT;
+        //        myPath.Data = geometry;
+        //        myPath.MouseLeftButtonDown += myPath_MouseLeftButtonDown;
+        //        myPath.MouseEnter += Shapes_MouseEnter_Hands;
+        //        myPath.MouseLeave += Shapes_MouseLeave;
 
-                mygrid.Children.Add(myPath);
-            }
-        }
+        //        mygrid.Children.Add(myPath);
+        //    }
+        //}
 
         /*--------------  圖形事件  --------------*/
-        //當左鍵點擊按到橢圓時
-        void myEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (drawtype == 5)
-            {
-                bConThing = true;
-                gp = new gPoint();
-                Ellipse tempEll = sender as Ellipse;
-                double locLeft = tempEll.Margin.Left;
-                double locTop = tempEll.Margin.Top;
+        ////當左鍵點擊按到橢圓時
+        //void myEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (drawtype == 5)
+        //    {
+        //        bConThing = true;
+        //        gp = new gPoint();
+        //        Ellipse tempEll = sender as Ellipse;
+        //        double locLeft = tempEll.Margin.Left;
+        //        double locTop = tempEll.Margin.Top;
 
-                gp.point0 = new Point(tempEll.RenderedGeometry.Bounds.TopLeft.X - (tempEll.StrokeThickness / 2) + locLeft, tempEll.RenderedGeometry.Bounds.TopLeft.Y - (tempEll.StrokeThickness / 2) + locTop);
-                gp.point1 = new Point(gp.point0.X + tempEll.RenderedGeometry.Bounds.TopRight.X + (tempEll.StrokeThickness / 2), gp.point0.Y + tempEll.RenderedGeometry.Bounds.TopRight.Y - (tempEll.StrokeThickness / 2));
-                gp.point2 = new Point(gp.point0.X + tempEll.RenderedGeometry.Bounds.BottomLeft.X - (tempEll.StrokeThickness / 2), gp.point0.Y + tempEll.RenderedGeometry.Bounds.BottomLeft.Y + (tempEll.StrokeThickness / 2));
-                gp.point3 = new Point(gp.point0.X + tempEll.RenderedGeometry.Bounds.BottomRight.X + (tempEll.StrokeThickness / 2), gp.point0.Y + tempEll.RenderedGeometry.Bounds.BottomRight.Y + (tempEll.StrokeThickness / 2));
+        //        gp.point0 = new Point(tempEll.RenderedGeometry.Bounds.TopLeft.X - (tempEll.StrokeThickness / 2) + locLeft, tempEll.RenderedGeometry.Bounds.TopLeft.Y - (tempEll.StrokeThickness / 2) + locTop);
+        //        gp.point1 = new Point(gp.point0.X + tempEll.RenderedGeometry.Bounds.TopRight.X + (tempEll.StrokeThickness / 2), gp.point0.Y + tempEll.RenderedGeometry.Bounds.TopRight.Y - (tempEll.StrokeThickness / 2));
+        //        gp.point2 = new Point(gp.point0.X + tempEll.RenderedGeometry.Bounds.BottomLeft.X - (tempEll.StrokeThickness / 2), gp.point0.Y + tempEll.RenderedGeometry.Bounds.BottomLeft.Y + (tempEll.StrokeThickness / 2));
+        //        gp.point3 = new Point(gp.point0.X + tempEll.RenderedGeometry.Bounds.BottomRight.X + (tempEll.StrokeThickness / 2), gp.point0.Y + tempEll.RenderedGeometry.Bounds.BottomRight.Y + (tempEll.StrokeThickness / 2));
 
-                gp.mouseXY = correctPoint(e.GetPosition(mygrid));
-                showCanvas();
-                ru.Sel = chd.checkHitWhich(gdc.sroot.PathList ,gp, 1);
-                greenDrawing();
-                bhave = true;
-            }
-        }
-        //當左鍵點擊按到矩形時
-        void myRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (drawtype == 5)
-            {
-                bConThing = true;
-                gp = new gPoint();
-                Rectangle tempRect = sender as Rectangle;
-                double locLeft = tempRect.Margin.Left;
-                double locTop = tempRect.Margin.Top;
+        //        gp.mouseXY = correctPoint(e.GetPosition(mygrid));
+        //        showCanvas();
+        //        ru.Sel = chd.checkHitWhich(gdc.sroot.PathList ,gp, 1);
+        //        greenDrawing();
+        //        bhave = true;
+        //    }
+        //}
+        ////當左鍵點擊按到矩形時
+        //void myRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (drawtype == 5)
+        //    {
+        //        bConThing = true;
+        //        gp = new gPoint();
+        //        Rectangle tempRect = sender as Rectangle;
+        //        double locLeft = tempRect.Margin.Left;
+        //        double locTop = tempRect.Margin.Top;
 
-                gp.point0 = new Point(tempRect.RenderedGeometry.Bounds.TopLeft.X - (tempRect.StrokeThickness / 2) + locLeft, tempRect.RenderedGeometry.Bounds.TopLeft.Y - (tempRect.StrokeThickness / 2) + locTop);
-                gp.point1 = new Point(gp.point0.X + tempRect.RenderedGeometry.Bounds.TopRight.X + (tempRect.StrokeThickness / 2), gp.point0.Y + tempRect.RenderedGeometry.Bounds.TopRight.Y - (tempRect.StrokeThickness / 2));
-                gp.point2 = new Point(gp.point0.X + tempRect.RenderedGeometry.Bounds.BottomLeft.X - (tempRect.StrokeThickness / 2), gp.point0.Y + tempRect.RenderedGeometry.Bounds.BottomLeft.Y + (tempRect.StrokeThickness / 2));
-                gp.point3 = new Point(gp.point0.X + tempRect.RenderedGeometry.Bounds.BottomRight.X + (tempRect.StrokeThickness / 2), gp.point0.Y + tempRect.RenderedGeometry.Bounds.BottomRight.Y + (tempRect.StrokeThickness / 2));
+        //        gp.point0 = new Point(tempRect.RenderedGeometry.Bounds.TopLeft.X - (tempRect.StrokeThickness / 2) + locLeft, tempRect.RenderedGeometry.Bounds.TopLeft.Y - (tempRect.StrokeThickness / 2) + locTop);
+        //        gp.point1 = new Point(gp.point0.X + tempRect.RenderedGeometry.Bounds.TopRight.X + (tempRect.StrokeThickness / 2), gp.point0.Y + tempRect.RenderedGeometry.Bounds.TopRight.Y - (tempRect.StrokeThickness / 2));
+        //        gp.point2 = new Point(gp.point0.X + tempRect.RenderedGeometry.Bounds.BottomLeft.X - (tempRect.StrokeThickness / 2), gp.point0.Y + tempRect.RenderedGeometry.Bounds.BottomLeft.Y + (tempRect.StrokeThickness / 2));
+        //        gp.point3 = new Point(gp.point0.X + tempRect.RenderedGeometry.Bounds.BottomRight.X + (tempRect.StrokeThickness / 2), gp.point0.Y + tempRect.RenderedGeometry.Bounds.BottomRight.Y + (tempRect.StrokeThickness / 2));
 
-                gp.mouseXY = correctPoint(e.GetPosition(mygrid));
-                showCanvas();
-                ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 2);
-                greenDrawing();
-                bhave = true;
-            }
-        }
-        //當左鍵點擊按到直線時
-        void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (drawtype == 5)
-            {
-                bConThing = true;
-                gp = new gPoint();
-                Line tempLine = sender as Line;
+        //        gp.mouseXY = correctPoint(e.GetPosition(mygrid));
+        //        showCanvas();
+        //        ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 2);
+        //        greenDrawing();
+        //        bhave = true;
+        //    }
+        //}
+        ////當左鍵點擊按到直線時
+        //void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (drawtype == 5)
+        //    {
+        //        bConThing = true;
+        //        gp = new gPoint();
+        //        Line tempLine = sender as Line;
 
-                gp.point0 = new Point(tempLine.X1, tempLine.Y1);
-                gp.point3 = new Point(tempLine.X2, tempLine.Y2);
+        //        gp.point0 = new Point(tempLine.X1, tempLine.Y1);
+        //        gp.point3 = new Point(tempLine.X2, tempLine.Y2);
 
-                gp.mouseXY = correctPoint(e.GetPosition(mygrid));
+        //        gp.mouseXY = correctPoint(e.GetPosition(mygrid));
 
-                showCanvas();
-                ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 3);
-                greenDrawing();
-                bhave = true;
-            }
-        }
-        //當左鍵點擊按到曲線時
-        void myPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (drawtype == 5)
-            {
-                bConThing = true;
-                gp = new gPoint();
-                System.Windows.Shapes.Path tempPath = sender as System.Windows.Shapes.Path;
-                String[] tmpStr = pathDataToPoint(tempPath.Data.ToString()).Split(',');
-                double[] tmpDouStr = new double[tmpStr.Length];
+        //        showCanvas();
+        //        ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 3);
+        //        greenDrawing();
+        //        bhave = true;
+        //    }
+        //}
+        ////當左鍵點擊按到曲線時
+        //void myPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (drawtype == 5)
+        //    {
+        //        bConThing = true;
+        //        gp = new gPoint();
+        //        System.Windows.Shapes.Path tempPath = sender as System.Windows.Shapes.Path;
+        //        String[] tmpStr = pathDataToPoint(tempPath.Data.ToString()).Split(',');
+        //        double[] tmpDouStr = new double[tmpStr.Length];
 
-                for (int i = 0; i < tmpStr.Length; i++)
-                {
-                    tmpDouStr[i] = Convert.ToDouble(tmpStr[i]);
-                }
+        //        for (int i = 0; i < tmpStr.Length; i++)
+        //        {
+        //            tmpDouStr[i] = Convert.ToDouble(tmpStr[i]);
+        //        }
 
-                gp.point0 = new Point(tmpDouStr[0], tmpDouStr[1]);
-                gp.point1 = new Point(tmpDouStr[2], tmpDouStr[3]);
-                gp.point2 = new Point(tmpDouStr[4], tmpDouStr[5]);
-                gp.point3 = new Point(tmpDouStr[6], tmpDouStr[7]);
+        //        gp.point0 = new Point(tmpDouStr[0], tmpDouStr[1]);
+        //        gp.point1 = new Point(tmpDouStr[2], tmpDouStr[3]);
+        //        gp.point2 = new Point(tmpDouStr[4], tmpDouStr[5]);
+        //        gp.point3 = new Point(tmpDouStr[6], tmpDouStr[7]);
 
-                gp.mouseXY = correctPoint(e.GetPosition(mygrid));
-                showCanvas();
-                ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 4);
-                greenDrawing();
-                bhave = true;
-            }
-        }
-        //四個角落的控制點
-        void cornerRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ru.Node = chd.checkHitCorner(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]);
-            gdc.node = ru.Node;
-            gCanMove = true;
-        }
-        //控制邊框的範圍
-        void cornerRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (gCanMove)
-            {
-                gCanMove = false;
-                pEnd = correctPoint(e.GetPosition(myControl));
-                double tempX, tempY;
-                double px = pStart.X;
-                double py = pStart.Y;
-                double ex = pEnd.X;
-                double ey = pEnd.Y;
+        //        gp.mouseXY = correctPoint(e.GetPosition(mygrid));
+        //        showCanvas();
+        //        ru.Sel = chd.checkHitWhich(gdc.sroot.PathList, gp, 4);
+        //        greenDrawing();
+        //        bhave = true;
+        //    }
+        //}
+        ////四個角落的控制點
+        //void cornerRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    ru.Node = chd.checkHitCorner(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]);
+        //    gdc.node = ru.Node;
+        //    gCanMove = true;
+        //}
+        ////控制邊框的範圍
+        //void cornerRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (gCanMove)
+        //    {
+        //        gCanMove = false;
+        //        pEnd = correctPoint(e.GetPosition(myControl));
+        //        double tempX, tempY;
+        //        double px = pStart.X;
+        //        double py = pStart.Y;
+        //        double ex = pEnd.X;
+        //        double ey = pEnd.Y;
 
-                if (drawtype != 3 && ex < px)
-                {
-                    tempX = ex;
-                    ex = px;
-                    px = tempX;
-                }
-                if (drawtype != 3 && ey < py)
-                {
-                    tempY = ey;
-                    ey = py;
-                    py = tempY;
-                }
+        //        if (drawtype != 3 && ex < px)
+        //        {
+        //            tempX = ex;
+        //            ex = px;
+        //            px = tempX;
+        //        }
+        //        if (drawtype != 3 && ey < py)
+        //        {
+        //            tempY = ey;
+        //            ey = py;
+        //            py = tempY;
+        //        }
 
-                remGPath(px, py, ex, ey);
+        //        remGPath(px, py, ex, ey);
 
-                if (bhave && ru.Sel >= 0)
-                {
-                    if (new Point(ex, ey) != new Point(px, py))
-                    {
-                        tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
-                        gdc.writeIn(tempFPath, 1);
-                        gdc.Release();
-                    }
-                }
-                if (Status.Equals("rest"))
-                    reDraw(true);
-            }
-        }
-        //當左鍵按下綠色邊框
-        void sideRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (chd.checkHitCenter(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
-            {
-                ru.Node = 4;
-                gCanMove = true;
-            }
-        }
-        //當左鍵放開綠色邊框
-        void sideRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (gCanMove)
-            {
-                gCanMove = false;
-                pEnd = correctPoint(e.GetPosition(myControl));
-                double px = pStart.X;
-                double py = pStart.Y;
-                double ex = pEnd.X;
-                double ey = pEnd.Y;
-                remGPath(px, py, ex, ey);
-                if (bhave && ru.Sel >= 0)
-                {
-                    if (new Point(ex, ey) != new Point(px, py))
-                    {
-                        tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
-                        gdc.writeIn(tempFPath, 1);
-                        gdc.Release();
+        //        if (bhave && ru.Sel >= 0)
+        //        {
+        //            if (new Point(ex, ey) != new Point(px, py))
+        //            {
+        //                tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
+        //                gdc.writeIn(tempFPath, 1);
+        //                gdc.Release();
+        //            }
+        //        }
+        //        if (Status.Equals("rest"))
+        //            reDraw(true);
+        //    }
+        //}
+        ////當左鍵按下綠色邊框
+        //void sideRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (chd.checkHitCenter(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
+        //    {
+        //        ru.Node = 4;
+        //        gCanMove = true;
+        //    }
+        //}
+        ////當左鍵放開綠色邊框
+        //void sideRect_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (gCanMove)
+        //    {
+        //        gCanMove = false;
+        //        pEnd = correctPoint(e.GetPosition(myControl));
+        //        double px = pStart.X;
+        //        double py = pStart.Y;
+        //        double ex = pEnd.X;
+        //        double ey = pEnd.Y;
+        //        remGPath(px, py, ex, ey);
+        //        if (bhave && ru.Sel >= 0)
+        //        {
+        //            if (new Point(ex, ey) != new Point(px, py))
+        //            {
+        //                tempFPath.copyVal(gdc.sroot.PathList[ru.Sel]);
+        //                gdc.writeIn(tempFPath, 1);
+        //                gdc.Release();
 
-                        if (Status.Equals("rest"))
-                            reDraw(true);
-                    }
-                }
-            }
-        }
-        //當左鍵按下被選取的線條
-        void controlLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (chd.checkHitLine(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
-            {
-                gCanMove = true;
-                ru.Node = 4;
-            }
-        }
-        //當左鍵按下被選取的曲線
-        void controlPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            System.Windows.Shapes.Path p = sender as System.Windows.Shapes.Path;
-            String tempStr = pathDataToPoint(p.Data.ToString());
+        //                if (Status.Equals("rest"))
+        //                    reDraw(true);
+        //            }
+        //        }
+        //    }
+        //}
+        ////當左鍵按下被選取的線條
+        //void controlLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (chd.checkHitLine(correctPoint(e.GetPosition(myControl)), gdc.sroot.PathList[ru.Sel]))
+        //    {
+        //        gCanMove = true;
+        //        ru.Node = 4;
+        //    }
+        //}
+        ////當左鍵按下被選取的曲線
+        //void controlPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    System.Windows.Shapes.Path p = sender as System.Windows.Shapes.Path;
+        //    String tempStr = pathDataToPoint(p.Data.ToString());
 
-            ru.Node = 4;
-            gCanMove = true;
-        }
+        //    ru.Node = 4;
+        //    gCanMove = true;
+        //}
         //換鼠標
         void Shapes_MouseEnter_Hands(object sender, MouseEventArgs e)
         {
@@ -819,12 +821,20 @@ namespace violet
         /*--------------  鍵盤事件  --------------*/
         private void UserControl_KeyDown(object sender, KeyEventArgs e) //鍵盤按鍵按下
         {
+            if (e.Key == Key.Delete)
+            {
+                if (VShape.shapeLib.Data.currShape != null)
+                    VShape.shapeLib.Data.currShape.IsDelete = true;
+
+            }
+
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 if (e.Key == Key.C)
                 {
                     gPath tp = new gPath();
-                    tp.copyVal(gdc.sroot.PathList[ru.Sel]);
+
+                    tp.copyVal(VShape.shapeLib.Data.gdc.sroot.PathList[ru.Sel]);
                     using (MemoryStream stream = new MemoryStream())
                     {
                         XmlSerializer s = new XmlSerializer(typeof(gPath));
@@ -849,17 +859,17 @@ namespace violet
                     using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
                     {
                         gPath tp = (gPath)serializer.Deserialize(XmlReader.Create(ms));
-                        tp.ListPlace = gdc.sroot.PathList.Count;
-                        if (gdc.checkWhich(tp) != -1)
+                        tp.ListPlace = VShape.shapeLib.Data.gdc.sroot.PathList.Count;
+                        if (VShape.shapeLib.Data.gdc.checkWhich(tp) != -1)
                         {
                             tp.controlBtn1 = new Point(tp.controlBtn1.X + 9, tp.controlBtn1.Y + 9);
                             tp.controlBtn2 = new Point(tp.controlBtn2.X + 9, tp.controlBtn2.Y + 9);
                             tp.controlBtn3 = new Point(tp.controlBtn3.X + 9, tp.controlBtn3.Y + 9);
                             tp.controlBtn4 = new Point(tp.controlBtn4.X + 9, tp.controlBtn4.Y + 9);
                         }
-                        gdc.writeIn(tp, 0);
-                        gdc.Release();
-                        reDraw(true);
+                        VShape.shapeLib.Data.gdc.writeIn(tp, 0);
+                        VShape.shapeLib.Data.gdc.Release();
+                       // reDraw(true);
                     }
                 }
             }
@@ -869,7 +879,7 @@ namespace violet
         //繪製點選圖形的控制範圍
         void greenDrawing()
         {
-            gPath p = (gPath)gdc.sroot.PathList[ru.Sel];
+            gPath p = (gPath)VShape.shapeLib.Data.gdc.sroot.PathList[ru.Sel];
             byte tmpR = colorR;
             byte tmpG = colorG;
             byte tmpB = colorB;
@@ -964,8 +974,8 @@ namespace violet
                 sideRect.Width = Math.Abs(xEnd - xStart);
                 sideRect.Height = Math.Abs(yEnd - yStart);
                 sideRect.Margin = new Thickness(xStart, yStart, 0, 0);
-                sideRect.MouseLeftButtonDown += sideRect_MouseLeftButtonDown;
-                sideRect.MouseLeftButtonUp += sideRect_MouseLeftButtonUp;
+            //    sideRect.MouseLeftButtonDown += sideRect_MouseLeftButtonDown;
+             //   sideRect.MouseLeftButtonUp += sideRect_MouseLeftButtonUp;
                 sideRect.MouseEnter += Shapes_MouseEnter_SizeAll;
                 sideRect.MouseLeave += Shapes_MouseLeave;
 
@@ -995,8 +1005,8 @@ namespace violet
                 cornerRect.Width = Math.Abs(xEnd - xStart);
                 cornerRect.Height = Math.Abs(yEnd - yStart);
                 cornerRect.Margin = new Thickness(xStart, yStart, 0, 0);
-                cornerRect.MouseLeftButtonDown += cornerRect_MouseLeftButtonDown;
-                cornerRect.MouseLeftButtonUp += cornerRect_MouseLeftButtonUp;
+              //  cornerRect.MouseLeftButtonDown += cornerRect_MouseLeftButtonDown;
+              //  cornerRect.MouseLeftButtonUp += cornerRect_MouseLeftButtonUp;
                 cornerRect.MouseEnter += Shapes_MouseEnter_Hands;
                 cornerRect.MouseLeave += Shapes_MouseLeave;
 
@@ -1025,8 +1035,8 @@ namespace violet
                 controlLine.HorizontalAlignment = HorizontalAlignment.Left;
                 controlLine.VerticalAlignment = VerticalAlignment.Center;
                 controlLine.StrokeThickness = strokeT;
-                controlLine.MouseLeftButtonDown += controlLine_MouseLeftButtonDown;
-                controlLine.MouseLeftButtonUp += myControl_MouseLeftButtonUp;
+              //  controlLine.MouseLeftButtonDown += controlLine_MouseLeftButtonDown;
+              //  controlLine.MouseLeftButtonUp += myControl_MouseLeftButtonUp;
                 controlLine.MouseEnter += Shapes_MouseEnter_SizeAll;
                 controlLine.MouseLeave += Shapes_MouseLeave;
 
@@ -1057,7 +1067,7 @@ namespace violet
                 controlPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
                 controlPath.StrokeThickness = strokeT;
                 controlPath.Data = geometry;
-                controlPath.MouseLeftButtonDown += controlPath_MouseLeftButtonDown;
+       //         controlPath.MouseLeftButtonDown += controlPath_MouseLeftButtonDown;
                 controlPath.MouseEnter += Shapes_MouseEnter_SizeAll;
                 controlPath.MouseLeave += Shapes_MouseLeave;
 
@@ -1077,7 +1087,7 @@ namespace violet
             if (ru.Sel >= 0)
                 tempFPath.ListPlace = ru.Sel;
             else
-                tempFPath.ListPlace = gdc.sroot.PathList.Count;
+                tempFPath.ListPlace = VShape.shapeLib.Data.gdc.sroot.PathList.Count;
 
             if (drawtype <= 3)
             {
@@ -1098,251 +1108,251 @@ namespace violet
                 tempFPath.controlBtn4 = p3;
             }
         }
-        private void reDraw(bool bfull) //重新繪製畫布
-        {
-            if (bfull)
-            {
-                mygrid.Children.Clear();
-                myControl.Children.Clear();
-            }
-            gPath p = new gPath();
-            p = null;
-            Point tempPoint;
-            if (ru.Sel >= 0 && bhave)
-            {
-                p = (gPath)gdc.sroot.PathList[ru.Sel];
-            }
-            if (bfull)
-            {
-                foreach (gPath gpath in gdc.sroot.PathList)
-                {
-                    if (gpath != null && gpath != p)
-                    {
-                        drawGPath(gpath);
-                    }
-                }
-            }
-            if (p != null) //改變控制點位置,建議更改成一個方法使用
-            {
-                if (gdc.bmove)
-                {
-                    if (gdc.node >= 0)
-                    {
-                        if (p.drawtype < 3)
-                        {
-                            if (gdc.node == 0)
-                            {
-                                if (p.controlBtn1.X > p.controlBtn2.X)
-                                {
-                                    gdc.node = 1;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn1;
-                                    p.controlBtn1 = tempPoint;
-                                    tempPoint = p.controlBtn3;
-                                    p.controlBtn3 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else if (p.controlBtn1.Y > p.controlBtn3.Y)
-                                {
-                                    gdc.node = 2;
-                                    tempPoint = p.controlBtn1;
-                                    p.controlBtn1 = p.controlBtn3;
-                                    p.controlBtn3 = tempPoint;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else
-                                {
-                                    p.controlBtn1.X = gdc.mx;
-                                    p.controlBtn1.Y = gdc.my;
-                                    p.controlBtn2.Y = gdc.my;
-                                    p.controlBtn3.X = gdc.mx;
-                                }
-                            }
-                            else if (gdc.node == 1)
-                            {
-                                if (p.controlBtn2.X < p.controlBtn1.X)
-                                {
-                                    gdc.node = 0;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn1;
-                                    p.controlBtn1 = tempPoint;
-                                    tempPoint = p.controlBtn3;
-                                    p.controlBtn3 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else if (p.controlBtn2.Y > p.controlBtn4.Y)
-                                {
-                                    gdc.node = 3;
-                                    tempPoint = p.controlBtn1;
-                                    p.controlBtn1 = p.controlBtn3;
-                                    p.controlBtn3 = tempPoint;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else
-                                {
-                                    p.controlBtn2.X = gdc.mx;
-                                    p.controlBtn2.Y = gdc.my;
-                                    p.controlBtn1.Y = gdc.my;
-                                    p.controlBtn4.X = gdc.mx;
-                                }
-                            }
-                            else if (gdc.node == 2)
-                            {
-                                if (p.controlBtn3.X > p.controlBtn4.X)
-                                {
-                                    gdc.node = 3;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn1;
-                                    p.controlBtn1 = tempPoint;
-                                    tempPoint = p.controlBtn3;
-                                    p.controlBtn3 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else if (p.controlBtn3.Y < p.controlBtn1.Y)
-                                {
-                                    gdc.node = 0;
-                                    tempPoint = p.controlBtn1;
-                                    p.controlBtn1 = p.controlBtn3;
-                                    p.controlBtn3 = tempPoint;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else
-                                {
-                                    p.controlBtn3.X = gdc.mx;
-                                    p.controlBtn3.Y = gdc.my;
-                                    p.controlBtn1.X = gdc.mx;
-                                    p.controlBtn4.Y = gdc.my;
-                                }
-                            }
-                            else if (gdc.node == 3)
-                            {
-                                if (p.controlBtn4.X < p.controlBtn3.X)
-                                {
-                                    gdc.node = 2;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn1;
-                                    p.controlBtn1 = tempPoint;
-                                    tempPoint = p.controlBtn3;
-                                    p.controlBtn3 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else if (p.controlBtn4.Y < p.controlBtn2.Y)
-                                {
-                                    gdc.node = 1;
-                                    tempPoint = p.controlBtn1;
-                                    p.controlBtn1 = p.controlBtn3;
-                                    p.controlBtn3 = tempPoint;
-                                    tempPoint = p.controlBtn2;
-                                    p.controlBtn2 = p.controlBtn4;
-                                    p.controlBtn4 = tempPoint;
-                                }
-                                else
-                                {
-                                    p.controlBtn4.X = gdc.mx;
-                                    p.controlBtn4.Y = gdc.my;
-                                    p.controlBtn2.X = gdc.mx;
-                                    p.controlBtn3.Y = gdc.my;
-                                }
-                            }
-                            else
-                            {
-                                tempPoint = tempStart;
-                                p.controlBtn1.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn1.Y += (gdc.my - tempPoint.Y);
-                                p.controlBtn2.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn2.Y += (gdc.my - tempPoint.Y);
-                                p.controlBtn3.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn3.Y += (gdc.my - tempPoint.Y);
-                                p.controlBtn4.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn4.Y += (gdc.my - tempPoint.Y);
-                                tempStart = new Point(gdc.mx, gdc.my);
-                            }
-                        }
-                        else if (p.drawtype == 3)
-                        {
-                            if (gdc.node == 0)
-                            {
-                                p.controlBtn1.X = gdc.mx;
-                                p.controlBtn1.Y = gdc.my;
-                            }
-                            if (gdc.node == 3)
-                            {
-                                p.controlBtn4.X = gdc.mx;
-                                p.controlBtn4.Y = gdc.my;
-                            }
-                            if (gdc.node == 4)
-                            {
-                                tempPoint = tempStart;
-                                p.controlBtn1.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn1.Y += (gdc.my - tempPoint.Y);
-                                p.controlBtn4.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn4.Y += (gdc.my - tempPoint.Y);
-                                tempStart = new Point(gdc.mx, gdc.my);
-                            }
-                        }
-                        else
-                        {
-                            if (gdc.node == 0)
-                            {
-                                p.controlBtn1.X = gdc.mx;
-                                p.controlBtn1.Y = gdc.my;
-                            }
-                            else if (gdc.node == 1)
-                            {
-                                p.controlBtn2.X = gdc.mx;
-                                p.controlBtn2.Y = gdc.my;
-                            }
-                            else if (gdc.node == 2)
-                            {
-                                p.controlBtn3.X = gdc.mx;
-                                p.controlBtn3.Y = gdc.my;
-                            }
-                            else if(gdc.node == 3)
-                            {
-                                p.controlBtn4.X = gdc.mx;
-                                p.controlBtn4.Y = gdc.my;
-                            }
-                            else
-                            {
-                                tempPoint = tempStart;
-                                p.controlBtn1.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn1.Y += (gdc.my - tempPoint.Y);
-                                p.controlBtn2.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn2.Y += (gdc.my - tempPoint.Y);
-                                p.controlBtn3.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn3.Y += (gdc.my - tempPoint.Y);
-                                p.controlBtn4.X += (gdc.mx - tempPoint.X);
-                                p.controlBtn4.Y += (gdc.my - tempPoint.Y);
-                                tempStart = new Point(gdc.mx, gdc.my);
-                            }
-                        }
-                    }
-                }
-                drawGPath(p);
-                greenDrawing();
-            }
-        }
+        //private void reDraw(bool bfull) //重新繪製畫布
+        //{
+        //    if (bfull)
+        //    {
+        //        mygrid.Children.Clear();
+        //        myControl.Children.Clear();
+        //    }
+        //    gPath p = new gPath();
+        //    p = null;
+        //    Point tempPoint;
+        //    if (ru.Sel >= 0 && bhave)
+        //    {
+        //        p = (gPath)gdc.sroot.PathList[ru.Sel];
+        //    }
+        //    if (bfull)
+        //    {
+        //        foreach (gPath gpath in gdc.sroot.PathList)
+        //        {
+        //            if (gpath != null && gpath != p)
+        //            {
+        //                drawGPath(gpath);
+        //            }
+        //        }
+        //    }
+        //    if (p != null) //改變控制點位置,建議更改成一個方法使用
+        //    {
+        //        if (gdc.bmove)
+        //        {
+        //            if (gdc.node >= 0)
+        //            {
+        //                if (p.drawtype < 3)
+        //                {
+        //                    if (gdc.node == 0)
+        //                    {
+        //                        if (p.controlBtn1.X > p.controlBtn2.X)
+        //                        {
+        //                            gdc.node = 1;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn1;
+        //                            p.controlBtn1 = tempPoint;
+        //                            tempPoint = p.controlBtn3;
+        //                            p.controlBtn3 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else if (p.controlBtn1.Y > p.controlBtn3.Y)
+        //                        {
+        //                            gdc.node = 2;
+        //                            tempPoint = p.controlBtn1;
+        //                            p.controlBtn1 = p.controlBtn3;
+        //                            p.controlBtn3 = tempPoint;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else
+        //                        {
+        //                            p.controlBtn1.X = gdc.mx;
+        //                            p.controlBtn1.Y = gdc.my;
+        //                            p.controlBtn2.Y = gdc.my;
+        //                            p.controlBtn3.X = gdc.mx;
+        //                        }
+        //                    }
+        //                    else if (gdc.node == 1)
+        //                    {
+        //                        if (p.controlBtn2.X < p.controlBtn1.X)
+        //                        {
+        //                            gdc.node = 0;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn1;
+        //                            p.controlBtn1 = tempPoint;
+        //                            tempPoint = p.controlBtn3;
+        //                            p.controlBtn3 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else if (p.controlBtn2.Y > p.controlBtn4.Y)
+        //                        {
+        //                            gdc.node = 3;
+        //                            tempPoint = p.controlBtn1;
+        //                            p.controlBtn1 = p.controlBtn3;
+        //                            p.controlBtn3 = tempPoint;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else
+        //                        {
+        //                            p.controlBtn2.X = gdc.mx;
+        //                            p.controlBtn2.Y = gdc.my;
+        //                            p.controlBtn1.Y = gdc.my;
+        //                            p.controlBtn4.X = gdc.mx;
+        //                        }
+        //                    }
+        //                    else if (gdc.node == 2)
+        //                    {
+        //                        if (p.controlBtn3.X > p.controlBtn4.X)
+        //                        {
+        //                            gdc.node = 3;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn1;
+        //                            p.controlBtn1 = tempPoint;
+        //                            tempPoint = p.controlBtn3;
+        //                            p.controlBtn3 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else if (p.controlBtn3.Y < p.controlBtn1.Y)
+        //                        {
+        //                            gdc.node = 0;
+        //                            tempPoint = p.controlBtn1;
+        //                            p.controlBtn1 = p.controlBtn3;
+        //                            p.controlBtn3 = tempPoint;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else
+        //                        {
+        //                            p.controlBtn3.X = gdc.mx;
+        //                            p.controlBtn3.Y = gdc.my;
+        //                            p.controlBtn1.X = gdc.mx;
+        //                            p.controlBtn4.Y = gdc.my;
+        //                        }
+        //                    }
+        //                    else if (gdc.node == 3)
+        //                    {
+        //                        if (p.controlBtn4.X < p.controlBtn3.X)
+        //                        {
+        //                            gdc.node = 2;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn1;
+        //                            p.controlBtn1 = tempPoint;
+        //                            tempPoint = p.controlBtn3;
+        //                            p.controlBtn3 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else if (p.controlBtn4.Y < p.controlBtn2.Y)
+        //                        {
+        //                            gdc.node = 1;
+        //                            tempPoint = p.controlBtn1;
+        //                            p.controlBtn1 = p.controlBtn3;
+        //                            p.controlBtn3 = tempPoint;
+        //                            tempPoint = p.controlBtn2;
+        //                            p.controlBtn2 = p.controlBtn4;
+        //                            p.controlBtn4 = tempPoint;
+        //                        }
+        //                        else
+        //                        {
+        //                            p.controlBtn4.X = gdc.mx;
+        //                            p.controlBtn4.Y = gdc.my;
+        //                            p.controlBtn2.X = gdc.mx;
+        //                            p.controlBtn3.Y = gdc.my;
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        tempPoint = tempStart;
+        //                        p.controlBtn1.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn1.Y += (gdc.my - tempPoint.Y);
+        //                        p.controlBtn2.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn2.Y += (gdc.my - tempPoint.Y);
+        //                        p.controlBtn3.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn3.Y += (gdc.my - tempPoint.Y);
+        //                        p.controlBtn4.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn4.Y += (gdc.my - tempPoint.Y);
+        //                        tempStart = new Point(gdc.mx, gdc.my);
+        //                    }
+        //                }
+        //                else if (p.drawtype == 3)
+        //                {
+        //                    if (gdc.node == 0)
+        //                    {
+        //                        p.controlBtn1.X = gdc.mx;
+        //                        p.controlBtn1.Y = gdc.my;
+        //                    }
+        //                    if (gdc.node == 3)
+        //                    {
+        //                        p.controlBtn4.X = gdc.mx;
+        //                        p.controlBtn4.Y = gdc.my;
+        //                    }
+        //                    if (gdc.node == 4)
+        //                    {
+        //                        tempPoint = tempStart;
+        //                        p.controlBtn1.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn1.Y += (gdc.my - tempPoint.Y);
+        //                        p.controlBtn4.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn4.Y += (gdc.my - tempPoint.Y);
+        //                        tempStart = new Point(gdc.mx, gdc.my);
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    if (gdc.node == 0)
+        //                    {
+        //                        p.controlBtn1.X = gdc.mx;
+        //                        p.controlBtn1.Y = gdc.my;
+        //                    }
+        //                    else if (gdc.node == 1)
+        //                    {
+        //                        p.controlBtn2.X = gdc.mx;
+        //                        p.controlBtn2.Y = gdc.my;
+        //                    }
+        //                    else if (gdc.node == 2)
+        //                    {
+        //                        p.controlBtn3.X = gdc.mx;
+        //                        p.controlBtn3.Y = gdc.my;
+        //                    }
+        //                    else if(gdc.node == 3)
+        //                    {
+        //                        p.controlBtn4.X = gdc.mx;
+        //                        p.controlBtn4.Y = gdc.my;
+        //                    }
+        //                    else
+        //                    {
+        //                        tempPoint = tempStart;
+        //                        p.controlBtn1.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn1.Y += (gdc.my - tempPoint.Y);
+        //                        p.controlBtn2.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn2.Y += (gdc.my - tempPoint.Y);
+        //                        p.controlBtn3.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn3.Y += (gdc.my - tempPoint.Y);
+        //                        p.controlBtn4.X += (gdc.mx - tempPoint.X);
+        //                        p.controlBtn4.Y += (gdc.my - tempPoint.Y);
+        //                        tempStart = new Point(gdc.mx, gdc.my);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        drawGPath(p);
+        //        greenDrawing();
+        //    }
+        //}
         public void ClearBtnUse() // 清除畫布警告
         {
             if (MessageBox.Show("你確定要清除畫布嗎?    若要你的檔案將會全部遺失!", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 mygrid.Children.Clear();
-                gdc.sroot.PathList.Clear();
-                gdc.FullList.Clear();
-                gdc.UndoStack.Clear();
-                gdc.Release();
+                VShape.shapeLib.Data.gdc.sroot.PathList.Clear();
+                VShape.shapeLib.Data.gdc.FullList.Clear();
+                VShape.shapeLib.Data.gdc.UndoStack.Clear();
+                VShape.shapeLib.Data.gdc.Release();
             }
         }
         public void ClearDrawing()  //清空資料區
         {
             mygrid.Children.Clear();
-            gdc.sroot.PathList.Clear();
+            VShape.shapeLib.Data.gdc.sroot.PathList.Clear();
         }
         public void hideBackLine() //背景格線取消
         {
@@ -1470,13 +1480,13 @@ namespace violet
             {
                 if (Act == 0)
                 {
-                    gdc.reDo();
-                    reDraw(true);
+                    VShape.shapeLib.Data.gdc.reDo();
+                 //   reDraw(true);
                 }
                 if (Act == 1)
                 {
-                    gdc.unDo();
-                    reDraw(true);
+                    VShape.shapeLib.Data.gdc.unDo();
+                   // reDraw(true);
                 }
             }
         }
@@ -1499,8 +1509,8 @@ namespace violet
             using (MemoryStream ms = new MemoryStream( System.Text.Encoding.UTF8.GetBytes(xml)))
             {
                 //要重新去記錄步驟,否則匯入後redo, undo 無法使用
-                gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
-                reDraw(true);
+                VShape.shapeLib.Data.gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
+                //reDraw(true);
             }
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e) //關閉時,轉成圖片
@@ -1546,7 +1556,7 @@ namespace violet
 
                 XmlSerializer s = new XmlSerializer(typeof(SVGRoot));
 
-                s.Serialize(XmlWriter.Create(stream), gdc.sroot);
+                s.Serialize(XmlWriter.Create(stream), VShape.shapeLib.Data.gdc.sroot);
 
                 stream.Flush();
                 stream.Seek(0, SeekOrigin.Begin);
