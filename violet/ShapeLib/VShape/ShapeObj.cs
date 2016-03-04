@@ -50,7 +50,7 @@ namespace violet.VShape
         int xEnd;
         int yEnd;
 
-        public System.Collections.ArrayList getMenuItem()
+        public virtual System.Collections.ArrayList getMenuItem()
         {
            
             ArrayList ret = new ArrayList();

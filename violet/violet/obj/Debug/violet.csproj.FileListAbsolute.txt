@@ -74,3 +74,5 @@ D:\violet\Violet\violet\violet\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Util
 D:\violet\Violet\violet\violet\bin\Debug\ShapeLib.dll
 D:\violet\Violet\violet\violet\bin\Debug\ShapeLib.pdb
 D:\violet\Violet\violet\violet\bin\Debug\icons\rectangle.png
+C:\James\Violet\Violet\violet\violet\bin\Debug\icons\rectangle.png
+C:\James\Violet\Violet\violet\violet\bin\Debug\icons\circle.png

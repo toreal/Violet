@@ -12,7 +12,7 @@ namespace violet.VShape
     {
 
 
-        public System.Collections.ArrayList getMenuItem()
+        public override System.Collections.ArrayList getMenuItem()
         {
 
             ArrayList ret = new ArrayList();
@@ -21,7 +21,7 @@ namespace violet.VShape
             ui.label = "Circle";
 
 
-            ui.image = new Bitmap(@"icons\rectangle.png");
+            ui.image = new Bitmap(@"icons\circle.png");
       //      ui.click = this.btn_Click;
             ret.Add(ui);
 

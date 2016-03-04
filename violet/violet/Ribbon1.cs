@@ -46,7 +46,7 @@ namespace violet
                         uiobj.Click+=(RibbonControlEventHandler) ui.click;
                         uiobj.Label = ui.label;
                         uiobj.Image = ui.image;
-                        
+                        uiobj.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
                         break;
                 }
 

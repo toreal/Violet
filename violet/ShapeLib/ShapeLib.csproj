@@ -76,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Doc\Design Issues.html" />
+    <Content Include="icons\circle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="icons\rectangle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
