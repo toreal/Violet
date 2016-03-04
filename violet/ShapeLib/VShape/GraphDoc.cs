@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 
@@ -39,40 +40,7 @@ namespace violet.VShape
         public int mx;
         public int my;
         public bool bmove;
-        /// <summary>
-        /// 維護 undo stack
-        /// </summary>
-        /// <param name="Data"></param>
-        /// <param name="Action"></param>
-        public void writeIn(gPath Data, int Action)
-        {
-            saveState pa;
-            if (Action == 0)//新增動作
-            {
-                gPath g = new gPath();
-                FullList.Add(Data);
-                pa = new saveState(Data.ListPlace, -1, (FullList.Count - 1));
-                UndoStack.Push(pa);
-                g.copyVal(Data);
-                sroot.PathList.Add(g);
-            }
-            else if (Action == 1) //修改動作(物件已存在)
-            {
-                int temp = 0;
-                for (int i = FullList.Count - 1; i >= 0; i--)
-                {
-                    if (FullList[i].ListPlace == Data.ListPlace)
-                    {
-                        temp = i;
-                        break;
-                    }
-                }
-                FullList.Add(Data);
-                pa = new saveState(Data.ListPlace, temp, (FullList.Count - 1));
-                UndoStack.Push(pa);
-            }
-        }
-
+      
         public int checkWhich(gPath gp)
         {
             int whichOne = -1;
@@ -100,9 +68,58 @@ namespace violet.VShape
             }
             return whichOne;
         }
-      
+
+        public void reDrawAll()
+        {
+            foreach (gPath gp in sroot.PathList)
+            {
+                if ( !gp.IsDelete )
+                {
+                    gp.redraw();
+
+                }
+            }
+
+        }
+
         /// <summary>
-        /// 
+        /// 維護 undo stack ,把目前狀態存起來.並清空redo stack,如果之前有undo 動作,是回覆到某一狀態,在此之後的動作都可清除
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <param name="Action"></param>
+        public void writeIn(gPath Data, int Action)
+        {
+            saveState pa;
+                
+            int lens =RedoStack.Count;            
+             RedoStack.Clear();
+             FullList.RemoveRange(FullList.Count - lens, lens);
+
+            
+
+            if (Action == 0)//新增動作
+            {
+                gPath g = new gPath();
+                //等一下會加入到list 中,所以count 正好為其在list  所在的位置
+                pa = new saveState(Action, sroot.PathList.Count, (FullList.Count ));
+                
+                UndoStack.Push(pa);
+                g.copyVal(Data);
+                FullList.Add(Data);
+                sroot.PathList.Add(g);
+            }
+            else  //修改動作(物件已存在)
+            {                               
+                pa = new saveState(Action, Data.ListPlace, FullList.Count );
+                FullList.Add(Data);
+                UndoStack.Push(pa);
+            }
+        }
+
+
+        /// <summary>
+        /// 重作到目前狀態
+        ///  
         /// </summary>
         public void reDo()
         {
@@ -113,28 +130,28 @@ namespace violet.VShape
 
                 tempPA = (saveState)RedoStack.Pop();
 
-                if (tempPA.leastPlace() >= 0)
+                if (tempPA.currSate >= 0 && tempPA.currSate < FullList.Count)
                 {
-                    tempPath.copyVal(FullList[tempPA.leastPlace()]);
-                    if ((sroot.PathList.Count - 1) < tempPA.changePlace())
-                    {
-                        sroot.PathList.Add(tempPath);
-                    }
-                    else
-                    {
-                        sroot.PathList[tempPA.changePlace()] = tempPath;
-                    }
+                    tempPath.copyVal(FullList[tempPA.currSate]);
+                 
+
+                    if (tempPA.Action == 0)
+                        sroot.PathList[tempPA.GraphIndex].IsDelete = false;
+
+                    sroot.PathList[tempPA.GraphIndex] = tempPath;
+                    sroot.PathList[tempPA.GraphIndex].redraw();
                 }
                 else
                 {
-                    sroot.PathList.RemoveAt(tempPA.changePlace());
+                   // sroot.PathList.RemoveAt(tempPA.GraphIndex);
                 }
                 UndoStack.Push(tempPA);
+                
             }
         }
 
         /// <summary>
-        /// undo 
+        /// undo 回到前一狀態
         /// </summary>
         public void unDo()
         {
@@ -146,17 +163,47 @@ namespace violet.VShape
 
                 tempPA = (saveState)UndoStack.Pop();
 
-                if (tempPA.lastPlace() >= 0)
+                if (tempPA.currSate >= 0 && tempPA.currSate < FullList.Count)
                 {
-                    tempPath.copyVal(FullList[tempPA.lastPlace()]);
-                    sroot.PathList[tempPA.changePlace()] = tempPath;
+                    if ( tempPA.Action ==0)
+                    {
+
+                        sroot.PathList[tempPA.GraphIndex].IsDelete = true;
+ 
+                    }else
+                    {
+                        //找出前一個state 
+                        int i;
+                        for ( i = tempPA.currSate-1; i >=0 ; i --)
+                        {
+                           if (  FullList[i].ListPlace == tempPA.GraphIndex)
+                           {
+                               tempPath.copyVal(FullList[i]);
+                               sroot.PathList[tempPA.GraphIndex] = tempPath;
+                               sroot.PathList[tempPA.GraphIndex].redraw();
+                               break;
+ 
+                           }
+                        }
+                        if ( i < 0 ) //something wrong
+                        {
+                            Debug.WriteLine("something wrong");
+                        }
+
+                    }
+
                 }
                 else
                 {
-                    sroot.PathList.RemoveAt(tempPA.changePlace());
+
+                    //something wrong
+                    Debug.WriteLine("something wrong");
+
+                    //sroot.PathList.RemoveAt(tempPA.GraphIndex);
                 }
                 //將該事件放入redo stack
                 RedoStack.Push(tempPA);
+               
             }
         }
 
@@ -184,9 +231,16 @@ namespace violet.VShape
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
-
+        public bool isSel;
         private int shapeIndex;
 
+        public void redraw()
+        {
+         
+            Shape s = getDrawShape();
+            SolidColorBrush sb = new SolidColorBrush(Color.FromArgb(255,255,0,0));
+            s.Stroke = sb;
+        }
         
            public Shape getDrawShape()
             {
@@ -211,6 +265,8 @@ namespace violet.VShape
         {
             get
             {
+
+
                 return isdel;
                 //throw new NotImplementedException();
             }
@@ -227,6 +283,20 @@ namespace violet.VShape
                     shapeLib.Data.mygrid.InvalidateVisual();
 
                         isdel = true;
+                }else
+                {
+                    if ( isdel)
+                    {
+                        Shape drawShape = getDrawShape();
+                        if (drawShape != null)
+                            shapeLib.Data.mygrid.Children.Add(drawShape);
+
+                        shapeLib.Data.mygrid.InvalidateVisual();
+
+
+                    }
+
+
                 }
 
                 // throw new NotImplementedException();
@@ -236,8 +306,14 @@ namespace violet.VShape
 
        public   void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (shapeLib.Data.drawtype == 5)
+           // if (shapeLib.Data.drawtype == 5)
             {
+                //檢查是否有按下shift
+                if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+                {
+
+
+                }
 
                 shapeLib.Data.currShape = this;
 
@@ -253,6 +329,7 @@ namespace violet.VShape
             drawtype = obj.drawtype;
             state = obj.state;
             ListPlace = obj.ListPlace;
+            shapeIndex = obj.shapeIndex;
 
             controlBtn1 = obj.controlBtn1;
             controlBtn2 = obj.controlBtn2;
@@ -283,45 +360,23 @@ namespace violet.VShape
     public class saveState
     {
         //0: insert, 1:update, 2:delete
-        int Action; 
+      public   int Action; 
     //目前圖形串列中的第幾個,為必免順序改變,凡加入的就一直存在(data list)
-    int GraphIndex;
+    public int GraphIndex;
 
     //操作前的狀態 fullList 中,操作前該物件所在位置,即最後一個狀態.至少會有新增的狀態.以GraphIndex 去找,其實可以不用記錄
     //int preSate;
 
     //操作後的狀態 fullList 中,剛更改的狀態
-    int currSate;
+    public int currSate;
 
-        private int changeP;   //該物件在data list 中的位置
-        private int lastP;   //該物件是針對fullList 的某一物件操作(新增的話即為-1)
-        private int leastP; //該物件存在於fullList 的位置(新的事件都是最後一個)
       
-        //將目前的狀態存起來
-        public void Save()
-        {
-
-
-        }
-        //回到前一狀態
-        public void Undo()
-        {
-
-
-        }
-
-        //重作到目前狀態
-        public void Redo()
-        {
-
-
-        }
-
+  
         public saveState()
         {
-            Action = 0;
-            GraphIndex = 0;
-            currSate = 0; 
+            Action = -1;
+            GraphIndex = -1;
+            currSate = -1; 
             //changeP = 0;
             //lastP = -1;
             //leastP = 0;
@@ -329,22 +384,11 @@ namespace violet.VShape
         }
         public saveState(int a, int b, int c)
         {
-            changeP = a;
-            lastP = b;
-            leastP = c;
+            Action = a;
+            GraphIndex = b;
+            currSate = c;
         }
-        public int changePlace()
-        {
-            return changeP;
-        }
-        public int lastPlace()
-        {
-            return lastP;
-        }
-        public int leastPlace()
-        {
-            return leastP;
-        }
+      
     }
 
     public class checkHitDraw

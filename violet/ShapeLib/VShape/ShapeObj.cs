@@ -41,7 +41,7 @@ namespace violet.VShape
     public class ShapeObj:IShapeUI,IDrawing,IUpdateOP,IInsertOP
     {
 
-        gPath tempFPath;
+        gPath currPath;
         int drawtype=3;
         System.Windows.Point p0, p1, p2, p3 = new System.Windows.Point(0, 0); //紀錄四個控制點使用
         //Line myLine;
@@ -131,15 +131,15 @@ namespace violet.VShape
                 myLine.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                 myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = shapeLib.Data.strokeT;
-                myLine.MouseLeftButtonDown += tempFPath.myLine_MouseLeftButtonDown;
+                myLine.MouseLeftButtonDown += currPath.myLine_MouseLeftButtonDown;
                 shapeLib.Data.mygrid.Children.Add(myLine);
                 
-                tempFPath.setDrawShape( myLine);
+                currPath.setDrawShape( myLine);
 
             }
             else
             {
-                Line myLine =(Line) tempFPath.getDrawShape();
+                Line myLine =(Line) currPath.getDrawShape();
                   myLine.X2 = xEnd;
                 myLine.Y2 = yEnd;
             }
@@ -166,7 +166,7 @@ namespace violet.VShape
                 shapeLib.Data.pStart = correctPoint(e.GetPosition(shapeLib.Data.myControl));
             }
 
-            tempFPath = new gPath();
+            currPath = new gPath();
             shapeLib.Data.tempStart = shapeLib.Data.pStart;
 
             if (!shapeLib.Data.gCanMove && !shapeLib.Data.OnIt)
@@ -203,7 +203,7 @@ namespace violet.VShape
             Canvas mygrid = shapeLib.Data.mygrid;
 
             shapeLib.Data.pStart = correctPoint(e.GetPosition(mygrid));
-            tempFPath = new gPath();
+            currPath = new gPath();
             shapeLib.Data.tempStart = shapeLib.Data.pStart;
             shapeLib.Data.bCanMove = true;
             if (shapeLib.Data.drawtype == 5)
@@ -254,7 +254,7 @@ namespace violet.VShape
 
                 if (shapeLib.Data.drawtype <= 4 && shapeLib.Data.Status.Equals("rest"))
                 {
-                    shapeLib.Data.gdc.writeIn(tempFPath, 0);
+                    shapeLib.Data.gdc.writeIn(currPath, 0);
                     shapeLib.Data.gdc.Release();
                 }
                 shapeLib.Data.gdc.bmove = false;
@@ -328,34 +328,34 @@ namespace violet.VShape
         /*--------------  其他功能  --------------*/
         private void remGPath(double px, double py, double ex, double ey) //儲存新繪製的圖形資料
         {
-            tempFPath.state.colorB = shapeLib.Data.colorB;
-            tempFPath.state.colorG = shapeLib.Data.colorG;
-            tempFPath.state.colorR = shapeLib.Data.colorR;
-            tempFPath.state.strokeT = shapeLib.Data.strokeT;
-            tempFPath.drawtype = drawtype;
+            currPath.state.colorB = shapeLib.Data.colorB;
+            currPath.state.colorG = shapeLib.Data.colorG;
+            currPath.state.colorR = shapeLib.Data.colorR;
+            currPath.state.strokeT = shapeLib.Data.strokeT;
+            currPath.drawtype = drawtype;
 
             if (shapeLib.Data.ru.Sel >= 0)
-                tempFPath.ListPlace = shapeLib.Data.ru.Sel;
+                currPath.ListPlace = shapeLib.Data.ru.Sel;
             else
-                tempFPath.ListPlace = shapeLib.Data.gdc.sroot.PathList.Count;
+                currPath.ListPlace = shapeLib.Data.gdc.sroot.PathList.Count;
 
             if (drawtype <= 3)
             {
-                tempFPath.controlBtn1 = new System.Windows.Point(px, py);
-                tempFPath.controlBtn4 = new System.Windows.Point(ex, ey);
+                currPath.controlBtn1 = new System.Windows.Point(px, py);
+                currPath.controlBtn4 = new System.Windows.Point(ex, ey);
 
                 if (drawtype < 3)
                 {
-                    tempFPath.controlBtn2 = new System.Windows.Point(ex, py);
-                    tempFPath.controlBtn3 = new System.Windows.Point(px, ey);
+                    currPath.controlBtn2 = new System.Windows.Point(ex, py);
+                    currPath.controlBtn3 = new System.Windows.Point(px, ey);
                 }
             }
             if (drawtype == 4)
             {
-                tempFPath.controlBtn1 = p0;
-                tempFPath.controlBtn2 = p1;
-                tempFPath.controlBtn3 = p2;
-                tempFPath.controlBtn4 = p3;
+                currPath.controlBtn1 = p0;
+                currPath.controlBtn2 = p1;
+                currPath.controlBtn3 = p2;
+                currPath.controlBtn4 = p3;
             }
         }
       
