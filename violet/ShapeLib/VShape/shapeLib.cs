@@ -32,7 +32,7 @@ namespace violet.VShape
         }
 
         static public  GModel Data = new GModel();
-        static IList<ShapeObj> ret = new[] { new ShapeObj() };
+        static IList<ShapeObj> ret = new[] { new ShapeObj() , new ShapeCircle()};
 
         static public void undo()
         {
