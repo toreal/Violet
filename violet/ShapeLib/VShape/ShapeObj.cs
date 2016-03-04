@@ -1,5 +1,5 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
-using Microsoft.Windows.Controls.Ribbon;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,7 +56,10 @@ namespace violet.VShape
             ArrayList ret = new ArrayList();
 
             shapeUI ui = new shapeUI();
-            ui.label = "test";
+            ui.label = "Line";
+
+
+            ui.image = new Bitmap(@"icons\rectangle.png");
             ui.click = this.btn_Click;
             ret.Add(ui);
 

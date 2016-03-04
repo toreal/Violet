@@ -44,9 +44,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="RibbonControlsLibrary">
-      <HintPath>..\packages\RibbonControlsLibrary.4.0.0\lib\net40\RibbonControlsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -67,6 +64,7 @@
     <Compile Include="VShape\IInsertOP.cs" />
     <Compile Include="VShape\IShapeUI.cs" />
     <Compile Include="VShape\IUpdateOP.cs" />
+    <Compile Include="VShape\ShapeCircle.cs" />
     <Compile Include="VShape\shapeLib.cs" />
     <Compile Include="VShape\ShapeObj.cs" />
   </ItemGroup>
@@ -78,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Doc\Design Issues.html" />
+    <None Include="icons\rectangle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
