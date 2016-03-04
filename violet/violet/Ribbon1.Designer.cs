@@ -52,12 +52,11 @@ namespace violet
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.Color = this.Factory.CreateRibbonGroup();
-            this.group2 = this.Factory.CreateRibbonGroup();
             this.circle_btn = this.Factory.CreateRibbonButton();
             this.rectangle_btn = this.Factory.CreateRibbonButton();
             this.line_btn = this.Factory.CreateRibbonButton();
             this.Curve = this.Factory.CreateRibbonButton();
+            this.Color = this.Factory.CreateRibbonGroup();
             this.red_btn = this.Factory.CreateRibbonButton();
             this.orange_btn = this.Factory.CreateRibbonButton();
             this.yellow_btn = this.Factory.CreateRibbonButton();
@@ -67,6 +66,7 @@ namespace violet
             this.black_btn = this.Factory.CreateRibbonButton();
             this.gray = this.Factory.CreateRibbonButton();
             this.white_btn = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
             this.selBtn = this.Factory.CreateRibbonButton();
             this.StrokeThickness = this.Factory.CreateRibbonMenu();
             this.px1 = this.Factory.CreateRibbonButton();
@@ -99,31 +99,6 @@ namespace violet
             this.group1.Items.Add(this.Curve);
             this.group1.Label = "Shape";
             this.group1.Name = "group1";
-            // 
-            // Color
-            // 
-            this.Color.Items.Add(this.red_btn);
-            this.Color.Items.Add(this.orange_btn);
-            this.Color.Items.Add(this.yellow_btn);
-            this.Color.Items.Add(this.blue_btn);
-            this.Color.Items.Add(this.violet);
-            this.Color.Items.Add(this.green_btn);
-            this.Color.Items.Add(this.black_btn);
-            this.Color.Items.Add(this.gray);
-            this.Color.Items.Add(this.white_btn);
-            this.Color.Label = "Color";
-            this.Color.Name = "Color";
-            // 
-            // group2
-            // 
-            this.group2.Items.Add(this.selBtn);
-            this.group2.Items.Add(this.StrokeThickness);
-            this.group2.Items.Add(this.bgp);
-            this.group2.Items.Add(this.button1);
-            this.group2.Items.Add(this.Undo);
-            this.group2.Items.Add(this.redo);
-            this.group2.Label = "Other";
-            this.group2.Name = "group2";
             // 
             // circle_btn
             // 
@@ -161,6 +136,20 @@ namespace violet
             this.Curve.Name = "Curve";
             this.Curve.ShowImage = true;
             this.Curve.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Curve_Click);
+            // 
+            // Color
+            // 
+            this.Color.Items.Add(this.red_btn);
+            this.Color.Items.Add(this.orange_btn);
+            this.Color.Items.Add(this.yellow_btn);
+            this.Color.Items.Add(this.blue_btn);
+            this.Color.Items.Add(this.violet);
+            this.Color.Items.Add(this.green_btn);
+            this.Color.Items.Add(this.black_btn);
+            this.Color.Items.Add(this.gray);
+            this.Color.Items.Add(this.white_btn);
+            this.Color.Label = "Color";
+            this.Color.Name = "Color";
             // 
             // red_btn
             // 
@@ -233,6 +222,17 @@ namespace violet
             this.white_btn.Name = "white_btn";
             this.white_btn.ShowImage = true;
             this.white_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.white_btn_Click);
+            // 
+            // group2
+            // 
+            this.group2.Items.Add(this.selBtn);
+            this.group2.Items.Add(this.StrokeThickness);
+            this.group2.Items.Add(this.bgp);
+            this.group2.Items.Add(this.button1);
+            this.group2.Items.Add(this.Undo);
+            this.group2.Items.Add(this.redo);
+            this.group2.Label = "Other";
+            this.group2.Name = "group2";
             // 
             // selBtn
             // 
