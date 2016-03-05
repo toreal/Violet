@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShapeLib.VShape;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace violet.VShape
         /// define supported shape
         /// </summary>
         /// <returns></returns>
-        static public IList<ShapeObj> SupportedShape(Form myview)
+        static public IList<ShapeObj> SupportedShape(getForm myview)
         {
             if (myview != null)
             Data.view = myview;
@@ -48,7 +49,7 @@ namespace violet.VShape
 
     public class GModel
     {
-        public Form view;
+        public getForm view;
         public int lineSpace = 9;
         public int drawtype = 1;
         public String colortype = "black";
@@ -77,5 +78,6 @@ namespace violet.VShape
         public bool OnIt = false; //是否有滑入或滑出選取物件
 
         public gPath currShape;
+        public List<gPath> multiSelList = new List<gPath>();
     }
 }

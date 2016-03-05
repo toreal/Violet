@@ -60,7 +60,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VShape\GraphDoc.cs" />
+    <Compile Include="VShape\gView.cs" />
     <Compile Include="VShape\IDrawing.cs" />
+    <Compile Include="VShape\IForm.cs" />
     <Compile Include="VShape\IInsertOP.cs" />
     <Compile Include="VShape\IShapeUI.cs" />
     <Compile Include="VShape\IUpdateOP.cs" />

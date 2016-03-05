@@ -9,6 +9,7 @@ namespace violet.VShape
 {
     interface IInsertOP
     {
+        void MouseOP();
         void MouseDownInsert(object sender, MouseButtonEventArgs e);
         void MouseUpInsert(object sender, MouseButtonEventArgs e);
         void MouseMoveInsert(object sender, MouseEventArgs e);

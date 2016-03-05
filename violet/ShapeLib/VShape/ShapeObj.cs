@@ -1,5 +1,5 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
-
+using ShapeLib.VShape;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace violet.VShape
     {
 
         gPath currPath;
-        int drawtype=3;
+        int drawtype=0;
         System.Windows.Point p0, p1, p2, p3 = new System.Windows.Point(0, 0); //紀錄四個控制點使用
         //Line myLine;
         int xStart;
@@ -70,6 +70,18 @@ namespace violet.VShape
         void btn_Click(object sender, RibbonControlEventArgs e)
         {
 
+            MouseOP();
+        }
+
+        public void MouseOP()
+        {
+            if (shapeLib.Data.view != null)
+            {
+                IForm f = shapeLib.Data.view();
+                f.Show();
+                shapeLib.Data.mygrid = f.drawControl;
+            }
+
             if (shapeLib.Data.mygrid!= null)
             {
                 IList<ShapeObj> ret = shapeLib.SupportedShape(null);
@@ -89,10 +101,7 @@ namespace violet.VShape
             }
 
 
-          if ( shapeLib.Data.view != null)
-          {
-              shapeLib.Data.view.Show();
-          }
+         
 
             
           //  System.Windows.Forms.MessageBox.Show("Clicked");
@@ -115,33 +124,33 @@ namespace violet.VShape
         }
 
        
-        public void DrawShape()
+        public void DrawShape(gView gv, gPath data , Boolean bfirst)
         {
-            if (shapeLib.Data.bfirst)
+            if (bfirst)
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
                
                Line myLine = new Line();
-                myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(shapeLib.Data.colorR, shapeLib.Data.colorG, shapeLib.Data.colorB));
-                myLine.X1 = xStart;
-                myLine.X2 = xEnd;
-                myLine.Y1 = yStart;
-                myLine.Y2 = yEnd;
+                myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
+                myLine.X1 = data.controlBtn1.X;
+                myLine.Y1 = data.controlBtn1.Y;
+                myLine.X2 = data.controlBtn4.X;                
+                myLine.Y2 = data.controlBtn4.Y;
                 myLine.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                 myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = shapeLib.Data.strokeT;
-                myLine.MouseLeftButtonDown += currPath.myLine_MouseLeftButtonDown;
+                myLine.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
                 shapeLib.Data.mygrid.Children.Add(myLine);
-                
-                currPath.setDrawShape( myLine);
+                gv.baseShape.Add(myLine);
+               // currPath.setDrawShape( myLine);
 
             }
             else
             {
-                Line myLine =(Line) currPath.getDrawShape();
-                  myLine.X2 = xEnd;
-                myLine.Y2 = yEnd;
+                Line myLine =(Line)gv.baseShape[0];// =(Line) currPath.getDrawShape();
+                  myLine.X2 = data.controlBtn4.X;
+                myLine.Y2 = data.controlBtn4.Y;
             }
 
 
@@ -254,12 +263,13 @@ namespace violet.VShape
 
                 if (shapeLib.Data.drawtype <= 4 && shapeLib.Data.Status.Equals("rest"))
                 {
+                    currPath.drawtype = 0;//line,在shaplib 中的位置
                     shapeLib.Data.gdc.writeIn(currPath, 0);
                     shapeLib.Data.gdc.Release();
                 }
                 shapeLib.Data.gdc.bmove = false;
                 if (shapeLib.Data.Status.Equals("rest"))
-                    DrawShape();
+                    currPath.redraw(1);
 
                 shapeLib.Data.bfirst = true;
                 shapeLib.Data.bhave = false;
@@ -294,11 +304,12 @@ namespace violet.VShape
                         py = tempY;
                     }
 
-                     xStart=(int)px;
-                     yStart = (int)py;
-                     xEnd = (int)ex;
-                     yEnd = (int)ey;
-                     DrawShape();
+                    remGPath(px, py, ex, ey);
+                     //xStart=(int)px;
+                     //yStart = (int)py;
+                     //xEnd = (int)ex;
+                     //yEnd = (int)ey;
+                     currPath.redraw(0);
                     //switch (shapeLib.Data.drawtype)
                     //{
                     //    case 1:

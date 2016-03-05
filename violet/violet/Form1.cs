@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShapeLib.VShape;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace violet
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form,IForm 
     {
         double Swidth;
         double Sheight;
@@ -71,6 +72,13 @@ namespace violet
         public void setAction(int act)
         {
             userControl1.RUdo(act);
+        }
+
+      
+
+        public System.Windows.Controls.Canvas drawControl
+        {
+            get { return userControl1.mygrid; }
         }
     }
 }

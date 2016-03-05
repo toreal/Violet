@@ -1,4 +1,5 @@
-﻿//using Microsoft.Office.Interop.Word;
+﻿using ShapeLib.VShape;
+//using Microsoft.Office.Interop.Word;
 //using Microsoft.Office.Tools.Word;
 using System;
 using System.Collections;
@@ -31,7 +32,7 @@ namespace violet.VShape
     public class GraphDoc
     {
        public SVGRoot sroot = new SVGRoot();
-       public List<Shape> shapeList = new List<Shape>();
+       public List<gView> shapeList = new List<gView>();
        public List<gPath> FullList = new List<gPath>(); //remember all action from grid
         public Stack UndoStack = new Stack();
         public Stack RedoStack = new Stack();
@@ -75,7 +76,7 @@ namespace violet.VShape
             {
                 if ( !gp.IsDelete )
                 {
-                    gp.redraw();
+                    gp.redraw(1);
 
                 }
             }
@@ -139,7 +140,8 @@ namespace violet.VShape
                         sroot.PathList[tempPA.GraphIndex].IsDelete = false;
 
                     sroot.PathList[tempPA.GraphIndex] = tempPath;
-                    sroot.PathList[tempPA.GraphIndex].redraw();
+                    sroot.PathList[tempPA.GraphIndex].redraw(1);
+                      
                 }
                 else
                 {
@@ -180,7 +182,7 @@ namespace violet.VShape
                            {
                                tempPath.copyVal(FullList[i]);
                                sroot.PathList[tempPA.GraphIndex] = tempPath;
-                               sroot.PathList[tempPA.GraphIndex].redraw();
+                               sroot.PathList[tempPA.GraphIndex].redraw(1);
                                break;
  
                            }
@@ -232,32 +234,66 @@ namespace violet.VShape
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
         public bool isSel;
-        private int shapeIndex;
+        private int shapeIndex=-1;
 
-        public void redraw()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="remove"> -1 : 移除, 0: 運動中畫, 1: 正式畫 , 2: 重新加入</param>
+        public void redraw( int removetype)
         {
-         
-            Shape s = getDrawShape();
-            SolidColorBrush sb = new SolidColorBrush(Color.FromArgb(255,255,0,0));
-            s.Stroke = sb;
+            gView gv = null;
+            Boolean bfirst = false;
+
+            if (shapeIndex < 0)
+            {
+                gv = new gView();
+                shapeIndex = shapeLib.Data.gdc.shapeList.Count;
+                shapeLib.Data.gdc.shapeList.Add(gv);
+                bfirst = true;
+            }
+            else
+                gv = shapeLib.Data.gdc.shapeList[shapeIndex];
+
+            switch(removetype)
+            {
+                case -1:
+                    foreach (Shape sp in gv.baseShape)
+                        shapeLib.Data.mygrid.Children.Remove(sp);
+                    break;
+            
+                    
+                case 2:
+                    foreach (Shape sp in gv.baseShape)
+                        shapeLib.Data.mygrid.Children.Add(sp);
+                    shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
+                    break;
+                case 0:
+                case 1:
+                    shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
+           
+                    break;
+
+            }
+            
         }
         
-           public Shape getDrawShape()
-            {
-                if (shapeIndex >= 0 && shapeIndex < shapeLib.Data.gdc.shapeList.Count)
-                {
-                    Shape ishape = shapeLib.Data.gdc.shapeList[shapeIndex];
-                    return ishape;
-                }
-                return null;
+          // public Shape getDrawShape()
+          //  {
+          //      if (shapeIndex >= 0 && shapeIndex < shapeLib.Data.gdc.shapeList.Count)
+          //      {
+          //          Shape ishape = shapeLib.Data.gdc.shapeList[shapeIndex];
+          //          return ishape;
+          //      }
+          //      return null;
 
-            }
+          //  }
 
-          public  void setDrawShape(Shape value)
-            {
-                shapeLib.Data.gdc.shapeList.Add(value);
-                shapeIndex = shapeLib.Data.gdc.shapeList.Count - 1;
-            }
+          //public  void setDrawShape(Shape value)
+          //  {
+          //      shapeLib.Data.gdc.shapeList.Add(value);
+          //      shapeIndex = shapeLib.Data.gdc.shapeList.Count - 1;
+          //  }
         
 
         private bool isdel = false;
@@ -274,30 +310,23 @@ namespace violet.VShape
             {
                 if (value == true)
                 {
+                    this.redraw( -1 );
                  
-                 
-                    Shape drawShape = getDrawShape();
-                    if (drawShape != null)
-                             shapeLib.Data.mygrid.Children.Remove(drawShape);
-
-                    shapeLib.Data.mygrid.InvalidateVisual();
-
-                        isdel = true;
+                
+                      
                 }else
                 {
                     if ( isdel)
                     {
-                        Shape drawShape = getDrawShape();
-                        if (drawShape != null)
-                            shapeLib.Data.mygrid.Children.Add(drawShape);
-
-                        shapeLib.Data.mygrid.InvalidateVisual();
-
+                        this.redraw(2); 
+                
 
                     }
 
 
                 }
+                isdel = true;
+
 
                 // throw new NotImplementedException();
             }
@@ -311,13 +340,23 @@ namespace violet.VShape
                 //檢查是否有按下shift
                 if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                 {
+                    shapeLib.Data.multiSelList.Add(this);
 
-
+                }else
+                {
+                    foreach( gPath gp in shapeLib.Data.multiSelList )
+                    {
+                        gp.isSel = false;
+                    }
+                    if (shapeLib.Data.currShape != null && shapeLib.Data.currShape != this)
+                        shapeLib.Data.currShape.isdel = false;
                 }
 
                 shapeLib.Data.currShape = this;
+                this.isSel = true;
 
-
+                IInsertOP sh = shapeLib.SupportedShape(null)[this.drawtype];
+                sh.MouseOP();
             }
             //throw new NotImplementedException();
         }

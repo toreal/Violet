@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using Microsoft.Office.Tools.Word;
 using System.Collections;
+using ShapeLib.VShape;
 
 namespace violet
 {
@@ -12,7 +13,7 @@ namespace violet
     {
         public Form1 f;
         double backGroundColor = 0.2;
-        void Check()
+        IForm  Check()
         {
             //確認畫布是否有開啟中
             if (f == null)
@@ -26,6 +27,7 @@ namespace violet
                 f.drawBackgroundLine(backGroundColor);
                 f.Disposed += new EventHandler(f_Disposed);
             }
+            return (IForm)f;
         }
         //create form
 
