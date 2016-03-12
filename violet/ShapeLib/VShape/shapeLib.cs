@@ -33,7 +33,7 @@ namespace ShapeLib.VShape
         }
 
         static public  GModel Data = new GModel();
-        static IList<ShapeObj> ret = new[] { new ShapeObj() , new ShapeCircle()};
+        static IList<ShapeObj> ret = new[] { new ShapeObj() , new ShapeCircle(), new Sproerty()};
 
         static public void undo()
         {
