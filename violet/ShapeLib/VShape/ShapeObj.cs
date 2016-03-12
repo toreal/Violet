@@ -35,7 +35,7 @@ namespace violet.VShape
         public String label;
         public ArrayList items;
         public RibbonControlEventHandler click;
-        public string belong;
+        public string belong; //屬於某一Group 或 menu
     }
     
     public class ShapeObj:IShapeUI,IDrawing,IUpdateOP,IInsertOP
@@ -56,11 +56,15 @@ namespace violet.VShape
             ArrayList ret = new ArrayList();
 
             shapeUI ui = new shapeUI();
+            ui.uitype = shapeUIType.RibbonGroup;
+            ui.label = "Shapes";
+            ret.Add(ui);
+
+            ui = new shapeUI();
             ui.label = "Line";
-
-
             ui.image = new Bitmap(@"icons\rectangle.png");
             ui.click = this.btn_Click;
+            ui.belong = "Shapes";
             ret.Add(ui);
 
             return ret;

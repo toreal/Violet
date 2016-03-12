@@ -6,6 +6,7 @@ using Microsoft.Office.Tools.Ribbon;
 using Microsoft.Office.Tools.Word;
 using System.Collections;
 using ShapeLib.VShape;
+using violet.VShape;
 
 namespace violet
 {
@@ -40,26 +41,32 @@ namespace violet
 
             foreach (VShape.shapeUI ui in list)
             {
-                RibbonButton  uiobj=null;
                 switch(ui.uitype)
                 {
                     case VShape.shapeUIType.RibbonButton:
-                        uiobj = this.Factory.CreateRibbonButton();
+                        RibbonButton uiobj =  this.Factory.CreateRibbonButton();
                         uiobj.Click+=(RibbonControlEventHandler) ui.click;
                         uiobj.Label = ui.label;
                         uiobj.Image = ui.image;
                         uiobj.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+
+                        addByName(uiobj, ui.belong);
+                        break;
+                    case shapeUIType.RibbonGroup:
+                        RibbonGroup uig = this.Factory.CreateRibbonGroup();
+                        uig.Label = ui.label;
+                        tab1.Groups.Add(uig);
+
+                        break;
+                    case shapeUIType.RibbonMenu:
+                        RibbonMenu rim = Factory.CreateRibbonMenu();
+                        rim.Label = ui.label;
+                        rim.Image = ui.image;
+                        addByName(rim, ui.belong);
                         break;
                 }
 
-                if ( uiobj != null)
-                {
-                    group1.SuspendLayout();
-                    group1.Items.Add(uiobj);
-                    group1.ResumeLayout(false);
-                    group1.PerformLayout();
-
-                }
+                
                     
             }
 
@@ -68,7 +75,46 @@ namespace violet
                 
         }
 
-        
+
+        void addByName(RibbonControl uiobj, String name)
+        {
+            if (uiobj != null)
+            {
+                foreach (RibbonGroup gr in  tab1.Groups )
+                {
+                    if ( gr.Label == name)
+                    {
+                        gr.SuspendLayout();
+                        gr.Items.Add(uiobj);
+                        gr.ResumeLayout(false);
+                        gr.PerformLayout();
+                        break;
+                    }
+                    
+                    
+                    foreach(RibbonControl rc in gr.Items  )
+                    {
+                        if ( rc is RibbonMenu )
+                        {
+                            RibbonMenu rm = (RibbonMenu)rc;
+                            if (rm.Label == name)
+                            {
+                                rm.SuspendLayout();
+                                rm.Items.Add(uiobj);
+                                rm.ResumeLayout(false);
+                                rm.PerformLayout();
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
+                
+            }
+
+        }
+
 
         void f_Disposed(object sender, EventArgs e)
         {

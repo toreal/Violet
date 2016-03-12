@@ -22,6 +22,7 @@ namespace violet.VShape
 
 
             ui.image = new Bitmap(@"icons\circle.png");
+            ui.belong = "Shapes";
       //      ui.click = this.btn_Click;
             ret.Add(ui);
 
