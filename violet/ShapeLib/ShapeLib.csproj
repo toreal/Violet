@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VShape\ShapeTriangle.cs" />
     <Compile Include="VShape\ShapeCurve.cs" />
     <Compile Include="VShape\ShapeRectangle.cs" />
     <Compile Include="VShape\GraphDoc.cs" />
@@ -88,6 +89,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="icons\line.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icons\triangle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="icons\rectangle.png">

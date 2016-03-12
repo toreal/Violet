@@ -79,3 +79,4 @@ C:\James\Violet\Violet\violet\violet\bin\Debug\icons\circle.png
 D:\violet\Violet\violet\violet\bin\Debug\icons\circle.png
 D:\violet\Violet\violet\violet\bin\Debug\icons\line.png
 D:\violet\Violet\violet\violet\bin\Debug\icons\curve.png
+D:\violet\Violet\violet\violet\bin\Debug\icons\triangle.png

@@ -7,3 +7,4 @@ D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.dll
 D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.pdb
 D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\line.png
 D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\curve.png
+D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\triangle.png
