@@ -113,12 +113,12 @@ namespace violet
             // 
             // rectangle_btn
             // 
-            this.rectangle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+      /*      this.rectangle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.rectangle_btn.Image = global::violet.Properties.Resources.rectangle;
             this.rectangle_btn.Label = "Rectangle";
             this.rectangle_btn.Name = "rectangle_btn";
             this.rectangle_btn.ShowImage = true;
-            this.rectangle_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.rectangle_btn_Click);
+            this.rectangle_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.rectangle_btn_Click);*/
             // 
             // line_btn
             // 

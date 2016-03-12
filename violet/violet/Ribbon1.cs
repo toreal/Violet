@@ -134,12 +134,12 @@ namespace violet
             f.Show();
         }
 
-        private void rectangle_btn_Click(object sender, RibbonControlEventArgs e)
+    /*    private void rectangle_btn_Click(object sender, RibbonControlEventArgs e)
         {
             Check();
             f.setDrawType(2);
             f.Show();
-        }
+        }*/
 
         private void line_btn_Click(object sender, RibbonControlEventArgs e)
         {

@@ -62,7 +62,7 @@ namespace ShapeLib.VShape
 
             ui = new shapeUI();
             ui.label = "Line";
-            ui.image = new Bitmap(@"icons\rectangle.png");
+            ui.image = new Bitmap(@"icons\line.png");
             ui.click = this.btn_Click;
             ui.belong = "Shapes";
             ret.Add(ui);

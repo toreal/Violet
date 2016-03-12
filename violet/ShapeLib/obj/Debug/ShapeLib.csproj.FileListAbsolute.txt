@@ -1,0 +1,9 @@
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.csprojResolveAssemblyReference.cache
+D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\circle.png
+D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\rectangle.png
+D:\violet\Violet\violet\ShapeLib\bin\Debug\ShapeLib.dll
+D:\violet\Violet\violet\ShapeLib\bin\Debug\ShapeLib.pdb
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.dll
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.pdb
+D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\line.png
+D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\curve.png
