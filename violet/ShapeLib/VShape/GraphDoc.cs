@@ -350,6 +350,12 @@ namespace ShapeLib.VShape
                     }
                     if (shapeLib.Data.currShape != null && shapeLib.Data.currShape != this)
                         shapeLib.Data.currShape.isdel = false;
+
+                    shapeLib.Data.multiSelList.Clear(); 
+
+                    shapeLib.Data.multiSelList.Add(this);
+
+
                 }
 
                 shapeLib.Data.currShape = this;
