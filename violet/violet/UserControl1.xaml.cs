@@ -1,4 +1,5 @@
 ﻿
+using ShapeLib.VShape;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Serialization;
-using violet.VShape;
+
 
 namespace violet
 {
@@ -37,7 +38,7 @@ namespace violet
             InitializeComponent();
             hiddenCanvas(); //一開始要將myControl畫布取消顯示
 
-            VShape.shapeLib.initControl(mygrid, myControl);
+            shapeLib.initControl(mygrid, myControl);
 
         }
         //初始設定
@@ -823,8 +824,8 @@ namespace violet
         {
             if (e.Key == Key.Delete)
             {
-                if (VShape.shapeLib.Data.currShape != null)
-                    VShape.shapeLib.Data.currShape.IsDelete = true;
+                if (shapeLib.Data.currShape != null)
+                    shapeLib.Data.currShape.IsDelete = true;
 
             }
 
@@ -834,7 +835,7 @@ namespace violet
                 {
                     gPath tp = new gPath();
 
-                    tp.copyVal(VShape.shapeLib.Data.gdc.sroot.PathList[ru.Sel]);
+                    tp.copyVal(shapeLib.Data.gdc.sroot.PathList[ru.Sel]);
                     using (MemoryStream stream = new MemoryStream())
                     {
                         XmlSerializer s = new XmlSerializer(typeof(gPath));
@@ -859,16 +860,16 @@ namespace violet
                     using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
                     {
                         gPath tp = (gPath)serializer.Deserialize(XmlReader.Create(ms));
-                        tp.ListPlace = VShape.shapeLib.Data.gdc.sroot.PathList.Count;
-                        if (VShape.shapeLib.Data.gdc.checkWhich(tp) != -1)
+                        tp.ListPlace = shapeLib.Data.gdc.sroot.PathList.Count;
+                        if (shapeLib.Data.gdc.checkWhich(tp) != -1)
                         {
                             tp.controlBtn1 = new Point(tp.controlBtn1.X + 9, tp.controlBtn1.Y + 9);
                             tp.controlBtn2 = new Point(tp.controlBtn2.X + 9, tp.controlBtn2.Y + 9);
                             tp.controlBtn3 = new Point(tp.controlBtn3.X + 9, tp.controlBtn3.Y + 9);
                             tp.controlBtn4 = new Point(tp.controlBtn4.X + 9, tp.controlBtn4.Y + 9);
                         }
-                        VShape.shapeLib.Data.gdc.writeIn(tp, 0);
-                        VShape.shapeLib.Data.gdc.Release();
+                        shapeLib.Data.gdc.writeIn(tp, 0);
+                        shapeLib.Data.gdc.Release();
                        // reDraw(true);
                     }
                 }
@@ -879,7 +880,7 @@ namespace violet
         //繪製點選圖形的控制範圍
         void greenDrawing()
         {
-            gPath p = (gPath)VShape.shapeLib.Data.gdc.sroot.PathList[ru.Sel];
+            gPath p = (gPath)shapeLib.Data.gdc.sroot.PathList[ru.Sel];
             byte tmpR = colorR;
             byte tmpG = colorG;
             byte tmpB = colorB;
@@ -1087,7 +1088,7 @@ namespace violet
             if (ru.Sel >= 0)
                 tempFPath.ListPlace = ru.Sel;
             else
-                tempFPath.ListPlace = VShape.shapeLib.Data.gdc.sroot.PathList.Count;
+                tempFPath.ListPlace = shapeLib.Data.gdc.sroot.PathList.Count;
 
             if (drawtype <= 3)
             {
@@ -1343,16 +1344,16 @@ namespace violet
             if (MessageBox.Show("你確定要清除畫布嗎?    若要你的檔案將會全部遺失!", "警告", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 mygrid.Children.Clear();
-                VShape.shapeLib.Data.gdc.sroot.PathList.Clear();
-                VShape.shapeLib.Data.gdc.FullList.Clear();
-                VShape.shapeLib.Data.gdc.UndoStack.Clear();
-                VShape.shapeLib.Data.gdc.Release();
+                shapeLib.Data.gdc.sroot.PathList.Clear();
+               shapeLib.Data.gdc.FullList.Clear();
+               shapeLib.Data.gdc.UndoStack.Clear();
+               shapeLib.Data.gdc.Release();
             }
         }
         public void ClearDrawing()  //清空資料區
         {
             mygrid.Children.Clear();
-            VShape.shapeLib.Data.gdc.sroot.PathList.Clear();
+            shapeLib.Data.gdc.sroot.PathList.Clear();
         }
         public void hideBackLine() //背景格線取消
         {
@@ -1480,12 +1481,12 @@ namespace violet
             {
                 if (Act == 0)
                 {
-                    VShape.shapeLib.Data.gdc.unDo();
+                    shapeLib.Data.gdc.unDo();
                  //   reDraw(true);
                 }
                 if (Act == 1)
                 {
-                    VShape.shapeLib.Data.gdc.reDo();
+                   shapeLib.Data.gdc.reDo();
                    // reDraw(true);
                 }
             }
@@ -1509,7 +1510,7 @@ namespace violet
             using (MemoryStream ms = new MemoryStream( System.Text.Encoding.UTF8.GetBytes(xml)))
             {
                 //要重新去記錄步驟,否則匯入後redo, undo 無法使用
-                VShape.shapeLib.Data.gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
+                shapeLib.Data.gdc.sroot = (SVGRoot)serializer.Deserialize(XmlReader.Create(ms));
                 //reDraw(true);
             }
         }
@@ -1556,7 +1557,7 @@ namespace violet
 
                 XmlSerializer s = new XmlSerializer(typeof(SVGRoot));
 
-                s.Serialize(XmlWriter.Create(stream), VShape.shapeLib.Data.gdc.sroot);
+                s.Serialize(XmlWriter.Create(stream), shapeLib.Data.gdc.sroot);
 
                 stream.Flush();
                 stream.Seek(0, SeekOrigin.Begin);

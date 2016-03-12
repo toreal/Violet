@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 
-namespace violet.VShape
+namespace ShapeLib.VShape
 {
     static public class shapeLib
     {

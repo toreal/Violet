@@ -69,6 +69,7 @@
     <Compile Include="VShape\ShapeCircle.cs" />
     <Compile Include="VShape\shapeLib.cs" />
     <Compile Include="VShape\ShapeObj.cs" />
+    <Compile Include="VShape\Sproerty.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="james.pfx" />

@@ -16,7 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace violet.VShape
+namespace ShapeLib.VShape
 {
 
 

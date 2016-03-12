@@ -6,7 +6,7 @@ using Microsoft.Office.Tools.Ribbon;
 using Microsoft.Office.Tools.Word;
 using System.Collections;
 using ShapeLib.VShape;
-using violet.VShape;
+
 
 namespace violet
 {
@@ -33,17 +33,17 @@ namespace violet
         //create form
 
 
-        public void Construt(VShape.ShapeObj obj )
+        public void Construt(ShapeObj obj )
         {
             ArrayList list = obj.getMenuItem();
           //  RibbonGroup group3 = this.Factory.CreateRibbonGroup();
            // RibbonTab tab = Factory.CreateRibbonTab();
 
-            foreach (VShape.shapeUI ui in list)
+            foreach (shapeUI ui in list)
             {
                 switch(ui.uitype)
                 {
-                    case VShape.shapeUIType.RibbonButton:
+                    case shapeUIType.RibbonButton:
                         RibbonButton uiobj =  this.Factory.CreateRibbonButton();
                         uiobj.Click+=(RibbonControlEventHandler) ui.click;
                         uiobj.Label = ui.label;
@@ -251,7 +251,7 @@ namespace violet
             Check();
             f.setDrawType(5);
 
-            VShape.shapeLib.Data.drawtype = 5;
+           shapeLib.Data.drawtype = 5;
 
         }
         private void redo_Click(object sender, RibbonControlEventArgs e)

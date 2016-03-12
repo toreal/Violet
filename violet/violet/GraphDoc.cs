@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Interop.Word;
+using ShapeLib.VShape;
 //using Microsoft.Office.Tools.Word;
 using System;
 using System.Collections;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
-using violet.VShape;
+
 
 
 namespace violet

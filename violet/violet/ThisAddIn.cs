@@ -12,7 +12,7 @@ using System.Drawing;
 //using Chem4Word.Core;
 using Microsoft.Office.Core;
 using System.Diagnostics;
-using violet.VShape;
+
 using System.Collections;
 
 namespace violet

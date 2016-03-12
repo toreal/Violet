@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using System.Xml.Serialization;
 
 
-namespace violet.VShape
+namespace ShapeLib.VShape
 {
 
     [XmlRoot(ElementName = "SVGRoot", Namespace = "")]

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace violet.VShape
+namespace ShapeLib.VShape
 {
     interface IDrawing
     {
