@@ -126,7 +126,7 @@ namespace ShapeLib.VShape
         public bool gCanMove = false; //選取後是否可以移動
         public bool bConThing = false; //是否有選取物件
         public bool OnIt = false; //是否有滑入或滑出選取物件
-
+        public int mClick = 0;
         public gPath currShape;
         public List<gPath> multiSelList = new List<gPath>();
     }
