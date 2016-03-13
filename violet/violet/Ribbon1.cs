@@ -43,7 +43,7 @@ namespace violet
             {
                 switch(ui.uitype)
                 {
-                    case shapeUIType.RibbonButton:
+                    case shapeUIType.RibbonBigButton:
                         RibbonButton uiobj =  this.Factory.CreateRibbonButton();
                         uiobj.Click+=(RibbonControlEventHandler) ui.click;
                         uiobj.Label = ui.label;
@@ -52,6 +52,16 @@ namespace violet
 
                         addByName(uiobj, ui.belong);
                         break;
+                    case shapeUIType.RibbonSmallButton:
+                        RibbonButton uisobj = this.Factory.CreateRibbonButton();
+                        uisobj.Click += (RibbonControlEventHandler)ui.click;
+                        uisobj.Label = ui.label;
+                        uisobj.Image = ui.image;
+                        uisobj.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeRegular;
+
+                        addByName(uisobj, ui.belong);
+                        break;
+                 
                     case shapeUIType.RibbonGroup:
                         RibbonGroup uig = this.Factory.CreateRibbonGroup();
                         uig.Label = ui.label;

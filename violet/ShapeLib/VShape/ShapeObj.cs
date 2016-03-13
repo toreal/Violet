@@ -22,7 +22,8 @@ namespace ShapeLib.VShape
 
     public enum shapeUIType
     {
-        RibbonButton,
+        RibbonBigButton,
+        RibbonSmallButton,
         RibbonMenu,
         RibbonGroup
     }

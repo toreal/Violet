@@ -22,49 +22,49 @@ namespace ShapeLib.VShape
 
 
             ui = new shapeUI();
-            ui.uitype = shapeUIType.RibbonButton;
+            ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Red";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
 
             ui = new shapeUI();
-            ui.uitype = shapeUIType.RibbonButton;
+            ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Green";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
 
             ui = new shapeUI();
-            ui.uitype = shapeUIType.RibbonButton;
+            ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Blue";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
 
             ui = new shapeUI();
-            ui.uitype = shapeUIType.RibbonButton;
+            ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Black";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
 
             ui = new shapeUI();
-            ui.uitype = shapeUIType.RibbonButton;
+            ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "White";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
 
             ui = new shapeUI();
-            ui.uitype = shapeUIType.RibbonButton;
+            ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Yellow";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
 
             ui = new shapeUI();
-            ui.uitype = shapeUIType.RibbonButton;
+            ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Orange";
             ui.click = btn_Click;
             ui.belong = "Colors";
