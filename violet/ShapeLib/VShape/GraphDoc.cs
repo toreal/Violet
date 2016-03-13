@@ -233,7 +233,25 @@ namespace ShapeLib.VShape
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
-        public bool isSel;
+        bool _isSel;
+
+        public bool isSel
+        {
+            get {             
+                return _isSel; }
+            set {
+                
+                if ( value != _isSel)
+                {
+                    _isSel = value;
+                    if (!value)
+                        redraw(2);
+                    else
+                        redraw(1);
+                }
+                                
+                 }
+        }
         private int shapeIndex=-1;
 
         /// <summary>
@@ -255,27 +273,41 @@ namespace ShapeLib.VShape
             else
                 gv = shapeLib.Data.gdc.shapeList[shapeIndex];
 
-            switch(removetype)
-            {
-                case -1:
-                    foreach (Shape sp in gv.baseShape)
-                        shapeLib.Data.mygrid.Children.Remove(sp);
-                    break;
-            
-                    
-                case 2:
-                    foreach (Shape sp in gv.baseShape)
-                        shapeLib.Data.mygrid.Children.Add(sp);
-                    shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
-                    break;
-                case 0:
-                case 1:
-                    shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
-           
-                    break;
 
+            if (isSel)
+            {
+                foreach (Shape sp in gv.baseShape)
+                    shapeLib.Data.mygrid.Children.Remove(sp);
+                shapeLib.SupportedShape(null)[drawtype].DisplayControlPoints(gv, this);
+                
             }
-            
+            else
+            {
+                foreach (Shape sp in gv.controlShape)
+                    shapeLib.Data.mygrid.Children.Remove(sp);
+                gv.controlShape.Clear();
+
+                switch (removetype)
+                {
+                    case -1:
+                        foreach (Shape sp in gv.baseShape)
+                            shapeLib.Data.mygrid.Children.Remove(sp);
+                        break;
+
+
+                    case 2:
+                        foreach (Shape sp in gv.baseShape)
+                            shapeLib.Data.mygrid.Children.Add(sp);
+                        shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
+                        break;
+                    case 0:
+                    case 1:
+                        shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
+
+                        break;
+
+                }
+            }
         }
         
           // public Shape getDrawShape()
@@ -331,6 +363,21 @@ namespace ShapeLib.VShape
                 // throw new NotImplementedException();
             }
         }
+        public void myLine_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if ( isSel)
+                shapeLib.Data.mygrid.Cursor = Cursors.SizeAll;
+            else 
+                shapeLib.Data.mygrid.Cursor= Cursors.Hand;
+         //   throw new NotImplementedException();
+        }
+
+        public void myLine_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            shapeLib.Data.mygrid.Cursor = Cursors.Arrow;
+       
+        //    throw new NotImplementedException();
+        }
 
 
        public   void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -349,7 +396,7 @@ namespace ShapeLib.VShape
                         gp.isSel = false;
                     }
                     if (shapeLib.Data.currShape != null && shapeLib.Data.currShape != this)
-                        shapeLib.Data.currShape.isdel = false;
+                        shapeLib.Data.currShape.isSel = false;
 
                     shapeLib.Data.multiSelList.Clear(); 
 
@@ -362,7 +409,9 @@ namespace ShapeLib.VShape
                 this.isSel = true;
 
                 IInsertOP sh = shapeLib.SupportedShape(null)[this.drawtype];
-                sh.MouseOP();
+                sh.MouseOP(1);
+
+                e.Handled = true;
             }
             //throw new NotImplementedException();
         }

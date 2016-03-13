@@ -74,10 +74,10 @@ namespace ShapeLib.VShape
         void btn_Click(object sender, RibbonControlEventArgs e)
         {
 
-            MouseOP();
+            MouseOP(0);
         }
 
-        public void MouseOP()
+        public void MouseOP( int ntype)
         {
             if (shapeLib.Data.view != null)
             {
@@ -93,15 +93,30 @@ namespace ShapeLib.VShape
                 foreach(ShapeObj obj in ret)
                 {
                     shapeLib.Data.mygrid.MouseLeftButtonUp -= obj.MouseUpInsert;
-                    shapeLib.Data.mygrid.MouseMove -= this.MouseMoveInsert;
-                    shapeLib.Data.mygrid.MouseLeftButtonDown -= this.MouseDownInsert;
-                
+                    shapeLib.Data.mygrid.MouseMove -= obj.MouseMoveInsert;
+                    shapeLib.Data.mygrid.MouseLeftButtonDown -= obj.MouseDownInsert;
+
+                    shapeLib.Data.mygrid.MouseLeftButtonUp -= obj.MouseDownUpdate;
+                    shapeLib.Data.mygrid.MouseMove -= obj.MouseMoveUpdate;
+                    shapeLib.Data.mygrid.MouseLeftButtonDown -= obj.MouseUpUpdate;
                 }
 
-                shapeLib.Data.mygrid.MouseLeftButtonUp += this.MouseUpInsert;
-                shapeLib.Data.mygrid.MouseMove += this.MouseMoveInsert;
-                shapeLib.Data.mygrid.MouseLeftButtonDown += this.MouseDownInsert;
+                if ( ntype ==0)
+                {
+                    shapeLib.Data.mygrid.MouseLeftButtonUp += this.MouseUpInsert;
+                    shapeLib.Data.mygrid.MouseMove += this.MouseMoveInsert;
+                    shapeLib.Data.mygrid.MouseLeftButtonDown += this.MouseDownInsert;
 
+
+                }else
+                {
+
+                    shapeLib.Data.mygrid.MouseLeftButtonUp += this.MouseUpUpdate;
+                    shapeLib.Data.mygrid.MouseMove += this.MouseMoveUpdate;
+                    shapeLib.Data.mygrid.MouseLeftButtonDown += this.MouseDownUpdate;
+
+                }
+              
             }
 
 
@@ -145,6 +160,8 @@ namespace ShapeLib.VShape
                 myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = shapeLib.Data.strokeT;
                 myLine.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
+                myLine.MouseEnter += data.myLine_MouseEnter;
+                myLine.MouseLeave += data.myLine_MouseLeave;
                 shapeLib.Data.mygrid.Children.Add(myLine);
                 gv.baseShape.Add(myLine);
                // currPath.setDrawShape( myLine);
@@ -161,53 +178,87 @@ namespace ShapeLib.VShape
          //   throw new NotImplementedException();
         }
 
-      
-        public void DisplayControlPoints()
+
+
+
+
+        public void DisplayControlPoints(gView gv, gPath data)
         {
-            throw new NotImplementedException();
+            if ( gv.controlShape.Count ==0)
+            {
+                Line myLine = new Line();
+                myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 255, 0));
+                myLine.X1 = data.controlBtn1.X;
+                myLine.Y1 = data.controlBtn1.Y;
+                myLine.X2 = data.controlBtn4.X;
+                myLine.Y2 = data.controlBtn4.Y;
+                myLine.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = shapeLib.Data.strokeT;
+                myLine.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
+                myLine.MouseEnter += data.myLine_MouseEnter;
+                myLine.MouseLeave += data.myLine_MouseLeave;
+                shapeLib.Data.mygrid.Children.Add(myLine);
+                gv.controlShape.Add(myLine);
+              
+
+            }else
+            {
+                Line myLine = (Line)gv.controlShape[0];// =(Line) currPath.getDrawShape();
+
+                myLine.X1 = data.controlBtn1.X;
+                myLine.Y1 = data.controlBtn1.Y;
+           
+                myLine.X2 = data.controlBtn4.X;
+                myLine.Y2 = data.controlBtn4.Y;
+           
+            }
+
+
+           // throw new NotImplementedException();
         }
 
         public void MouseDownUpdate(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            int tempDraw = shapeLib.Data.gdc.sroot.PathList[shapeLib.Data.ru.Sel].drawtype;
-            if (tempDraw == 3)
-            {
-                shapeLib.Data.pStart = e.GetPosition(shapeLib.Data.myControl);
-            }
-            else
-            {
-                shapeLib.Data.pStart = correctPoint(e.GetPosition(shapeLib.Data.myControl));
-            }
+            //int tempDraw = shapeLib.Data.gdc.sroot.PathList[shapeLib.Data.ru.Sel].drawtype;
+            //if (tempDraw == 3)
+            //{
+            //    shapeLib.Data.pStart = e.GetPosition(shapeLib.Data.myControl);
+            //}
+            //else
+            //{
+            //    shapeLib.Data.pStart = correctPoint(e.GetPosition(shapeLib.Data.myControl));
+            //}
 
-            currPath = new gPath();
-            shapeLib.Data.tempStart = shapeLib.Data.pStart;
+            //currPath = new gPath();
+            //shapeLib.Data.tempStart = shapeLib.Data.pStart;
 
-            if (!shapeLib.Data.gCanMove && !shapeLib.Data.OnIt)
-            {
-                //hiddenCanvas();
-                shapeLib.Data.ru.Sel = -1;
-                shapeLib.Data.ru.Node = -1;
-                shapeLib.Data.bConThing = false;
-                shapeLib.Data.gdc.bmove = false;
-                shapeLib.Data.bfirst = true;
-                shapeLib.Data.bhave = false;
-                shapeLib.Data.OnIt = false;
-            }
-            if (shapeLib.Data.ru.Sel >= 0)
-            {
-                shapeLib.Data.gdc.node = shapeLib.Data.ru.Node;
-            }
+            //if (!shapeLib.Data.gCanMove && !shapeLib.Data.OnIt)
+            //{
+            //    //hiddenCanvas();
+            //    shapeLib.Data.ru.Sel = -1;
+            //    shapeLib.Data.ru.Node = -1;
+            //    shapeLib.Data.bConThing = false;
+            //    shapeLib.Data.gdc.bmove = false;
+            //    shapeLib.Data.bfirst = true;
+            //    shapeLib.Data.bhave = false;
+            //    shapeLib.Data.OnIt = false;
+            //}
+            //if (shapeLib.Data.ru.Sel >= 0)
+            //{
+            //    shapeLib.Data.gdc.node = shapeLib.Data.ru.Node;
+            //}
             //throw new NotImplementedException();
         }
 
         public void MouseUpUpdate(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void MouseMoveUpdate(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            throw new NotImplementedException();
+          //  throw new NotImplementedException();
         }
 
 
@@ -248,8 +299,18 @@ namespace ShapeLib.VShape
                 double ey = shapeLib.Data.pEnd.Y;
 
                 if (px == ex && py == ey) //click
-                    return;
+                {
+                    foreach (gPath gp in shapeLib.Data.multiSelList)
+                    {
+                        gp.isSel = false;
+                    }
+                    if (shapeLib.Data.currShape != null )
+                        shapeLib.Data.currShape.isSel = false;
 
+                    shapeLib.Data.multiSelList.Clear(); 
+                    return;
+                }
+                    
                 if (shapeLib.Data.drawtype != 3 && ex < px)
                 {
                     tempX = ex;

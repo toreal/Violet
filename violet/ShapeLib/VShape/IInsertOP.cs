@@ -9,7 +9,7 @@ namespace ShapeLib.VShape
 {
     interface IInsertOP
     {
-        void MouseOP();
+        void MouseOP( int ntype );
         void MouseDownInsert(object sender, MouseButtonEventArgs e);
         void MouseUpInsert(object sender, MouseButtonEventArgs e);
         void MouseMoveInsert(object sender, MouseEventArgs e);

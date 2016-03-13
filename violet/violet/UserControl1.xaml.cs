@@ -623,9 +623,14 @@ namespace violet
         {
             if (e.Key == Key.Delete)
             {
-                if (shapeLib.Data.currShape != null)
-                    shapeLib.Data.currShape.IsDelete = true;
+                foreach(gPath gp in shapeLib.Data.multiSelList)
+                {
+                    gp.isSel = false;
+                    gp.IsDelete = true;
 
+                }
+               shapeLib.Data.multiSelList.Clear();
+                
             }
 
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)

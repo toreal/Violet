@@ -10,7 +10,7 @@ namespace ShapeLib.VShape
     interface IDrawing
     {
         void DrawShape(gView  gv ,gPath data,Boolean bfirst );
-        void DisplayControlPoints();
+        void DisplayControlPoints(gView gv, gPath data);
 
 
     }
