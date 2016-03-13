@@ -57,7 +57,10 @@ namespace violet
                         uisobj.Click += (RibbonControlEventHandler)ui.click;
 
                         if (ui.image != null)
+                        {
+                            uisobj.ShowImage = true;
                             uisobj.Name = ui.label;
+                        }
                         else
                             uisobj.Label = ui.label;
                         
