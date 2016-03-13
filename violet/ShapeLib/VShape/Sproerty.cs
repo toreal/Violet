@@ -23,14 +23,14 @@ namespace ShapeLib.VShape
 
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonButton;
-            ui.label = "red";
+            ui.label = "Red";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
 
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonButton;
-            ui.label = "green";
+            ui.label = "Green";
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -79,33 +79,32 @@ namespace ShapeLib.VShape
              {
                      switch(btn.Label)
                      {
-                         case "red":
+                         case "Red":
                              shapeLib.Data.colorR = 255;
                              shapeLib.Data.colorG = 0;
                              shapeLib.Data.colorB = 0;
                              break;
-                         case "orange":
+                         case "Orange":
                              shapeLib.Data.colorR = 255;
                              shapeLib.Data.colorG = 165;
                              shapeLib.Data.colorB = 0;
                              break;
-                         case "yellow":
+                         case "Yellow":
                              shapeLib.Data.colorR = 255;
                              shapeLib.Data.colorG = 230;
                              shapeLib.Data.colorB = 0;
                              break;
-                         case "green":
+                         case "Green":
                              shapeLib.Data.colorR = 0;
                              shapeLib.Data.colorG = 128;
                              shapeLib.Data.colorB = 0;
                              break;
-<<<<<<< HEAD
-                         case "blue":
+                         case "Blue":
                              shapeLib.Data.colorR = 0;
                              shapeLib.Data.colorG = 0;
                              shapeLib.Data.colorB = 128;
                              break;
-                         case "black":
+                         case "Black":
                              shapeLib.Data.colorR = 0;
                              shapeLib.Data.colorG = 0;
                              shapeLib.Data.colorB = 0;
@@ -115,32 +114,17 @@ namespace ShapeLib.VShape
                              shapeLib.Data.colorG = 255;
                              shapeLib.Data.colorB = 255;
                              break;
-                         case "violet":
+                         case "Violet":
                              shapeLib.Data.colorR = 138;
                              shapeLib.Data.colorG = 43;
                              shapeLib.Data.colorB = 226;
                              break;
-                         case "gray":
+                         case "Gray":
                              shapeLib.Data.colorR = 128;
                              shapeLib.Data.colorG = 128;
                              shapeLib.Data.colorB = 128;
                              break;
-
-=======
-
-                         case "Blue":
-                             shapeLib.Data.colorR = 0;
-                             shapeLib.Data.colorG = 0;
-                             shapeLib.Data.colorB = 255;
-
-                             break;
-
-                         case "Black":
-                             shapeLib.Data.colorR = 0;
-                             shapeLib.Data.colorG = 0;
-                             shapeLib.Data.colorB = 0;
-
-                             break;
+break;
 
                          case "White":
                              shapeLib.Data.colorR = 255;
@@ -149,20 +133,6 @@ namespace ShapeLib.VShape
 
                              break;
 
-                         case "Yellow":
-                             shapeLib.Data.colorR = 255;
-                             shapeLib.Data.colorG = 217;
-                             shapeLib.Data.colorB = 0;
-
-                             break;
-
-                         case "Orange":
-                             shapeLib.Data.colorR = 255;
-                             shapeLib.Data.colorG = 116;
-                             shapeLib.Data.colorB = 21;
-
-                             break;
->>>>>>> 25195234a8e156595b1eff3fbc802d98e51a6cbc
                      }
         
              }
