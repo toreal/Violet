@@ -36,7 +36,7 @@ namespace ShapeLib.VShape
         }
 
         static public  GModel Data = new GModel();
-        static IList<ShapeObj> ret = new[] { new ShapeObj() , new ShapeCircle(), new Sproerty()};
+        static IList<ShapeObj> ret = new[] { new ShapeObj(), new ShapeCircle(), new Sproerty(), new ShapeRectangle(), new ShapeCurve(), new ShapeTriangle() };
 
         static public void copy()
         {

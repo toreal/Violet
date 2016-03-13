@@ -94,16 +94,16 @@ namespace violet
             // 
             // group1
             // 
-            this.group1.Items.Add(this.circle_btn);
+         /*   this.group1.Items.Add(this.circle_btn);
             this.group1.Items.Add(this.rectangle_btn);
             this.group1.Items.Add(this.line_btn);
             this.group1.Items.Add(this.Curve);
             this.group1.Label = "Shape";
-            this.group1.Name = "group1";
+            this.group1.Name = "group1";*/
             // 
             // circle_btn
             // 
-            this.circle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+          /*  this.circle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.circle_btn.Image = global::violet.Properties.Resources.circle;
             this.circle_btn.Label = "Circle";
             this.circle_btn.Name = "circle_btn";
@@ -137,10 +137,10 @@ namespace violet
             this.Curve.Name = "Curve";
             this.Curve.ShowImage = true;
             this.Curve.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Curve_Click);
-            // 
+            // */
             // Color
             // 
-            this.Color.Items.Add(this.red_btn);
+    /*        this.Color.Items.Add(this.red_btn);
             this.Color.Items.Add(this.orange_btn);
             this.Color.Items.Add(this.yellow_btn);
             this.Color.Items.Add(this.blue_btn);
@@ -150,7 +150,7 @@ namespace violet
             this.Color.Items.Add(this.gray);
             this.Color.Items.Add(this.white_btn);
             this.Color.Label = "Color";
-            this.Color.Name = "Color";
+            this.Color.Name = "Color";*/
             // 
             // red_btn
             // 
