@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ShapeLib.VShape;
 using System.Collections;
 using Microsoft.Office.Tools.Ribbon;
+using System.Drawing;
 
 namespace ShapeLib.VShape
 {
@@ -24,6 +25,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Red";
+            ui.image = new Bitmap(@"icons\red.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -77,7 +79,12 @@ namespace ShapeLib.VShape
             RibbonButton btn = sender as RibbonButton;
              if ( btn!= null)
              {
-                     switch(btn.Label)
+                 String txt = btn.Label;
+
+                 if (String.IsNullOrEmpty(txt))
+                     txt = btn.Name;
+
+                     switch(txt)
                      {
                          case "Red":
                              shapeLib.Data.colorR = 255;

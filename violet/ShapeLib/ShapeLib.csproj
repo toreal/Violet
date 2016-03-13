@@ -91,6 +91,9 @@
     <Content Include="icons\line.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="icons\red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="icons\triangle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

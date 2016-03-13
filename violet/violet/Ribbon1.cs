@@ -55,7 +55,12 @@ namespace violet
                     case shapeUIType.RibbonSmallButton:
                         RibbonButton uisobj = this.Factory.CreateRibbonButton();
                         uisobj.Click += (RibbonControlEventHandler)ui.click;
-                        uisobj.Label = ui.label;
+
+                        if (ui.image != null)
+                            uisobj.Name = ui.label;
+                        else
+                            uisobj.Label = ui.label;
+                        
                         uisobj.Image = ui.image;
                         uisobj.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeRegular;
 
