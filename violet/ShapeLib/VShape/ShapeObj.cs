@@ -43,7 +43,7 @@ namespace ShapeLib.VShape
     {
 
         gPath currPath;
-        int drawtype=0;
+        //int drawtype=0;
         System.Windows.Point p0, p1, p2, p3 = new System.Windows.Point(0, 0); //紀錄四個控制點使用
         //Line myLine;
         int xStart;
@@ -72,7 +72,7 @@ namespace ShapeLib.VShape
             //throw new NotImplementedException();
         }
 
-        void btn_Click(object sender, RibbonControlEventArgs e)
+        public void btn_Click(object sender, RibbonControlEventArgs e)
         {
 
             MouseOP(0);
@@ -144,7 +144,7 @@ namespace ShapeLib.VShape
         }
 
        
-        public void DrawShape(gView gv, gPath data , Boolean bfirst)
+        public virtual void DrawShape(gView gv, gPath data , Boolean bfirst)
         {
             if (bfirst)
             {
@@ -329,7 +329,7 @@ namespace ShapeLib.VShape
 
                 if (shapeLib.Data.drawtype <= 4 && shapeLib.Data.Status.Equals("rest"))
                 {
-                    currPath.drawtype = 0;//line,在shaplib 中的位置
+                    currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
                     shapeLib.Data.gdc.writeIn(currPath, 0);
                     shapeLib.Data.gdc.Release();
                 }
@@ -409,25 +409,25 @@ namespace ShapeLib.VShape
             currPath.state.colorG = shapeLib.Data.colorG;
             currPath.state.colorR = shapeLib.Data.colorR;
             currPath.state.strokeT = shapeLib.Data.strokeT;
-            currPath.drawtype = drawtype;
+            currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);
 
             if (shapeLib.Data.ru.Sel >= 0)
                 currPath.ListPlace = shapeLib.Data.ru.Sel;
             else
                 currPath.ListPlace = shapeLib.Data.gdc.sroot.PathList.Count;
 
-            if (drawtype <= 3)
+            if (currPath.drawtype <= 3)
             {
                 currPath.controlBtn1 = new System.Windows.Point(px, py);
                 currPath.controlBtn4 = new System.Windows.Point(ex, ey);
 
-                if (drawtype < 3)
+                if (currPath.drawtype < 3)
                 {
                     currPath.controlBtn2 = new System.Windows.Point(ex, py);
                     currPath.controlBtn3 = new System.Windows.Point(px, ey);
                 }
             }
-            if (drawtype == 4)
+            if (currPath.drawtype == 4)
             {
                 currPath.controlBtn1 = p0;
                 currPath.controlBtn2 = p1;

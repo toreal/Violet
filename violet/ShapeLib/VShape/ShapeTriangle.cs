@@ -23,7 +23,7 @@ namespace ShapeLib.VShape
 
             ui.image = new Bitmap(@"icons\triangle.png");
             ui.belong = "Shapes";
-            //      ui.click = this.btn_Click;
+            ui.click = this.btn_Click;
             ret.Add(ui);
 
             return ret;
