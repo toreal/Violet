@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ShapeLib.VShape.SVGRoot" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.GraphDoc" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAEAAAAAEAAIBEAABABAAAAAgAAIAAAQBBBAQI=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.gPath" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gACAAIAAQDAAMAAAAAQAAAAAAAAgAEAEAAgAAQAAAIA=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.RUse" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.gPoint" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.saveState" Collapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.checkHitDraw" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAIAAAAEAAAAAAAAABIAAEAAgAAA=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.gView" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\gView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.ShapeCircle" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\ShapeCircle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.ShapeCurve" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\ShapeCurve.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.shapeLib" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAEAIAAAAAAAAAABIAAAACAAAAAAQ=</HashCode>
+      <FileName>VShape\shapeLib.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.GModel" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIAQAgAEEBgBAAAoAAECAAAIAA2AAACAAQgAAIAABAI=</HashCode>
+      <FileName>VShape\shapeLib.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.shapeUI" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAgAAAAAFAAACAAAAAACAAAAAAA=</HashCode>
+      <FileName>VShape\ShapeObj.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.ShapeObj" Collapsed="true">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAIAAAAAARQAABISBABBAgCBAkEAAEAAoAAAAACAEAA=</HashCode>
+      <FileName>VShape\ShapeObj.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ShapeLib.VShape.ShapeRectangle" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>VShape\ShapeRectangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.ShapeTriangle" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\ShapeTriangle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeLib.VShape.Sproerty" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\Sproerty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ShapeLib.VShape.gPro" Collapsed="true">
+    <Position X="12" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\GraphDoc.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="ShapeLib.VShape.IDrawing" Collapsed="true">
+    <Position X="12" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>VShape\IDrawing.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ShapeLib.VShape.IForm" Collapsed="true">
+    <Position X="13.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
+      <FileName>VShape\IForm.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ShapeLib.VShape.IInsertOP" Collapsed="true">
+    <Position X="15.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAACAAAAAAAAAIAAAAAAAEAA=</HashCode>
+      <FileName>VShape\IInsertOP.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ShapeLib.VShape.IShapeUI" Collapsed="true">
+    <Position X="17.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAARAAAAACAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\IShapeUI.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ShapeLib.VShape.IUpdateOP" Collapsed="true">
+    <Position X="12" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABIAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>VShape\IUpdateOP.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ShapeLib.VShape.shapeUIType" Collapsed="true">
+    <Position X="12" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAEAAAAAAAAAEgAAAAAAA=</HashCode>
+      <FileName>VShape\ShapeObj.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="ShapeLib.VShape.getForm" Collapsed="true">
+    <Position X="12" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VShape\IForm.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Microsoft JhengHei UI" Size="9" />
+</ClassDiagram>
