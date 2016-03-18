@@ -34,6 +34,7 @@ namespace ShapeLib.VShape
 
 
 
+
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
             BezierSegment bezier ;
