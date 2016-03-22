@@ -278,17 +278,17 @@ namespace ShapeLib.VShape
             }
             shapeLib.Data.tempStart = shapeLib.Data.pStart;
             shapeLib.Data.bCanMove = true;
-            if (shapeLib.Data.drawtype == 5)
-            {
-                if (shapeLib.Data.gdc.selIndex < 0)
-                {
-                    shapeLib.Data.gdc.selIndex = shapeLib.Data.gdc.sroot.PathList.Count - 1;
-                }
-            }
-            else
-            {
-                shapeLib.Data.gdc.selIndex = -1;
-            }
+            //if (shapeLib.Data.drawtype == 5)
+            //{
+            //    if (shapeLib.Data.gdc.selIndex < 0)
+            //    {
+            //        shapeLib.Data.gdc.selIndex = shapeLib.Data.gdc.sroot.PathList.Count - 1;
+            //    }
+            //}
+            //else
+            //{
+            //    shapeLib.Data.gdc.selIndex = -1;
+            //}
 
            // throw new NotImplementedException();
         }
@@ -315,7 +315,7 @@ namespace ShapeLib.VShape
 
                     shapeLib.Data.mClick++;
 
-                    if (this.GetType() == typeof(ShapeCurve) && shapeLib.Data.mClick == 3)
+                    if (this.GetType() == typeof(ShapeCurve) && shapeLib.Data.mClick >= 3)
                     {
                         currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
                         shapeLib.Data.gdc.writeIn(currPath, 0);
@@ -334,25 +334,28 @@ namespace ShapeLib.VShape
                     shapeLib.Data.multiSelList.Clear(); 
                     return;
                 }
-                    
-                if (shapeLib.Data.drawtype != 3 && ex < px)
+                if (this.GetType() == typeof(ShapeRectangle))
                 {
-                    tempX = ex;
-                    ex = px;
-                    px = tempX;
+                    if (shapeLib.Data.drawtype != 3 && ex < px)
+                    {
+                        tempX = ex;
+                        ex = px;
+                        px = tempX;
+                    }
+                    if (shapeLib.Data.drawtype != 3 && ey < py)
+                    {
+                        tempY = ey;
+                        ey = py;
+                        py = tempY;
+                    }
                 }
-                if (shapeLib.Data.drawtype != 3 && ey < py)
-                {
-                    tempY = ey;
-                    ey = py;
-                    py = tempY;
-                }
-
                 remGPath(px, py, ex, ey);
 
                 if (  this.GetType() == typeof(ShapeCurve) )
                 {
                     shapeLib.Data.mClick++;
+                    if (shapeLib.Data.mClick >= 3)
+                        shapeLib.Data.mClick = 0;
                     
                 }
                     // || shapeLib.Data.mClick >=2 )
@@ -377,7 +380,7 @@ namespace ShapeLib.VShape
 
             if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
             {
-                if (!shapeLib.Data.bhave) //if you can control an object
+             //   if (!shapeLib.Data.bhave) //if you can control an object
                 {
                     shapeLib.Data.pEnd = correctPoint(e.GetPosition(mygrid));
                     double tempX, tempY;
@@ -385,19 +388,24 @@ namespace ShapeLib.VShape
                     double py = shapeLib.Data.pStart.Y;
                     double ex = shapeLib.Data.pEnd.X;
                     double ey = shapeLib.Data.pEnd.Y;
-                    if (shapeLib.Data.drawtype < 3 && ex < px)
-                    {
-                        tempX = ex;
-                        ex = px;
-                        px = tempX;
-                    }
-                    if (shapeLib.Data.drawtype < 3 && ey < py)
-                    {
-                        tempY = ey;
-                        ey = py;
-                        py = tempY;
-                    }
 
+                    
+
+                    if (this.GetType() == typeof(ShapeRectangle))
+                    {
+                        if (ex < px)
+                        {
+                            tempX = ex;
+                            ex = px;
+                            px = tempX;
+                        }
+                        if ( ey < py)
+                        {
+                            tempY = ey;
+                            ey = py;
+                            py = tempY;
+                        }
+                    }
                     remGPath(px, py, ex, ey);
                      //xStart=(int)px;
                      //yStart = (int)py;
@@ -458,10 +466,10 @@ namespace ShapeLib.VShape
 
                         break;
                     case 1:
-                        currPath.controlBtn2 = new System.Windows.Point(px, py);
+                        currPath.controlBtn2 = new System.Windows.Point(ex, ey);
                         break;
                     case 2:
-                        currPath.controlBtn3 = new System.Windows.Point(px, py);
+                        currPath.controlBtn3 = new System.Windows.Point(ex, ey);
                         
                         break;
 
@@ -472,7 +480,7 @@ namespace ShapeLib.VShape
                 Debug.WriteLine(currPath.controlBtn2);
                 Debug.WriteLine(currPath.controlBtn3);
                 Debug.WriteLine(currPath.controlBtn4);
-                Debug.WriteLine("_______________________");
+                Debug.WriteLine(px.ToString()+","+py.ToString()+"_______________________" + shapeLib.Data.mClick.ToString());
             }
             else
             {

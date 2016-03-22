@@ -52,21 +52,6 @@ namespace violet
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
-            this.group1 = this.Factory.CreateRibbonGroup();
-            this.circle_btn = this.Factory.CreateRibbonButton();
-            this.rectangle_btn = this.Factory.CreateRibbonButton();
-            this.line_btn = this.Factory.CreateRibbonButton();
-            this.Curve = this.Factory.CreateRibbonButton();
-            this.Color = this.Factory.CreateRibbonGroup();
-            this.red_btn = this.Factory.CreateRibbonButton();
-            this.orange_btn = this.Factory.CreateRibbonButton();
-            this.yellow_btn = this.Factory.CreateRibbonButton();
-            this.blue_btn = this.Factory.CreateRibbonButton();
-            this.violet = this.Factory.CreateRibbonButton();
-            this.green_btn = this.Factory.CreateRibbonButton();
-            this.black_btn = this.Factory.CreateRibbonButton();
-            this.gray = this.Factory.CreateRibbonButton();
-            this.white_btn = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.selBtn = this.Factory.CreateRibbonButton();
             this.StrokeThickness = this.Factory.CreateRibbonMenu();
@@ -78,151 +63,28 @@ namespace violet
             this.button1 = this.Factory.CreateRibbonButton();
             this.Undo = this.Factory.CreateRibbonButton();
             this.redo = this.Factory.CreateRibbonButton();
+            this.circle_btn = this.Factory.CreateRibbonButton();
+            this.rectangle_btn = this.Factory.CreateRibbonButton();
+            this.line_btn = this.Factory.CreateRibbonButton();
+            this.Curve = this.Factory.CreateRibbonButton();
+            this.red_btn = this.Factory.CreateRibbonButton();
+            this.orange_btn = this.Factory.CreateRibbonButton();
+            this.yellow_btn = this.Factory.CreateRibbonButton();
+            this.blue_btn = this.Factory.CreateRibbonButton();
+            this.violet = this.Factory.CreateRibbonButton();
+            this.green_btn = this.Factory.CreateRibbonButton();
+            this.black_btn = this.Factory.CreateRibbonButton();
+            this.gray = this.Factory.CreateRibbonButton();
+            this.white_btn = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
-            this.group1.SuspendLayout();
-            this.Color.SuspendLayout();
             this.group2.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
-            this.tab1.Groups.Add(this.group1);
-            this.tab1.Groups.Add(this.Color);
             this.tab1.Groups.Add(this.group2);
             this.tab1.Label = "Violet";
             this.tab1.Name = "tab1";
-            // 
-            // group1
-            // 
-         /*   this.group1.Items.Add(this.circle_btn);
-            this.group1.Items.Add(this.rectangle_btn);
-            this.group1.Items.Add(this.line_btn);
-            this.group1.Items.Add(this.Curve);
-            this.group1.Label = "Shape";
-            this.group1.Name = "group1";*/
-            // 
-            // circle_btn
-            // 
-          /*  this.circle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.circle_btn.Image = global::violet.Properties.Resources.circle;
-            this.circle_btn.Label = "Circle";
-            this.circle_btn.Name = "circle_btn";
-            this.circle_btn.ShowImage = true;
-            this.circle_btn.Tag = "";
-            this.circle_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.circle_btn_Click);
-            // 
-            // rectangle_btn
-            // 
-            this.rectangle_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.rectangle_btn.Image = global::violet.Properties.Resources.rectangle;
-            this.rectangle_btn.Label = "Rectangle";
-            this.rectangle_btn.Name = "rectangle_btn";
-            this.rectangle_btn.ShowImage = true;
-            this.rectangle_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.rectangle_btn_Click);
-            // 
-            // line_btn
-            // 
-            this.line_btn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.line_btn.Image = global::violet.Properties.Resources.line;
-            this.line_btn.Label = "Line";
-            this.line_btn.Name = "line_btn";
-            this.line_btn.ShowImage = true;
-            this.line_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.line_btn_Click);
-            // 
-            // Curve
-            // 
-            this.Curve.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.Curve.Image = global::violet.Properties.Resources.curve;
-            this.Curve.Label = "Curve";
-            this.Curve.Name = "Curve";
-            this.Curve.ShowImage = true;
-            this.Curve.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Curve_Click);
-            // */
-            // Color
-            // 
-    /*        this.Color.Items.Add(this.red_btn);
-            this.Color.Items.Add(this.orange_btn);
-            this.Color.Items.Add(this.yellow_btn);
-            this.Color.Items.Add(this.blue_btn);
-            this.Color.Items.Add(this.violet);
-            this.Color.Items.Add(this.green_btn);
-            this.Color.Items.Add(this.black_btn);
-            this.Color.Items.Add(this.gray);
-            this.Color.Items.Add(this.white_btn);
-            this.Color.Label = "Color";
-            this.Color.Name = "Color";*/
-            // 
-            // red_btn
-            // 
-            this.red_btn.Image = global::violet.Properties.Resources.red;
-            this.red_btn.Label = " ";
-            this.red_btn.Name = "red_btn";
-            this.red_btn.ShowImage = true;
-            this.red_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.red_btn_Click);
-            // 
-            // orange_btn
-            // 
-            this.orange_btn.Image = global::violet.Properties.Resources.orange;
-            this.orange_btn.Label = " ";
-            this.orange_btn.Name = "orange_btn";
-            this.orange_btn.ShowImage = true;
-            this.orange_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
-            // 
-            // yellow_btn
-            // 
-            this.yellow_btn.Image = global::violet.Properties.Resources.yellow1;
-            this.yellow_btn.Label = " ";
-            this.yellow_btn.Name = "yellow_btn";
-            this.yellow_btn.ShowImage = true;
-            this.yellow_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.yellow_btn_Click);
-            // 
-            // blue_btn
-            // 
-            this.blue_btn.Image = global::violet.Properties.Resources.blue;
-            this.blue_btn.Label = " ";
-            this.blue_btn.Name = "blue_btn";
-            this.blue_btn.ShowImage = true;
-            this.blue_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.blue_btn_Click);
-            // 
-            // violet
-            // 
-            this.violet.Image = ((System.Drawing.Image)(resources.GetObject("violet.Image")));
-            this.violet.Label = " ";
-            this.violet.Name = "violet";
-            this.violet.ShowImage = true;
-            this.violet.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.violet_Click);
-            // 
-            // green_btn
-            // 
-            this.green_btn.Image = global::violet.Properties.Resources.green;
-            this.green_btn.Label = " ";
-            this.green_btn.Name = "green_btn";
-            this.green_btn.ShowImage = true;
-            this.green_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.green_btn_Click);
-            // 
-            // black_btn
-            // 
-            this.black_btn.Image = global::violet.Properties.Resources.black;
-            this.black_btn.Label = " ";
-            this.black_btn.Name = "black_btn";
-            this.black_btn.ShowImage = true;
-            this.black_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.black_btn_Click);
-            // 
-            // gray
-            // 
-            this.gray.Image = ((System.Drawing.Image)(resources.GetObject("gray.Image")));
-            this.gray.Label = " ";
-            this.gray.Name = "gray";
-            this.gray.ShowImage = true;
-            this.gray.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.gray_Click);
-            // 
-            // white_btn
-            // 
-            this.white_btn.Image = global::violet.Properties.Resources.white1;
-            this.white_btn.Label = " ";
-            this.white_btn.Name = "white_btn";
-            this.white_btn.ShowImage = true;
-            this.white_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.white_btn_Click);
             // 
             // group2
             // 
@@ -324,6 +186,98 @@ namespace violet
             this.redo.ShowImage = true;
             this.redo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.redo_Click);
             // 
+            // circle_btn
+            // 
+            this.circle_btn.Label = "";
+            this.circle_btn.Name = "circle_btn";
+            // 
+            // rectangle_btn
+            // 
+            this.rectangle_btn.Label = "";
+            this.rectangle_btn.Name = "rectangle_btn";
+            // 
+            // line_btn
+            // 
+            this.line_btn.Label = "";
+            this.line_btn.Name = "line_btn";
+            // 
+            // Curve
+            // 
+            this.Curve.Label = "";
+            this.Curve.Name = "Curve";
+            // 
+            // red_btn
+            // 
+            this.red_btn.Image = global::violet.Properties.Resources.red;
+            this.red_btn.Label = " ";
+            this.red_btn.Name = "red_btn";
+            this.red_btn.ShowImage = true;
+            this.red_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.red_btn_Click);
+            // 
+            // orange_btn
+            // 
+            this.orange_btn.Image = global::violet.Properties.Resources.orange;
+            this.orange_btn.Label = " ";
+            this.orange_btn.Name = "orange_btn";
+            this.orange_btn.ShowImage = true;
+            this.orange_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
+            // 
+            // yellow_btn
+            // 
+            this.yellow_btn.Image = global::violet.Properties.Resources.yellow1;
+            this.yellow_btn.Label = " ";
+            this.yellow_btn.Name = "yellow_btn";
+            this.yellow_btn.ShowImage = true;
+            this.yellow_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.yellow_btn_Click);
+            // 
+            // blue_btn
+            // 
+            this.blue_btn.Image = global::violet.Properties.Resources.blue;
+            this.blue_btn.Label = " ";
+            this.blue_btn.Name = "blue_btn";
+            this.blue_btn.ShowImage = true;
+            this.blue_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.blue_btn_Click);
+            // 
+            // violet
+            // 
+            this.violet.Image = ((System.Drawing.Image)(resources.GetObject("violet.Image")));
+            this.violet.Label = " ";
+            this.violet.Name = "violet";
+            this.violet.ShowImage = true;
+            this.violet.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.violet_Click);
+            // 
+            // green_btn
+            // 
+            this.green_btn.Image = global::violet.Properties.Resources.green;
+            this.green_btn.Label = " ";
+            this.green_btn.Name = "green_btn";
+            this.green_btn.ShowImage = true;
+            this.green_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.green_btn_Click);
+            // 
+            // black_btn
+            // 
+            this.black_btn.Image = global::violet.Properties.Resources.black;
+            this.black_btn.Label = " ";
+            this.black_btn.Name = "black_btn";
+            this.black_btn.ShowImage = true;
+            this.black_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.black_btn_Click);
+            // 
+            // gray
+            // 
+            this.gray.Image = ((System.Drawing.Image)(resources.GetObject("gray.Image")));
+            this.gray.Label = " ";
+            this.gray.Name = "gray";
+            this.gray.ShowImage = true;
+            this.gray.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.gray_Click);
+            // 
+            // white_btn
+            // 
+            this.white_btn.Image = global::violet.Properties.Resources.white1;
+            this.white_btn.Label = " ";
+            this.white_btn.Name = "white_btn";
+            this.white_btn.ShowImage = true;
+            this.white_btn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.white_btn_Click);
+            // 
             // Ribbon1
             // 
             this.Name = "Ribbon1";
@@ -332,10 +286,6 @@ namespace violet
             this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.Ribbon1_Load);
             this.tab1.ResumeLayout(false);
             this.tab1.PerformLayout();
-            this.group1.ResumeLayout(false);
-            this.group1.PerformLayout();
-            this.Color.ResumeLayout(false);
-            this.Color.PerformLayout();
             this.group2.ResumeLayout(false);
             this.group2.PerformLayout();
 
@@ -344,7 +294,6 @@ namespace violet
         #endregion
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton circle_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton rectangle_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton line_btn;
@@ -352,7 +301,6 @@ namespace violet
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton bgp;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton Curve;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup Color;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton red_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton orange_btn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton yellow_btn;
