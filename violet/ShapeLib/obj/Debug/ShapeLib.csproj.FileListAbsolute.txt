@@ -15,3 +15,4 @@ D:\violet\Violet\violet\ShapeLib\bin\Debug\ShapeLib.dll
 D:\violet\Violet\violet\ShapeLib\bin\Debug\ShapeLib.pdb
 D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.dll
 D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.pdb
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.csprojResolveAssemblyReference.cache

@@ -349,6 +349,21 @@ namespace ShapeLib.VShape
                         py = tempY;
                     }
                 }
+                if (this.GetType() == typeof(ShapeTriangle))
+                {
+                    if (shapeLib.Data.drawtype != 3 && ex < px)
+                    {
+                        tempX = ex;
+                        ex = px;
+                        px = tempX;
+                    }
+                    if (shapeLib.Data.drawtype != 3 && ey < py)
+                    {
+                        tempY = ey;
+                        ey = py;
+                        py = tempY;
+                    }
+                }
                 remGPath(px, py, ex, ey);
 
                 if (  this.GetType() == typeof(ShapeCurve) )
@@ -400,6 +415,21 @@ namespace ShapeLib.VShape
                             px = tempX;
                         }
                         if ( ey < py)
+                        {
+                            tempY = ey;
+                            ey = py;
+                            py = tempY;
+                        }
+                    }
+                    if (this.GetType() == typeof(ShapeTriangle))
+                    {
+                        if (ex < px)
+                        {
+                            tempX = ex;
+                            ex = px;
+                            px = tempX;
+                        }
+                        if (ey < py)
                         {
                             tempY = ey;
                             ey = py;

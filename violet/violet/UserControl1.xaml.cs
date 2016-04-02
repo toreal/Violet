@@ -70,8 +70,10 @@ namespace violet
         Ellipse myEllipse; //紀錄橢圓形
         Rectangle myRect, cornerRect, sideRect;
         Line myLine, controlLine; //紀錄直線、控制後的直線
+        Polygon myTri;
         System.Windows.Shapes.Path myPath = new System.Windows.Shapes.Path(); //紀錄曲線
         System.Windows.Shapes.Path controlPath = new System.Windows.Shapes.Path(); //紀錄控制後的曲線
+
 
         bool bfirst = true; //是否為繪製新圖形
         bool bCanMove = false; //繪製時,滑鼠是否可以移動
@@ -243,6 +245,33 @@ namespace violet
                 myRect.Margin = new Thickness(xStart, yStart, 0, 0);
             }
         }
+        //繪製三角形
+        void drawTri(int xStart, int yStart, int xEnd, int yEnd, byte bfill)
+        {
+            if (bfirst)
+            {
+                Status = "rest";
+                bfirst = false;
+                myTri = new Polygon();
+
+                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                mySolidColorBrush.Color = Color.FromArgb(bfill, colorR, colorG, colorB);
+                myTri.Fill = mySolidColorBrush;
+                myTri.StrokeThickness = strokeT;
+                myTri.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+                myTri.Width = Math.Abs(xEnd - xStart);
+                myTri.Height = Math.Abs(yEnd - yStart);
+                myTri.Margin = new Thickness(xStart, yStart, 0, 0);
+
+                mygrid.Children.Add(myTri);
+            }
+            else
+            {
+                myTri.Width = Math.Abs(xEnd - xStart);
+                myTri.Height = Math.Abs(yEnd - yStart);
+               myTri.Margin = new Thickness(xStart, yStart, 0, 0);
+            }
+        }
         //繪製橢圓
         void drawEllipse(int xStart, int yStart, int xEnd, int yEnd)
         {
@@ -279,7 +308,7 @@ namespace violet
                 myEllipse.Margin = new Thickness(xStart, yStart, 0, 0);
             }
         }
-
+       
         //刷新畫面時 用來重繪圖形
         //private void drawGPath(gPath gpath)
         //{
