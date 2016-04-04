@@ -78,7 +78,7 @@ namespace ShapeLib.VShape
                 Points.Insert(1, data.controlBtn3);
                 Points.Add(data.controlBtn4);
                 myTri.Points = new PointCollection(Points);
-              //myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+             // myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
                 
             }
 
