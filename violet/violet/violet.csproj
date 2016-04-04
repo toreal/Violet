@@ -264,6 +264,7 @@
     </Compile>
     <AppDesigner Include="Properties\" />
     <None Include="violet.pfx" />
+    <None Include="violet_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UserControl1.xaml">
@@ -389,16 +390,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>violet.pfx</ManifestKeyFile>
+    <ManifestKeyFile>violet_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1A8C9EEB61AB0408AFD6B3A74FA97DE627983727</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E2E717DE71256108E0DB54C2F606EFD0E9DE6A9B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>violet.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>violet_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
