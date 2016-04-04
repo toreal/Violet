@@ -67,7 +67,6 @@ namespace ShapeLib.VShape
                 myRect.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
                 myRect.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
                 myRect.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
-
                 myRect.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                 myRect.VerticalAlignment = VerticalAlignment.Center;
                 myRect.StrokeThickness = shapeLib.Data.strokeT;
