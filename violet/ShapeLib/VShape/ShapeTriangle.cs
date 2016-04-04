@@ -57,9 +57,9 @@ namespace ShapeLib.VShape
                 PointCollection Points = new PointCollection();
                 Points.Insert(0,data.controlBtn1);
                 Points.Insert(1, data.controlBtn2);
-                Points.Add(data.controlBtn4);
+                Points.Insert(2,data.controlBtn4);
                 myTri.Points = new PointCollection(Points);
-                myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+                //myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
                 myTri.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                 myTri.VerticalAlignment = VerticalAlignment.Center;
                 myTri.StrokeThickness = shapeLib.Data.strokeT;
@@ -79,9 +79,9 @@ namespace ShapeLib.VShape
                 PointCollection Points = new PointCollection();
                 Points.Insert(0, data.controlBtn1);
                 Points.Insert(1, data.controlBtn2);
-                Points.Add(data.controlBtn4);
+                Points.Insert(2, data.controlBtn4);
                 myTri.Points = new PointCollection(Points);
-                myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+                //myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
                 
             }
 
