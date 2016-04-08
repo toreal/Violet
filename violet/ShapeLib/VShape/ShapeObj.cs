@@ -349,7 +349,7 @@ namespace ShapeLib.VShape
                         py = tempY;
                     }
                 }
-                if (this.GetType() == typeof(ShapeTriangle))
+                if (this.GetType() == typeof(ShaperightTriangle))
                 {
                     if (shapeLib.Data.drawtype != 3 && ex < px)
                     {
@@ -421,7 +421,7 @@ namespace ShapeLib.VShape
                             py = tempY;
                         }
                     }
-                    if (this.GetType() == typeof(ShapeTriangle))
+                    if (this.GetType() == typeof(ShaperightTriangle))
                     {
                         if (ex < px)
                         {

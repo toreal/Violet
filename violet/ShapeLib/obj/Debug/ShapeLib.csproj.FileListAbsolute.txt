@@ -17,3 +17,4 @@ D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.dll
 D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.pdb
 D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.csprojResolveAssemblyReference.cache
 D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\arrow.png
+D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\right-triangle.png

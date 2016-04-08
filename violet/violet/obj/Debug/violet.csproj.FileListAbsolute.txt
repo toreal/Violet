@@ -31,3 +31,4 @@ D:\violet\Violet\violet\violet\obj\Debug\violet.csproj.GenerateResource.Cache
 D:\violet\Violet\violet\violet\obj\Debug\Violet.dll
 D:\violet\Violet\violet\violet\obj\Debug\Violet.pdb
 D:\violet\Violet\violet\violet\bin\Debug\icons\arrow.png
+D:\violet\Violet\violet\violet\bin\Debug\icons\right-triangle.png
