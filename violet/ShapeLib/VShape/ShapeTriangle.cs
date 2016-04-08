@@ -52,9 +52,10 @@ namespace ShapeLib.VShape
                 //myTri.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
                 //myTri.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);              
                 PointCollection Points = new PointCollection();
-                Points.Insert(0,data.controlBtn1);
-                Points.Insert(1, data.controlBtn3);
                 Points.Add(data.controlBtn4);
+                Points.Add(data.controlBtn5);
+                Points.Add(data.controlBtn1);
+              
                 myTri.Points = new PointCollection(Points);
             //  myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
                 myTri.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
@@ -74,9 +75,10 @@ namespace ShapeLib.VShape
                 //myTri.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
                 //myTri.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
                 PointCollection Points = new PointCollection();
-                Points.Insert(0, data.controlBtn1);
-                Points.Insert(1, data.controlBtn3);
                 Points.Add(data.controlBtn4);
+                Points.Add(data.controlBtn5);
+                Points.Add(data.controlBtn1);
+                
                 myTri.Points = new PointCollection(Points);
              // myTri.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
 

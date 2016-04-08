@@ -349,20 +349,35 @@ namespace ShapeLib.VShape
                         py = tempY;
                     }
                 }
-                if (this.GetType() == typeof(ShaperightTriangle))
+                if (this.GetType() == typeof(ShapeCircle))
                 {
-                    if (shapeLib.Data.drawtype != 3 && ex < px)
+                    if (ex < px)
                     {
                         tempX = ex;
                         ex = px;
                         px = tempX;
                     }
-                    if (shapeLib.Data.drawtype != 3 && ey < py)
+                    if (ey < py)
                     {
                         tempY = ey;
                         ey = py;
                         py = tempY;
                     }
+                }
+                if (this.GetType() == typeof(ShapeTriangle))
+                {
+                    if (ex < px)
+                    {
+                        tempX = ex;
+                        ex = px;
+                        px = tempX;
+                    }
+                  /*  if (ex > px)
+                    {
+                        tempX = ex;
+                        ex = px;
+                        px = tempX;
+                    }*/
                 }
                 remGPath(px, py, ex, ey);
 
@@ -421,7 +436,7 @@ namespace ShapeLib.VShape
                             py = tempY;
                         }
                     }
-                    if (this.GetType() == typeof(ShaperightTriangle))
+                    if (this.GetType() == typeof(ShapeCircle))
                     {
                         if (ex < px)
                         {
@@ -435,6 +450,21 @@ namespace ShapeLib.VShape
                             ey = py;
                             py = tempY;
                         }
+                    }
+                    if (this.GetType() == typeof(ShapeTriangle))
+                    {
+                        if (ex < px)
+                        {
+                            tempX = ex;
+                            ex = px;
+                            px = tempX;
+                        }
+                      /*  if (ex > px)
+                        {
+                            tempX = ex;
+                            ex = px;
+                            px = tempX;
+                        }*/
                     }
                     remGPath(px, py, ex, ey);
                      //xStart=(int)px;
@@ -518,6 +548,8 @@ namespace ShapeLib.VShape
                 currPath.controlBtn4 = new System.Windows.Point(ex, ey);
                 currPath.controlBtn2 = new System.Windows.Point(ex, py);
                 currPath.controlBtn3 = new System.Windows.Point(px, ey);
+                currPath.controlBtn5 = new System.Windows.Point(px-(ex-px), ey);
+                //currPath.controlBtn6 = new System.Windows.Point(px , ey);
 
 
             }

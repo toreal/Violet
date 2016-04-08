@@ -233,6 +233,8 @@ namespace ShapeLib.VShape
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
+        public System.Windows.Point controlBtn5;
+        public System.Windows.Point controlBtn6;
         bool _isSel;
 
         public bool isSel
