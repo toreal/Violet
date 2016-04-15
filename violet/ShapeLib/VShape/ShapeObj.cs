@@ -368,16 +368,16 @@ namespace ShapeLib.VShape
                 {
                     if (ex < px)
                     {
-                        tempX = ex;
-                        ex = px;
-                        px = tempX;
+                        tempX = px;
+                        px = ex;
+                        ex = tempX;
                     }
-                  /*  if (ex > px)
+                   if (ex > px)
                     {
                         tempX = ex;
                         ex = px;
-                        px = tempX;
-                    }*/
+                        ex = tempX;
+                    }
                 }
                 remGPath(px, py, ex, ey);
 
@@ -455,16 +455,16 @@ namespace ShapeLib.VShape
                     {
                         if (ex < px)
                         {
-                            tempX = ex;
-                            ex = px;
-                            px = tempX;
+                            tempX = px;
+                            px = ex;
+                            ex = tempX;
                         }
-                      /*  if (ex > px)
+                        if (ex > px)
                         {
                             tempX = ex;
                             ex = px;
-                            px = tempX;
-                        }*/
+                            ex = tempX;
+                        }
                     }
                     remGPath(px, py, ex, ey);
                      //xStart=(int)px;
@@ -548,8 +548,7 @@ namespace ShapeLib.VShape
                 currPath.controlBtn4 = new System.Windows.Point(ex, ey);
                 currPath.controlBtn2 = new System.Windows.Point(ex, py);
                 currPath.controlBtn3 = new System.Windows.Point(px, ey);
-                currPath.controlBtn5 = new System.Windows.Point(px-(ex-px), ey);
-                //currPath.controlBtn6 = new System.Windows.Point(px , ey);
+              
 
 
             }
