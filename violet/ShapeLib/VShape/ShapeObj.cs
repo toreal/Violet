@@ -54,7 +54,7 @@ namespace ShapeLib.VShape
 
         public virtual System.Collections.ArrayList getMenuItem()
         {
-           
+
             ArrayList ret = new ArrayList();
 
             shapeUI ui = new shapeUI();
@@ -70,9 +70,8 @@ namespace ShapeLib.VShape
             ret.Add(ui);
 
             return ret;
-            //throw new NotImplementedException();
-        }
-
+        }  
+        
         public void btn_Click(object sender, RibbonControlEventArgs e)
         {
 

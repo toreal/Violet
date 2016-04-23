@@ -20,3 +20,4 @@ D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\arrow.png
 D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\right-triangle.png
 D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\text.png
 D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\pencil.png
+D:\violet\Violet\violet\ShapeLib\bin\Debug\icons\eraser.png
