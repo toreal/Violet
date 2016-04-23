@@ -20,10 +20,10 @@ namespace ShapeLib.VShape
             ArrayList ret = new ArrayList();
 
             shapeUI ui = new shapeUI();
-            ui.label = "Arrow";
+            ui.label = "Text";
 
 
-            ui.image = new System.Drawing.Bitmap(@"icons\arrow.png");
+            ui.image = new System.Drawing.Bitmap(@"icons\A.png");
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);
