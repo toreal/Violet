@@ -80,7 +80,7 @@ namespace ShapeLib.VShape
             return ret;
         }
 
-         void btn_Click(object sender, RibbonControlEventArgs e)
+       new void btn_Click(object sender, RibbonControlEventArgs e)
         {
             RibbonButton btn = sender as RibbonButton;
              if ( btn!= null)

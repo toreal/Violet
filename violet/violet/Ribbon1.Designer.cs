@@ -21,8 +21,8 @@ namespace violet
 
             foreach (ShapeObj obj in ret)
             {
-             
-                Construt(obj );
+
+                Construt(obj);
 
 
             }

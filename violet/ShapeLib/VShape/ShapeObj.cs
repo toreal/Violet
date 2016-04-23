@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
+
 namespace ShapeLib.VShape
 {
 
@@ -143,8 +144,8 @@ namespace ShapeLib.VShape
             throw new NotImplementedException();
         }
 
-       
-        public virtual void DrawShape(gView gv, gPath data , Boolean bfirst)
+
+        public virtual void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
             if (bfirst)
             {

@@ -12,14 +12,18 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 
+
 namespace ShapeLib.VShape
 {
+    
     static public class shapeLib
     {
         /// <summary>
         /// define supported shape
         /// </summary>
         /// <returns></returns>
+        /// 
+        
         static public IList<ShapeObj> SupportedShape(getForm myview)
         {
             if (myview != null)
@@ -64,7 +68,7 @@ namespace ShapeLib.VShape
                 }
             }
         }
-
+        
         static int shiftPos =0;
         static public void paste()
         {
@@ -106,9 +110,11 @@ namespace ShapeLib.VShape
         public GraphDoc gdc = new GraphDoc();
         public Canvas mygrid;
         public Canvas myControl;
+        
         public checkHitDraw chd = new checkHitDraw();
         public RUse ru = new RUse();
         public gPoint gp;
+     //public System.Windows.Forms.Panel panel1;
      //   public gPath tempFPath;
         public byte colorR = 0;
         public byte colorG = 0;
