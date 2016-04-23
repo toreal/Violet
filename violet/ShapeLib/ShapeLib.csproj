@@ -59,7 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VShape\PencilEraser.cs" />
+    <Compile Include="VShape\eraser.cs" />
+    <Compile Include="VShape\ShapePencil.cs" />
     <Compile Include="VShape\ShapeArrow.cs" />
     <Compile Include="VShape\ShapeText.cs" />
     <Compile Include="VShape\ShapeTriangle.cs" />
