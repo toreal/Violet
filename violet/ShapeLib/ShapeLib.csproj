@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Doc\Design Issues.html" />
-    <Content Include="icons\A.png" />
+    <Content Include="icons\text.png" />
     <Content Include="icons\arrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
