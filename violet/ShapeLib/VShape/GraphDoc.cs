@@ -233,7 +233,7 @@ namespace ShapeLib.VShape
         public System.Windows.Point controlBtn2;
         public System.Windows.Point controlBtn3;
         public System.Windows.Point controlBtn4;
-
+        public String Text = "";
         bool _isSel;
 
         public bool isSel

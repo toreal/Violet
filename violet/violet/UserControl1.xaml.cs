@@ -650,7 +650,9 @@ namespace violet
         /*--------------  鍵盤事件  --------------*/
         private void UserControl_KeyDown(object sender, KeyEventArgs e) //鍵盤按鍵按下
         {
-            if (e.Key == Key.Delete)
+            shapeLib.InsertText(e.Key.ToString());
+          
+            /*if (e.Key == Key.Delete)
             {
                 foreach(gPath gp in shapeLib.Data.multiSelList)
                 {
@@ -660,7 +662,7 @@ namespace violet
                 }
                shapeLib.Data.multiSelList.Clear();
                 
-            }
+            }*/
 
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
