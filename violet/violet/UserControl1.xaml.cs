@@ -652,7 +652,7 @@ namespace violet
         {
             shapeLib.InsertText(e.Key.ToString());
           
-            /*if (e.Key == Key.Delete)
+            if (e.Key == Key.Delete)
             {
                 foreach(gPath gp in shapeLib.Data.multiSelList)
                 {
@@ -662,7 +662,7 @@ namespace violet
                 }
                shapeLib.Data.multiSelList.Clear();
                 
-            }*/
+            }
 
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {

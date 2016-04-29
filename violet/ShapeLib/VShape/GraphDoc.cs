@@ -278,7 +278,7 @@ namespace ShapeLib.VShape
             if (isSel)
             {
                 foreach (Shape sp in gv.baseShape)
-                    shapeLib.Data.mygrid.Children.Remove(sp);
+                shapeLib.Data.mygrid.Children.Remove(sp);
                 shapeLib.SupportedShape(null)[drawtype].DisplayControlPoints(gv, this);
                 
             }
