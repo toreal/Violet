@@ -37,26 +37,21 @@ namespace ShapeLib.VShape
         {
             if (bfirst)
             {
+                shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
                 Ellipse  myEllipse = new Ellipse();
-
                 // Create a SolidColorBrush with a red color to fill the 
                 // Ellipse with.
-                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-
-                // Describes the brush's color using RGB values. 
-                // Each value has a range of 0-255.
-                mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 255);
-                myEllipse.Fill = mySolidColorBrush;
-                myEllipse.StrokeThickness = data.state.strokeT;
+              
                 myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
-
                 // Set the width and height of the Ellipse.
-
                 myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
                 myEllipse.Height = Math.Abs(data.controlBtn4.Y- data.controlBtn1.Y);
                 myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
-
+                myEllipse.StrokeThickness = shapeLib.Data.strokeT;
+                myEllipse.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
+                myEllipse.MouseEnter += data.myLine_MouseEnter;
+                myEllipse.MouseLeave += data.myLine_MouseLeave; 
                 shapeLib.Data.mygrid.Children.Add(myEllipse);
                 gv.baseShape.Add(myEllipse);
             }
@@ -69,6 +64,35 @@ namespace ShapeLib.VShape
             }
         }
 
+        public override void DisplayControlPoints(gView gv, gPath data)
+        {
+            if (gv.controlShape.Count == 0)
+            {
+                Ellipse myEllipse = new Ellipse();                
+                myEllipse.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 123, 0));                    
+                // Set the width and height of the Ellipse.
+                myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
+                myEllipse.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
+                myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+     
+                myEllipse.StrokeThickness = shapeLib.Data.strokeT;
+                myEllipse.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
+                myEllipse.MouseEnter += data.myLine_MouseEnter;
+                myEllipse.MouseLeave += data.myLine_MouseLeave; 
+                shapeLib.Data.mygrid.Children.Add(myEllipse);
+                gv.controlShape.Add(myEllipse);
 
+            }
+
+            else
+            {
+
+                Ellipse myEllipse = (Ellipse)gv.controlShape[0];
+                myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
+                myEllipse.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
+                myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+            }
+
+        }
     }
 }

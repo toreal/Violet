@@ -184,7 +184,7 @@ namespace ShapeLib.VShape
 
 
 
-        public void DisplayControlPoints(gView gv, gPath data)
+        public virtual void DisplayControlPoints(gView gv, gPath data)
         {
             if ( gv.controlShape.Count ==0)
             {
