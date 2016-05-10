@@ -31,9 +31,16 @@ namespace ShapeLib.VShape
             return ret;
             //throw new NotImplementedException();
         }
+        public override void DrawShape(gView gv, gPath data, Boolean bfirst)
+        {
+            if (bfirst)
+            {
+                shapeLib.Data.Status = "rest";
+                shapeLib.Data.bfirst = false;
 
-
-
-
+                    
+               
+            }
+        }
     }
 }

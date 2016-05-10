@@ -33,14 +33,15 @@ namespace ShapeLib.VShape
             return ret;
         }
 
-        static public void initControl(Canvas grid ,Canvas control)
-        {
-            Data.mygrid = grid;
-            Data.myControl = control;
-        }
+        //static public void initControl(Canvas grid ,Canvas control)
+        //{
+        //    Data.mygrid = grid;
+        //    Data.myControl = control;
+        //}
 
         static public  GModel Data = new GModel();
         static IList<ShapeObj> ret = new[] { new ShapeObj(), new ShapeCircle(), new ShapeRectangle(), new ShapeCurve(), new ShapeTriangle(), new ShaperightTriangle(), new ShapeArrow(), new ShapeText(), new ShapePencil(), new eraser(), new Sproerty() };
+      
         static public void InsertText(String txt)
         {
             if (shapeLib.Data.currShape != null)
@@ -118,7 +119,8 @@ namespace ShapeLib.VShape
         public String colortype = "black";
         public GraphDoc gdc = new GraphDoc();
         public Canvas mygrid;
-        public Canvas myControl;
+        public System.Windows.Controls.UserControl Root;
+     //   public Canvas myControl;
         
         public checkHitDraw chd = new checkHitDraw();
         public RUse ru = new RUse();

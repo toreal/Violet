@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Controls;
 
 namespace violet
 {
@@ -21,8 +22,11 @@ namespace violet
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+         
 
         }
+
+      
         //繪製背景格線
         public void drawBackgroundLine(double Sop)
         {
@@ -79,6 +83,17 @@ namespace violet
         public System.Windows.Controls.Canvas drawControl
         {
             get { return userControl1.mygrid; }
+        }
+
+
+
+
+
+
+
+        public System.Windows.Controls.UserControl getRoot
+        {
+            get { return (System.Windows.Controls.UserControl) userControl1 ; }
         }
     }
 }

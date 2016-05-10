@@ -81,11 +81,15 @@ namespace ShapeLib.VShape
 
         public void MouseOP( int ntype)
         {
+            IForm f=null;
+
             if (shapeLib.Data.view != null)
             {
-                IForm f = shapeLib.Data.view();
+                 f = shapeLib.Data.view();
+           
                 f.Show();
                 shapeLib.Data.mygrid = f.drawControl;
+                shapeLib.Data.Root = f.getRoot;
             }
 
             if (shapeLib.Data.mygrid!= null)
@@ -101,6 +105,10 @@ namespace ShapeLib.VShape
                     shapeLib.Data.mygrid.MouseLeftButtonUp -= obj.MouseDownUpdate;
                     shapeLib.Data.mygrid.MouseMove -= obj.MouseMoveUpdate;
                     shapeLib.Data.mygrid.MouseLeftButtonDown -= obj.MouseUpUpdate;
+
+                    shapeLib.Data.Root .KeyDown-= obj.FormKeyDown;
+                    shapeLib.Data.Root.KeyDown += obj.FormKeyDown;
+                 
                 }
 
                 if ( ntype ==0)
@@ -575,7 +583,17 @@ namespace ShapeLib.VShape
 
 
 
-      
-      
+
+
+
+
+
+
+
+
+        public void FormKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+          //  throw new NotImplementedException();
+        }
     }
 }

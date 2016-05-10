@@ -38,7 +38,7 @@ namespace violet
             InitializeComponent();
             hiddenCanvas(); //一開始要將myControl畫布取消顯示
 
-            shapeLib.initControl(mygrid, myControl);
+       //     shapeLib.initControl(mygrid, myControl);
 
         }
         //初始設定
@@ -652,7 +652,7 @@ namespace violet
         {
             shapeLib.InsertText(e.Key.ToString());
           
-            if (e.Key == Key.Delete)
+           /* if (e.Key == Key.Delete)
             {
                 foreach(gPath gp in shapeLib.Data.multiSelList)
                 {
@@ -662,7 +662,7 @@ namespace violet
                 }
                shapeLib.Data.multiSelList.Clear();
                 
-            }
+            }*/
 
             if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
