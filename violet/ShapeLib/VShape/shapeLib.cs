@@ -42,7 +42,7 @@ namespace ShapeLib.VShape
         static public  GModel Data = new GModel();
         static IList<ShapeObj> ret = new[] { new ShapeObj(), new ShapeCircle(), new ShapeRectangle(), new ShapeCurve(), new ShapeTriangle(), new ShaperightTriangle(), new ShapeArrow(), new ShapeText(), new ShapePencil(), new eraser(), new Sproerty() };
       
-        static public void InsertText(String txt)
+      /* static public void InsertText(String txt)
         {
             if (shapeLib.Data.currShape != null)
             {
@@ -51,7 +51,7 @@ namespace ShapeLib.VShape
 
             }
 
-        }
+        }*/
         static public void copy()
         {
          //   gPath tp = new gPath();

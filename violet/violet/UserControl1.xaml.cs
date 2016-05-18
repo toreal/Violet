@@ -650,7 +650,7 @@ namespace violet
         /*--------------  鍵盤事件  --------------*/
         private void UserControl_KeyDown(object sender, KeyEventArgs e) //鍵盤按鍵按下
         {
-            shapeLib.InsertText(e.Key.ToString());
+          //  shapeLib.InsertText(e.Key.ToString());
           
            /* if (e.Key == Key.Delete)
             {

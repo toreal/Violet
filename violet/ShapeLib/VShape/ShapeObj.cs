@@ -581,19 +581,9 @@ namespace ShapeLib.VShape
             return temp;
         }
 
-
-
-
-
-
-
-
-
-
-
-        public void FormKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-          //  throw new NotImplementedException();
-        }
+public virtual void FormKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+{
+    //throw new NotImplementedException();
+}
     }
 }
