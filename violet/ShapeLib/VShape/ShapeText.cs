@@ -18,10 +18,10 @@ namespace ShapeLib.VShape
 
     public class ShapeText : ShapeObj
     {
-        
-        public String txt;
-        public System.Windows.Controls.TextBox textBox = new System.Windows.Controls.TextBox();
-        
+
+        String txt;
+        System.Windows.Controls.TextBox textBox = new System.Windows.Controls.TextBox();
+        double x, y;
         public override System.Collections.ArrayList getMenuItem()
         {
             ArrayList ret = new ArrayList();
@@ -41,51 +41,54 @@ namespace ShapeLib.VShape
         //    txt += e.Key.ToString();
 
         //}
-        public void textBox_KeyDown(object sender,System.Windows.Input.KeyEventArgs e)
+       
+        public void LeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                txt = textBox.Text;
-                //textBox.Visible = false;
-            }
-           
+            txt = textBox.Text;
+            TextBlock textBlock = new TextBlock();
+            textBlock.Height = textBox.Height;
+            textBlock.Width = textBox.Width;
+            Canvas.SetLeft(textBlock, x);
+            Canvas.SetTop(textBlock, y);
+            textBlock.Text = txt;
+            txt = null;
+            textBox.Text = null;
+            shapeLib.Data.mygrid.Children.Remove(textBox);
+            shapeLib.Data.mygrid.Children.Add(textBlock);
+
         }
+
+      
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
             if (bfirst)
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
-                if (txt == null) {
-                System.Windows.Controls.TextBox textBox = new System.Windows.Controls.TextBox();
-                textBox.Height = 25;
-                textBox.Width = 100;
-                textBox.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
-                Canvas.SetLeft(textBox, data.controlBtn1.X);
-                Canvas.SetTop(textBox, data.controlBtn1.Y);
-                shapeLib.Data.mygrid.Children.Add(textBox);
-                textBox.KeyUp += new System.Windows.Input.KeyEventHandler(textBox_KeyDown);
+                if (txt == null) { 
+                    x =data.controlBtn1.X;
+                    y = data.controlBtn1.Y;
+                    
+                    textBox.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
+                    Canvas.SetLeft(textBox, x);
+                    Canvas.SetTop(textBox, y);
+                    shapeLib.Data.mygrid.Children.Add(textBox);
+                    textBox.Focus();
+                    textBox.AcceptsReturn = true;
+                    textBox.AcceptsTab = true;
+                    txt = textBox.Text;
+                    shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
                 }
-                else {     
-                TextBlock textBlock = new TextBlock();
-                textBlock.Height = 50;
-                textBlock.Width = 200;
-                textBlock.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
-                Canvas.SetLeft(textBlock, data.controlBtn1.X);
-                Canvas.SetTop(textBlock, data.controlBtn1.Y+25);
-                textBlock.Text = txt;
-                shapeLib.Data.mygrid.Children.Add(textBlock);
-                txt = null;
-                } 
+                else
+                {
+                    textBox.Focus();
+                }
             }
-          
+           
+           
         }
-       
-       
-       
-       
-
     }
+   
 }
        
 
