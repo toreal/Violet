@@ -64,35 +64,6 @@ namespace ShapeLib.VShape
             }
         }
 
-        public override void DisplayControlPoints(gView gv, gPath data)
-        {
-            if (gv.controlShape.Count == 0)
-            {
-                Ellipse myEllipse = new Ellipse();                
-                myEllipse.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 123, 0));                    
-                // Set the width and height of the Ellipse.
-                myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
-                myEllipse.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
-                myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
-     
-                myEllipse.StrokeThickness = shapeLib.Data.strokeT;
-                myEllipse.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
-                myEllipse.MouseEnter += data.myLine_MouseEnter;
-                myEllipse.MouseLeave += data.myLine_MouseLeave; 
-                shapeLib.Data.mygrid.Children.Add(myEllipse);
-                gv.controlShape.Add(myEllipse);
-
-            }
-
-            else
-            {
-
-                Ellipse myEllipse = (Ellipse)gv.controlShape[0];
-                myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
-                myEllipse.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
-                myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
-            }
-
-        }
+        
     }
 }

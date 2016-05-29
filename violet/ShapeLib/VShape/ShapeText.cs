@@ -22,6 +22,7 @@ namespace ShapeLib.VShape
         String txt;
         System.Windows.Controls.TextBox textBox = new System.Windows.Controls.TextBox();
         double x, y;
+        byte r, g, b;
         public override System.Collections.ArrayList getMenuItem()
         {
             ArrayList ret = new ArrayList();
@@ -46,6 +47,7 @@ namespace ShapeLib.VShape
         {
             txt = textBox.Text;
             TextBlock textBlock = new TextBlock();
+            textBlock.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
             textBlock.Height = textBox.Height;
             textBlock.Width = textBox.Width;
             Canvas.SetLeft(textBlock, x);
@@ -53,9 +55,8 @@ namespace ShapeLib.VShape
             textBlock.Text = txt;
             txt = null;
             textBox.Text = null;
-            shapeLib.Data.mygrid.Children.Remove(textBox);
             shapeLib.Data.mygrid.Children.Add(textBlock);
-
+            shapeLib.Data.mygrid.Children.Remove(textBox);
         }
 
       
@@ -66,10 +67,12 @@ namespace ShapeLib.VShape
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
                 if (txt == null) { 
-                    x =data.controlBtn1.X;
+                    x = data.controlBtn1.X;
                     y = data.controlBtn1.Y;
-                    
-                    textBox.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
+                    r = data.state.colorR;
+                    g = data.state.colorG;
+                    b = data.state.colorB;
+                    textBox.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
                     Canvas.SetLeft(textBox, x);
                     Canvas.SetTop(textBox, y);
                     shapeLib.Data.mygrid.Children.Add(textBox);
