@@ -1,4 +1,3 @@
-C:\james\Violet\violet\ShapeLib\obj\Debug\ShapeLib.csprojResolveAssemblyReference.cache
 C:\james\Violet\violet\ShapeLib\bin\Debug\icons\eraser.png
 C:\james\Violet\violet\ShapeLib\bin\Debug\icons\pencil.png
 C:\james\Violet\violet\ShapeLib\bin\Debug\icons\text.png
