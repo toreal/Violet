@@ -35,12 +35,12 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>12.0</OldToolsVersion>
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
-    <IsWebBootstrapper>True</IsWebBootstrapper>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>C:\james\tmp2\</PublishUrl>
-    <InstallUrl>https://github.com/toreal/Violet/raw/master/</InstallUrl>
+    <InstallUrl />
     <TargetCulture>zh-cht</TargetCulture>
-    <ApplicationVersion>1.0.0.13</ApplicationVersion>
+    <ApplicationVersion>1.0.0.15</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
