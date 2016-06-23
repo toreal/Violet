@@ -37,8 +37,8 @@
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
     <IsWebBootstrapper>True</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\James\Violet\Violet\</PublishUrl>
-    <InstallUrl>https://github.com/toreal/Violet/</InstallUrl>
+    <PublishUrl>C:\james\tmp\</PublishUrl>
+    <InstallUrl>https://github.com/toreal/Violet/blob/master/</InstallUrl>
     <TargetCulture>zh-cht</TargetCulture>
     <ApplicationVersion>1.0.0.9</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
@@ -237,7 +237,6 @@
     </EmbeddedResource>
     <None Include="james.pfx" />
     <None Include="james.snk" />
-    <None Include="keago0403_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -264,7 +263,6 @@
     </Compile>
     <AppDesigner Include="Properties\" />
     <None Include="violet.pfx" />
-    <None Include="violet_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UserControl1.xaml">
@@ -390,16 +388,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>violet_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>james.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E2E717DE71256108E0DB54C2F606EFD0E9DE6A9B</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>ABD452958D16AB246301387CD78B1B77F445B970</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>violet_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>james.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
