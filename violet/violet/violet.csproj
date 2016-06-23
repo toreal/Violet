@@ -38,9 +38,9 @@
     <IsWebBootstrapper>True</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>C:\james\tmp\</PublishUrl>
-    <InstallUrl>https://github.com/toreal/Violet/blob/master/</InstallUrl>
+    <InstallUrl>https://github.com/toreal/Violet/raw/master/</InstallUrl>
     <TargetCulture>zh-cht</TargetCulture>
-    <ApplicationVersion>1.0.0.9</ApplicationVersion>
+    <ApplicationVersion>1.0.0.10</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
