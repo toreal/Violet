@@ -35,12 +35,12 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>12.0</OldToolsVersion>
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <IsWebBootstrapper>True</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\james\tmp2\</PublishUrl>
-    <InstallUrl />
+    <PublishUrl>C:\james\install\</PublishUrl>
+    <InstallUrl>https://github.com/toreal/Violet/raw/master/setup.exe/</InstallUrl>
     <TargetCulture>zh-cht</TargetCulture>
-    <ApplicationVersion>1.0.0.15</ApplicationVersion>
+    <ApplicationVersion>1.0.0.16</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
@@ -388,16 +388,17 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>james.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>ABD452958D16AB246301387CD78B1B77F445B970</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1A6F04993DD934E4796B3A58CF2643B58D2CABBE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>james.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>violet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
