@@ -38,9 +38,9 @@
     <IsWebBootstrapper>True</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>C:\james\install\</PublishUrl>
-    <InstallUrl>https://github.com/toreal/Violet/raw/master/setup.exe/</InstallUrl>
+    <InstallUrl>https://github.com/toreal/Violet/raw/master/</InstallUrl>
     <TargetCulture>zh-cht</TargetCulture>
-    <ApplicationVersion>1.0.0.16</ApplicationVersion>
+    <ApplicationVersion>1.0.0.17</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
