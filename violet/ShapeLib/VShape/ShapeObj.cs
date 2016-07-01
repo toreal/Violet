@@ -33,25 +33,25 @@ namespace ShapeLib.VShape
    //public  delegate void mouseClick(object sender, RibbonControlEventArgs e);
     public class shapeUI
     {
-        static string _codebase;
-        public String codebase { get {
-                if (String.IsNullOrEmpty(_codebase))
-                    _codebase = getcodebase();
-                return _codebase;
-            } }
+        //static string _codebase;
+        //public String codebase { get {
+        //        if (String.IsNullOrEmpty(_codebase))
+        //            _codebase = getcodebase();
+        //        return _codebase;
+        //    } }
 
-        string  getcodebase()
-        {
-            System.Reflection.Assembly assemblyInfo = System.Reflection.Assembly.GetExecutingAssembly();
+        //string  getcodebase()
+        //{
+        //    System.Reflection.Assembly assemblyInfo = System.Reflection.Assembly.GetExecutingAssembly();
 
-            string assemblyLocation = assemblyInfo.Location;
+        //    string assemblyLocation = assemblyInfo.Location;
 
 
-            Uri uriCodeBase = new Uri(assemblyInfo.CodeBase);
-            String ClickOnceLocation = System.IO.Path.GetDirectoryName(uriCodeBase.LocalPath.ToString());
-            return ClickOnceLocation+@"\";
+        //    Uri uriCodeBase = new Uri(assemblyInfo.CodeBase);
+        //    String ClickOnceLocation = System.IO.Path.GetDirectoryName(uriCodeBase.LocalPath.ToString());
+        //    return ClickOnceLocation+@"\";
 
-        }
+        //}
 
         public shapeUIType uitype;
         public System.Drawing.Image image;
@@ -85,7 +85,12 @@ namespace ShapeLib.VShape
 
             ui = new shapeUI();
             ui.label = "Line";
-            ui.image = new Bitmap(ui.codebase+@"icons\line.png");
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.IO.Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.line.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+
+            
             ui.click = this.btn_Click;
             ui.belong = "Shapes";
             ret.Add(ui);

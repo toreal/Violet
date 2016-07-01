@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,8 +19,12 @@ namespace ShapeLib.VShape
             shapeUI ui = new shapeUI();
             ui.label = "Eraser";
 
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.eraser.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
 
-            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\eraser.png");
+
+           
             ui.belong = "Tools";
             ui.click = this.btn_Click;
             ret.Add(ui);

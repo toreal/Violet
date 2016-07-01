@@ -33,8 +33,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>p2.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -60,6 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="VShape\eraser.cs" />
     <Compile Include="VShape\ShapePencil.cs" />
     <Compile Include="VShape\ShapeArrow.cs" />
@@ -84,65 +88,34 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="james.pfx" />
     <None Include="james.snk" />
+    <None Include="p2.pfx" />
     <None Include="packages.config" />
     <None Include="violet.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Doc\Design Issues.html" />
-    <Content Include="icons\eraser.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\pencil.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\text.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\arrow.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\black.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\blue.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\circle.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\curve.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\green.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\line.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\right-triangle.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\white1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\yellow.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\white.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\orange.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\red.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\triangle.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="icons\rectangle.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="icons\eraser.png" />
+    <EmbeddedResource Include="icons\pencil.png" />
+    <EmbeddedResource Include="icons\text.png" />
+    <EmbeddedResource Include="icons\arrow.png" />
+    <EmbeddedResource Include="icons\black.png" />
+    <EmbeddedResource Include="icons\blue.png" />
+    <EmbeddedResource Include="icons\circle.png" />
+    <EmbeddedResource Include="icons\curve.png" />
+    <EmbeddedResource Include="icons\green.png" />
+    <EmbeddedResource Include="icons\line.png" />
+    <EmbeddedResource Include="icons\right-triangle.png" />
+    <EmbeddedResource Include="icons\white1.png" />
+    <EmbeddedResource Include="icons\yellow.png" />
+    <EmbeddedResource Include="icons\white.png" />
+    <EmbeddedResource Include="icons\orange.png" />
+    <EmbeddedResource Include="icons\red.png" />
+    <EmbeddedResource Include="icons\triangle.png" />
+    <EmbeddedResource Include="icons\rectangle.png" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

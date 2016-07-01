@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,12 @@ namespace ShapeLib.VShape
 
             shapeUI ui = new shapeUI();
             ui.label = "Arrow";
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.arrow.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
 
 
-            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\arrow.png");
+            
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);

@@ -22,10 +22,19 @@ namespace ShapeLib.VShape
             ret.Add(ui);
 
 
+            
+
+
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Red";
-            ui.image = new Bitmap(ui.codebase+@"icons\red.png");
+
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.IO.Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.red.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+
+            
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -33,7 +42,12 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Green";
-            ui.image = new Bitmap(ui.codebase+@"icons\green.png");
+
+            myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.green.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+
+            
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -41,7 +55,10 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Blue";
-            ui.image = new Bitmap(ui.codebase+@"icons\blue.png");
+            myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.blue.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+            
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -49,7 +66,10 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Black";
-            ui.image = new Bitmap(ui.codebase+@"icons\black.png");
+            myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.black.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+            
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -57,7 +77,10 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "White";
-            ui.image = new Bitmap(ui.codebase+@"icons\white1.png");
+            myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.white1.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+            
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -65,7 +88,10 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Yellow";
-            ui.image = new Bitmap(ui.codebase+@"icons\yellow.png");
+            myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.yellow.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+            
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -73,7 +99,10 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Orange";
-            ui.image = new Bitmap(ui.codebase+@"icons\orange.png");
+            myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.orange.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+
+            
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);

@@ -22,8 +22,11 @@ namespace ShapeLib.VShape
             shapeUI ui = new shapeUI();
             ui.label = "Rectangle";
 
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.IO.Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.rectangle.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
 
-            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\rectangle.png");
+            
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);

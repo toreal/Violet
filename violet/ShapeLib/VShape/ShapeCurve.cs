@@ -22,8 +22,10 @@ namespace ShapeLib.VShape
             shapeUI ui = new shapeUI();
             ui.label = "Curve";
 
-
-            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\curve.png");
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.IO.Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.curve.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
+            
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);

@@ -1,6 +1,8 @@
 ﻿using ShapeLib.VShape;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace violet
 {
@@ -16,14 +18,21 @@ namespace violet
         {
             InitializeComponent();
 
-            //Check();
-            IList<ShapeObj> ret = shapeLib.SupportedShape(Check);
-
-            foreach (ShapeObj obj in ret)
+            try
             {
+                //Check();
+                IList<ShapeObj> ret = shapeLib.SupportedShape(Check);
 
-                Construt(obj);
+                foreach (ShapeObj obj in ret)
+                {
 
+                    Construt(obj);
+
+
+                }
+            }catch(Exception em)
+            {
+                MessageBox.Show(em.ToString());
 
             }
    

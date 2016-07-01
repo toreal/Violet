@@ -1,0 +1,6 @@
+C:\james\Violet\violet\ShapeLib\obj\Debug\ShapeLib.dll
+C:\james\Violet\violet\ShapeLib\obj\Debug\ShapeLib.pdb
+C:\james\Violet\violet\ShapeLib\bin\Debug\ShapeLib.dll
+C:\james\Violet\violet\ShapeLib\bin\Debug\ShapeLib.pdb
+C:\james\Violet\violet\ShapeLib\obj\Debug\ShapeLib.Properties.Resources.resources
+C:\james\Violet\violet\ShapeLib\obj\Debug\ShapeLib.csproj.GenerateResource.Cache

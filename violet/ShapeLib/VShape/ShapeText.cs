@@ -28,8 +28,11 @@ namespace ShapeLib.VShape
             ArrayList ret = new ArrayList();
             shapeUI ui = new shapeUI();
             ui.label = "Text";
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.IO.Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.text.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
 
-            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\text.png");
+            
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);

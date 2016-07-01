@@ -23,8 +23,12 @@ namespace ShapeLib.VShape
             shapeUI ui = new shapeUI();
             ui.label = "Right Triangle";
 
+            System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.IO.Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.right-triangle.png");
+            ui.image = new System.Drawing.Bitmap(myStream);
 
-            ui.image = new Bitmap(ui.codebase+@"icons\right-triangle.png");
+
+            
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);
