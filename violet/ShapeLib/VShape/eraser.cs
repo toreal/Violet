@@ -18,7 +18,7 @@ namespace ShapeLib.VShape
             ui.label = "Eraser";
 
 
-            ui.image = new System.Drawing.Bitmap(@"icons\eraser.png");
+            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\eraser.png");
             ui.belong = "Tools";
             ui.click = this.btn_Click;
             ret.Add(ui);

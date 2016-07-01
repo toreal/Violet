@@ -24,7 +24,7 @@ namespace ShapeLib.VShape
             ui.label = "Triangle";
 
 
-            ui.image = new Bitmap(@"icons\triangle.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\triangle.png");
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);

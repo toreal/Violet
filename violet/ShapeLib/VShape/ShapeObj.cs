@@ -33,6 +33,26 @@ namespace ShapeLib.VShape
    //public  delegate void mouseClick(object sender, RibbonControlEventArgs e);
     public class shapeUI
     {
+        static string _codebase;
+        public String codebase { get {
+                if (String.IsNullOrEmpty(_codebase))
+                    _codebase = getcodebase();
+                return _codebase;
+            } }
+
+        string  getcodebase()
+        {
+            System.Reflection.Assembly assemblyInfo = System.Reflection.Assembly.GetExecutingAssembly();
+
+            string assemblyLocation = assemblyInfo.Location;
+
+
+            Uri uriCodeBase = new Uri(assemblyInfo.CodeBase);
+            String ClickOnceLocation = System.IO.Path.GetDirectoryName(uriCodeBase.LocalPath.ToString());
+            return ClickOnceLocation+@"\";
+
+        }
+
         public shapeUIType uitype;
         public System.Drawing.Image image;
         public String label;
@@ -55,7 +75,7 @@ namespace ShapeLib.VShape
 
         public virtual System.Collections.ArrayList getMenuItem()
         {
-
+            
             ArrayList ret = new ArrayList();
 
             shapeUI ui = new shapeUI();
@@ -65,7 +85,7 @@ namespace ShapeLib.VShape
 
             ui = new shapeUI();
             ui.label = "Line";
-            ui.image = new Bitmap(@"icons\line.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\line.png");
             ui.click = this.btn_Click;
             ui.belong = "Shapes";
             ret.Add(ui);

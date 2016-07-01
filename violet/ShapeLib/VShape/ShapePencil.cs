@@ -27,7 +27,7 @@ namespace ShapeLib.VShape
             ret.Add(ui);
             shapeUI pui = new shapeUI();
             pui.label = "Pencil";
-            pui.image = new Bitmap(@"icons\pencil.png");
+            pui.image = new Bitmap(pui.codebase+@"icons\pencil.png");
             pui.click = btn_Click;
             pui.belong = "Tools";
             ret.Add(pui);
