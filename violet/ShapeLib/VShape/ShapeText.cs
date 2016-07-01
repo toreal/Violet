@@ -29,7 +29,7 @@ namespace ShapeLib.VShape
             shapeUI ui = new shapeUI();
             ui.label = "Text";
 
-            ui.image = new System.Drawing.Bitmap(@"icons\text.png");
+            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\text.png");
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);

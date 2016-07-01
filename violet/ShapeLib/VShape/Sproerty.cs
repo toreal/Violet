@@ -25,7 +25,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Red";
-            ui.image = new Bitmap(@"icons\red.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\red.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -33,7 +33,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Green";
-            ui.image = new Bitmap(@"icons\green.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\green.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -41,7 +41,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Blue";
-            ui.image = new Bitmap(@"icons\blue.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\blue.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -49,7 +49,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Black";
-            ui.image = new Bitmap(@"icons\black.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\black.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -57,7 +57,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "White";
-            ui.image = new Bitmap(@"icons\white1.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\white1.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -65,7 +65,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Yellow";
-            ui.image = new Bitmap(@"icons\yellow.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\yellow.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);
@@ -73,7 +73,7 @@ namespace ShapeLib.VShape
             ui = new shapeUI();
             ui.uitype = shapeUIType.RibbonSmallButton;
             ui.label = "Orange";
-            ui.image = new Bitmap(@"icons\orange.png");
+            ui.image = new Bitmap(ui.codebase+@"icons\orange.png");
             ui.click = btn_Click;
             ui.belong = "Colors";
             ret.Add(ui);

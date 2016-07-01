@@ -23,7 +23,7 @@ namespace ShapeLib.VShape
             ui.label = "Arrow";
 
 
-            ui.image = new System.Drawing.Bitmap(@"icons\arrow.png");
+            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\arrow.png");
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);

@@ -23,7 +23,7 @@ namespace ShapeLib.VShape
             ui.label = "Curve";
 
 
-            ui.image = new System.Drawing.Bitmap(@"icons\curve.png");
+            ui.image = new System.Drawing.Bitmap(ui.codebase+@"icons\curve.png");
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);
