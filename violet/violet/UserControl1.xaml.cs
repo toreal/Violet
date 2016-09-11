@@ -1211,16 +1211,16 @@ namespace violet
             switch (stroketype)
             {
                 case 1:
-                    strokeT = 1;
+                   shapeLib.Data.strokeT = 1;
                     break;
                 case 3:
-                    strokeT = 3;
+                    shapeLib.Data.strokeT = 3;
                     break;
                 case 5:
-                    strokeT = 5;
+                    shapeLib.Data.strokeT = 5;
                     break;
                 case 8:        //可考慮拿掉,有點太粗了
-                    strokeT = 8;
+                    shapeLib.Data.strokeT = 8;
                     break;
             }
         }

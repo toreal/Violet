@@ -59,6 +59,7 @@ namespace ShapeLib.VShape
         public ArrayList items;
         public RibbonControlEventHandler click;
         public string belong; //屬於某一Group 或 menu
+      
     }
     
     public class ShapeObj:IShapeUI,IDrawing,IUpdateOP,IInsertOP
@@ -187,6 +188,7 @@ namespace ShapeLib.VShape
                
                Line myLine = new Line();
                 myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
+               
                 myLine.X1 = data.controlBtn1.X;
                 myLine.Y1 = data.controlBtn1.Y;
                 myLine.X2 = data.controlBtn4.X;                
@@ -235,18 +237,17 @@ namespace ShapeLib.VShape
                 myLine.MouseLeave += data.myLine_MouseLeave;
                 shapeLib.Data.mygrid.Children.Add(myLine);
                 gv.controlShape.Add(myLine);
-              
+      
 
             }else
             {
                 Line myLine = (Line)gv.controlShape[0];// =(Line) currPath.getDrawShape();
 
                 myLine.X1 = data.controlBtn1.X;
-                myLine.Y1 = data.controlBtn1.Y;
-           
+                myLine.Y1 = data.controlBtn1.Y;     
                 myLine.X2 = data.controlBtn4.X;
                 myLine.Y2 = data.controlBtn4.Y;
-           
+               
             }
 
 
@@ -440,7 +441,7 @@ namespace ShapeLib.VShape
         public void MouseMoveInsert(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas mygrid = shapeLib.Data.mygrid;
-
+            
             if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
             {
              //   if (!shapeLib.Data.bhave) //if you can control an object
@@ -452,8 +453,7 @@ namespace ShapeLib.VShape
                     double ex = shapeLib.Data.pEnd.X;
                     double ey = shapeLib.Data.pEnd.Y;
 
-                    
-
+                   
                     if (this.GetType() == typeof(ShapeRectangle))
                     {
                         if (ex < px)
@@ -505,6 +505,8 @@ namespace ShapeLib.VShape
                      //xEnd = (int)ex;
                      //yEnd = (int)ey;
                      currPath.redraw(0);
+                    
+
                     //switch (shapeLib.Data.drawtype)
                     //{
                     //    case 1:

@@ -11,3 +11,10 @@ D:\Violet\violet\ShapeLib\obj\Debug\ShapeLib.dll
 D:\Violet\violet\ShapeLib\obj\Debug\ShapeLib.pdb
 D:\Violet\violet\ShapeLib\bin\Debug\ShapeLib.dll
 D:\Violet\violet\ShapeLib\bin\Debug\ShapeLib.pdb
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.csprojResolveAssemblyReference.cache
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.Properties.Resources.resources
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.csproj.GenerateResource.Cache
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.dll
+D:\violet\Violet\violet\ShapeLib\obj\Debug\ShapeLib.pdb
+D:\violet\Violet\violet\ShapeLib\bin\Debug\ShapeLib.dll
+D:\violet\Violet\violet\ShapeLib\bin\Debug\ShapeLib.pdb

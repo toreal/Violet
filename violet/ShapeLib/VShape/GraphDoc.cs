@@ -397,13 +397,9 @@ namespace ShapeLib.VShape
                         gp.isSel = false;
                     }
                     if (shapeLib.Data.currShape != null && shapeLib.Data.currShape != this)
-                        shapeLib.Data.currShape.isSel = false;
-
+                    shapeLib.Data.currShape.isSel = false;
                     shapeLib.Data.multiSelList.Clear(); 
-
                     shapeLib.Data.multiSelList.Add(this);
-
-
                 }
 
                 shapeLib.Data.currShape = this;
