@@ -10,9 +10,120 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet2.css" media="screen">
     
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="js/jquery.jget.js"></script>
     
-    
-    
+<style type="text/css">
+	#abgne-block-20120327 {
+		width: 640px;
+	}
+	#abgne-block-20120327 ul, #abgne-block-20120327 li {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	#abgne-block-20120327 .tabs li {
+		float: left;
+		margin: 0 0 -1px 5px;
+		border: 1px solid #ddd;
+		background: #fafafa;
+		height: 32px;
+		cursor: pointer;
+		border-radius: 5px 5px 0 0;
+	}
+	#abgne-block-20120327 .tabs li.active {
+		background: #fff;
+		padding-bottom: 1px;
+		border-bottom: none;
+	}
+	#abgne-block-20120327 .tabs li.hover{
+		background: #f5f5f5; 
+	}
+	#abgne-block-20120327 .tabs span {
+		display: block;
+		float: left;
+		overflow: hidden;
+		padding: 7px 15px 5px 15px;
+	}
+	#abgne-block-20120327 .tab_container {
+		clear: both;
+		border: 1px solid #DDD;
+		background: #fff;
+		overflow: hidden;
+		border-radius: 5px;
+	}
+	#abgne-block-20120327 .tab_container ul {
+		position: relative;
+		height: 150px;
+		overflow: hidden;
+	}
+	#abgne-block-20120327 .tab_container .tab_content li {
+		position: absolute;
+		width: 610px;
+		height: 100%;
+		padding: 15px;
+		margin-top: 10px;
+		background: #fff;
+	}
+	#abgne-block-20120327 .tab_container .tab_content li img {
+		display: block;
+		float: left;
+		margin-right: 15px;
+	}
+	#abgne-block-20120327 .tab_container .tab_content li h3 {
+		font-size: 22px;
+		line-height: 22px;
+		margin: 5px 0 15px;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+	// 預設顯示第一個頁籤
+	// 並先把 .tabs, .tabs li 及 .tab_content, .tab_content li 等元素取出
+	// 同時也要取得 .tab_content 的寬
+	var _default = 0, 
+		$block = $('#abgne-block-20120327'), 
+		$tabs = $block.find('.tabs'), 
+		$tabsLi = $tabs.find('li'), 
+		$tab_content = $block.find('.tab_content'), 
+		$tab_contentLi = $tab_content.find('li'), 
+		_width = $tab_content.width();
+ 
+	// 當滑鼠移到 .tabs li 上時要套用 .hover 樣式
+	// 移出時要移除 .hover 樣式
+	$tabsLi.hover(function(){
+		var $this = $(this);
+ 
+		// 若被滑鼠移上去的 li 是目前顯示的頁籤就不做任何動作
+		if($this.hasClass('active')) return;
+ 
+		$this.toggleClass('hover');
+	}).click(function(){	// 當滑鼠點擊 .tabs li 時
+		// 先取出被點擊及目前顯示的頁籤與索引
+		var $active = $tabsLi.filter('.active').removeClass('active'), 
+			_activeIndex = $active.index(),  
+			$this = $(this).addClass('active').removeClass('hover'), 
+			_index = $this.index(), 
+			isNext = _index > _activeIndex;
+ 
+		// 如果被點擊的頁籤就是目前已顯示的頁籤, 則不做任何動作
+		if(_activeIndex == _index) return;
+ 
+		// 依索引大或小來決定移動的位置
+		$tab_contentLi.eq(_activeIndex).stop().animate({
+			left: isNext ? -_width : _width
+		}).end().eq(_index).css('left', isNext ? _width : -_width).stop().animate({
+			left: 0
+		});
+	});
+ 
+	// 先把預設要顯示的頁籤加上 .active 樣式及顯示相對應的內容
+	$tabsLi.eq(_default).addClass('active');
+	$tab_contentLi.eq(_default).siblings().css({
+		left: _width
+	});
+});
+</script>    
         
         
     
@@ -30,10 +141,35 @@
     <section class="main-content">   
 <div class="container">
 
-
+<div id="abgne-block-20120327">
+		<ul class="tabs">
+			<li><span>Happy Birthday</span></li>
+			<li><span>Calculator Widget</span></li>
+			<li><span>My Card</span></li>
+		</ul>
+		<div class="tab_container">
+			<ul class="tab_content">
+			  <li>
+					<img src="images/Happy_Birthday.png" alt="Happy Birthday">
+					<h3>Happy Birthday</h3>
+					<p>是否曾經因太忙碌而錯過好友的生日呢？此軟體能依日期列出全部含有生日設定的聯絡人清單，讓您快速掌握下一位生日的聯絡人。</p>
+				</li>
+			  <li>
+					<img src="images/Calculator_Widget.png" alt="Calculator Widget">
+					<h3>Calculator Widget</h3>
+					<p>是否常常想用計算機時都得要在一堆程式中尋找呢？「Calculator Widget」是一個可以把計算機放在桌面上的小工具程式，讓您可以直接立即使用並計算。</p>
+				</li>
+				<li>
+					<img src="images/My_Card.png" alt="My Card">
+					<h3>My Card</h3>
+					<p>My Card 是一個簡單直覺使用的程式，可以讓您把各種有條碼(BarCode)的卡片建檔管理，並提供條碼小工具可直接放在桌面上。</p>
+				</li>
+			</ul>
+		</div>
+	</div>
 			
 
-		</div>
+	
 		
 
 
