@@ -68,7 +68,7 @@ namespace ShapeLib.VShape
         Point[] myarr = new Point[6];
        
         int m = 6, extra;
-        int MAX_STEPS = 50;
+        int MAX_STEPS = 1000;
         //Boolean first = true;
 
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
@@ -87,14 +87,12 @@ namespace ShapeLib.VShape
                 shapeLib.Data.bfirst = false;
                 BezierSegment bezier = new BezierSegment();
                 PathFigure figure = new PathFigure();
-                if (myarr[0] == myarr[1] && myarr[1] == myarr[2] && myarr[2] == myarr[3] && myarr[3] == myarr[4] && myarr[4] == myarr[5])
-                {
+                //if (myarr[0] == myarr[1] && myarr[1] == myarr[2] && myarr[2] == myarr[3] && myarr[3] == myarr[4] && myarr[4] == myarr[5])
+                //{
+                //   myarr[3] = data.controlBtn4;
+                //}
 
-                   myarr[3] = data.controlBtn4;
-
-                }
-
-                else{
+                //else{
                    
                 for (int i = 0; i < m - 3; i++)
                 {
@@ -139,9 +137,8 @@ namespace ShapeLib.VShape
                     bezier.Point2 = data.controlBtn4;
                     bezier.Point3 = myarr[3];
 
-                }
-                //shapeLib.Data.mClick++;
-
+                //}
+                
 
                 figure.Segments.Add(bezier);
                 PathGeometry geometry = new PathGeometry();
@@ -175,9 +172,7 @@ namespace ShapeLib.VShape
                 bs.Point1 = myarr[1];
                 bs.Point2 = data.controlBtn4;
                 bs.Point3 = myarr[3];
-                //bs.Point1 = data.controlBtn2;
-                //bs.Point2 = data.controlBtn3;
-                //bs.Point3 = data.controlBtn4;
+               
 
 
 

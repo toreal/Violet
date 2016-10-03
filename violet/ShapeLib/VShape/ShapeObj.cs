@@ -415,13 +415,13 @@ namespace ShapeLib.VShape
                 }
                 remGPath(px, py, ex, ey);
 
-                if (  this.GetType() == typeof(ShapeCurve) )
-                {
-                    shapeLib.Data.mClick++;
-                    if (shapeLib.Data.mClick >= 3)
-                        shapeLib.Data.mClick = 0;
+                //if (  this.GetType() == typeof(ShapeCurve) )
+                //{
+                //    shapeLib.Data.mClick++;
+                //    if (shapeLib.Data.mClick >= 3)
+                //        shapeLib.Data.mClick = 0;
                     
-                }
+                //}
                     // || shapeLib.Data.mClick >=2 )
                 {
                     currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
