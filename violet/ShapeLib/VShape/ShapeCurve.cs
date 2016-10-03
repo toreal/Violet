@@ -66,6 +66,7 @@ namespace ShapeLib.VShape
         //}
 
         Point[] myarr = new Point[6];
+       
         int m = 6, extra;
         int MAX_STEPS = 50;
         //Boolean first = true;
@@ -76,7 +77,10 @@ namespace ShapeLib.VShape
             //double py = shapeLib.Data.pStart.Y;
             //double ex = shapeLib.Data.pEnd.X;
             //double ey = shapeLib.Data.pEnd.Y;
-            if (bfirst)
+            
+              
+           
+           if (bfirst)
             {
 
                 shapeLib.Data.Status = "rest";
@@ -86,17 +90,14 @@ namespace ShapeLib.VShape
                 if (myarr[0] == myarr[1] && myarr[1] == myarr[2] && myarr[2] == myarr[3] && myarr[3] == myarr[4] && myarr[4] == myarr[5])
                 {
 
-                    myarr[0] = data.controlBtn1;
-                    myarr[1] = data.controlBtn1;
-                    myarr[2] = data.controlBtn4;
-                    myarr[3] = data.controlBtn4;
+                   myarr[3] = data.controlBtn4;
 
                 }
 
-                else
+                else{
+                   
+                for (int i = 0; i < m - 3; i++)
                 {
-                    for (int i = 0; i < m - 3; i++)
-                    {
                         if (i == (m - 4))
                         {
                             extra = 1;
