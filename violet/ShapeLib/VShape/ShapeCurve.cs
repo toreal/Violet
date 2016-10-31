@@ -77,25 +77,27 @@ namespace ShapeLib.VShape
             //double py = shapeLib.Data.pStart.Y;
             //double ex = shapeLib.Data.pEnd.X;
             //double ey = shapeLib.Data.pEnd.Y;
-            
-              
-           
-           if (bfirst)
+
+
+
+            if (bfirst)
             {
 
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
                 BezierSegment bezier = new BezierSegment();
                 PathFigure figure = new PathFigure();
-                //if (myarr[0] == myarr[1] && myarr[1] == myarr[2] && myarr[2] == myarr[3] && myarr[3] == myarr[4] && myarr[4] == myarr[5])
-                //{
-                //   myarr[3] = data.controlBtn4;
-                //}
-
-                //else{
-                   
-                for (int i = 0; i < m - 3; i++)
+                if (myarr[0] == myarr[1] && myarr[1] == myarr[2] && myarr[2] == myarr[3] && myarr[3] == myarr[4] && myarr[4] == myarr[5])
                 {
+                    myarr[3] = data.controlBtn1;
+                    //myarr[3] = data.controlBtn4;
+                }
+
+                else
+                {
+
+                    for (int i = 0; i < m - 3; i++)
+                    {
                         if (i == (m - 4))
                         {
                             extra = 1;
@@ -120,25 +122,25 @@ namespace ShapeLib.VShape
                             myarr[i].Y = Qy;
                         }
                     }
-
-                    for (int i = 0; i < 4; i++)
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if ((3 - i) > 0)
                     {
-                        if ((3 - i) > 0)
-                        {
-                            myarr[2 - i] = myarr[3 - i];
-                        }
-                        else
-                            myarr[i] = data.controlBtn1;
-
+                        myarr[2 - i] = myarr[3 - i];
                     }
+                    else
+                        myarr[i] = data.controlBtn1;
 
-                    figure.StartPoint = myarr[0];
-                    bezier.Point1 = myarr[1];
-                    bezier.Point2 = data.controlBtn4;
-                    bezier.Point3 = myarr[3];
+                }
+
+                figure.StartPoint = myarr[0];
+                bezier.Point1 = myarr[1];
+                bezier.Point2 = data.controlBtn4;
+                bezier.Point3 = myarr[3];
 
                 //}
-                
+
 
                 figure.Segments.Add(bezier);
                 PathGeometry geometry = new PathGeometry();
@@ -172,7 +174,7 @@ namespace ShapeLib.VShape
                 bs.Point1 = myarr[1];
                 bs.Point2 = data.controlBtn4;
                 bs.Point3 = myarr[3];
-               
+
 
 
 
