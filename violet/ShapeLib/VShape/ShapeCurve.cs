@@ -68,16 +68,10 @@ namespace ShapeLib.VShape
 
         int m = 6, extra, count = 0;
         int MAX_STEPS = 1000;
-        //Boolean first = true;
+        
 
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
-            //double px = shapeLib.Data.pStart.X;
-            //double py = shapeLib.Data.pStart.Y;
-            //double ex = shapeLib.Data.pEnd.X;
-            //double ey = shapeLib.Data.pEnd.Y;
-
-
 
             if (bfirst)
             {
@@ -87,41 +81,11 @@ namespace ShapeLib.VShape
                 BezierSegment bezier = new BezierSegment();
                 PathFigure figure = new PathFigure();
 
-                if (count == 0) { 
-                    
+                if (count == 0)
+                {
+
                     myarr[3] = data.controlBtn1;
                     count++;
-            }else{
-               
-                    for (int i = 0; i < m - 3; i++)
-                    {
-                        if (i == (m - 4))
-                        {
-                            extra = 1;
-                        }
-                        else
-                            extra = 0;
-                        for (int j = 0; j < MAX_STEPS + extra; j++)
-                        {
-
-                            double u = j / MAX_STEPS;
-                            double Qx = B0(u) * myarr[i].X +
-                                    B1(u) * myarr[i + 1].X +
-                                    B2(u) * myarr[i + 2].X +
-                                    B3(u) * myarr[i + 3].X;
-
-                            double Qy = B0(u) * myarr[i].Y +
-                                    B1(u) * myarr[i + 1].Y +
-                                    B2(u) * myarr[i + 2].Y +
-                                    B3(u) * myarr[i + 3].Y;
-
-                            myarr[i].X = Qx;
-                            myarr[i].Y = Qy;
-                        
-                       }
-                        
-                    }
-                    
                 }
 
                 for (int a = 0; a < 4; a++)
@@ -135,16 +99,38 @@ namespace ShapeLib.VShape
 
                 }
 
-                
+                for (int i = 0; i < m - 3; i++)
+                {
+                    if (i == (m - 4))
+                    {
+                        extra = 1;
+                    }
+                    else
+                        extra = 0;
+                    for (int j = 0; j < MAX_STEPS + extra; j++)
+                    {
 
-                figure.StartPoint = myarr[0];
-                bezier.Point1 = myarr[1];
-                bezier.Point2 = data.controlBtn4;
-                bezier.Point3 = myarr[3];
+                        double u = j / MAX_STEPS;
+                        double Qx = B0(u) * myarr[i].X +
+                                B1(u) * myarr[i + 1].X +
+                                B2(u) * myarr[i + 2].X +
+                                B3(u) * myarr[i + 3].X;
 
+                        double Qy = B0(u) * myarr[i].Y +
+                                B1(u) * myarr[i + 1].Y +
+                                B2(u) * myarr[i + 2].Y +
+                                B3(u) * myarr[i + 3].Y;
 
-                //}
+                        myarr[i].X = Qx;
+                        myarr[i].Y = Qy;
 
+                    }
+
+                }
+                //figure.StartPoint = myarr[0];
+                //bezier.Point1 = myarr[1];
+                //bezier.Point2 = data.controlBtn4;
+                //bezier.Point3 = myarr[3];
 
                 figure.Segments.Add(bezier);
                 PathGeometry geometry = new PathGeometry();
@@ -171,10 +157,8 @@ namespace ShapeLib.VShape
                 Path myPath = (Path)gv.baseShape[0];// =(Line) currPath.getDrawShape();
                 PathGeometry geometry = (PathGeometry)myPath.Data;
 
-
-
                 BezierSegment bs = (BezierSegment)geometry.Figures[0].Segments[0];
-
+              
                 geometry.Figures[0].StartPoint = myarr[0];
                 bs.Point1 = myarr[1];
                 bs.Point2 = data.controlBtn4;
