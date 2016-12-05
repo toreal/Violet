@@ -391,7 +391,7 @@
     <ManifestKeyFile>so910327.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B82C12DE4C9DEA4AF6201BB1E768D45EF7466493</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2B0F3823DE663C95ACC89C458FCC7B69865FCFE6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

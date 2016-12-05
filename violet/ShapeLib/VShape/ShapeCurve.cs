@@ -68,107 +68,120 @@ namespace ShapeLib.VShape
 
         int m = 6, extra, count = 0;
         int MAX_STEPS = 1000;
-        
+
 
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
 
-            if (bfirst)
+            if (count == 0)
             {
-
-                shapeLib.Data.Status = "rest";
-                shapeLib.Data.bfirst = false;
-                BezierSegment bezier = new BezierSegment();
-                PathFigure figure = new PathFigure();
-
-                if (count == 0)
-                {
-
-                    myarr[3] = data.controlBtn1;
-                    count++;
-                }
-
-                for (int a = 0; a < 4; a++)
-                {
-                    if ((3 - a) > 0)
-                    {
-                        myarr[2 - a] = myarr[3 - a];
-                    }
-                    else
-                        myarr[a] = data.controlBtn1;
-
-                }
-
-                for (int i = 0; i < m - 3; i++)
-                {
-                    if (i == (m - 4))
-                    {
-                        extra = 1;
-                    }
-                    else
-                        extra = 0;
-                    for (int j = 0; j < MAX_STEPS + extra; j++)
-                    {
-
-                        double u = j / MAX_STEPS;
-                        double Qx = B0(u) * myarr[i].X +
-                                B1(u) * myarr[i + 1].X +
-                                B2(u) * myarr[i + 2].X +
-                                B3(u) * myarr[i + 3].X;
-
-                        double Qy = B0(u) * myarr[i].Y +
-                                B1(u) * myarr[i + 1].Y +
-                                B2(u) * myarr[i + 2].Y +
-                                B3(u) * myarr[i + 3].Y;
-
-                        myarr[i].X = Qx;
-                        myarr[i].Y = Qy;
-
-                    }
-
-                }
-                //figure.StartPoint = myarr[0];
-                //bezier.Point1 = myarr[1];
-                //bezier.Point2 = data.controlBtn4;
-                //bezier.Point3 = myarr[3];
-
-                figure.Segments.Add(bezier);
-                PathGeometry geometry = new PathGeometry();
-                geometry.Figures.Add(figure);
-
-                //myPath.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(curve_MouseLeftButtonDown);
-                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                // Describes the brush's color using RGB values. 
-                // Each value has a range of 0-255.
-
+                myarr[3] = data.controlBtn1;
                 Path myPath = new System.Windows.Shapes.Path();
-                myPath.Stroke = new SolidColorBrush(Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
-                myPath.StrokeThickness = data.state.strokeT;
-                /*myPath.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
-                myPath.MouseEnter += data.myLine_MouseEnter;
-                myPath.MouseLeave += data.myLine_MouseLeave; */
-                myPath.Data = geometry;
+                PathGeometry geometry = (PathGeometry)myPath.Data;
                 shapeLib.Data.mygrid.Children.Add(myPath);
                 gv.baseShape.Add(myPath);
-
+                count++;
             }
             else
             {
-                Path myPath = (Path)gv.baseShape[0];// =(Line) currPath.getDrawShape();
-                PathGeometry geometry = (PathGeometry)myPath.Data;
 
-                BezierSegment bs = (BezierSegment)geometry.Figures[0].Segments[0];
-              
-                geometry.Figures[0].StartPoint = myarr[0];
-                bs.Point1 = myarr[1];
-                bs.Point2 = data.controlBtn4;
-                bs.Point3 = myarr[3];
 
+                if (bfirst)
+                {
+                    shapeLib.Data.Status = "rest";
+                    shapeLib.Data.bfirst = false;
+                    BezierSegment bezier = new BezierSegment();
+                    PathFigure figure = new PathFigure();
 
 
 
+                    for (int a = 0; a < 4; a++)
+                    {
+                        if ((3 - a) > 0)
+                        {
+                            myarr[2 - a] = myarr[3 - a];
+                        }
+                        else
+                            myarr[a] = data.controlBtn1;
+
+                    }
+
+                    for (int i = 0; i < m - 3; i++)
+                    {
+                        if (i == (m - 4))
+                        {
+                            extra = 1;
+                        }
+                        else
+                            extra = 0;
+                        for (int j = 0; j < MAX_STEPS + extra; j++)
+                        {
+
+                            double u = j / MAX_STEPS;
+                            double Qx = B0(u) * myarr[i].X +
+                                    B1(u) * myarr[i + 1].X +
+                                    B2(u) * myarr[i + 2].X +
+                                    B3(u) * myarr[i + 3].X;
+
+                            double Qy = B0(u) * myarr[i].Y +
+                                    B1(u) * myarr[i + 1].Y +
+                                    B2(u) * myarr[i + 2].Y +
+                                    B3(u) * myarr[i + 3].Y;
+
+                            myarr[i].X = Qx;
+                            myarr[i].Y = Qy;
+
+                        }
+
+                    }
+                    //figure.StartPoint = myarr[0];
+                    //bezier.Point1 = myarr[1];
+                    //bezier.Point2 = data.controlBtn4;
+                    //bezier.Point3 = myarr[3];
+
+                    figure.Segments.Add(bezier);
+                    PathGeometry geometry = new PathGeometry();
+                    geometry.Figures.Add(figure);
+
+                    //myPath.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(curve_MouseLeftButtonDown);
+                    SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                    // Describes the brush's color using RGB values. 
+                    // Each value has a range of 0-255.
+
+                    Path myPath = new System.Windows.Shapes.Path();
+                    myPath.Stroke = new SolidColorBrush(Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
+                    myPath.StrokeThickness = data.state.strokeT;
+                    /*myPath.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
+                    myPath.MouseEnter += data.myLine_MouseEnter;
+                    myPath.MouseLeave += data.myLine_MouseLeave; */
+                    myPath.Data = geometry;
+                    shapeLib.Data.mygrid.Children.Add(myPath);
+                    gv.baseShape.Add(myPath);
+
+
+
+
+                }
+                else
+                {
+
+                    Path myPath = (Path)gv.baseShape[0];// =(Line) currPath.getDrawShape();
+                    PathGeometry geometry = (PathGeometry)myPath.Data;
+                    if (geometry != null)
+                    {
+                        BezierSegment bs = (BezierSegment)geometry.Figures[0].Segments[0];
+
+                        geometry.Figures[0].StartPoint = myarr[0];
+                        bs.Point1 = myarr[1];
+                        bs.Point2 = data.controlBtn4;
+                        bs.Point3 = myarr[3];
+                    }
+
+
+                }
 
             }
+
         }
     }
 
