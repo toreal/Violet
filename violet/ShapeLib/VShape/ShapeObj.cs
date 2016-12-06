@@ -349,7 +349,7 @@ namespace ShapeLib.VShape
 
                     shapeLib.Data.mClick++;
 
-                    if (this.GetType() == typeof(ShapeCurve) && shapeLib.Data.mClick >= 3)
+                    if (this.GetType() == typeof(ShapeCurve) && shapeLib.Data.mClick >=1)
                     {
                         currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
                         shapeLib.Data.gdc.writeIn(currPath, 0);

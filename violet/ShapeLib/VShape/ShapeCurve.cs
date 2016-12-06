@@ -108,7 +108,7 @@ namespace ShapeLib.VShape
 
                     for (int i = 0; i < m - 3; i++)
                     {
-                        if (i == (m - 4))
+                        if (i == m - 4)
                         {
                             extra = 1;
                         }
@@ -117,7 +117,7 @@ namespace ShapeLib.VShape
                         for (int j = 0; j < MAX_STEPS + extra; j++)
                         {
 
-                            double u = j / MAX_STEPS;
+                            double u = j/MAX_STEPS;
                             double Qx = B0(u) * myarr[i].X +
                                     B1(u) * myarr[i + 1].X +
                                     B2(u) * myarr[i + 2].X +
