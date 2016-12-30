@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Violet by toreal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet2' type='text/css'>
+    
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet2.css" media="screen">
+    
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="js/jquery.jget.js"></script>
+    
+<style type="text/css">
+	#abgne-block-20120327 {
+		width: 100%;
+		height: 1550px;
+	}
+	#abgne-block-20120327 ul, #abgne-block-20120327 li {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	#abgne-block-20120327 .tabs li {
+		float: left;
+		margin: 0 0 -1px 5px;
+		border: 1px solid #ddd;
+		background: #fafafa;
+		height: 32px;
+		cursor: pointer;
+		border-radius: 5px 5px 0 0;
+	}
+	#abgne-block-20120327 .tabs li.active {
+		background: #fff;
+		padding-bottom: 1px;
+		border-bottom: none;
+	}
+	#abgne-block-20120327 .tabs li.hover{
+		background: #f5f5f5; 
+	}
+	#abgne-block-20120327 .tabs span {
+		display: block;
+		float: left;
+		overflow: hidden;
+		padding: 7px 15px 5px 15px;
+	}
+	#abgne-block-20120327 .tab_container {
+		clear: both;
+		border: 1px solid #DDD;
+		background: #fff;
+		overflow: hidden;
+		border-radius: 5px;
+	}
+	#abgne-block-20120327 .tab_container ul {
+		position: relative;
+		height: 1400px;
+		overflow: visible;
+	}
+	#abgne-block-20120327 .tab_container .tab_content li {
+	position: absolute;
+	width: 100%;
+	height: 2257px;
+	padding: 15px;
+	margin-top: 10px;
+	background: #fff;
+	}
+	#abgne-block-20120327 .tab_container .tab_content li img {
+		display: block;
+		float: left;
+		margin-right: 15px;
+	}
+	#abgne-block-20120327 .tab_container .tab_content li h3 {
+		font-size: 22px;
+		line-height: 22px;
+		margin: 5px 0 15px;
+	}
+	#css_table {
+      display:table;
+  }
+.css_tr {
+      display: table-row;
+  }
+.css_td {
+      display: table-cell;
+  }
+</style>
+<script type="text/javascript">
+	$(function(){
+	// 預設顯示第一個頁籤
+	// 並先把 .tabs, .tabs li 及 .tab_content, .tab_content li 等元素取出
+	// 同時也要取得 .tab_content 的寬
+	var _default = 0, 
+		$block = $('#abgne-block-20120327'), 
+		$tabs = $block.find('.tabs'), 
+		$tabsLi = $tabs.find('li'), 
+		$tab_content = $block.find('.tab_content'), 
+		$tab_contentLi = $tab_content.find('li'), 
+		_width = $tab_content.width();
+ 
+	// 當滑鼠移到 .tabs li 上時要套用 .hover 樣式
+	// 移出時要移除 .hover 樣式
+	$tabsLi.hover(function(){
+		var $this = $(this);
+ 
+		// 若被滑鼠移上去的 li 是目前顯示的頁籤就不做任何動作
+		if($this.hasClass('active')) return;
+ 
+		$this.toggleClass('hover');
+	}).click(function(){	// 當滑鼠點擊 .tabs li 時
+		// 先取出被點擊及目前顯示的頁籤與索引
+		var $active = $tabsLi.filter('.active').removeClass('active'), 
+			_activeIndex = $active.index(),  
+			$this = $(this).addClass('active').removeClass('hover'), 
+			_index = $this.index(), 
+			isNext = _index > _activeIndex;
+ 
+		// 如果被點擊的頁籤就是目前已顯示的頁籤, 則不做任何動作
+		if(_activeIndex == _index) return;
+ 
+		// 依索引大或小來決定移動的位置
+		$tab_contentLi.eq(_activeIndex).stop().animate({
+			left: isNext ? -_width : _width
+		}).end().eq(_index).css('left', isNext ? _width : -_width).stop().animate({
+			left: 0
+		});
+	});
+ 
+	// 先把預設要顯示的頁籤加上 .active 樣式及顯示相對應的內容
+	$tabsLi.eq(_default).addClass('active');
+	$tab_contentLi.eq(_default).siblings().css({
+		left: _width
+	});
+});
+</script>    
+        
+        
+    
+  </head>
+  
+  <body >
+    <section class="page-header">
+      <h1 class="project-name">Violet</h1>
+      <a href="https://github.com/toreal/Violet" class="btn">View on GitHub</a>
+      <a href="https://github.com/toreal/Violet/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/toreal/Violet/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="http://toreal.github.io/Violet/manual.html" class="btn">安裝使用手冊</a>
+      <a href="http://toreal.github.io/Violet/intro.html" class="btn">繪圖功能介紹</a>
+    </section>
+
+    <section class="main-content">   
+<div class="container">
+
+<div id="abgne-block-20120327">
+		<ul class="tabs">
+			<li><span>直線</span></li>
+			<li><span>矩形</span></li>
+            <li><span>圓形</span></li>
+            <li><span>三角形</span></li>
+            <li><span>箭號</span></li>
+            <li><span>曲線</span></li>
+            <li><span>文字</span></li>
+            <li><span>顏色</span></li>
+            <li><span>返回</span></li>
+            <li><span>輔助網格</span></li>
+            <li><span>輸出</span></li>
+            <li><span>清除</span></li>
+			
+		</ul>
+		<div class="tab_container">
+			<ul class="tab_content">
+			  
+              <li>	
+					<h3>直線</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in15.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                              <div class="css_tr"><p>滑鼠左鍵點擊，拖曳即可畫出，可以360度的方向繪出直線。<img src="images/in1.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+			  <li>	
+					<h3>矩形</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in17.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                             <div class="css_tr"><p>滑鼠左鍵點擊，拖曳即可畫出。<img src="images/in3.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                              
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                   
+			  <li>	
+					<h3>圓形</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			 
+                              <div class="css_tr"><p><img src="images/in16.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                             <div class="css_tr"><p>滑鼠點擊後，以拖拉方式可360度旋轉亦可反轉。<img src="images/in4.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+              
+              <li>	
+					<h3>三角形</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in19.JPG" width=100% height=auto><img src="images/in20.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                             <div class="css_tr"><p><img src="images/in5.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+                 <li>	
+					<h3>箭號</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in21.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                             <div class="css_tr"><p><img src="images/in5.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+
+              <li>	
+					<h3>曲線</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in18.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                              <div class="css_tr"><p><img src="images/in6.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+
+              <li>	
+					<h3>文字</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in22.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                              <div class="css_tr"><p><img src="images/in7.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+                 <li>	
+					<h3>顏色</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in23.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                             <div class="css_tr"><p><img src="images/in8.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+
+              <li>	
+					<h3>返回</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in14.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+
+              <li>	
+					<h3>輔助網格</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/in12.JPG" width=100% height=auto></p>
+                   			 </br></div>
+                             <div class="css_tr"><p><img src="images/in11.JPG" width=100% height=auto><img src="images/in10.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+			  <li>              <li>	
+					<h3>清除</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p><img src="images/install3.JPG" width=100% height=auto></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                
+              <li>	
+					<h3>輸出</h3>
+                    <div id="css_table">
+                      	<div class="css_td">                     
+                   			  <div class="css_tr"><p></p>
+                   			 </br></div>
+					     </div>
+                    </div> </br>
+                    <p></p>
+				</li>
+                               
+				
+			</ul>
+		</div>
+	</div>
+			
+
+	
+		
+
+
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/toreal/Violet">Violet</a> is maintained by <a href="https://github.com/toreal">toreal</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
