@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -38,54 +39,214 @@ namespace ShapeLib.VShape
             
             return ret;
         }
-        
-        
-        
-        private void panel1_mouseDown(object sender, MouseEventArgs e)
+
+
+
+        double B0(double u)
         {
-            shapeLib.Data.bfirst = false;
+            double ret = (1 - u) * (1 - u) * (1 - u) / 6.0;
+            return ret;
         }
-        private void panel1_mouseUp(object sender, MouseEventArgs e)
+
+        double B1(double u)
         {
-            shapeLib.Data.bfirst = true;
-            prex = null;
-            prey = null;
+            double ret = (3 * u * u * u - 6 * u * u + 4.0) / 6.0;
+            return ret;
         }
-        int? prex = null;
-        int? prey = null;
-        //void panel1_mouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (canpaint)
-        //    {
-        //        System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Black, shapeLib.Data.strokeT);
-        //        g.DrawLine(pen, new System.Drawing.Point(prex ?? e.X, prey ?? e.Y), new System.Drawing.Point(e.X, e.Y));
-        //        prex = e.X;
-        //        prey = e.Y;
-        //    }
-        //}
-        
+        double B2(double u)
+        {
+            double ret = (-3 * u * u * u + 3 * u * u + 3 * u + 1.0) / 6.0;
+            return ret;
+        }
+        double B3(double u)
+        {
+            double ret = u * u * u / 6.0;
+            return ret;
+        }
+
+
+        ArrayList plist = new ArrayList();
+        //ArrayList list = new ArrayList();
+
+        int extra = 0;
+        int sx;
+        int sy;
+
+
+        public void DrawPoint(int x, int y, int idx)
+        {
+
+            if (idx != 0)
+            {
+                Line myLine = new Line();
+                myLine.X1 = sx;
+                myLine.Y1 = sy;
+                myLine.X2 = x;
+                myLine.Y2 = y;
+                myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(shapeLib.Data.colorR, shapeLib.Data.colorG, shapeLib.Data.colorB));
+                //myLine.HorizontalAlignment = HorizontalAlignment.Left;
+                //myLine.VerticalAlignment = VerticalAlignment.Center;
+                myLine.StrokeThickness = shapeLib.Data.strokeT;
+
+                shapeLib.Data.mygrid.Children.Add(myLine);
+            }
+            //gv.baseShape.Add(myLine);
+            sx = x;
+            sy = y;
+        }
+        public void redraw()
+        {
+            int m = plist.Count;
+            int MAX_STEPS = 10;
+            for (int i = 0; i < m - 3; i++)
+            {
+                System.Drawing.Point p = (System.Drawing.Point)plist[i];
+                System.Drawing.Point p1 = (System.Drawing.Point)plist[i + 1];
+                System.Drawing.Point p2 = (System.Drawing.Point)plist[i + 2];
+                System.Drawing.Point p3 = (System.Drawing.Point)plist[i + 3];
+
+
+                if (i == m - 4)
+                {
+                    extra = 1;
+                }
+                else
+                    extra = 0;
+
+                sx = p.X;
+                sy = p.Y;
+
+                for (int j = 0; j < MAX_STEPS + extra; j++)
+                {
+
+                    double u = j * 1.0 / MAX_STEPS;
+                    double Qx = B0(u) * p.X +
+                                     B1(u) * p1.X +
+                                     B2(u) * p2.X +
+                                     B3(u) * p3.X;
+
+                    double Qy = B0(u) * p.Y +
+                                   B1(u) * p1.Y +
+                                   B2(u) * p2.Y +
+                                   B3(u) * p3.Y;
+
+                    DrawPoint((int)Qx, (int)Qy, j);
+
+                }
+
+            }
+
+            shapeLib.Data.mygrid.InvalidateVisual();
+        }
+        public void LeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            //sx = (int)(e.GetPosition(shapeLib.Data.mygrid).X);
+            //sy = (int)(e.GetPosition(shapeLib.Data.mygrid).Y);
+            //Ellipse myEllipse = new Ellipse();
+            //myEllipse.Height = 1.0;
+            //myEllipse.Width = 1.0;
+            //myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            //myEllipse.StrokeThickness = shapeLib.Data.strokeT;
+            //Canvas.SetLeft(myEllipse, sx);
+            //Canvas.SetTop(myEllipse, sy);
+            //shapeLib.Data.mygrid.Children.Add(myEllipse);
+            //shapeLib.Data.mygrid.InvalidateVisual();
+            redraw();
+
+        }
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
-            
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 255, 0)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(255, 0, 0)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
             if (bfirst)
             {
+                shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
-                Form form = new Form();
-                Graphics g = form.CreateGraphics();
-                int ex = (int)(data.controlBtn1.X);
-                int ey = (int)(data.controlBtn1.Y);
-                System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Black, shapeLib.Data.strokeT);
-                g.DrawLine(pen, new System.Drawing.Point(prex ?? ex, prey ?? ey), new System.Drawing.Point(ex, ey));
-                prex = ex;
-                prey = ey;
-
-                //shapeLib.Data.mygrid.Children.Add(form);
-                //gv.baseShape.Add(pen);
+                sx = (int)data.controlBtn1.X;
+                sy = (int)data.controlBtn1.Y;
+                plist.Add(new System.Drawing.Point(sx, sy));
+                shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
             }
-           
+            //else
+            //shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
         }
 
-       
 
+        //        public override void DisplayControlPoints(gView gv, gPath data)
+        //        {
+        //            if (gv.controlShape.Count == 0)
+        //            {
+        //                BezierSegment bezier = new BezierSegment();
+        //                //bezier.Point3 = data.controlBtn3;
+        //                PathFigure figure = new PathFigure();
+        //                if (myarr[0] == myarr[1] && myarr[1] == myarr[2] && myarr[2] == myarr[3])
+        //                {
+
+        //                    myarr[0] = data.controlBtn1;
+        //                    myarr[1] = data.controlBtn1;
+        //                    myarr[2] = data.controlBtn4;
+        //                    myarr[3] = data.controlBtn4;
+        //                }
+        //                else
+        //                {
+        //                    for (int i = 0; i < 4; i++)
+        //                    {
+        //                        if ((3 - i) > 0)
+        //                        {
+        //                            myarr[2 - i] = myarr[3 - i];
+        //                        }
+        //                        else
+        //                            myarr[i] = data.controlBtn1;
+
+        //                    }
+        //                    figure.StartPoint = myarr[0];
+        //                    bezier.Point1 = myarr[1];
+        //                    bezier.Point2 = data.controlBtn4;
+        //                    bezier.Point3 = myarr[3];
+        //                }  
+        //                //figure.StartPoint = data.controlBtn1;
+        //                //bezier.Point1 = figure.StartPoint;
+        //                //bezier.Point2 = bezier.Point3;
+        //                figure.Segments.Add(bezier);
+        //                PathGeometry geometry = new PathGeometry();
+        //                geometry.Figures.Add(figure);
+        //                Path myPath = new System.Windows.Shapes.Path();
+        //                myPath.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 0, 255));
+        //                myPath.StrokeThickness = data.state.strokeT;
+        //                /* myPath.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
+        //                 myPath.MouseEnter += data.myLine_MouseEnter;
+        //                 myPath.MouseLeave += data.myLine_MouseLeave;  */
+        //                myPath.Data = geometry;
+        //                shapeLib.Data.mygrid.Children.Add(myPath);
+        //                gv.controlShape.Add(myPath);
+
+        //            }
+
+        //            else
+        //            {
+        //                Path myPath = (Path)gv.controlShape[0];// =(Line) currPath.getDrawShape();
+        //                PathGeometry geometry = (PathGeometry)myPath.Data;
+        //                geometry.Figures[0].StartPoint = data.controlBtn4;
+        //                BezierSegment bs = (BezierSegment)geometry.Figures[0].Segments[0];
+        //                //bs.Point1 = data.controlBtn2;
+        //                //bs.Point2 = data.controlBtn3;
+        //                //bs.Point3 = data.controlBtn4;
+        //                bs.Point1 = myarr[1];
+        //                bs.Point2 = data.controlBtn4;
+        //                bs.Point3 = myarr[3]; 
+        //            }
+
+        //        }
     }
 }
