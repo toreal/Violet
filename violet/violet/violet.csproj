@@ -388,16 +388,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>so910327.pfx</ManifestKeyFile>
+    <ManifestKeyFile>violet.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>CA15C9BF5C000479A6E63F7B25DA098284255283</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1A8C9EEB61AB0408AFD6B3A74FA97DE627983727</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>so910327.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>violet.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>

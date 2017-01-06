@@ -68,11 +68,38 @@ namespace ShapeLib.VShape
         ArrayList plist = new ArrayList();
         //ArrayList list = new ArrayList();
 
-        int extra = 0;
+        int extra ;
         int sx;
         int sy;
 
+           public override void DrawShape(gView gv, gPath data, Boolean bfirst)
+        {
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 255, 0)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(255, 0, 0)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
+            if (bfirst)
+            {
+                shapeLib.Data.Status = "rest";
+                shapeLib.Data.bfirst = false;
+                sx = (int)data.controlBtn1.X;
+                sy = (int)data.controlBtn1.Y;
+                plist.Add(new System.Drawing.Point(sx, sy));
+                shapeLib.Data.mygrid.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
 
+
+            }
+            
+            //shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
+        }
         public void DrawPoint(int x, int y, int idx)
         {
 
@@ -98,6 +125,7 @@ namespace ShapeLib.VShape
         {
             int m = plist.Count;
             int MAX_STEPS = 10;
+     
             for (int i = 0; i < m - 3; i++)
             {
                 System.Drawing.Point p = (System.Drawing.Point)plist[i];
@@ -110,9 +138,7 @@ namespace ShapeLib.VShape
                 {
                     extra = 1;
                 }
-                else
-                    extra = 0;
-
+             
                 sx = p.X;
                 sy = p.Y;
 
@@ -136,9 +162,9 @@ namespace ShapeLib.VShape
 
             }
 
-            shapeLib.Data.mygrid.InvalidateVisual();
+         
         }
-        public void LeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void LeftButtonDown(object sender,EventArgs e)
         {
 
             //sx = (int)(e.GetPosition(shapeLib.Data.mygrid).X);
@@ -152,35 +178,14 @@ namespace ShapeLib.VShape
             //Canvas.SetTop(myEllipse, sy);
             //shapeLib.Data.mygrid.Children.Add(myEllipse);
             //shapeLib.Data.mygrid.InvalidateVisual();
-            redraw();
+            for (int i = 0; i < plist.Count; i++) {
+                if(plist.Count>4) plist.RemoveAt(i); 
+                    
+            }
+                redraw();
 
         }
-        public override void DrawShape(gView gv, gPath data, Boolean bfirst)
-        {
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 255, 0)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(255, 0, 0)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            if (bfirst)
-            {
-                shapeLib.Data.Status = "rest";
-                shapeLib.Data.bfirst = false;
-                sx = (int)data.controlBtn1.X;
-                sy = (int)data.controlBtn1.Y;
-                plist.Add(new System.Drawing.Point(sx, sy));
-                shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
-            }
-            //else
-            //shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
-        }
+     
 
 
         //        public override void DisplayControlPoints(gView gv, gPath data)
