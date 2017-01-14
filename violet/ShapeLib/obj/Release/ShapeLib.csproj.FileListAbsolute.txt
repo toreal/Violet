@@ -4,3 +4,4 @@ C:\james\Violet\violet\ShapeLib\obj\Release\ShapeLib.dll
 C:\james\Violet\violet\ShapeLib\obj\Release\ShapeLib.pdb
 C:\james\Violet\violet\ShapeLib\obj\Release\ShapeLib.Properties.Resources.resources
 C:\james\Violet\violet\ShapeLib\obj\Release\ShapeLib.csproj.GenerateResource.Cache
+C:\james\Violet\violet\ShapeLib\obj\Release\ShapeLib.csprojResolveAssemblyReference.cache

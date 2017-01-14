@@ -145,32 +145,6 @@ namespace violet
             //Check();
         }
 
-     /*   private void circle_btn_Click(object sender, RibbonControlEventArgs e)
-        {
-            Check();
-            f.setDrawType(1);
-            f.Show();
-        }
-
-      private void rectangle_btn_Click(object sender, RibbonControlEventArgs e)
-        {
-            Check();
-            f.setDrawType(2);
-            f.Show();
-        }
-
-        private void line_btn_Click(object sender, RibbonControlEventArgs e)
-        {
-            Check();
-            f.setDrawType(3);
-            f.Show();
-        }
-        private void Curve_Click(object sender, RibbonControlEventArgs e)
-        {
-            Check();
-            f.setDrawType(4);
-            f.Show();
-        }*/
         private void clear_Click(object sender, RibbonControlEventArgs e)
         {
             if (f != null)

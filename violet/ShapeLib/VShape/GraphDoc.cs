@@ -90,6 +90,8 @@ namespace ShapeLib.VShape
         /// <param name="Action"></param>
         public void writeIn(gPath Data, int Action)
         {
+
+
             saveState pa;
                 
             int lens =RedoStack.Count;            

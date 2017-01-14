@@ -33,7 +33,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>violet.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>p3.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -85,13 +85,9 @@
     <Compile Include="VShape\Sproerty.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="james.pfx" />
     <None Include="james.snk" />
-    <None Include="p2.pfx" />
+    <None Include="p3.pfx" />
     <None Include="packages.config" />
-    <None Include="so910327.pfx" />
-    <None Include="violet.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Doc\Design Issues.html" />

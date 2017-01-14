@@ -74,18 +74,6 @@ namespace ShapeLib.VShape
 
            public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 255, 0)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(255, 0, 0)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
-            //list.Add(new SolidColorBrush(Color.FromRgb(0, 0, 255)));
             if (bfirst)
             {
                 shapeLib.Data.Status = "rest";
@@ -167,17 +155,6 @@ namespace ShapeLib.VShape
         public void LeftButtonDown(object sender,EventArgs e)
         {
 
-            //sx = (int)(e.GetPosition(shapeLib.Data.mygrid).X);
-            //sy = (int)(e.GetPosition(shapeLib.Data.mygrid).Y);
-            //Ellipse myEllipse = new Ellipse();
-            //myEllipse.Height = 1.0;
-            //myEllipse.Width = 1.0;
-            //myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            //myEllipse.StrokeThickness = shapeLib.Data.strokeT;
-            //Canvas.SetLeft(myEllipse, sx);
-            //Canvas.SetTop(myEllipse, sy);
-            //shapeLib.Data.mygrid.Children.Add(myEllipse);
-            //shapeLib.Data.mygrid.InvalidateVisual();
             for (int i = 0; i < plist.Count; i++) {
                 if(plist.Count>4) plist.RemoveAt(i); 
                     
@@ -186,72 +163,6 @@ namespace ShapeLib.VShape
 
         }
      
-
-
-        //        public override void DisplayControlPoints(gView gv, gPath data)
-        //        {
-        //            if (gv.controlShape.Count == 0)
-        //            {
-        //                BezierSegment bezier = new BezierSegment();
-        //                //bezier.Point3 = data.controlBtn3;
-        //                PathFigure figure = new PathFigure();
-        //                if (myarr[0] == myarr[1] && myarr[1] == myarr[2] && myarr[2] == myarr[3])
-        //                {
-
-        //                    myarr[0] = data.controlBtn1;
-        //                    myarr[1] = data.controlBtn1;
-        //                    myarr[2] = data.controlBtn4;
-        //                    myarr[3] = data.controlBtn4;
-        //                }
-        //                else
-        //                {
-        //                    for (int i = 0; i < 4; i++)
-        //                    {
-        //                        if ((3 - i) > 0)
-        //                        {
-        //                            myarr[2 - i] = myarr[3 - i];
-        //                        }
-        //                        else
-        //                            myarr[i] = data.controlBtn1;
-
-        //                    }
-        //                    figure.StartPoint = myarr[0];
-        //                    bezier.Point1 = myarr[1];
-        //                    bezier.Point2 = data.controlBtn4;
-        //                    bezier.Point3 = myarr[3];
-        //                }  
-        //                //figure.StartPoint = data.controlBtn1;
-        //                //bezier.Point1 = figure.StartPoint;
-        //                //bezier.Point2 = bezier.Point3;
-        //                figure.Segments.Add(bezier);
-        //                PathGeometry geometry = new PathGeometry();
-        //                geometry.Figures.Add(figure);
-        //                Path myPath = new System.Windows.Shapes.Path();
-        //                myPath.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 0, 255));
-        //                myPath.StrokeThickness = data.state.strokeT;
-        //                /* myPath.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
-        //                 myPath.MouseEnter += data.myLine_MouseEnter;
-        //                 myPath.MouseLeave += data.myLine_MouseLeave;  */
-        //                myPath.Data = geometry;
-        //                shapeLib.Data.mygrid.Children.Add(myPath);
-        //                gv.controlShape.Add(myPath);
-
-        //            }
-
-        //            else
-        //            {
-        //                Path myPath = (Path)gv.controlShape[0];// =(Line) currPath.getDrawShape();
-        //                PathGeometry geometry = (PathGeometry)myPath.Data;
-        //                geometry.Figures[0].StartPoint = data.controlBtn4;
-        //                BezierSegment bs = (BezierSegment)geometry.Figures[0].Segments[0];
-        //                //bs.Point1 = data.controlBtn2;
-        //                //bs.Point2 = data.controlBtn3;
-        //                //bs.Point3 = data.controlBtn4;
-        //                bs.Point1 = myarr[1];
-        //                bs.Point2 = data.controlBtn4;
-        //                bs.Point3 = myarr[3]; 
-        //            }
-
-        //        }
+        
     }
 }

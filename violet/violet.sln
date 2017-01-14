@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "violet", "violet\violet.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeLib", "ShapeLib\ShapeLib.csproj", "{CFD0D1ED-70E2-4174-9937-6758F457D53C}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupViolet", "SetupViolet\SetupViolet.vdproj", "{ECE91B06-9341-4F02-96FF-5EB0BAACB610}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,8 +21,6 @@ Global
 		{CFD0D1ED-70E2-4174-9937-6758F457D53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFD0D1ED-70E2-4174-9937-6758F457D53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFD0D1ED-70E2-4174-9937-6758F457D53C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ECE91B06-9341-4F02-96FF-5EB0BAACB610}.Debug|Any CPU.ActiveCfg = Debug
-		{ECE91B06-9341-4F02-96FF-5EB0BAACB610}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -33,26 +33,7 @@ namespace ShapeLib.VShape
     //public  delegate void mouseClick(object sender, RibbonControlEventArgs e);
     public class shapeUI
     {
-        //static string _codebase;
-        //public String codebase { get {
-        //        if (String.IsNullOrEmpty(_codebase))
-        //            _codebase = getcodebase();
-        //        return _codebase;
-        //    } }
-
-        //string  getcodebase()
-        //{
-        //    System.Reflection.Assembly assemblyInfo = System.Reflection.Assembly.GetExecutingAssembly();
-
-        //    string assemblyLocation = assemblyInfo.Location;
-
-
-        //    Uri uriCodeBase = new Uri(assemblyInfo.CodeBase);
-        //    String ClickOnceLocation = System.IO.Path.GetDirectoryName(uriCodeBase.LocalPath.ToString());
-        //    return ClickOnceLocation+@"\";
-
-        //}
-
+     
         public shapeUIType uitype;
         public System.Drawing.Image image;
         public String label;
@@ -66,14 +47,7 @@ namespace ShapeLib.VShape
     {
 
         gPath currPath;
-        //int drawtype=0;
-        System.Windows.Point p0, p1, p2, p3 = new System.Windows.Point(0, 0); //紀錄四個控制點使用
-        //Line myLine;
-        int xStart;
-        int yStart;
-        int xEnd;
-        int yEnd;
-
+     
         public virtual System.Collections.ArrayList getMenuItem()
         {
 
@@ -164,6 +138,7 @@ namespace ShapeLib.VShape
 
         }
 
+        //從xml 生成data
         public ShapeObj Create(string svg)
         {
             throw new NotImplementedException();
@@ -174,6 +149,7 @@ namespace ShapeLib.VShape
             throw new NotImplementedException();
         }
 
+        //存檔時存生xml 
         public string SVGString()
         {
             throw new NotImplementedException();
