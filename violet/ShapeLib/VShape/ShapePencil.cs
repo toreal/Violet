@@ -71,6 +71,7 @@ namespace ShapeLib.VShape
         int extra ;
         int sx;
         int sy;
+	byte r, g, b;
 
            public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
@@ -78,6 +79,9 @@ namespace ShapeLib.VShape
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
+		r = data.state.colorR;
+                g = data.state.colorG;
+                b = data.state.colorB;
                 sx = (int)data.controlBtn1.X;
                 sy = (int)data.controlBtn1.Y;
                 plist.Add(new System.Drawing.Point(sx, sy));
@@ -98,7 +102,7 @@ namespace ShapeLib.VShape
                 myLine.Y1 = sy;
                 myLine.X2 = x;
                 myLine.Y2 = y;
-                myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(shapeLib.Data.colorR, shapeLib.Data.colorG, shapeLib.Data.colorB));
+                myLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
                 //myLine.HorizontalAlignment = HorizontalAlignment.Left;
                 //myLine.VerticalAlignment = VerticalAlignment.Center;
                 myLine.StrokeThickness = shapeLib.Data.strokeT;
