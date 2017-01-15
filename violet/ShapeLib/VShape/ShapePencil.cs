@@ -73,9 +73,7 @@ namespace ShapeLib.VShape
         //ArrayList list = new ArrayList();
 
         int extra ;
-       // int sx;
-       // int sy;
-
+	byte r, g, b;
 
            public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
@@ -103,7 +101,10 @@ namespace ShapeLib.VShape
                 gv.baseShape.Add(p);
 
                 Debug.WriteLine("draw pencil");
-
+        		r = data.state.colorR;
+                g = data.state.colorG;
+                b = data.state.colorB;
+        
             }
             else
             {
@@ -113,7 +114,6 @@ namespace ShapeLib.VShape
 
             //shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
         }
-
         private  Path buildShape()
         {
             Path ret = new Path();
@@ -196,7 +196,7 @@ namespace ShapeLib.VShape
 
             shapeLib.Data.pStart = correctPoint(e.GetPosition(mygrid));
 
-            if (this.GetType() != typeof(ShapeCurve) || shapeLib.Data.mClick == 0)
+            //if (this.GetType() != typeof(ShapeCurve) || shapeLib.Data.mClick == 0)
             {
 
                 currPath = new gPath();
