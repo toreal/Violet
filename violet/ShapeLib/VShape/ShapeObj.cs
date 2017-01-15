@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
+//using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -46,7 +46,7 @@ namespace ShapeLib.VShape
     public class ShapeObj : IShapeUI, IDrawing, IUpdateOP, IInsertOP
     {
 
-        gPath currPath;
+         protected gPath currPath;
      
         public virtual System.Collections.ArrayList getMenuItem()
         {
@@ -155,10 +155,11 @@ namespace ShapeLib.VShape
             throw new NotImplementedException();
         }
 
-
+        //依data 繪製,如果是第一次畫要新建shape, 更新的話只要更新最後一點
         public virtual void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
             if (bfirst)
+
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
@@ -276,7 +277,7 @@ namespace ShapeLib.VShape
         }
 
 
-        public void MouseDownInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        public virtual  void MouseDownInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Canvas mygrid = shapeLib.Data.mygrid;
 
@@ -290,19 +291,7 @@ namespace ShapeLib.VShape
             }
             shapeLib.Data.tempStart = shapeLib.Data.pStart;
             shapeLib.Data.bCanMove = true;
-            //if (shapeLib.Data.drawtype == 5)
-            //{
-            //    if (shapeLib.Data.gdc.selIndex < 0)
-            //    {
-            //        shapeLib.Data.gdc.selIndex = shapeLib.Data.gdc.sroot.PathList.Count - 1;
-            //    }
-            //}
-            //else
-            //{
-            //    shapeLib.Data.gdc.selIndex = -1;
-            //}
-
-            // throw new NotImplementedException();
+         
         }
 
         public virtual void MouseUpInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -416,7 +405,7 @@ namespace ShapeLib.VShape
             //throw new NotImplementedException();
         }
 
-        public void MouseMoveInsert(object sender, System.Windows.Input.MouseEventArgs e)
+        public virtual  void MouseMoveInsert(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas mygrid = shapeLib.Data.mygrid;
 
@@ -478,32 +467,8 @@ namespace ShapeLib.VShape
                         }
                     }
                     remGPath(px, py, ex, ey);
-                    //xStart=(int)px;
-                    //yStart = (int)py;
-                    //xEnd = (int)ex;
-                    //yEnd = (int)ey;
                     currPath.redraw(0);
-
-
-                    //switch (shapeLib.Data.drawtype)
-                    //{
-                    //    case 1:
-                    //        mygrid.drawEllipse((int)px, (int)py, (int)ex, (int)ey);
-                    //        myEllipse.Opacity = 0.5;
-                    //        break;
-                    //    case 2:
-                    //        mygrid.drawRect((int)px, (int)py, (int)ex, (int)ey, 0);
-                    //        myRect.Opacity = 0.5;
-                    //        break;
-                    //    case 3:
-                    //        mygrid.drawLine((int)px, (int)py, (int)ex, (int)ey);
-                    //        myLine.Opacity = 0.5;
-                    //        break;
-                    //    case 4:
-                    //        mygrid.drawCurve((int)px, (int)py, (int)ex, (int)ey);
-                    //        myPath.Opacity = 0.5;
-                    //        break;
-                    //}
+                    
                 }
             }
 
@@ -512,7 +477,7 @@ namespace ShapeLib.VShape
 
 
         /*--------------  其他功能  --------------*/
-        private void remGPath(double px, double py, double ex, double ey) //儲存新繪製的圖形資料
+        protected void remGPath(double px, double py, double ex, double ey) //儲存新繪製的圖形資料
         {
             currPath.state.colorB = shapeLib.Data.colorB;
             currPath.state.colorG = shapeLib.Data.colorG;
@@ -555,7 +520,11 @@ namespace ShapeLib.VShape
                 Debug.WriteLine(currPath.controlBtn4);
                 Debug.WriteLine(px.ToString() + "," + py.ToString() + "_______________________" + shapeLib.Data.mClick.ToString());
             }
-            else
+            else if(this.GetType() == typeof(ShapePencil))
+            {
+                currPath.pList.Add(new Point(ex,ey));
+
+            }else
             {
                 currPath.controlBtn1 = new System.Windows.Point(px, py);
                 currPath.controlBtn4 = new System.Windows.Point(ex, ey);
@@ -569,7 +538,7 @@ namespace ShapeLib.VShape
         }
 
 
-        private System.Windows.Point correctPoint(System.Windows.Point p)
+        protected System.Windows.Point correctPoint(System.Windows.Point p)
         {
             int lineSpace = shapeLib.Data.lineSpace;
             System.Windows.Point temp = p;

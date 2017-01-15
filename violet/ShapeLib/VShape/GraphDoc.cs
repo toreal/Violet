@@ -237,7 +237,7 @@ namespace ShapeLib.VShape
         public System.Windows.Point controlBtn4;
         public String Text = "";
         bool _isSel;
-
+        public List<Point> pList = new List<Point>();
         public bool isSel
         {
             get {             
@@ -428,6 +428,11 @@ namespace ShapeLib.VShape
             controlBtn2 = obj.controlBtn2;
             controlBtn3 = obj.controlBtn3;
             controlBtn4 = obj.controlBtn4;
+
+            foreach(Point p in obj.pList)
+            {
+                pList.Add(p);
+            }
         }
 
     }
