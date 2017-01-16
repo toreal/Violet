@@ -66,14 +66,14 @@ namespace ShapeLib.VShape
         }
 
 
-        Point[] plist ;
+    //    Point[] plist ;
 
-        ArrayList addlist = new ArrayList();
+      //  ArrayList addlist = new ArrayList();
 
         //ArrayList list = new ArrayList();
 
         int extra ;
-	byte r, g, b;
+    	byte r, g, b;
 
            public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
@@ -81,43 +81,48 @@ namespace ShapeLib.VShape
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
-                //   sx = (int)data.controlBtn1.X;
-                //  sy = (int)data.controlBtn1.Y;
-                //  plist.Add(new System.Drawing.Point(sx, sy));
-                //   shapeLib.Data.mygrid.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
+                Path p = buildShape(data);
 
-                int m = addlist.Count;
-                plist = new Point[m + 2];
-                addlist.CopyTo(plist,1);
-                plist[0] = plist[1];
-                plist[m+1] = plist[m];
-             
+                r = data.state.colorR;
+                g = data.state.colorG;
+                b = data.state.colorB;
 
-                Path p = buildShape();
-
-                p.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 255, 0));
+                p.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r,g,b));
                 p.StrokeThickness = shapeLib.Data.strokeT;
+               // p.StrokeEndLineCap = PenLineCap.Round;
+               // p.StrokeStartLineCap = PenLineCap.Flat;
                 shapeLib.Data.mygrid.Children.Add(p);
                 gv.baseShape.Add(p);
 
                 Debug.WriteLine("draw pencil");
-        		r = data.state.colorR;
-                g = data.state.colorG;
-                b = data.state.colorB;
         
             }
             else
             {
+                Path myLine = (Path)gv.baseShape[0];
+
+                buildShape(data, myLine);
 
             }
             
 
             //shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
         }
-        private  Path buildShape()
+        private  Path buildShape(gPath data ,Path old=null)
         {
-            Path ret = new Path();
-            int m = plist.Length;
+            Path ret = old;
+
+            if (old == null)
+            {
+                ret = new Path();
+            }
+            int m = data.pList.Count;
+            Point[]    plist = new Point[m + 3];
+            data.pList.CopyTo(plist, 1);
+            plist[0] = plist[1] ;
+            plist[m + 1] = plist[m+2]= data.controlBtn4;
+            m = m +3;
+
             int MAX_STEPS = 10;
 
             PathFigure myPathFigure = new PathFigure();
@@ -188,23 +193,35 @@ namespace ShapeLib.VShape
 
             return ret;
         }
-       
+
+
 
         public override void MouseDownInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Right)
+           // if (e.RightButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                shapeLib.Data.gdc.writeIn(currPath, 0);
+                shapeLib.Data.gdc.Release();
+                shapeLib.Data.mClick = 0;
+                return;
+
+            }
+
+
             Canvas mygrid = shapeLib.Data.mygrid;
 
-            shapeLib.Data.pStart = correctPoint(e.GetPosition(mygrid));
+            shapeLib.Data.pStart = e.GetPosition(mygrid);
 
-            //if (this.GetType() != typeof(ShapeCurve) || shapeLib.Data.mClick == 0)
+            if ( shapeLib.Data.mClick == 0)
             {
 
                 currPath = new gPath();
                 currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);
+                currPath.pList.Add(shapeLib.Data.pStart);
             }
-            //shapeLib.Data.tempStart = shapeLib.Data.pStart;
+            shapeLib.Data.tempStart = shapeLib.Data.pStart;
             shapeLib.Data.bCanMove = true;
-           addlist.Add(shapeLib.Data.pStart);
 
         }
 
@@ -212,17 +229,21 @@ namespace ShapeLib.VShape
         {
             Canvas mygrid = shapeLib.Data.mygrid;
 
-            if (shapeLib.Data.bCanMove)
+        
+
+            if (shapeLib.Data.bCanMove && e.ChangedButton== MouseButton.Left)
             {
-                shapeLib.Data.pEnd = correctPoint(e.GetPosition(mygrid));
+                shapeLib.Data.pEnd = e.GetPosition(mygrid);
                 double tempX, tempY;
                 double px = shapeLib.Data.pStart.X;
                 double py = shapeLib.Data.pStart.Y;
                 double ex = shapeLib.Data.pEnd.X;
                 double ey = shapeLib.Data.pEnd.Y;
 
-                if (px == ex && py == ey) //click
+               // if (px == ex && py == ey) //click
                 {
+                        currPath.pList.Add(new Point(ex, ey));
+
                     //
                     Debug.WriteLine("click");
                     remGPath(px, py, ex, ey);
@@ -230,13 +251,13 @@ namespace ShapeLib.VShape
 
                     shapeLib.Data.mClick++;
 
-                    if (this.GetType() == typeof(ShapeCurve) && shapeLib.Data.mClick >= 3)
-                    {
-                        currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
-                        shapeLib.Data.gdc.writeIn(currPath, 0);
-                        shapeLib.Data.gdc.Release();
-                        shapeLib.Data.mClick = 0;
-                    }
+                    //if (this.GetType() == typeof(ShapeCurve) && shapeLib.Data.mClick >= 3)
+                    //{
+                    //    currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
+                    //    shapeLib.Data.gdc.writeIn(currPath, 0);
+                    //    shapeLib.Data.gdc.Release();
+                    //    shapeLib.Data.mClick = 0;
+                    //}
 
 
                     foreach (gPath gp in shapeLib.Data.multiSelList)
@@ -249,21 +270,18 @@ namespace ShapeLib.VShape
                     shapeLib.Data.multiSelList.Clear();
                     return;
                 }
-              
-                remGPath(px, py, ex, ey);
+                //remGPath(px, py, ex, ey);
+                //{
+                //    currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
+                //    shapeLib.Data.gdc.writeIn(currPath, 0);
+                //    shapeLib.Data.gdc.Release();
+                //}
+                //shapeLib.Data.gdc.bmove = false;
+                //if (shapeLib.Data.Status.Equals("rest"))
+                //    currPath.redraw(1);
 
-                // || shapeLib.Data.mClick >=2 )
-                {
-                    currPath.drawtype = shapeLib.SupportedShape(null).IndexOf(this);//line,在shaplib 中的位置
-                    shapeLib.Data.gdc.writeIn(currPath, 0);
-                    shapeLib.Data.gdc.Release();
-                }
-                shapeLib.Data.gdc.bmove = false;
-                if (shapeLib.Data.Status.Equals("rest"))
-                    currPath.redraw(1);
-
-                shapeLib.Data.bfirst = true;
-                shapeLib.Data.bhave = false;
+                //shapeLib.Data.bfirst = true;
+                //shapeLib.Data.bhave = false;
             }
             //throw new NotImplementedException();
         }
@@ -272,17 +290,18 @@ namespace ShapeLib.VShape
         {
             Canvas mygrid = shapeLib.Data.mygrid;
 
-            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+           
+
+            if ( currPath!= null && shapeLib.Data.mClick > 0)
             {
                 //   if (!shapeLib.Data.bhave) //if you can control an object
                 {
-                    shapeLib.Data.pEnd = correctPoint(e.GetPosition(mygrid));
+                    shapeLib.Data.pEnd =e.GetPosition(mygrid);
                     double tempX, tempY;
                     double px = shapeLib.Data.pStart.X;
                     double py = shapeLib.Data.pStart.Y;
                     double ex = shapeLib.Data.pEnd.X;
                     double ey = shapeLib.Data.pEnd.Y;
-
 
                     remGPath(px, py, ex, ey);
                     currPath.redraw(0);
@@ -290,6 +309,8 @@ namespace ShapeLib.VShape
                 }
             }
 
+            
+  
             //throw new NotImplementedException();
         }
 

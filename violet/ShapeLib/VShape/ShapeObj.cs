@@ -33,7 +33,7 @@ namespace ShapeLib.VShape
     //public  delegate void mouseClick(object sender, RibbonControlEventArgs e);
     public class shapeUI
     {
-     
+
         public shapeUIType uitype;
         public System.Drawing.Image image;
         public String label;
@@ -46,8 +46,8 @@ namespace ShapeLib.VShape
     public class ShapeObj : IShapeUI, IDrawing, IUpdateOP, IInsertOP
     {
 
-         protected gPath currPath;
-     
+        protected gPath currPath;
+
         public virtual System.Collections.ArrayList getMenuItem()
         {
 
@@ -98,13 +98,13 @@ namespace ShapeLib.VShape
 
                 foreach (ShapeObj obj in ret)
                 {
-                    shapeLib.Data.mygrid.MouseLeftButtonUp -= obj.MouseUpInsert;
+                    shapeLib.Data.mygrid.MouseUp -= obj.MouseUpInsert;
                     shapeLib.Data.mygrid.MouseMove -= obj.MouseMoveInsert;
-                    shapeLib.Data.mygrid.MouseLeftButtonDown -= obj.MouseDownInsert;
+                    shapeLib.Data.mygrid.MouseDown -= obj.MouseDownInsert;
 
-                    shapeLib.Data.mygrid.MouseLeftButtonUp -= obj.MouseDownUpdate;
+                    shapeLib.Data.mygrid.MouseUp -= obj.MouseDownUpdate;
                     shapeLib.Data.mygrid.MouseMove -= obj.MouseMoveUpdate;
-                    shapeLib.Data.mygrid.MouseLeftButtonDown -= obj.MouseUpUpdate;
+                    shapeLib.Data.mygrid.MouseDown -= obj.MouseUpUpdate;
 
                     shapeLib.Data.Root.KeyDown -= obj.FormKeyDown;
                     shapeLib.Data.Root.KeyDown += obj.FormKeyDown;
@@ -113,9 +113,9 @@ namespace ShapeLib.VShape
 
                 if (ntype == 0)
                 {
-                    shapeLib.Data.mygrid.MouseLeftButtonUp += this.MouseUpInsert;
+                    shapeLib.Data.mygrid.MouseUp += this.MouseUpInsert;
                     shapeLib.Data.mygrid.MouseMove += this.MouseMoveInsert;
-                    shapeLib.Data.mygrid.MouseLeftButtonDown += this.MouseDownInsert;
+                    shapeLib.Data.mygrid.MouseDown += this.MouseDownInsert;
 
 
                 }
@@ -277,13 +277,13 @@ namespace ShapeLib.VShape
         }
 
 
-        public virtual  void MouseDownInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        public virtual void MouseDownInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Canvas mygrid = shapeLib.Data.mygrid;
 
             shapeLib.Data.pStart = correctPoint(e.GetPosition(mygrid));
 
-            if (this.GetType() != typeof(ShapeCurve) || shapeLib.Data.mClick == 0)
+            if ((this.GetType() != typeof(ShapeCurve) && this.GetType() != typeof(ShapePencil)) || shapeLib.Data.mClick == 0)
             {
 
                 currPath = new gPath();
@@ -291,7 +291,7 @@ namespace ShapeLib.VShape
             }
             shapeLib.Data.tempStart = shapeLib.Data.pStart;
             shapeLib.Data.bCanMove = true;
-         
+
         }
 
         public virtual void MouseUpInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -309,6 +309,12 @@ namespace ShapeLib.VShape
 
                 if (px == ex && py == ey) //click
                 {
+                    if (this.GetType() == typeof(ShapePencil))
+                    {
+                        currPath.pList.Add(new Point(ex, ey));
+
+                    }
+
                     //
                     Debug.WriteLine("click");
                     remGPath(px, py, ex, ey);
@@ -405,7 +411,7 @@ namespace ShapeLib.VShape
             //throw new NotImplementedException();
         }
 
-        public virtual  void MouseMoveInsert(object sender, System.Windows.Input.MouseEventArgs e)
+        public virtual void MouseMoveInsert(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Canvas mygrid = shapeLib.Data.mygrid;
 
@@ -468,8 +474,17 @@ namespace ShapeLib.VShape
                     }
                     remGPath(px, py, ex, ey);
                     currPath.redraw(0);
-                    
+
                 }
+            }
+            else
+            {
+                if (this.GetType() == typeof(ShapePencil))
+                {
+
+                }
+
+
             }
 
             //throw new NotImplementedException();
@@ -520,11 +535,7 @@ namespace ShapeLib.VShape
                 Debug.WriteLine(currPath.controlBtn4);
                 Debug.WriteLine(px.ToString() + "," + py.ToString() + "_______________________" + shapeLib.Data.mClick.ToString());
             }
-            else if(this.GetType() == typeof(ShapePencil))
-            {
-                currPath.pList.Add(new Point(ex,ey));
-
-            }else
+            else
             {
                 currPath.controlBtn1 = new System.Windows.Point(px, py);
                 currPath.controlBtn4 = new System.Windows.Point(ex, ey);
