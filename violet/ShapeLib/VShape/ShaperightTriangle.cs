@@ -44,7 +44,7 @@ namespace ShapeLib.VShape
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
 
-                Polyline myTri = new Polyline();
+                Polygon myTri = new Polygon();
 
                 //        //如果要繪製中心顏色，可開啟這段
                 SolidColorBrush mySolidColorBrush = new SolidColorBrush();
@@ -53,7 +53,7 @@ namespace ShapeLib.VShape
                 Points.Add(data.controlBtn1);
                 Points.Add(data.controlBtn3);
                 Points.Add(data.controlBtn4);
-                Points.Add(data.controlBtn1);
+               // Points.Add(data.controlBtn1);
                 
 
                 myTri.Points = new PointCollection(Points);          
@@ -69,12 +69,12 @@ namespace ShapeLib.VShape
             }
             else
             {
-                Polyline myTri = (Polyline)gv.baseShape[0];// =(Line) currPath.getDrawShape();
+                Polygon myTri = (Polygon)gv.baseShape[0];// =(Line) currPath.getDrawShape();
                 PointCollection Points = new PointCollection();
                 Points.Add(data.controlBtn1);
                 Points.Add(data.controlBtn3);
                 Points.Add(data.controlBtn4);
-                Points.Add(data.controlBtn1);
+             //   Points.Add(data.controlBtn1);
                 myTri.Points = new PointCollection(Points);
                         
             }

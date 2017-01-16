@@ -43,7 +43,7 @@ namespace ShapeLib.VShape
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
 
-                Polyline myTri = new Polyline();
+                Polygon myTri = new Polygon();
 
                 //        //如果要繪製中心顏色，可開啟這段
                 myTri.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
@@ -52,7 +52,7 @@ namespace ShapeLib.VShape
                 Points.Add(new System.Windows.Point(data.controlBtn1.X + (data.controlBtn4.X - data.controlBtn1.X) / 2, data.controlBtn1.Y));
                 Points.Add(new System.Windows.Point(data.controlBtn1.X , data.controlBtn4.Y));
                 Points.Add(new System.Windows.Point(data.controlBtn4.X , data.controlBtn4.Y));
-                Points.Add(new System.Windows.Point(data.controlBtn1.X + (data.controlBtn4.X - data.controlBtn1.X) / 2, data.controlBtn1.Y));
+              //  Points.Add(new System.Windows.Point(data.controlBtn1.X + (data.controlBtn4.X - data.controlBtn1.X) / 2, data.controlBtn1.Y));
 
                 myTri.Points = new PointCollection(Points);
                 myTri.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
@@ -67,12 +67,12 @@ namespace ShapeLib.VShape
             }
             else
             {
-                Polyline myTri = (Polyline)gv.baseShape[0];// =(Line) currPath.getDrawShape();
+                Polygon myTri = (Polygon)gv.baseShape[0];// =(Line) currPath.getDrawShape();
                 PointCollection Points = new PointCollection();
                 Points.Add(new System.Windows.Point(data.controlBtn1.X + (data.controlBtn4.X - data.controlBtn1.X) / 2, data.controlBtn1.Y));
                 Points.Add(new System.Windows.Point(data.controlBtn1.X, data.controlBtn4.Y));
                 Points.Add(new System.Windows.Point(data.controlBtn4.X, data.controlBtn4.Y));
-                Points.Add(new System.Windows.Point(data.controlBtn1.X + (data.controlBtn4.X - data.controlBtn1.X) / 2, data.controlBtn1.Y));
+             //   Points.Add(new System.Windows.Point(data.controlBtn1.X + (data.controlBtn4.X - data.controlBtn1.X) / 2, data.controlBtn1.Y));
                 myTri.Points = new PointCollection(Points);
 
             }
