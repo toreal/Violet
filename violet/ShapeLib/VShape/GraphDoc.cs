@@ -164,6 +164,7 @@ namespace ShapeLib.VShape
             {
                 gPath tempPath = new gPath();
                 saveState tempPA ;
+                shapeLib.Data.mClick = 0;
 
                 tempPA = (saveState)UndoStack.Pop();
 
