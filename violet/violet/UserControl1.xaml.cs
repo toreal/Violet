@@ -112,104 +112,104 @@ namespace violet
             myControl.Visibility = Visibility.Visible;
         }
 
-        //繪製曲線
-        void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
-        {
-            if (bfirst)
-            {
-                if (Status.Equals("rest"))
-                {
-                    bfirst = false;
-                    bezier = new BezierSegment();
-                    bezier.Point3 = new Point(xEnd, yEnd);
-                    figure = new PathFigure();
-                    figure.StartPoint = new Point(xStart, yStart);
-                    bezier.Point1 = figure.StartPoint;
-                    bezier.Point2 = bezier.Point3;
-                    p0 = figure.StartPoint;
-                    p1 = bezier.Point1;
-                    figure.Segments.Add(bezier);
-                    geometry = new PathGeometry();
-                    geometry.Figures.Add(figure);
-                    myPath = new System.Windows.Shapes.Path();
-                    myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
-                    myPath.StrokeThickness = strokeT;
-                    myPath.Data = geometry;
+        ////繪製曲線
+        //void drawCurve(int xStart, int yStart, int xEnd, int yEnd)
+        //{
+        //    if (bfirst)
+        //    {
+        //        if (Status.Equals("rest"))
+        //        {
+        //            bfirst = false;
+        //            bezier = new BezierSegment();
+        //            bezier.Point3 = new Point(xEnd, yEnd);
+        //            figure = new PathFigure();
+        //            figure.StartPoint = new Point(xStart, yStart);
+        //            bezier.Point1 = figure.StartPoint;
+        //            bezier.Point2 = bezier.Point3;
+        //            p0 = figure.StartPoint;
+        //            p1 = bezier.Point1;
+        //            figure.Segments.Add(bezier);
+        //            geometry = new PathGeometry();
+        //            geometry.Figures.Add(figure);
+        //            myPath = new System.Windows.Shapes.Path();
+        //            myPath.Stroke = new SolidColorBrush(Color.FromRgb(colorR, colorG, colorB));
+        //            myPath.StrokeThickness = strokeT;
+        //            myPath.Data = geometry;
 
-                    mygrid.Children.Add(myPath);
-                    Status = "work1";
-                }
-                else if (Status.Equals("work1"))
-                {
-                    bfirst = false;
-                    mygrid.Children.Remove(myPath);
-                    bezier.Point1 = new Point(xEnd, yEnd);
-                    bezier.Point3 = p3;
-                    figure = new PathFigure();
-                    figure.StartPoint = p0;
-                    figure.Segments.Add(bezier);
-                    geometry = new PathGeometry();
-                    geometry.Figures.Add(figure);
-                    myPath.Data = geometry;
+        //            mygrid.Children.Add(myPath);
+        //            Status = "work1";
+        //        }
+        //        else if (Status.Equals("work1"))
+        //        {
+        //            bfirst = false;
+        //            mygrid.Children.Remove(myPath);
+        //            bezier.Point1 = new Point(xEnd, yEnd);
+        //            bezier.Point3 = p3;
+        //            figure = new PathFigure();
+        //            figure.StartPoint = p0;
+        //            figure.Segments.Add(bezier);
+        //            geometry = new PathGeometry();
+        //            geometry.Figures.Add(figure);
+        //            myPath.Data = geometry;
 
-                    mygrid.Children.Add(myPath);
-                    Status = "work2";
-                }
-                else if (Status.Equals("work2"))
-                {
-                    bfirst = false;
-                    mygrid.Children.Remove(myPath);
-                    bezier.Point2 = new Point(xEnd, yEnd);
-                    bezier.Point1 = p1;
-                    bezier.Point3 = p3;
-                    figure = new PathFigure();
-                    figure.StartPoint = p0;
-                    figure.Segments.Add(bezier);
-                    geometry = new PathGeometry();
-                    geometry.Figures.Add(figure);
-                    myPath.Data = geometry;
-                    tempGeo = geometry;
-                    mygrid.Children.Add(myPath);
-                    Status = "rest";
-                }
-            }
-            else
-            {
-                if (Status.Equals("work1"))
-                {
-                    bezier.Point3 = new Point(xEnd, yEnd);
-                    p3 = bezier.Point3;
-                    bezier.Point2 = bezier.Point3;
-                    p2 = bezier.Point2;
-                }
-                else if (Status.Equals("work2"))
-                {
-                    bezier.Point1 = new Point(xEnd, yEnd);
-                    p1 = bezier.Point1;
-                }
-                else if (Status.Equals("rest"))
-                {
-                    bezier.Point2 = new Point(xEnd, yEnd);
-                    p2 = bezier.Point2;
-                }
-            }
-        }
-        //換鼠標
-        void Shapes_MouseEnter_Hands(object sender, MouseEventArgs e)
-        {
-           // OnIt = true;
-            this.Cursor = System.Windows.Input.Cursors.Hand;
-        }
-        void Shapes_MouseEnter_SizeAll(object sender, MouseEventArgs e)
-        {
-        //    OnIt = true;
-            this.Cursor = System.Windows.Input.Cursors.SizeAll;
-        }
-        void Shapes_MouseLeave(object sender, MouseEventArgs e)
-        {
-          //  OnIt = false;
-            this.Cursor = System.Windows.Input.Cursors.Arrow;
-        }
+        //            mygrid.Children.Add(myPath);
+        //            Status = "work2";
+        //        }
+        //        else if (Status.Equals("work2"))
+        //        {
+        //            bfirst = false;
+        //            mygrid.Children.Remove(myPath);
+        //            bezier.Point2 = new Point(xEnd, yEnd);
+        //            bezier.Point1 = p1;
+        //            bezier.Point3 = p3;
+        //            figure = new PathFigure();
+        //            figure.StartPoint = p0;
+        //            figure.Segments.Add(bezier);
+        //            geometry = new PathGeometry();
+        //            geometry.Figures.Add(figure);
+        //            myPath.Data = geometry;
+        //            tempGeo = geometry;
+        //            mygrid.Children.Add(myPath);
+        //            Status = "rest";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (Status.Equals("work1"))
+        //        {
+        //            bezier.Point3 = new Point(xEnd, yEnd);
+        //            p3 = bezier.Point3;
+        //            bezier.Point2 = bezier.Point3;
+        //            p2 = bezier.Point2;
+        //        }
+        //        else if (Status.Equals("work2"))
+        //        {
+        //            bezier.Point1 = new Point(xEnd, yEnd);
+        //            p1 = bezier.Point1;
+        //        }
+        //        else if (Status.Equals("rest"))
+        //        {
+        //            bezier.Point2 = new Point(xEnd, yEnd);
+        //            p2 = bezier.Point2;
+        //        }
+        //    }
+        //}
+        ////換鼠標
+        //void Shapes_MouseEnter_Hands(object sender, MouseEventArgs e)
+        //{
+        //   // OnIt = true;
+        //    this.Cursor = System.Windows.Input.Cursors.Hand;
+        //}
+        //void Shapes_MouseEnter_SizeAll(object sender, MouseEventArgs e)
+        //{
+        ////    OnIt = true;
+        //    this.Cursor = System.Windows.Input.Cursors.SizeAll;
+        //}
+        //void Shapes_MouseLeave(object sender, MouseEventArgs e)
+        //{
+        //  //  OnIt = false;
+        //    this.Cursor = System.Windows.Input.Cursors.Arrow;
+        //}
 
         /*--------------  鍵盤事件  --------------*/
         private void UserControl_KeyDown(object sender, KeyEventArgs e) //鍵盤按鍵按下

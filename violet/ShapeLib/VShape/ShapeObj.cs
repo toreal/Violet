@@ -96,6 +96,9 @@ namespace ShapeLib.VShape
             {
                 IList<ShapeObj> ret = shapeLib.SupportedShape(null);
 
+                shapeLib.Data.UItype = ret.IndexOf(this);
+
+
                 foreach (ShapeObj obj in ret)
                 {
                     shapeLib.Data.mygrid.MouseUp -= obj.MouseUpInsert;
@@ -111,6 +114,7 @@ namespace ShapeLib.VShape
 
                 }
 
+                
                 if (ntype == 0)
                 {
                     shapeLib.Data.mygrid.MouseUp += this.MouseUpInsert;
@@ -309,12 +313,7 @@ namespace ShapeLib.VShape
 
                 if (px == ex && py == ey) //click
                 {
-                    if (this.GetType() == typeof(ShapePencil))
-                    {
-                        currPath.pList.Add(new Point(ex, ey));
-
-                    }
-
+        
                     //
                     Debug.WriteLine("click");
                     remGPath(px, py, ex, ey);
@@ -343,13 +342,13 @@ namespace ShapeLib.VShape
                 }
                 if (this.GetType() == typeof(ShapeRectangle))
                 {
-                    if (shapeLib.Data.drawtype != 3 && ex < px)
+                    if ( ex < px)
                     {
                         tempX = ex;
                         ex = px;
                         px = tempX;
                     }
-                    if (shapeLib.Data.drawtype != 3 && ey < py)
+                    if ( ey < py)
                     {
                         tempY = ey;
                         ey = py;

@@ -369,10 +369,13 @@ namespace ShapeLib.VShape
         }
         public void myLine_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if ( isSel)
-                shapeLib.Data.mygrid.Cursor = Cursors.SizeAll;
-            else 
-                shapeLib.Data.mygrid.Cursor= Cursors.Hand;
+            if (shapeLib.Data.UItype < 0)
+            {
+                if (isSel)
+                    shapeLib.Data.mygrid.Cursor = Cursors.SizeAll;
+                else
+                    shapeLib.Data.mygrid.Cursor = Cursors.Hand;
+            }
          //   throw new NotImplementedException();
         }
 
@@ -386,7 +389,7 @@ namespace ShapeLib.VShape
 
        public   void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-           // if (shapeLib.Data.drawtype == 5)
+            if (shapeLib.Data.UItype <0)
             {
                 //檢查是否有按下shift
                 if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)

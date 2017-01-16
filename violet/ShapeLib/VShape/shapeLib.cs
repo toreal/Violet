@@ -115,7 +115,7 @@ namespace ShapeLib.VShape
     {
         public getForm view;
         public int lineSpace = 9;
-        public int drawtype = 1;
+        public int UItype = 1;
         public String colortype = "black";
         public GraphDoc gdc = new GraphDoc();
         public Canvas mygrid;

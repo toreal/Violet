@@ -87,6 +87,7 @@ namespace violet
             this.white_btn = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group2.SuspendLayout();
+            this.SuspendLayout();
             // 
             // tab1
             // 
@@ -297,6 +298,7 @@ namespace violet
             this.tab1.PerformLayout();
             this.group2.ResumeLayout(false);
             this.group2.PerformLayout();
+            this.ResumeLayout(false);
 
         }
 

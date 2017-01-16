@@ -241,9 +241,9 @@ namespace violet
         private void selBtn_Click(object sender, RibbonControlEventArgs e)
         {
             Check();
-            f.setDrawType(5);
+            //f.setDrawType(5);
 
-           shapeLib.Data.drawtype = 5;
+           shapeLib.Data.UItype = -1;
 
         }
         private void redo_Click(object sender, RibbonControlEventArgs e)
