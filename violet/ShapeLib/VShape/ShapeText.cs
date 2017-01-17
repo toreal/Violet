@@ -23,6 +23,7 @@ namespace ShapeLib.VShape
         System.Windows.Controls.TextBox textBox = new System.Windows.Controls.TextBox();
         double x, y;
         byte r, g, b;
+        Boolean last = false;
         public override System.Collections.ArrayList getMenuItem()
         {
             ArrayList ret = new ArrayList();
@@ -32,7 +33,7 @@ namespace ShapeLib.VShape
             System.IO.Stream myStream = myAssembly.GetManifestResourceStream("ShapeLib.icons.text.png");
             ui.image = new System.Drawing.Bitmap(myStream);
 
-            
+
             ui.belong = "Shapes";
             ui.click = this.btn_Click;
             ret.Add(ui);
@@ -45,7 +46,7 @@ namespace ShapeLib.VShape
         //    txt += e.Key.ToString();
 
         //}
-       
+
         public void LeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             txt = textBox.Text;
@@ -56,20 +57,28 @@ namespace ShapeLib.VShape
             Canvas.SetLeft(textBlock, x);
             Canvas.SetTop(textBlock, y);
             textBlock.Text = txt;
-            txt = null;
-            textBox.Text = null;
             shapeLib.Data.mygrid.Children.Add(textBlock);
+            textBox.Text = null;
+            txt = null;
             shapeLib.Data.mygrid.Children.Remove(textBox);
+            
+
+        }
+        public void RightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            shapeLib.Data.mygrid.Children.Remove(textBox);
+            
         }
 
-      
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
             if (bfirst)
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
-                if (txt == null) { 
+
+                if (txt == null)
+                {
                     x = data.controlBtn1.X;
                     y = data.controlBtn1.Y;
                     r = data.state.colorR;
@@ -83,19 +92,26 @@ namespace ShapeLib.VShape
                     textBox.AcceptsReturn = true;
                     textBox.AcceptsTab = true;
                     txt = textBox.Text;
-                    shapeLib.Data.mygrid.MouseDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
+                    shapeLib.Data.mygrid.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
+
                 }
                 else
                 {
+                    txt = null;
                     textBox.Focus();
+                    
                 }
             }
-           
-           
+            else
+            {
+
+                shapeLib.Data.mygrid.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(RightButtonDown);
+
+            }
+
+
+
         }
     }
-   
-}
-       
 
-    
+}
