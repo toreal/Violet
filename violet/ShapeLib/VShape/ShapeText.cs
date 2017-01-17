@@ -64,16 +64,17 @@ namespace ShapeLib.VShape
             
 
         }
-        public void RightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            shapeLib.Data.mygrid.Children.Remove(textBox);
-            
-        }
+        //public void RightButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    shapeLib.Data.mygrid.Children.Remove(textBox);
+
+        //}
 
         public override void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
             if (bfirst)
             {
+
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
 
@@ -99,17 +100,13 @@ namespace ShapeLib.VShape
                 {
                     txt = null;
                     textBox.Focus();
-                    
+
                 }
-            }
-            else
-            {
-
-                shapeLib.Data.mygrid.MouseRightButtonDown += new System.Windows.Input.MouseButtonEventHandler(RightButtonDown);
-
-            }
+            }else
 
 
+                txt = null;
+           
 
         }
     }
