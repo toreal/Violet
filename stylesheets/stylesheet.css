@@ -7,7 +7,8 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #606c71; }
+  color: #606c71;
+  background-color:#fdf5e6; }
 
 a {
   color: #1e6bb8;
@@ -212,7 +213,9 @@ a {
     max-width: 64rem;
     padding: 2rem 6rem;
     margin: 0 auto;
-    font-size: 1.1rem; } }
+    font-size: 1.1rem; 
+	
+	} }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .main-content {
