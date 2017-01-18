@@ -1,4 +1,3 @@
-C:\james\Violet\violet\violet\obj\Debug\violet.csprojResolveAssemblyReference.cache
 C:\james\Violet\violet\violet\obj\Debug\UserControl1.baml
 C:\james\Violet\violet\violet\obj\Debug\UserControl1.g.cs
 C:\james\Violet\violet\violet\obj\Debug\Violet_MarkupCompile.cache
@@ -18,5 +17,6 @@ C:\james\Violet\violet\violet\bin\Debug\Microsoft.Office.Tools.Word.dll
 C:\james\Violet\violet\violet\bin\Debug\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
 C:\james\Violet\violet\violet\bin\Debug\ShapeLib.dll
 C:\james\Violet\violet\violet\bin\Debug\ShapeLib.pdb
+C:\james\Violet\violet\violet\obj\Debug\violet.csprojResolveAssemblyReference.cache
 C:\james\Violet\violet\violet\obj\Debug\Violet.dll
 C:\james\Violet\violet\violet\obj\Debug\Violet.pdb

@@ -37,7 +37,7 @@
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
     <IsWebBootstrapper>True</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\james\installweb\</PublishUrl>
+    <PublishUrl>C:\james\install\</PublishUrl>
     <InstallUrl>https://github.com/toreal/Violet/raw/master/</InstallUrl>
     <TargetCulture>zh-cht</TargetCulture>
     <ApplicationVersion>1.0.0.20</ApplicationVersion>
@@ -234,6 +234,8 @@
     <EmbeddedResource Include="Ribbon1.resx">
       <DependentUpon>Ribbon1.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="james.pfx" />
+    <None Include="p2.pfx" />
     <None Include="p3.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -385,16 +387,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>p3.pfx</ManifestKeyFile>
+    <ManifestKeyFile>p2.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D04E7D6CEE208476B7F1DCF5E31AE016F83CAD8E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1A6F04993DD934E4796B3A58CF2643B58D2CABBE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>p3.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>james.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
