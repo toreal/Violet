@@ -33,7 +33,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>james.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>so910327.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -90,6 +90,7 @@
     <None Include="p2.pfx" />
     <None Include="p3.pfx" />
     <None Include="packages.config" />
+    <None Include="so910327.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Doc\Design Issues.html" />

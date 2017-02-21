@@ -255,6 +255,7 @@
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="so910327.pfx" />
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.cs</DependentUpon>
     </None>
@@ -387,16 +388,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>p2.pfx</ManifestKeyFile>
+    <ManifestKeyFile>so910327.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1A6F04993DD934E4796B3A58CF2643B58D2CABBE</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D702238181C22413AECFA6DF1CCA5AECD16EC752</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>james.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>so910327.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>

@@ -21,7 +21,7 @@ namespace ShapeLib.VShape
     [XmlRoot(ElementName = "SVGRoot", Namespace = "")]
     public class SVGRoot
     {
-         [XmlElement("PathList")]
+        [XmlElement("PathList")]
         public List<gPath> PathList = new List<gPath>();
     }
     /// <summary>
@@ -31,9 +31,9 @@ namespace ShapeLib.VShape
     /// </summary>
     public class GraphDoc
     {
-       public SVGRoot sroot = new SVGRoot();
-       public List<gView> shapeList = new List<gView>();
-       public List<gPath> FullList = new List<gPath>(); //remember all action from grid
+        public SVGRoot sroot = new SVGRoot();
+        public List<gView> shapeList = new List<gView>();
+        public List<gPath> FullList = new List<gPath>(); //remember all action from grid
         public Stack UndoStack = new Stack();
         public Stack RedoStack = new Stack();
         public int selIndex = -1; // The last seat in PathList array
@@ -41,7 +41,7 @@ namespace ShapeLib.VShape
         public int mx;
         public int my;
         public bool bmove;
-      
+
         public int checkWhich(gPath gp)
         {
             int whichOne = -1;
@@ -74,7 +74,7 @@ namespace ShapeLib.VShape
         {
             foreach (gPath gp in sroot.PathList)
             {
-                if ( !gp.IsDelete )
+                if (!gp.IsDelete)
                 {
                     gp.redraw(1);
 
@@ -93,27 +93,27 @@ namespace ShapeLib.VShape
 
 
             saveState pa;
-                
-            int lens =RedoStack.Count;            
-             RedoStack.Clear();
-             FullList.RemoveRange(FullList.Count - lens, lens);
 
-            
+            int lens = RedoStack.Count;
+            RedoStack.Clear();
+            FullList.RemoveRange(FullList.Count - lens, lens);
+
+
 
             if (Action == 0)//新增動作
             {
                 gPath g = new gPath();
                 //等一下會加入到list 中,所以count 正好為其在list  所在的位置
-                pa = new saveState(Action, sroot.PathList.Count, (FullList.Count ));
-                
+                pa = new saveState(Action, sroot.PathList.Count, (FullList.Count));
+
                 UndoStack.Push(pa);
                 g.copyVal(Data);
                 FullList.Add(Data);
                 sroot.PathList.Add(g);
             }
             else  //修改動作(物件已存在)
-            {                               
-                pa = new saveState(Action, Data.ListPlace, FullList.Count );
+            {
+                pa = new saveState(Action, Data.ListPlace, FullList.Count);
                 FullList.Add(Data);
                 UndoStack.Push(pa);
             }
@@ -129,28 +129,28 @@ namespace ShapeLib.VShape
             if (RedoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
-                saveState tempPA ;
+                saveState tempPA;
 
                 tempPA = (saveState)RedoStack.Pop();
 
                 if (tempPA.currSate >= 0 && tempPA.currSate < FullList.Count)
                 {
                     tempPath.copyVal(FullList[tempPA.currSate]);
-                 
+
 
                     if (tempPA.Action == 0)
                         sroot.PathList[tempPA.GraphIndex].IsDelete = false;
 
                     sroot.PathList[tempPA.GraphIndex] = tempPath;
                     sroot.PathList[tempPA.GraphIndex].redraw(1);
-                      
+
                 }
                 else
                 {
-                   // sroot.PathList.RemoveAt(tempPA.GraphIndex);
+                    // sroot.PathList.RemoveAt(tempPA.GraphIndex);
                 }
                 UndoStack.Push(tempPA);
-                
+
             }
         }
 
@@ -163,34 +163,35 @@ namespace ShapeLib.VShape
             if (UndoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
-                saveState tempPA ;
+                saveState tempPA;
                 shapeLib.Data.mClick = 0;
 
                 tempPA = (saveState)UndoStack.Pop();
 
                 if (tempPA.currSate >= 0 && tempPA.currSate < FullList.Count)
                 {
-                    if ( tempPA.Action ==0)
+                    if (tempPA.Action == 0)
                     {
 
                         sroot.PathList[tempPA.GraphIndex].IsDelete = true;
- 
-                    }else
+
+                    }
+                    else
                     {
                         //找出前一個state 
                         int i;
-                        for ( i = tempPA.currSate-1; i >=0 ; i --)
+                        for (i = tempPA.currSate - 1; i >= 0; i--)
                         {
-                           if (  FullList[i].ListPlace == tempPA.GraphIndex)
-                           {
-                               tempPath.copyVal(FullList[i]);
-                               sroot.PathList[tempPA.GraphIndex] = tempPath;
-                               sroot.PathList[tempPA.GraphIndex].redraw(1);
-                               break;
- 
-                           }
+                            if (FullList[i].ListPlace == tempPA.GraphIndex)
+                            {
+                                tempPath.copyVal(FullList[i]);
+                                sroot.PathList[tempPA.GraphIndex] = tempPath;
+                                sroot.PathList[tempPA.GraphIndex].redraw(1);
+                                break;
+
+                            }
                         }
-                        if ( i < 0 ) //something wrong
+                        if (i < 0) //something wrong
                         {
                             Debug.WriteLine("something wrong");
                         }
@@ -208,7 +209,7 @@ namespace ShapeLib.VShape
                 }
                 //將該事件放入redo stack
                 RedoStack.Push(tempPA);
-               
+
             }
         }
 
@@ -217,14 +218,14 @@ namespace ShapeLib.VShape
             this.RedoStack.Clear();
         }
     }
-    
+
     [Serializable]
     public struct gPro
     {
-        public byte colorR ;
-        public byte colorG ;
-        public byte colorB ;
-        public int strokeT ;
+        public byte colorR;
+        public byte colorG;
+        public byte colorB;
+        public int strokeT;
     }
     [Serializable]
     public class gPath
@@ -241,11 +242,14 @@ namespace ShapeLib.VShape
         public List<Point> pList = new List<Point>();
         public bool isSel
         {
-            get {             
-                return _isSel; }
-            set {
-                
-                if ( value != _isSel)
+            get
+            {
+                return _isSel;
+            }
+            set
+            {
+
+                if (value != _isSel)
                 {
                     _isSel = value;
                     if (!value)
@@ -253,16 +257,16 @@ namespace ShapeLib.VShape
                     else
                         redraw(1);
                 }
-                                
-                 }
+
+            }
         }
-        private int shapeIndex=-1;
+        private int shapeIndex = -1;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="remove"> -1 : 移除, 0: 運動中畫, 1: 正式畫 , 2: 重新加入</param>
-        public void redraw( int removetype)
+        public void redraw(int removetype)
         {
             gView gv = null;
             Boolean bfirst = false;
@@ -281,9 +285,9 @@ namespace ShapeLib.VShape
             if (isSel)
             {
                 foreach (Shape sp in gv.baseShape)
-                shapeLib.Data.mygrid.Children.Remove(sp);
+                    shapeLib.Data.mygrid.Children.Remove(sp);
                 shapeLib.SupportedShape(null)[drawtype].DisplayControlPoints(gv, this);
-                
+
             }
             else
             {
@@ -313,24 +317,24 @@ namespace ShapeLib.VShape
                 }
             }
         }
-        
-          // public Shape getDrawShape()
-          //  {
-          //      if (shapeIndex >= 0 && shapeIndex < shapeLib.Data.gdc.shapeList.Count)
-          //      {
-          //          Shape ishape = shapeLib.Data.gdc.shapeList[shapeIndex];
-          //          return ishape;
-          //      }
-          //      return null;
 
-          //  }
+        // public Shape getDrawShape()
+        //  {
+        //      if (shapeIndex >= 0 && shapeIndex < shapeLib.Data.gdc.shapeList.Count)
+        //      {
+        //          Shape ishape = shapeLib.Data.gdc.shapeList[shapeIndex];
+        //          return ishape;
+        //      }
+        //      return null;
 
-          //public  void setDrawShape(Shape value)
-          //  {
-          //      shapeLib.Data.gdc.shapeList.Add(value);
-          //      shapeIndex = shapeLib.Data.gdc.shapeList.Count - 1;
-          //  }
-        
+        //  }
+
+        //public  void setDrawShape(Shape value)
+        //  {
+        //      shapeLib.Data.gdc.shapeList.Add(value);
+        //      shapeIndex = shapeLib.Data.gdc.shapeList.Count - 1;
+        //  }
+
 
         private bool isdel = false;
         public bool IsDelete
@@ -346,16 +350,17 @@ namespace ShapeLib.VShape
             {
                 if (value == true)
                 {
-                    this.redraw( -1 );
-                 
-                
-                      
-                }else
+                    this.redraw(-1);
+
+
+
+                }
+                else
                 {
-                    if ( isdel)
+                    if (isdel)
                     {
-                        this.redraw(2); 
-                
+                        this.redraw(2);
+
 
                     }
 
@@ -372,39 +377,63 @@ namespace ShapeLib.VShape
             if (shapeLib.Data.UItype < 0)
             {
                 if (isSel)
+                {
+                    double gapX, gapY, x, y;
                     shapeLib.Data.mygrid.Cursor = Cursors.SizeAll;
+                    gapX = Math.Abs(shapeLib.Data.currShape.controlBtn4.X + shapeLib.Data.currShape.controlBtn1.X) / 2.0;
+                    gapY = Math.Abs(shapeLib.Data.currShape.controlBtn4.Y + shapeLib.Data.currShape.controlBtn1.Y) / 2.0;
+                    x = e.GetPosition(shapeLib.Data.mygrid).X;
+                    y = e.GetPosition(shapeLib.Data.mygrid).Y;
+                    shapeLib.Data.currShape.controlBtn4.X = shapeLib.Data.currShape.controlBtn4.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn4.Y = shapeLib.Data.currShape.controlBtn4.Y + (y - gapY);
+                    shapeLib.Data.currShape.controlBtn1.X = shapeLib.Data.currShape.controlBtn1.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn1.Y = shapeLib.Data.currShape.controlBtn1.Y + (y - gapY);
+                    shapeLib.Data.currShape.controlBtn2.X = shapeLib.Data.currShape.controlBtn2.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn2.Y = shapeLib.Data.currShape.controlBtn2.Y + (y - gapY);
+                    shapeLib.Data.currShape.controlBtn3.X = shapeLib.Data.currShape.controlBtn3.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn3.Y = shapeLib.Data.currShape.controlBtn3.Y + (y - gapY);
+                    //if (this.Equals(typeof(ShapeRectangle)))
+                    //{
+                    //    this.controlBtn1 = e.GetPosition(shapeLib.Data.mygrid);
+                    //}
+                }
                 else
+                {
                     shapeLib.Data.mygrid.Cursor = Cursors.Hand;
+
+                }
+
             }
-         //   throw new NotImplementedException();
+            //   throw new NotImplementedException();
         }
 
         public void myLine_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             shapeLib.Data.mygrid.Cursor = Cursors.Arrow;
-       
-        //    throw new NotImplementedException();
+
+            //    throw new NotImplementedException();
         }
 
 
-       public   void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        public void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (shapeLib.Data.UItype <0)
+            if (shapeLib.Data.UItype < 0)
             {
                 //檢查是否有按下shift
                 if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
                 {
                     shapeLib.Data.multiSelList.Add(this);
 
-                }else
+                }
+                else
                 {
-                    foreach( gPath gp in shapeLib.Data.multiSelList )
+                    foreach (gPath gp in shapeLib.Data.multiSelList)
                     {
                         gp.isSel = false;
                     }
                     if (shapeLib.Data.currShape != null && shapeLib.Data.currShape != this)
-                    shapeLib.Data.currShape.isSel = false;
-                    shapeLib.Data.multiSelList.Clear(); 
+                        shapeLib.Data.currShape.isSel = false;
+                    shapeLib.Data.multiSelList.Clear();
                     shapeLib.Data.multiSelList.Add(this);
                 }
 
@@ -433,7 +462,7 @@ namespace ShapeLib.VShape
             controlBtn3 = obj.controlBtn3;
             controlBtn4 = obj.controlBtn4;
 
-            foreach(Point p in obj.pList)
+            foreach (Point p in obj.pList)
             {
                 pList.Add(p);
             }
@@ -448,7 +477,8 @@ namespace ShapeLib.VShape
         public System.Windows.Point Point;
     }
 
-    public class gPoint{
+    public class gPoint
+    {
         public System.Windows.Point mouseXY;
 
         public System.Windows.Point point0;
@@ -462,23 +492,23 @@ namespace ShapeLib.VShape
     public class saveState
     {
         //0: insert, 1:update, 2:delete
-      public   int Action; 
-    //目前圖形串列中的第幾個,為必免順序改變,凡加入的就一直存在(data list)
-    public int GraphIndex;
+        public int Action;
+        //目前圖形串列中的第幾個,為必免順序改變,凡加入的就一直存在(data list)
+        public int GraphIndex;
 
-    //操作前的狀態 fullList 中,操作前該物件所在位置,即最後一個狀態.至少會有新增的狀態.以GraphIndex 去找,其實可以不用記錄
-    //int preSate;
+        //操作前的狀態 fullList 中,操作前該物件所在位置,即最後一個狀態.至少會有新增的狀態.以GraphIndex 去找,其實可以不用記錄
+        //int preSate;
 
-    //操作後的狀態 fullList 中,剛更改的狀態
-    public int currSate;
+        //操作後的狀態 fullList 中,剛更改的狀態
+        public int currSate;
 
-      
-  
+
+
         public saveState()
         {
             Action = -1;
             GraphIndex = -1;
-            currSate = -1; 
+            currSate = -1;
             //changeP = 0;
             //lastP = -1;
             //leastP = 0;
@@ -490,7 +520,7 @@ namespace ShapeLib.VShape
             GraphIndex = b;
             currSate = c;
         }
-      
+
     }
 
     public class checkHitDraw
