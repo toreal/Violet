@@ -1,5 +1,5 @@
-﻿using Microsoft.Office.Interop.Word;
-using ShapeLib.VShape;
+﻿using ShapeLib.VShape;
+//using Microsoft.Office.Interop.Word;
 //using Microsoft.Office.Tools.Word;
 using System;
 using System.Collections;
@@ -9,19 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Xml.Serialization;
 
 
-
-namespace violet
+namespace ShapeLib.VShape
 {
 
-    //[XmlRoot(ElementName = "SVGRoot", Namespace = "")]
-    //public class SVGRoot
-    //{
-    //     [XmlElement("PathList")]
-    //    public List<gPath> PathList = new List<gPath>();
-    //}
+    [XmlRoot(ElementName = "SVGRoot", Namespace = "")]
+    public class SVGRoot
+    {
+        [XmlElement("PathList")]
+        public List<gPath> PathList = new List<gPath>();
+    }
     /// <summary>
     /// 記錄shape list,action data
     /// stack 記錄動作,每個動作(pointAry)包含,該圖是圖形的第幾個(Listplace),之前記錄是否己有相同圖是第幾個,目前圖存在記錄的第幾個
@@ -29,8 +31,9 @@ namespace violet
     /// </summary>
     public class GraphDoc
     {
-       public SVGRoot sroot = new SVGRoot();
-       public List<gPath> FullList = new List<gPath>(); //remember all action from grid
+        public SVGRoot sroot = new SVGRoot();
+        public List<gView> shapeList = new List<gView>();
+        public List<gPath> FullList = new List<gPath>(); //remember all action from grid
         public Stack UndoStack = new Stack();
         public Stack RedoStack = new Stack();
         public int selIndex = -1; // The last seat in PathList array
@@ -38,35 +41,6 @@ namespace violet
         public int mx;
         public int my;
         public bool bmove;
-
-        public void writeIn(gPath Data, int Action)
-        {
-            pointAry pa;
-            if (Action == 0)
-            {
-                gPath g = new gPath();
-                FullList.Add(Data);
-                pa = new pointAry(Data.ListPlace, -1, (FullList.Count - 1));
-                UndoStack.Push(pa);
-                g.copyVal(Data);
-                sroot.PathList.Add(g);
-            }
-            else if (Action == 1)
-            {
-                int temp = 0;
-                for (int i = FullList.Count - 1; i >= 0; i--)
-                {
-                    if (FullList[i].ListPlace == Data.ListPlace)
-                    {
-                        temp = i;
-                        break;
-                    }
-                }
-                FullList.Add(Data);
-                pa = new pointAry(Data.ListPlace, temp, (FullList.Count - 1));
-                UndoStack.Push(pa);
-            }
-        }
 
         public int checkWhich(gPath gp)
         {
@@ -95,58 +69,147 @@ namespace violet
             }
             return whichOne;
         }
-      
+
+        public void reDrawAll()
+        {
+            foreach (gPath gp in sroot.PathList)
+            {
+                if (!gp.IsDelete)
+                {
+                    gp.redraw(1);
+
+                }
+            }
+
+        }
+
         /// <summary>
-        /// 
+        /// 維護 undo stack ,把目前狀態存起來.並清空redo stack,如果之前有undo 動作,是回覆到某一狀態,在此之後的動作都可清除
         /// </summary>
-        public void unDo()
+        /// <param name="Data"></param>
+        /// <param name="Action"></param>
+        public void writeIn(gPath Data, int Action)
+        {
+
+
+            saveState pa;
+
+            int lens = RedoStack.Count;
+            RedoStack.Clear();
+            FullList.RemoveRange(FullList.Count - lens, lens);
+
+
+
+            if (Action == 0)//新增動作
+            {
+                gPath g = new gPath();
+                //等一下會加入到list 中,所以count 正好為其在list  所在的位置
+                pa = new saveState(Action, sroot.PathList.Count, (FullList.Count));
+
+                UndoStack.Push(pa);
+                g.copyVal(Data);
+                FullList.Add(Data);
+                sroot.PathList.Add(g);
+            }
+            else  //修改動作(物件已存在)
+            {
+                pa = new saveState(Action, Data.ListPlace, FullList.Count);
+                FullList.Add(Data);
+                UndoStack.Push(pa);
+            }
+        }
+
+
+        /// <summary>
+        /// 重作到目前狀態
+        ///  
+        /// </summary>
+        public void reDo()
         {
             if (RedoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
-                pointAry tempPA = new pointAry();
+                saveState tempPA;
 
-                tempPA = (pointAry)RedoStack.Pop();
+                tempPA = (saveState)RedoStack.Pop();
 
-                if (tempPA.leastPlace() >= 0)
+                if (tempPA.currSate >= 0 && tempPA.currSate < FullList.Count)
                 {
-                    tempPath.copyVal(FullList[tempPA.leastPlace()]);
-                    if ((sroot.PathList.Count - 1) < tempPA.changePlace())
-                    {
-                        sroot.PathList.Add(tempPath);
-                    }
-                    else
-                    {
-                        sroot.PathList[tempPA.changePlace()] = tempPath;
-                    }
+                    tempPath.copyVal(FullList[tempPA.currSate]);
+
+
+                    if (tempPA.Action == 0)
+                        sroot.PathList[tempPA.GraphIndex].IsDelete = false;
+
+                    sroot.PathList[tempPA.GraphIndex] = tempPath;
+                    sroot.PathList[tempPA.GraphIndex].redraw(1);
+
                 }
                 else
                 {
-                    sroot.PathList.RemoveAt(tempPA.changePlace());
+                    // sroot.PathList.RemoveAt(tempPA.GraphIndex);
                 }
                 UndoStack.Push(tempPA);
+
             }
         }
 
-        public void reDo()
+        /// <summary>
+        /// undo 回到前一狀態
+        /// </summary>
+        public void unDo()
         {
+            //檢查是否有可undo 的事件
             if (UndoStack.Count > 0)
             {
                 gPath tempPath = new gPath();
-                pointAry tempPA = new pointAry();
+                saveState tempPA;
+                shapeLib.Data.mClick = 0;
 
-                tempPA = (pointAry)UndoStack.Pop();
+                tempPA = (saveState)UndoStack.Pop();
 
-                if (tempPA.lastPlace() >= 0)
+                if (tempPA.currSate >= 0 && tempPA.currSate < FullList.Count)
                 {
-                    tempPath.copyVal(FullList[tempPA.lastPlace()]);
-                    sroot.PathList[tempPA.changePlace()] = tempPath;
+                    if (tempPA.Action == 0)
+                    {
+
+                        sroot.PathList[tempPA.GraphIndex].IsDelete = true;
+
+                    }
+                    else
+                    {
+                        //找出前一個state 
+                        int i;
+                        for (i = tempPA.currSate - 1; i >= 0; i--)
+                        {
+                            if (FullList[i].ListPlace == tempPA.GraphIndex)
+                            {
+                                tempPath.copyVal(FullList[i]);
+                                sroot.PathList[tempPA.GraphIndex] = tempPath;
+                                sroot.PathList[tempPA.GraphIndex].redraw(1);
+                                break;
+
+                            }
+                        }
+                        if (i < 0) //something wrong
+                        {
+                            Debug.WriteLine("something wrong");
+                        }
+
+                    }
+
                 }
                 else
                 {
-                    sroot.PathList.RemoveAt(tempPA.changePlace());
+
+                    //something wrong
+                    Debug.WriteLine("something wrong");
+
+                    //sroot.PathList.RemoveAt(tempPA.GraphIndex);
                 }
+                //將該事件放入redo stack
                 RedoStack.Push(tempPA);
+
             }
         }
 
@@ -155,40 +218,257 @@ namespace violet
             this.RedoStack.Clear();
         }
     }
-    
+
     [Serializable]
     public struct gPro
     {
-        public byte colorR ;
-        public byte colorG ;
-        public byte colorB ;
-        public int strokeT ;
+        public byte colorR;
+        public byte colorG;
+        public byte colorB;
+        public int strokeT;
     }
-    //[Serializable]
-    //public class gPath
-    //{
-    //    public int drawtype;
-    //    public gPro state;
-    //    public int ListPlace;
-    //    public System.Windows.Point controlBtn1;
-    //    public System.Windows.Point controlBtn2;
-    //    public System.Windows.Point controlBtn3;
-    //    public System.Windows.Point controlBtn4;
+    [Serializable]
+    public class gPath
+    {
+        public int drawtype;
+        public gPro state;
+        public int ListPlace;
+        public System.Windows.Point controlBtn1;
+        public System.Windows.Point controlBtn2;
+        public System.Windows.Point controlBtn3;
+        public System.Windows.Point controlBtn4;
+        public String Text = "";
+        bool _isSel;
+        public List<Point> pList = new List<Point>();
+        public bool isSel
+        {
+            get
+            {
+                return _isSel;
+            }
+            set
+            {
 
-    //    public void copyVal(gPath obj)
-    //    {
+                if (value != _isSel)
+                {
+                    _isSel = value;
+                    if (!value)
+                        redraw(2);
+                    else
+                        redraw(1);
+                }
 
-    //        drawtype = obj.drawtype;
-    //        state = obj.state;
-    //        ListPlace = obj.ListPlace;
+            }
+        }
+        private int shapeIndex = -1;
 
-    //        controlBtn1 = obj.controlBtn1;
-    //        controlBtn2 = obj.controlBtn2;
-    //        controlBtn3 = obj.controlBtn3;
-    //        controlBtn4 = obj.controlBtn4;
-    //    }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="remove"> -1 : 移除, 0: 運動中畫, 1: 正式畫 , 2: 重新加入</param>
+        public void redraw(int removetype)
+        {
+            gView gv = null;
+            Boolean bfirst = false;
 
-    //}
+            if (shapeIndex < 0)
+            {
+                gv = new gView();
+                shapeIndex = shapeLib.Data.gdc.shapeList.Count;
+                shapeLib.Data.gdc.shapeList.Add(gv);
+                bfirst = true;
+            }
+            else
+                gv = shapeLib.Data.gdc.shapeList[shapeIndex];
+
+
+            if (isSel)
+            {
+                foreach (Shape sp in gv.baseShape)
+                    shapeLib.Data.mygrid.Children.Remove(sp);
+                shapeLib.SupportedShape(null)[drawtype].DisplayControlPoints(gv, this);
+
+            }
+            else
+            {
+                foreach (Shape sp in gv.controlShape)
+                    shapeLib.Data.mygrid.Children.Remove(sp);
+                gv.controlShape.Clear();
+
+                switch (removetype)
+                {
+                    case -1:
+                        foreach (Shape sp in gv.baseShape)
+                            shapeLib.Data.mygrid.Children.Remove(sp);
+                        break;
+
+
+                    case 2:
+                        foreach (Shape sp in gv.baseShape)
+                            shapeLib.Data.mygrid.Children.Add(sp);
+                        shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
+                        break;
+                    case 0:
+                    case 1:
+                        shapeLib.SupportedShape(null)[drawtype].DrawShape(gv, this, bfirst);
+
+                        break;
+
+                }
+            }
+        }
+
+        // public Shape getDrawShape()
+        //  {
+        //      if (shapeIndex >= 0 && shapeIndex < shapeLib.Data.gdc.shapeList.Count)
+        //      {
+        //          Shape ishape = shapeLib.Data.gdc.shapeList[shapeIndex];
+        //          return ishape;
+        //      }
+        //      return null;
+
+        //  }
+
+        //public  void setDrawShape(Shape value)
+        //  {
+        //      shapeLib.Data.gdc.shapeList.Add(value);
+        //      shapeIndex = shapeLib.Data.gdc.shapeList.Count - 1;
+        //  }
+
+
+        private bool isdel = false;
+        public bool IsDelete
+        {
+            get
+            {
+
+
+                return isdel;
+                //throw new NotImplementedException();
+            }
+            set
+            {
+                if (value == true)
+                {
+                    this.redraw(-1);
+
+
+
+                }
+                else
+                {
+                    if (isdel)
+                    {
+                        this.redraw(2);
+
+
+                    }
+
+
+                }
+                isdel = true;
+
+
+                // throw new NotImplementedException();
+            }
+        }
+        public void myLine_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (shapeLib.Data.UItype < 0)
+            {
+                if (isSel)
+                {
+                    double gapX, gapY, x, y;
+                    shapeLib.Data.mygrid.Cursor = Cursors.SizeAll;
+                    gapX = Math.Abs(shapeLib.Data.currShape.controlBtn4.X + shapeLib.Data.currShape.controlBtn1.X) / 2.0;
+                    gapY = Math.Abs(shapeLib.Data.currShape.controlBtn4.Y + shapeLib.Data.currShape.controlBtn1.Y) / 2.0;
+                    x = e.GetPosition(shapeLib.Data.mygrid).X;
+                    y = e.GetPosition(shapeLib.Data.mygrid).Y;
+                    shapeLib.Data.currShape.controlBtn4.X = shapeLib.Data.currShape.controlBtn4.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn4.Y = shapeLib.Data.currShape.controlBtn4.Y + (y - gapY);
+                    shapeLib.Data.currShape.controlBtn1.X = shapeLib.Data.currShape.controlBtn1.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn1.Y = shapeLib.Data.currShape.controlBtn1.Y + (y - gapY);
+                    shapeLib.Data.currShape.controlBtn2.X = shapeLib.Data.currShape.controlBtn2.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn2.Y = shapeLib.Data.currShape.controlBtn2.Y + (y - gapY);
+                    shapeLib.Data.currShape.controlBtn3.X = shapeLib.Data.currShape.controlBtn3.X + (x - gapX);
+                    shapeLib.Data.currShape.controlBtn3.Y = shapeLib.Data.currShape.controlBtn3.Y + (y - gapY);
+                    //if (this.Equals(typeof(ShapeRectangle)))
+                    //{
+                    //    this.controlBtn1 = e.GetPosition(shapeLib.Data.mygrid);
+                    //}
+                }
+                else
+                {
+                    shapeLib.Data.mygrid.Cursor = Cursors.Hand;
+                    
+                }
+                    
+            }
+            //   throw new NotImplementedException();
+        }
+
+        public void myLine_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            shapeLib.Data.mygrid.Cursor = Cursors.Arrow;
+
+            //    throw new NotImplementedException();
+        }
+
+
+        public void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (shapeLib.Data.UItype < 0)
+            {
+                //檢查是否有按下shift
+                if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+                {
+                    shapeLib.Data.multiSelList.Add(this);
+                    
+                }
+                else
+                {
+                    foreach (gPath gp in shapeLib.Data.multiSelList)
+                    {
+                        gp.isSel = false;
+                    }
+                    if (shapeLib.Data.currShape != null && shapeLib.Data.currShape != this)
+                        shapeLib.Data.currShape.isSel = false;
+                    shapeLib.Data.multiSelList.Clear();
+                    shapeLib.Data.multiSelList.Add(this);
+                }
+
+                shapeLib.Data.currShape = this;
+                this.isSel = true;
+
+                IInsertOP sh = shapeLib.SupportedShape(null)[this.drawtype];
+                sh.MouseOP(1);
+
+                e.Handled = true;
+            }
+            //throw new NotImplementedException();
+        }
+
+
+        public void copyVal(gPath obj)
+        {
+
+            drawtype = obj.drawtype;
+            state = obj.state;
+            ListPlace = obj.ListPlace;
+            shapeIndex = obj.shapeIndex;
+
+            controlBtn1 = obj.controlBtn1;
+            controlBtn2 = obj.controlBtn2;
+            controlBtn3 = obj.controlBtn3;
+            controlBtn4 = obj.controlBtn4;
+
+            foreach (Point p in obj.pList)
+            {
+                pList.Add(p);
+            }
+        }
+
+    }
 
     public class RUse
     {
@@ -196,10 +476,9 @@ namespace violet
         public int Node = -1;
         public System.Windows.Point Point;
     }
-    //當mouse 點選之後,要查看mouse 是點選到那一個物件,所以把點選到的shape 的boundary 找出來依其boundary  去比對
-    //但新的作法是否仍有需要呢?
 
-    public class gPoint{
+    public class gPoint
+    {
         public System.Windows.Point mouseXY;
 
         public System.Windows.Point point0;
@@ -207,37 +486,41 @@ namespace violet
         public System.Windows.Point point2;
         public System.Windows.Point point3;
     }
-
-    public class pointAry
+    /// <summary>
+    /// 為了維護undo redo, 系統任何操作必需把狀態存起來,
+    /// </summary>
+    public class saveState
     {
-        private int leastP;
-        private int lastP;
-        private int changeP;
-        public pointAry()
+        //0: insert, 1:update, 2:delete
+        public int Action;
+        //目前圖形串列中的第幾個,為必免順序改變,凡加入的就一直存在(data list)
+        public int GraphIndex;
+
+        //操作前的狀態 fullList 中,操作前該物件所在位置,即最後一個狀態.至少會有新增的狀態.以GraphIndex 去找,其實可以不用記錄
+        //int preSate;
+
+        //操作後的狀態 fullList 中,剛更改的狀態
+        public int currSate;
+
+
+
+        public saveState()
         {
-            changeP = 0;
-            lastP = -1;
-            leastP = 0;
+            Action = -1;
+            GraphIndex = -1;
+            currSate = -1;
+            //changeP = 0;
+            //lastP = -1;
+            //leastP = 0;
 
         }
-        public pointAry(int a, int b, int c)
+        public saveState(int a, int b, int c)
         {
-            changeP = a;
-            lastP = b;
-            leastP = c;
+            Action = a;
+            GraphIndex = b;
+            currSate = c;
         }
-        public int changePlace()
-        {
-            return changeP;
-        }
-        public int lastPlace()
-        {
-            return lastP;
-        }
-        public int leastPlace()
-        {
-            return leastP;
-        }
+
     }
 
     public class checkHitDraw
