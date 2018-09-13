@@ -47,20 +47,48 @@ namespace ShapeLib.VShape
 
         //}
 
-        public void LeftButtonDown(object sender, MouseButtonEventArgs e)
+        public override void MouseDownInsert(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        //public void LeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            txt = textBox.Text;
+            base.MouseDownInsert(sender, e);
+            finish();
+
+        }
+        public override void finish()
+        {
+
+            int scale = shapeLib.Data.strokeT;
+            txt = textBox.Text ;
             TextBlock textBlock = new TextBlock();
             textBlock.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
             textBlock.Height = textBox.Height;
             textBlock.Width = textBox.Width;
+            textBlock.FontSize = 10 + scale * 4;
+
             Canvas.SetLeft(textBlock, x);
             Canvas.SetTop(textBlock, y);
+
+           while (txt.Contains(@"\u" ))
+            {
+                int ind = txt.IndexOf(@"\u");
+                string s= txt.Substring(ind, 6);
+                byte[] bytes = new byte[2];
+                bytes[1] = Convert.ToByte(s.Substring(2, 2), 16);
+                bytes[0] = Convert.ToByte(s.Substring(4, 2), 16);
+                string result = Encoding.Unicode.GetString(bytes);
+                txt=txt.Replace(s, result);
+
+
+
+
+            }
             textBlock.Text = txt;
             shapeLib.Data.mygrid.Children.Add(textBlock);
             textBox.Text = null;
             txt = null;
             shapeLib.Data.mygrid.Children.Remove(textBox);
+            last = true;
+            shapeLib.Data.Root.Focus();
             
 
         }
@@ -88,15 +116,18 @@ namespace ShapeLib.VShape
                     textBox.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
                     Canvas.SetLeft(textBox, x);
                     Canvas.SetTop(textBox, y);
+                    textBox.FontSize = 10 + shapeLib.Data.strokeT * 4;
                     shapeLib.Data.mygrid.Children.Add(textBox);
                     textBox.Focus();
                     textBox.AcceptsReturn = true;
                     textBox.AcceptsTab = true;
                     txt = textBox.Text;
-                    shapeLib.Data.mygrid.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
+                    last = false;
+                   // shapeLib.Data.mygrid.MouseDown += this.MouseDownInsert;
+                        //new System.Windows.Input.MouseButtonEventHandler(LeftButtonDown);
 
                 }
-                else
+                else if (!last)
                 {
                     txt = null;
                     textBox.Focus();

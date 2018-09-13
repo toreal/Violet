@@ -15,5 +15,6 @@ namespace ShapeLib.VShape
         void MouseUpInsert(object sender, MouseButtonEventArgs e);
         void MouseMoveInsert(object sender, MouseEventArgs e);
         void FormKeyDown(object sender, System.Windows.Input.KeyEventArgs e);
+        void finish();
     }
 }

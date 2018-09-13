@@ -84,7 +84,7 @@ namespace ShapeLib.VShape
         {
             String str = System.Windows.Clipboard.GetText();
 
-            shiftPos += 15;
+            shiftPos += 30;
             XmlSerializer serializer = new XmlSerializer(typeof(List<gPath>));
             using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str)))
             {

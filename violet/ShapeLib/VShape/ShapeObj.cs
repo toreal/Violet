@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 namespace ShapeLib.VShape
 {
 
-
+    //建構不同UI 時使用
     public enum shapeUIType
     {
         RibbonBigButton,
@@ -29,8 +29,8 @@ namespace ShapeLib.VShape
         RibbonMenu,
         RibbonGroup
     }
-
-    //public  delegate void mouseClick(object sender, RibbonControlEventArgs e);
+    
+    //定義一個UI項目
     public class shapeUI
     {
 
@@ -43,6 +43,8 @@ namespace ShapeLib.VShape
 
     }
 
+
+    //某一類的形狀.包含UI 的界面,繪製方式.更新方式.新增方式
     public class ShapeObj : IShapeUI, IDrawing, IUpdateOP, IInsertOP
     {
 
@@ -73,6 +75,13 @@ namespace ShapeLib.VShape
             return ret;
         }
 
+
+        public virtual void finish()
+        {
+
+        }
+
+        //UI 點選
         public void btn_Click(object sender, RibbonControlEventArgs e)
         {
 
@@ -92,11 +101,14 @@ namespace ShapeLib.VShape
                 shapeLib.Data.Root = f.getRoot;
             }
 
+                
+
             if (shapeLib.Data.mygrid != null)
             {
                 IList<ShapeObj> ret = shapeLib.SupportedShape(null);
 
                 shapeLib.Data.UItype = ret.IndexOf(this);
+
 
 
                 foreach (ShapeObj obj in ret)
@@ -110,11 +122,15 @@ namespace ShapeLib.VShape
                     shapeLib.Data.mygrid.MouseDown -= obj.MouseUpUpdate;
 
                     shapeLib.Data.Root.KeyDown -= obj.FormKeyDown;
-                    shapeLib.Data.Root.KeyDown += obj.FormKeyDown;
+
+                    obj.finish();
 
                 }
 
-                
+
+                shapeLib.Data.Root.Focus();
+                shapeLib.Data.Root.KeyDown += this.FormKeyDown;
+
                 if (ntype == 0)
                 {
                     shapeLib.Data.mygrid.MouseUp += this.MouseUpInsert;
@@ -385,6 +401,7 @@ namespace ShapeLib.VShape
                         ex = tempX;
                     }
                 }
+
                 remGPath(px, py, ex, ey);
 
                 if (this.GetType() == typeof(ShapeCurve))
@@ -567,6 +584,36 @@ namespace ShapeLib.VShape
 
         public virtual void FormKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+
+            Debug.Write(e.Key);
+
+
+            if (e.Key == Key.Delete || e.Key == Key.Back)
+            {
+                foreach (gPath gp in shapeLib.Data.multiSelList)
+                {
+                    gp.isSel = false;
+                    gp.IsDelete = true;
+
+                }
+                shapeLib.Data.multiSelList.Clear();
+
+            }
+            
+
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                if (e.Key == Key.C)
+                {
+                    shapeLib.copy();
+                }
+                else if (e.Key == Key.V)
+                {
+                    shapeLib.paste();
+                }
+            }
+
+
             //throw new NotImplementedException();
         }
 
