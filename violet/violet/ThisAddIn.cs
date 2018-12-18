@@ -44,6 +44,8 @@ namespace violet
 
         bool doonce = false;
 
+
+        //程式進入點
         protected override object RequestService(Guid serviceGuid)
         {
             if ( !doonce)
