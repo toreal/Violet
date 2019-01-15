@@ -235,6 +235,7 @@
       <DependentUpon>Ribbon1.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="my.pfx" />
+    <None Include="newkey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -385,16 +386,16 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>my.pfx</ManifestKeyFile>
+    <ManifestKeyFile>newkey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E5A4BBC11FDD1AD19F714D7D3116A329C93EAFDA</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A9DF9CA00C14E4C6758B42EA27EF99CED97CDFB3</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>my.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>newkey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
