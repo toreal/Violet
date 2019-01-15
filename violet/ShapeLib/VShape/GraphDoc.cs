@@ -41,6 +41,12 @@ namespace ShapeLib.VShape
         public int mx;
         public int my;
         public bool bmove;
+        public bool brotate;
+
+        public bool bbegmove;
+        public bool bbegrotate;
+        public double startAngle;
+        public double totalAngle;
 
         public int checkWhich(gPath gp)
         {
@@ -378,28 +384,39 @@ namespace ShapeLib.VShape
             {
                 if (isSel)
                 {
-                    double gapX, gapY, x, y;
-                    shapeLib.Data.mygrid.Cursor = Cursors.SizeAll;
-                    gapX = Math.Abs(shapeLib.Data.currShape.controlBtn4.X + shapeLib.Data.currShape.controlBtn1.X) / 2.0;
-                    gapY = Math.Abs(shapeLib.Data.currShape.controlBtn4.Y + shapeLib.Data.currShape.controlBtn1.Y) / 2.0;
-                    x = e.GetPosition(shapeLib.Data.mygrid).X;
-                    y = e.GetPosition(shapeLib.Data.mygrid).Y;
-                    shapeLib.Data.currShape.controlBtn4.X = shapeLib.Data.currShape.controlBtn4.X + (x - gapX);
-                    shapeLib.Data.currShape.controlBtn4.Y = shapeLib.Data.currShape.controlBtn4.Y + (y - gapY);
-                    shapeLib.Data.currShape.controlBtn1.X = shapeLib.Data.currShape.controlBtn1.X + (x - gapX);
-                    shapeLib.Data.currShape.controlBtn1.Y = shapeLib.Data.currShape.controlBtn1.Y + (y - gapY);
-                    shapeLib.Data.currShape.controlBtn2.X = shapeLib.Data.currShape.controlBtn2.X + (x - gapX);
-                    shapeLib.Data.currShape.controlBtn2.Y = shapeLib.Data.currShape.controlBtn2.Y + (y - gapY);
-                    shapeLib.Data.currShape.controlBtn3.X = shapeLib.Data.currShape.controlBtn3.X + (x - gapX);
-                    shapeLib.Data.currShape.controlBtn3.Y = shapeLib.Data.currShape.controlBtn3.Y + (y - gapY);
+
+                    if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+                    {
+                        shapeLib.Data.mygrid.Cursor = Cursors.ScrollWE;
+                        shapeLib.Data.gdc.brotate = true;
+                        shapeLib.Data.gdc.bbegrotate = false;
+
+                    }else
+                    {
+                        shapeLib.Data.mygrid.Cursor = Cursors.SizeAll;
+
+                        shapeLib.Data.gdc.bmove = true;
+                        shapeLib.Data.gdc.bbegrotate = false;
+
+
+                    }
+
+
+
                     //if (this.Equals(typeof(ShapeRectangle)))
                     //{
                     //    this.controlBtn1 = e.GetPosition(shapeLib.Data.mygrid);
                     //}
+
+
+
                 }
                 else
                 {
-                    shapeLib.Data.mygrid.Cursor = Cursors.Hand;
+                    if (!shapeLib.Data.gdc.bmove)
+                    {
+                        shapeLib.Data.mygrid.Cursor = Cursors.Hand;
+                    }
 
                 }
 
@@ -409,10 +426,14 @@ namespace ShapeLib.VShape
 
         public void myLine_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            shapeLib.Data.mygrid.Cursor = Cursors.Arrow;
-
+            if (!shapeLib.Data.gdc.bmove && !shapeLib.Data.gdc.brotate)
+            {
+                shapeLib.Data.mygrid.Cursor = Cursors.Arrow;
+            }
+            
             //    throw new NotImplementedException();
         }
+
 
 
         public void myLine_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

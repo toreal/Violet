@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 //using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -88,6 +89,8 @@ namespace ShapeLib.VShape
             MouseOP(0);
         }
 
+
+        //ntype 0 for insert mode,  1 for update mode
         public void MouseOP(int ntype)
         {
             IForm f = null;
@@ -179,7 +182,6 @@ namespace ShapeLib.VShape
         public virtual void DrawShape(gView gv, gPath data, Boolean bfirst)
         {
             if (bfirst)
-
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
@@ -205,6 +207,11 @@ namespace ShapeLib.VShape
             else
             {
                 Line myLine = (Line)gv.baseShape[0];// =(Line) currPath.getDrawShape();
+            
+                myLine.X1 = data.controlBtn1.X;
+                myLine.Y1 = data.controlBtn1.Y;
+            
+
                 myLine.X2 = data.controlBtn4.X;
                 myLine.Y2 = data.controlBtn4.Y;
             }
@@ -255,6 +262,22 @@ namespace ShapeLib.VShape
 
         public void MouseDownUpdate(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (shapeLib.Data.gdc.bmove)
+            {
+                shapeLib.Data.gdc.bbegmove = true;
+
+            }
+
+
+            if ( shapeLib.Data.gdc.brotate)
+            {
+                shapeLib.Data.gdc.bbegrotate = true;
+                shapeLib.Data.gdc.totalAngle = 0;
+
+
+
+            }
+
             //int tempDraw = shapeLib.Data.gdc.sroot.PathList[shapeLib.Data.ru.Sel].drawtype;
             //if (tempDraw == 3)
             //{
@@ -288,11 +311,92 @@ namespace ShapeLib.VShape
 
         public void MouseUpUpdate(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
+            if (shapeLib.Data.gdc.bmove || shapeLib.Data.gdc.brotate)
+            {
+                shapeLib.Data.gdc.bmove = false;
+                shapeLib.Data.gdc.brotate = false;
+                shapeLib.Data.gdc.bbegrotate = false;
+                shapeLib.Data.gdc.bbegmove = false;
+                shapeLib.Data.currShape.isSel = false;
+               
+            }
             //throw new NotImplementedException();
         }
+        
+
 
         public void MouseMoveUpdate(object sender, System.Windows.Input.MouseEventArgs e)
         {
+            double gapX, gapY, x, y;
+
+            if (shapeLib.Data.gdc.bmove  )
+            {
+                gapX = Math.Abs(shapeLib.Data.currShape.controlBtn4.X + shapeLib.Data.currShape.controlBtn1.X) / 2.0;
+                gapY = Math.Abs(shapeLib.Data.currShape.controlBtn4.Y + shapeLib.Data.currShape.controlBtn1.Y) / 2.0;
+                x = e.GetPosition(shapeLib.Data.mygrid).X;
+                y = e.GetPosition(shapeLib.Data.mygrid).Y;
+                shapeLib.Data.currShape.controlBtn4.X = shapeLib.Data.currShape.controlBtn4.X + (x - gapX);
+                shapeLib.Data.currShape.controlBtn4.Y = shapeLib.Data.currShape.controlBtn4.Y + (y - gapY);
+                shapeLib.Data.currShape.controlBtn1.X = shapeLib.Data.currShape.controlBtn1.X + (x - gapX);
+                shapeLib.Data.currShape.controlBtn1.Y = shapeLib.Data.currShape.controlBtn1.Y + (y - gapY);
+                shapeLib.Data.currShape.controlBtn2.X = shapeLib.Data.currShape.controlBtn2.X + (x - gapX);
+                shapeLib.Data.currShape.controlBtn2.Y = shapeLib.Data.currShape.controlBtn2.Y + (y - gapY);
+                shapeLib.Data.currShape.controlBtn3.X = shapeLib.Data.currShape.controlBtn3.X + (x - gapX);
+                shapeLib.Data.currShape.controlBtn3.Y = shapeLib.Data.currShape.controlBtn3.Y + (y - gapY);
+
+                shapeLib.Data.currShape.redraw(1);
+
+            }
+
+            if ( shapeLib.Data.gdc.bbegrotate)
+            {
+                gapX = Math.Abs(shapeLib.Data.currShape.controlBtn4.X + shapeLib.Data.currShape.controlBtn1.X) / 2.0;
+                gapY = Math.Abs(shapeLib.Data.currShape.controlBtn4.Y + shapeLib.Data.currShape.controlBtn1.Y) / 2.0;
+
+                x = e.GetPosition(shapeLib.Data.mygrid).X;
+                y = e.GetPosition(shapeLib.Data.mygrid).Y;
+
+                double dx = x - gapX;
+                double dy = y - gapY;
+               double  angle = Math.Atan2(dy, dx);
+               double  CurrentAngle =angle* 180 / Math.PI;
+
+                CurrentAngle = CurrentAngle - shapeLib.Data.gdc.totalAngle;
+
+
+                System.Drawing.Drawing2D.Matrix rotate_at_center = new
+                System.Drawing.Drawing2D.Matrix();
+                rotate_at_center.RotateAt((float )CurrentAngle,new System.Drawing.PointF( (float) gapX, (float)gapY));
+                PointF[] myArray =
+             {
+                 new PointF((float)shapeLib.Data.currShape.controlBtn1.X,(float) shapeLib.Data.currShape.controlBtn1.Y),
+                 new PointF((float)shapeLib.Data.currShape.controlBtn2.X,(float) shapeLib.Data.currShape.controlBtn2.Y),
+                 new PointF((float)shapeLib.Data.currShape.controlBtn3.X,(float) shapeLib.Data.currShape.controlBtn3.Y),
+                 new PointF((float)shapeLib.Data.currShape.controlBtn4.X,(float) shapeLib.Data.currShape.controlBtn4.Y)
+
+             };
+
+                rotate_at_center.TransformPoints(myArray);
+
+                shapeLib.Data.currShape.controlBtn1.X = myArray[0].X;
+                shapeLib.Data.currShape.controlBtn1.Y = myArray[0].Y;
+                shapeLib.Data.currShape.controlBtn2.X = myArray[1].X;
+                shapeLib.Data.currShape.controlBtn2.Y = myArray[1].Y;
+                shapeLib.Data.currShape.controlBtn3.X = myArray[2].X;
+                shapeLib.Data.currShape.controlBtn3.Y = myArray[2].Y;
+                shapeLib.Data.currShape.controlBtn4.X = myArray[3].X;
+                shapeLib.Data.currShape.controlBtn4.Y = myArray[3].Y;
+
+
+                shapeLib.Data.gdc.totalAngle += CurrentAngle;
+
+
+                shapeLib.Data.currShape.redraw(1);
+            }
+
+
+
             //  throw new NotImplementedException();
         }
 
