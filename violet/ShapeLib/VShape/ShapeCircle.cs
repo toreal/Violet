@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -43,16 +44,35 @@ namespace ShapeLib.VShape
             {
                 shapeLib.Data.Status = "rest";
                 shapeLib.Data.bfirst = false;
-                Ellipse  myEllipse = new Ellipse();
-                // Create a SolidColorBrush with a red color to fill the 
-                // Ellipse with.
-              
+
+                Shape myEllipse;
+                if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                {
+                    Path mypath = new Path();
+                    EllipseGeometry mye = new EllipseGeometry();
+                    mye.Center = data.controlBtn1;
+                    mypath.Data = mye;
+                    
+
+                    myEllipse = mypath;
+
+
+                }
+                else
+                {
+
+
+                    myEllipse = new Ellipse();
+                    // Create a SolidColorBrush with a red color to fill the 
+                    // Ellipse with.
+
+                    // Set the width and height of the Ellipse.
+                    myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
+                    myEllipse.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
+                    myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+                }
+
                 myEllipse.Stroke = new SolidColorBrush(Color.FromRgb(data.state.colorR, data.state.colorG, data.state.colorB));
-                // Set the width and height of the Ellipse.
-                myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
-                myEllipse.Height = Math.Abs(data.controlBtn4.Y- data.controlBtn1.Y);
-                myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
-                myEllipse.StrokeThickness = shapeLib.Data.strokeT;
                 myEllipse.MouseLeftButtonDown += data.myLine_MouseLeftButtonDown;
                 myEllipse.MouseEnter += data.myLine_MouseEnter;
                 myEllipse.MouseLeave += data.myLine_MouseLeave; 
@@ -61,10 +81,23 @@ namespace ShapeLib.VShape
             }
             else
             {
-                Ellipse myEllipse = (Ellipse)gv.baseShape[0];
-                myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
-                myEllipse.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
-                myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+                Shape myEllipse = (Shape)gv.baseShape[0];
+
+                if (myEllipse is Ellipse)
+                {
+                    myEllipse.Width = Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
+                    myEllipse.Height = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
+                    myEllipse.Margin = new Thickness(data.controlBtn1.X, data.controlBtn1.Y, 0, 0);
+                }else
+                {
+                    Path myp = (Path)gv.baseShape[0];
+                    EllipseGeometry myre = (EllipseGeometry) myp.Data;
+                    myre.RadiusX= Math.Abs(data.controlBtn4.X - data.controlBtn1.X);
+                    myre.RadiusY = Math.Abs(data.controlBtn4.Y - data.controlBtn1.Y);
+
+
+
+                }
             }
         }
 
