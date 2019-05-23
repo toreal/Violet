@@ -1,0 +1,12 @@
+digraph "圖形化之類別階層"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node49 [label="ICachedType",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node49 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="ControlCollection",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classChem4Word_1_1Core_1_1ControlCollection.html",tooltip="List of control's properties. This class provides an implementation of ICachedType for complete contr..."];
+  Node43 [label="List",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node43 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

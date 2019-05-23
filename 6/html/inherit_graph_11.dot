@@ -1,0 +1,8 @@
+digraph "圖形化之類別階層"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="GraphDoc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html",tooltip="記錄shape list,action data stack 記錄動作,每個動作(pointAry)包含,該圖是圖形的第幾個(Listplace),之前記錄是否己有相同圖是第幾個,..."];
+}

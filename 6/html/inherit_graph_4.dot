@@ -1,0 +1,8 @@
+digraph "圖形化之類別階層"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="ControlsStorage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classChem4Word_1_1Core_1_1ControlsStorage.html",tooltip="/summary>"];
+}
