@@ -1,0 +1,16 @@
+digraph "ClearBtnUse"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node6 [label="ClearBtnUse",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="violet.Form1.ClearDrawing",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a4e7e92bf7f6f1b0c59deb07dff50b755",tooltip="清除畫布"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="violet.Ribbon1.clear\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a1adc4f9bbc2feb5973fda12d7bac1dd4",tooltip=" "];
+  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="violet.Ribbon1.Initialize\lComponent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a6405d5db675d5338663195a4d12b4c9f",tooltip="此為設計工具支援所需的方法 - 請勿使用程式碼編輯器 修改這個方法的內容。"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="violet.Ribbon1.Ribbon1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#afc6de2c82a1dd328f4aa83e0e02bf293",tooltip=" "];
+}

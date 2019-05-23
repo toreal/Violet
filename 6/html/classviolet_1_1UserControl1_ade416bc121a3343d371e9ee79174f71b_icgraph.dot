@@ -1,0 +1,31 @@
+digraph "drawBackLine"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node35 [label="drawBackLine",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="畫背景格線"];
+  Node35 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="violet.Form1.drawBackgroundLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a132ce6e73ab218f205bea0e580cdff3b",tooltip="繪製背景格線"];
+  Node36 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="violet.Ribbon1.Check",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a8aa07d65426e7ce38b64e3f6fd17dd6c",tooltip=" "];
+  Node37 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="violet.Ribbon1.clear\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a1adc4f9bbc2feb5973fda12d7bac1dd4",tooltip=" "];
+  Node38 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="violet.Ribbon1.Initialize\lComponent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a6405d5db675d5338663195a4d12b4c9f",tooltip="此為設計工具支援所需的方法 - 請勿使用程式碼編輯器 修改這個方法的內容。"];
+  Node39 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="violet.Ribbon1.Ribbon1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#afc6de2c82a1dd328f4aa83e0e02bf293",tooltip=" "];
+  Node37 -> Node41 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="violet.Ribbon1.selBtn\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a5f06c411b10278cb1d1549abbeee78c6",tooltip=" "];
+  Node41 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 -> Node42 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="violet.Ribbon1.initPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a867ef83dccf9cf4c442062a2dea308e5",tooltip="載入圖片"];
+  Node42 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="violet.ThisAddIn.Application\l_WindowBeforeDoubleClick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#aa494af8af0bf8a93c32c525d56ca863a",tooltip=" "];
+  Node43 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="violet.ThisAddIn.Request\lService",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#a2a2663e65ebffe71ea25933a00b45b43",tooltip=" "];
+  Node37 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 -> Node45 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="violet.Ribbon1.bgp\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#ae38b9ead9b36ef6a79a025d0e2e006b9",tooltip=" "];
+  Node45 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

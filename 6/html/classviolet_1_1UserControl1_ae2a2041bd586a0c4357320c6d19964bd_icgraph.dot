@@ -1,0 +1,25 @@
+digraph "stroke"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node91 [label="stroke",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node91 -> Node92 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="violet.Form1.setStrokeType",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a14331243b0008fce34d1497525290635",tooltip="設定線條粗細"];
+  Node92 -> Node93 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="violet.Ribbon1.px1\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#add4753437c1fec372b83298030da3262",tooltip=" "];
+  Node93 -> Node94 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 [label="violet.Ribbon1.Initialize\lComponent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a6405d5db675d5338663195a4d12b4c9f",tooltip="此為設計工具支援所需的方法 - 請勿使用程式碼編輯器 修改這個方法的內容。"];
+  Node94 -> Node95 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 [label="violet.Ribbon1.Ribbon1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#afc6de2c82a1dd328f4aa83e0e02bf293",tooltip=" "];
+  Node92 -> Node96 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node96 [label="violet.Ribbon1.px3\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a96fd39f8387d169a1db2a07306349a84",tooltip=" "];
+  Node96 -> Node94 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 -> Node97 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node97 [label="violet.Ribbon1.px5\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#aa0606a9dccde08ccf7121b6891307e73",tooltip=" "];
+  Node97 -> Node94 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 -> Node98 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node98 [label="violet.Ribbon1.px8\l_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a8a221ed1584c2e2953b03241a954db83",tooltip=" "];
+  Node98 -> Node94 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,24 @@
+digraph "UserControl_KeyDown"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node99 [label="UserControl_KeyDown",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="繪製曲線"];
+  Node99 -> Node100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 [label="ShapeLib.VShape.shapeLib.copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1shapeLib.html#a595f2cc22a259de1325183ec28b1caf3",tooltip=" "];
+  Node99 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="ShapeLib.VShape.shapeLib.paste",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1shapeLib.html#a65066b4a90c6e198caaa769a4a95b63d",tooltip=" "];
+  Node101 -> Node102 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 [label="ShapeLib.VShape.GraphDoc.check\lWhich",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#a24ecbfb409416abd3b6d373f2d61ac09",tooltip=" "];
+  Node101 -> Node103 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node103 [label="ShapeLib.VShape.gPath.redraw",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html#a3d0ca616bad384ca3a1e4a3eef245d07",tooltip=" "];
+  Node103 -> Node104 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node104 [label="ShapeLib.VShape.shapeLib.\lSupportedShape",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1shapeLib.html#a2351d411700f286075d73bfc5b16ac5a",tooltip="define supported shape"];
+  Node101 -> Node105 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node105 [label="ShapeLib.VShape.GraphDoc.writeIn",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#afa57d6c546aa1a7c7de0d0a8afb1facf",tooltip="維護 undo stack ,把目前狀態存起來.並清空redo stack,如果之前有undo 動作,是回覆到某一狀態,在此之後的動作都可清除"];
+  Node105 -> Node106 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 [label="ShapeLib.VShape.gPath.copyVal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html#a71d28a4e45efc11cba10f7495bcffb4b",tooltip=" "];
+  Node101 -> Node107 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node107 [label="ShapeLib.VShape.GraphDoc.\lRelease",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#a94c93747c8daa99d65c2a04c6be0748c",tooltip=" "];
+}

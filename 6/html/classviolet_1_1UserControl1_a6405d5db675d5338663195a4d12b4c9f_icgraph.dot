@@ -1,0 +1,10 @@
+digraph "InitializeComponent"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node66 [label="InitializeComponent",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="InitializeComponent"];
+  Node66 -> Node67 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 [label="UserControl1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#a152b8abc37691aad6b087dfcd06f4a4b",tooltip=" "];
+}
