@@ -1,0 +1,20 @@
+digraph "selBtn_Click"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node265 [label="selBtn_Click",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node265 -> Node266 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node266 [label="Check",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a8aa07d65426e7ce38b64e3f6fd17dd6c",tooltip=" "];
+  Node266 -> Node267 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node267 [label="violet.Form1.setFormSize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a66ada238a1e1de24fb7fa163a080a7e7",tooltip="取得設定用的畫布大小"];
+  Node266 -> Node268 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node268 [label="violet.Form1.drawBackgroundLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a132ce6e73ab218f205bea0e580cdff3b",tooltip="繪製背景格線"];
+  Node268 -> Node269 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node269 [label="violet.UserControl1.draw\lBackLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#ade416bc121a3343d371e9ee79174f71b",tooltip="畫背景格線"];
+  Node268 -> Node270 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node270 [label="violet.UserControl1.hide\lBackLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#adcb2044e63bc071fd2ac2ea76c040972",tooltip=" "];
+  Node266 -> Node271 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node271 [label="f_Disposed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#acb15324b124bd9320875063b75ad293c",tooltip=" "];
+}

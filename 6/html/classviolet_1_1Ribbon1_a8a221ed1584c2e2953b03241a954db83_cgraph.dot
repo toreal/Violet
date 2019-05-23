@@ -1,0 +1,12 @@
+digraph "px8_Click"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node240 [label="px8_Click",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node240 -> Node241 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node241 [label="violet.Form1.setStrokeType",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a14331243b0008fce34d1497525290635",tooltip="設定線條粗細"];
+  Node241 -> Node242 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node242 [label="violet.UserControl1.stroke",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#ae2a2041bd586a0c4357320c6d19964bd",tooltip=" "];
+}

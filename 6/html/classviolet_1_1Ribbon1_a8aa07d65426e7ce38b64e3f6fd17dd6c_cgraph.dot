@@ -1,0 +1,18 @@
+digraph "Check"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node91 [label="Check",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node91 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="violet.Form1.setFormSize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a66ada238a1e1de24fb7fa163a080a7e7",tooltip="取得設定用的畫布大小"];
+  Node91 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="violet.Form1.drawBackgroundLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a132ce6e73ab218f205bea0e580cdff3b",tooltip="繪製背景格線"];
+  Node93 -> Node94 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 [label="violet.UserControl1.draw\lBackLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#ade416bc121a3343d371e9ee79174f71b",tooltip="畫背景格線"];
+  Node93 -> Node95 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 [label="violet.UserControl1.hide\lBackLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#adcb2044e63bc071fd2ac2ea76c040972",tooltip=" "];
+  Node91 -> Node96 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node96 [label="f_Disposed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#acb15324b124bd9320875063b75ad293c",tooltip=" "];
+}

@@ -1,0 +1,17 @@
+digraph "setAction"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node40 [label="setAction",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="選擇使用Redo或Undo"];
+  Node40 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="violet.UserControl1.RUdo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#adce58b9119f7bced547e478d7520b904",tooltip=" "];
+  Node41 -> Node42 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="ShapeLib.VShape.GraphDoc.unDo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#a359934f74e0e64b27fedc6caab497747",tooltip="undo 回到前一狀態"];
+  Node42 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="ShapeLib.VShape.gPath.copyVal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html#a71d28a4e45efc11cba10f7495bcffb4b",tooltip=" "];
+  Node41 -> Node44 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="ShapeLib.VShape.GraphDoc.reDo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#a093d674b805546d5e270f594ee907159",tooltip="重作到目前狀態"];
+  Node44 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}
