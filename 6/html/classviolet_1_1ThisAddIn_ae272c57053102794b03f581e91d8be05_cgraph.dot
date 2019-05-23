@@ -1,0 +1,16 @@
+digraph "Initialize"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node53 [label="Initialize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node53 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 [label="InitializeCachedData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#a46e46eccbceab9b4e922b3e6e2097f9d",tooltip=" "];
+  Node53 -> Node55 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="InitializeControls",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#a4cb13cee3efe7300d05eb9d67877e02f",tooltip=" "];
+  Node53 -> Node56 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="InitializeComponents",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#a8ea83adbfaf0d634b37df26d4b98d443",tooltip=" "];
+  Node53 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="InitializeData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#a2891a80ef396183203c7b1ac96c30612",tooltip=" "];
+}

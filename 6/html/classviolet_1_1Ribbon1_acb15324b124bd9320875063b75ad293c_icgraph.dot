@@ -1,0 +1,26 @@
+digraph "f_Disposed"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node147 [label="f_Disposed",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node147 -> Node148 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node148 [label="Check",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a8aa07d65426e7ce38b64e3f6fd17dd6c",tooltip=" "];
+  Node148 -> Node149 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node149 [label="clear_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a1adc4f9bbc2feb5973fda12d7bac1dd4",tooltip=" "];
+  Node149 -> Node150 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node150 [label="InitializeComponent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a6405d5db675d5338663195a4d12b4c9f",tooltip="此為設計工具支援所需的方法 - 請勿使用程式碼編輯器 修改這個方法的內容。"];
+  Node150 -> Node151 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node151 [label="Ribbon1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#afc6de2c82a1dd328f4aa83e0e02bf293",tooltip=" "];
+  Node148 -> Node152 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node152 [label="selBtn_Click",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a5f06c411b10278cb1d1549abbeee78c6",tooltip=" "];
+  Node152 -> Node150 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node148 -> Node153 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node153 [label="initPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a867ef83dccf9cf4c442062a2dea308e5",tooltip="載入圖片"];
+  Node153 -> Node154 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node154 [label="violet.ThisAddIn.Application\l_WindowBeforeDoubleClick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#aa494af8af0bf8a93c32c525d56ca863a",tooltip=" "];
+  Node154 -> Node155 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node155 [label="violet.ThisAddIn.Request\lService",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1ThisAddIn.html#a2a2663e65ebffe71ea25933a00b45b43",tooltip=" "];
+  Node148 -> Node151 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

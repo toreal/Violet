@@ -1,0 +1,12 @@
+digraph "red_btn_Click"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node246 [label="red_btn_Click",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node246 -> Node247 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node247 [label="violet.Form1.setColorType",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Form1.html#a00f162522226a974face4f565558a2e7",tooltip="設定顏色"];
+  Node247 -> Node248 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node248 [label="violet.UserControl1.color",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1UserControl1.html#aa66182f3f962b3080ad71ec138b7a953",tooltip=" "];
+}

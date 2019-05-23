@@ -1,0 +1,12 @@
+digraph "blue_btn_Click"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node82 [label="blue_btn_Click",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node82 -> Node83 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node83 [label="InitializeComponent",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#a6405d5db675d5338663195a4d12b4c9f",tooltip="此為設計工具支援所需的方法 - 請勿使用程式碼編輯器 修改這個方法的內容。"];
+  Node83 -> Node84 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node84 [label="Ribbon1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classviolet_1_1Ribbon1.html#afc6de2c82a1dd328f4aa83e0e02bf293",tooltip=" "];
+}
