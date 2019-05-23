@@ -1,0 +1,20 @@
+digraph "paste"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18 [label="paste",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node18 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="ShapeLib.VShape.GraphDoc.check\lWhich",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#a24ecbfb409416abd3b6d373f2d61ac09",tooltip=" "];
+  Node18 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="ShapeLib.VShape.gPath.redraw",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html#a3d0ca616bad384ca3a1e4a3eef245d07",tooltip=" "];
+  Node20 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="SupportedShape",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1shapeLib.html#a2351d411700f286075d73bfc5b16ac5a",tooltip="define supported shape"];
+  Node18 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="ShapeLib.VShape.GraphDoc.writeIn",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#afa57d6c546aa1a7c7de0d0a8afb1facf",tooltip="維護 undo stack ,把目前狀態存起來.並清空redo stack,如果之前有undo 動作,是回覆到某一狀態,在此之後的動作都可清除"];
+  Node22 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="ShapeLib.VShape.gPath.copyVal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html#a71d28a4e45efc11cba10f7495bcffb4b",tooltip=" "];
+  Node18 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="ShapeLib.VShape.GraphDoc.\lRelease",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#a94c93747c8daa99d65c2a04c6be0748c",tooltip=" "];
+}

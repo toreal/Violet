@@ -1,0 +1,24 @@
+digraph "MouseUpInsert"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node240 [label="MouseUpInsert",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node240 -> Node241 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node241 [label="correctPoint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1ShapeObj.html#a71cdea85479187fc9529601a58844615",tooltip=" "];
+  Node240 -> Node242 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node242 [label="remGPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1ShapeObj.html#a3969d0be24dcac277ab2a486898df32d",tooltip="儲存新繪製的圖形資料"];
+  Node242 -> Node243 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node243 [label="ShapeLib.VShape.shapeLib.\lSupportedShape",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1shapeLib.html#a2351d411700f286075d73bfc5b16ac5a",tooltip="define supported shape"];
+  Node240 -> Node244 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node244 [label="ShapeLib.VShape.gPath.redraw",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html#a3d0ca616bad384ca3a1e4a3eef245d07",tooltip=" "];
+  Node244 -> Node243 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node240 -> Node243 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node240 -> Node245 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node245 [label="ShapeLib.VShape.GraphDoc.writeIn",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#afa57d6c546aa1a7c7de0d0a8afb1facf",tooltip="維護 undo stack ,把目前狀態存起來.並清空redo stack,如果之前有undo 動作,是回覆到某一狀態,在此之後的動作都可清除"];
+  Node245 -> Node246 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node246 [label="ShapeLib.VShape.gPath.copyVal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html#a71d28a4e45efc11cba10f7495bcffb4b",tooltip=" "];
+  Node240 -> Node247 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node247 [label="ShapeLib.VShape.GraphDoc.\lRelease",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html#a94c93747c8daa99d65c2a04c6be0748c",tooltip=" "];
+}

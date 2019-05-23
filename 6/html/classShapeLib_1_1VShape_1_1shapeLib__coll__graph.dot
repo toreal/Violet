@@ -1,0 +1,23 @@
+digraph "shapeLib"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="shapeLib",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" Data" ,fontname="Helvetica"];
+  Node2 [label="GModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GModel.html",tooltip=" "];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" gdc" ,fontname="Helvetica"];
+  Node3 [label="GraphDoc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1GraphDoc.html",tooltip="記錄shape list,action data stack 記錄動作,每個動作(pointAry)包含,該圖是圖形的第幾個(Listplace),之前記錄是否己有相同圖是第幾個,..."];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" sroot" ,fontname="Helvetica"];
+  Node4 [label="SVGRoot",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1SVGRoot.html",tooltip=" "];
+  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ru" ,fontname="Helvetica"];
+  Node5 [label="RUse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1RUse.html",tooltip=" "];
+  Node6 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" gp" ,fontname="Helvetica"];
+  Node6 [label="gPoint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPoint.html",tooltip=" "];
+  Node7 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" currShape" ,fontname="Helvetica"];
+  Node7 [label="gPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1gPath.html",tooltip=" "];
+  Node8 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" state" ,fontname="Helvetica"];
+  Node8 [label="gPro",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structShapeLib_1_1VShape_1_1gPro.html",tooltip=" "];
+  Node9 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" chd" ,fontname="Helvetica"];
+  Node9 [label="checkHitDraw",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classShapeLib_1_1VShape_1_1checkHitDraw.html",tooltip=" "];
+}
